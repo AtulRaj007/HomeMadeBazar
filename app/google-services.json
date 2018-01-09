@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "819390329581",
+    "firebase_url": "https://homemadebazar-84883.firebaseio.com",
+    "project_id": "homemadebazar-84883",
+    "storage_bucket": "homemadebazar-84883.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819390329581:android:ac35cda86a1822d7",
+        "android_client_info": {
+          "package_name": "com.homemadebazar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "819390329581-r4s702tfjqkmrcga75ulogmlvn5an0u6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1S-0ZTNEFdcDfPstALlq0wVxiNYI1dHk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

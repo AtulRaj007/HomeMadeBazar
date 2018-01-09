@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/margin_5"
+    android:background="@color/black_heading_color"
+    android:orientation="vertical">
+
+    <TextView
+        android:textColor="@color/white"
+        android:id="@+id/tv_marker_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name"
+        android:textSize="@dimen/text_18" />
+
+    <TextView
+        android:text="0"
+        android:textColor="@color/white"
+        android:drawableLeft="@drawable/rating_fill"
+        android:id="@+id/tv_marker_rating"
+        android:textSize="@dimen/text_18"
+        android:drawablePadding="@dimen/margin_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="false" />
+
+</LinearLayout>

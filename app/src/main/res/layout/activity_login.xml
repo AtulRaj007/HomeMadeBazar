@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.7">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <me.relex.circleindicator.CircleIndicator
+                android:id="@+id/indicator"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_alignParentBottom="true" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_weight="0.3"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/str_get_home_food"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_20" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/iv_country_flag"-->
+                    <!--android:layout_width="50dp"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:src="@drawable/indian_flag" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_country_code"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:text="+91"-->
+                    <!--android:gravity="center"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--android:textSize="@dimen/text_20" />-->
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/ccp_country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:ccp_showNameCode="false"
+                    android:layout_gravity="center_vertical"
+                    app:ccp_defaultNameCode="IN"  />
+
+
+
+                <LinearLayout
+                    android:id="@+id/ll_mobile_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                   android:gravity="center"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginRight="@dimen/margin_10"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/et_mobile_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_15"
+                        android:text="@string/str_enter_mobile_number"
+                        />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/margin_10"
+                        android:layout_marginRight="@dimen/margin_30"
+                        android:background="@color/black" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+                <View
+                    android:id="@+id/view_number"
+                    android:layout_width="match_parent"
+                    android:clickable="true"
+                    android:layout_height="match_parent"/>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_10"
+                android:textColor="@color/blue_social"
+                android:text="@string/str_or" />
+
+            <TextView
+                android:id="@+id/tv_connect_social_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/blue_social"
+                android:text="@string/str_connect_with_social_account"
+                android:textSize="@dimen/text_15" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

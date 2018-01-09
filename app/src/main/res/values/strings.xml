@@ -1,0 +1,205 @@
+<resources>
+    <string name="google_maps_key">AIzaSyCcuBdrhrWte5MtGLxNJjz5uC0Psuw5xaQ</string>
+
+    <string name="app_name">HomeMadeBazar</string>
+    <string name="str_get_home_food">Get Home Food on the Move</string>
+    <string name="str_or">OR</string>
+    <string name="str_connect_with_social_account">Connect with Social Account</string>
+    <string name="str_enter_mobile_number">Enter Your Mobile Number</string>
+    <string name="str_continue">CONTINUE</string>
+    <string name="str_verification_code">Verification Code</string>
+    <string name="str_verification_text">Please Enter the digit verification code sent to your mobile 9999999999</string>
+    <string name="str_resend_code"><u>RESEND CODE</u></string>
+    <string name="str_home_made_bazar">Home Made Bazar</string>
+    <string name="str_first_name">FIRST NAME</string>
+    <string name="hint_last_name">LAST NAME</string>
+    <string name="str_email_id">E-MAIL ID</string>
+    <string name="hint_create_password">CREATE PASSWORD</string>
+    <string name="str_confirm_password">CONFIRM PASSWORD</string>
+    <string name="str_choose_role">CHOOSE YOUR ROLE</string>
+    <string name="str_enter_password">Enter Your Password to Login</string>
+    <string name="hint_password">PASSWORD</string>
+    <string name="str_choose_account">Choose Account</string>
+    <string name="str_home_chef">HOME CHEF</string>
+    <string name="str_home_chef_desc">Serve the home cooking experience with love and care.</string>
+    <string name="str_foodie">FOODIE</string>
+    <string name="str_foodie_desc">Experience the home like food at your near place.</string>
+    <string name="str_marketplace">MARKET PLACE</string>
+    <string name="str_marketplace_desc">The hub of purchasing ingredients according to different dishes.</string>
+    <string name="hint_enter_mobile_number">Enter Your Mobile Number</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="str_information">INFORMATION</string>
+    <string name="str_my_orders">My Orders</string>
+    <string name="str_my_wallet">My Wallet</string>
+    <string name="str_sales_report">Sales Report</string>
+    <string name="str_transaction_history">Transaction History</string>
+    <string name="str_others">OTHERS</string>
+    <string name="str_terms_of_use">Terms of use</string>
+    <string name="str_privacy_policy">Privacy Policy</string>
+    <string name="str_about">About</string>
+    <string name="str_logout">Logout</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+    <string name="listgridmenu">listgrid</string>
+    <string name="str_order_id">Order ID:</string>
+    <string name="str_accept">Accept</string>
+    <string name="str_reject">Reject</string>
+    <string name="str_add_cover_photo">ADD COVER PHOTO</string>
+    <string name="str_shop_name">Shop Name:-</string>
+    <string name="str_address">Address:-</string>
+    <string name="str_speciality">Speciality:-</string>
+    <string name="str_create_order">Create Order</string>
+    <string name="str_invite_friends">Invite Friends</string>
+    <string name="dinner">Dinner</string>
+    <string name="serves">Serves 1</string>
+    <string name="str_my_videos">My Videos</string>
+    <string name="str_add_cart"> Add to cart</string>
+    <string name="str_get">GET</string>
+    <string name="enter_no_people">ENTER NUMBER OF PEOPLES</string>
+    <string name="str_checkout">CHECKOUT</string>
+    <string name="str_current_balance">CURRENT BALANCE</string>
+    <string name="total_balance">Total Balance</string>
+    <string name="transfer_to_bank">Transfer to Bank</string>
+    <string name="add_money">Add Money</string>
+    <string name="pay_money">Pay Money</string>
+    <string name="accept_money">Accept Money</string>
+    <string name="str_my_profile">My Profile</string>
+    <string name="str_upload_pic">Upload Profile Pic</string>
+    <string name="str_about_your_self">ABOUT YOUR SELF</string>
+    <string name="str_update_profile">UPDATE PROFILE</string>
+    <string name="str_wallet_balance">Wallet Balance</string>
+    <string name="hint_enter_amount">ENTER AMOUNT</string>
+    <string name="str_add_money">Add Money</string>
+    <string name="str_pay_money_via">Pay Money</string>
+    <string name="str_mobile_number">Mobile Number</string>
+    <string name="str_enter_amount">Enter Amount</string>
+    <string name="str_description">Description</string>
+    <string name="str_pay_money">Pay Money</string>
+    <string name="str_pay_money_qr">Do you want to pay money via QR Code</string>
+    <string name="str_scan_this_code">Scan this code</string>
+    <string name="str_pay_via_mobile">To pay via Mobile Number</string>
+    <string name="share_code">SHARE CODE</string>
+    <string name="notification">Notification</string>
+    <string name="hint_enter_dish_name">Enter Dish Name</string>
+    <string name="hint_dish_price">Dish Price</string>
+    <string name="hint_max_guest">Max. No. of Guest</string>
+    <string name="hint_minimum_guest">Min. No. Of Guest</string>
+    <string name="hint_description_dish">Description</string>
+    <string name="hint_rules_guest">Rules</string>
+    <string name="str_post">Post</string>
+    <string name="str_availability">Availability</string>
+    <string name="str_breakfast">Breakfast</string>
+    <string name="str_lunch">Lunch</string>
+    <string name="str_dinner">Dinner</string>
+    <string name="str_monday">Monday</string>
+    <string name="str_tuesday">Tuesday</string>
+    <string name="str_wednesday">Wednesday</string>
+    <string name="str_thursday">Thursday</string>
+    <string name="str_friday">Friday</string>
+    <string name="str_saturday">Saturday</string>
+    <string name="str_sunday">Sunday</string>
+    <string name="str_timings">TIMINGS :-</string>
+    <string name="str_breakfast_small">BREAKFAST</string>
+    <string name="str_lunch_small">LUNCH</string>
+    <string name="str_dinner_small">DINNER</string>
+    <string name="str_create_order_one_food">You can only create an order for one food.</string>
+    <string name="str_ok">OK</string>
+    <string name="str_save_timings">SAVE TIMINGS</string>
+    <string name="str_cusine">CUSINE</string>
+    <string name="str_timings_from">TIMINGS\nFrom</string>
+    <string name="str_timings_to">TIMINGS\nTO</string>
+    <string name="str_google_login_failed">Google Login Failed.</string>
+
+    <string name="facebook_app_id">127311281232978</string>
+    <string name="fb_login_protocol_scheme">fb127311281232978</string>
+    <string name="progress_dialog">Please wait...</string>
+    <string name="str_skip">SKIP</string>
+    <string name="str_enter_address">ADDRESS</string>
+    <string name="str_pin_code">PINCODE</string>
+    <string name="str_sync_social_data">Sync Social Data</string>
+    <string name="enter_country">Country</string>
+    <string name="aadhar_number">Aadhar Number</string>
+    <string name="str_add_photo">Add Photo!</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="str_choose_gallary">Choose from Gallary</string>
+    <string name="str_cancel">Cancel</string>
+    <string name="hint_enter_shop_name">Enter Shop Name</string>
+    <string name="hint_enter_address">Enter Address</string>
+    <string name="hint_enter_speciality">Enter Speciality</string>
+    <string name="hint_enter_food_speciality">Enter Food Speciality</string>
+    <string name="str_save">Save</string>
+    <string name="str_add_shop_details">ADD SHOP DETAILS</string>
+    <string name="text_accept">Confirm</string>
+    <string name="text_ignore">Ignore</string>
+    <string name="str_send_invites_participants">Send invite to new participants</string>
+    <string name="str_request">Request</string>
+    <string name="hint_dish_category">Dish Category</string>
+    <string name="hint_any_discount">Any Discount (%)</string>
+    <string name="str_pets_allowed">Pets Allowed</string>
+    <string name="hint_drinks">Drinks</string>
+    <string name="str_add_dish_photo">ADD PHOTOS</string>
+    <string name="sync_contact">Sync phone contact into app</string>
+    <string name="str_edit_timings">Edit Timings</string>
+    <string name="hint_enter_price_range">Enter Price Range</string>
+    <string name="uploading_photo">Uploading photo ... please Wait</string>
+    <string name="hint_search_for_recipe">Search for recipes</string>
+    <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
+    <string name="str_about_dish">About Dish</string>
+    <string name="permote_business">PERMOTE BUSINESS</string>
+    <string name="str_search_text_marketplace">Search for ingredients, dishes</string>
+
+    <string-array name="array_post_type">
+        <item>Friends</item>
+        <item>Public</item>
+    </string-array>
+    <string name="title_activity_foodie_home_chef_search">FoodieHomeChefSearchActivity</string>
+    <string name="hint_search_home_chef">Search for Home Chef</string>
+    <string name="str_top_categories">Top Categories</string>
+    <string name="str_call">Call</string>
+    <string name="str_message">Message</string>
+    <string name="str_total_sales">Total sales today</string>
+    <string name="str_manage">Manage</string>
+    <string name="str_add_product">Add a product</string>
+    <string name="title_activity_market_place_add_product">MarketPlaceAddProductActivity</string>
+    <string name="hint_product_name">Product name</string>
+    <string name="hint_brand">Brand</string>
+    <string name="hint_price">Price</string>
+    <string name="hint_Description">Description</string>
+    <string name="str_add_picture">Add Picture</string>
+    <string name="str_add">Add</string>
+    <string name="str_add_brand">Add a brand</string>
+    <string name="str_add_category">Add a category</string>
+    <string name="hint_category_name">Category name</string>
+    <string name="str_category_id">Category ID:</string>
+    <string name="hint_brand_name">Brand Name</string>
+    <string name="str_products">Products</string>
+    <string name="str_join">Join</string>
+    <string name="str_proceed">Proceed</string>
+    <string name="str_close">Close</string>
+    <string name="str_or_enter_mobile_number">or Enter Mobile Number</string>
+
+
+    <string-array name="product_category">
+        <item>Category1</item>
+        <item>Category2</item>
+        <item>Category3</item>
+        <item>Category4</item>
+        <item>Category5</item>
+    </string-array>
+
+    <string-array name="product_brand">
+        <item>Brand1</item>
+        <item>Brand2</item>
+        <item>Brand3</item>
+        <item>Brand4</item>
+        <item>Brand5</item>
+    </string-array>
+    <string name="title_activity_chat">ChatActivity</string>
+    <string name="str_camera">Camera</string>
+    <string name="str_gallery">Gallery</string>
+    <string name="str_location">Location</string>
+    <string name="str_enter_comment">Write comment here...</string>
+
+</resources>

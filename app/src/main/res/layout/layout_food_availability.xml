@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_20"
+    android:background="@drawable/background_border_widet"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_grid_height"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/dim_grid_first_row_weight"
+            android:background="@drawable/background_border_widet"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/str_availability"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/str_breakfast"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/str_lunch"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/str_dinner"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_grid_height"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/dim_grid_first_row_weight"
+            android:background="@drawable/background_border_widet"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/str_monday"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14" />
+
+        <ImageView
+            android:id="@+id/iv_mon_breakfast"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+        <ImageView
+            android:id="@+id/iv_mon_lunch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+        <ImageView
+            android:id="@+id/iv_mon_dinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_grid_height"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/dim_grid_first_row_weight"
+            android:background="@drawable/background_border_widet"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/str_tuesday"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14" />
+
+        <ImageView
+            android:id="@+id/iv_tue_breakfast"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+        <ImageView
+            android:id="@+id/iv_tue_lunch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+        <ImageView
+            android:id="@+id/iv_tue_dinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_grid_height"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/dim_grid_first_row_weight"
+            android:background="@drawable/background_border_widet"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/str_wednesday"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14" />
+
+        <ImageView
+            android:id="@+id/iv_wed_breakfast"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+        <ImageView
+            android:id="@+id/iv_wed_lunch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+        <ImageView
+            android:id="@+id/iv_wed_dinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_grid_height"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/dim_grid_first_row_weight"
+            android:background="@drawable/background_border_widet"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/str_thursday"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14" />
+
+        <ImageView
+            android:id="@+id/iv_thu_breakfast"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+        <ImageView
+            android:id="@+id/iv_thu_lunch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+        <ImageView
+            android:id="@+id/iv_thu_dinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_grid_height"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/dim_grid_first_row_weight"
+            android:background="@drawable/background_border_widet"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/str_friday"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14" />
+
+        <ImageView
+            android:id="@+id/iv_fri_breakfast"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+        <ImageView
+            android:id="@+id/iv_fri_lunch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+        <ImageView
+            android:id="@+id/iv_fri_dinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_grid_height"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/dim_grid_first_row_weight"
+            android:background="@drawable/background_border_widet"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/str_saturday"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14" />
+
+        <ImageView
+            android:id="@+id/iv_sat_breakfast"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+        <ImageView
+            android:id="@+id/iv_sat_lunch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+        <ImageView
+            android:id="@+id/iv_sat_dinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_grid_height"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/dim_grid_first_row_weight"
+            android:background="@drawable/background_border_widet"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/str_sunday"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14" />
+
+        <ImageView
+            android:id="@+id/iv_sun_breakfast"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+        <ImageView
+            android:id="@+id/iv_sun_lunch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+        <ImageView
+            android:id="@+id/iv_sun_dinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_widet"
+            android:scaleType="center" />
+
+    </LinearLayout>
+
+</LinearLayout>
