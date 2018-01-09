@@ -180,6 +180,7 @@ public class Constants {
         String URL = ">>>>>URL##";
         String REQUEST = ">>>>>REQUEST##";
         String RESPONSE = ">>>>>RESPONSE##";
+        String NOTIFICATION=">>>>>PUSH##";
     }
 
     public interface MessageSequeceOrder {

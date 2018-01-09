@@ -1,17 +1,10 @@
 package com.homemadebazar.fcm;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.homemadebazar.R;
-import com.homemadebazar.activity.HomeActivity;
+import com.homemadebazar.util.Constants;
 
 /**
  * Created by atulraj on 24/12/17.
@@ -22,10 +15,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.e(">>>>>FCM", remoteMessage.getData().toString());
+        System.out.println(Constants.ServiceTAG.NOTIFICATION + remoteMessage.getData().toString());
 
     }
 
-    private void showNotification(){
+    private void showNotification() {
 
     }
 }
