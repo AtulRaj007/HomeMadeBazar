@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.homemadebazar.R;
 import com.homemadebazar.model.ChatMessageModel;
 import com.homemadebazar.util.Constants;
+import com.homemadebazar.util.PicassoTrustAll;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -110,11 +111,15 @@ public class ChatConversationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             } else if (holder instanceof LocationViewHolder) {
                 if (!TextUtils.isEmpty(chatMessageModel.getLatitude()) && !TextUtils.isEmpty(chatMessageModel.getLongitude())) {
-                    Picasso.with(context).load(makeUrl(chatMessageModel.getLatitude(), chatMessageModel.getLongitude())).into(((LocationViewHolder) holder).ivLocationImage);
+                    String locationImageUrl = makeUrl(chatMessageModel.getLatitude(), chatMessageModel.getLongitude());
+//                    Picasso.with(context).load(locationImageUrl).into(((LocationViewHolder) holder).ivLocationImage);
+                    PicassoTrustAll.getInstance(context)
+                            .load(locationImageUrl)
+                            .into(((LocationViewHolder) holder).ivLocationImage);
                 }
                 ((LocationViewHolder) holder).tvTime.setText(chatMessageModel.getSentTime());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -122,6 +127,12 @@ public class ChatConversationAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public int getItemCount() {
         return chatMessageModelArrayList.size();
+    }
+
+    public String makeUrl(String latitude, String longitude) {
+        String url = "https://maps.googleapis.com/maps/api/staticmap?zoom=15&size=300x150&maptype=roadmap&markers=color:red%7Clabel:⬤%7C" + latitude + "," + longitude + "&key=" + context.getResources().getString(R.string.google_api_key);
+        Log.e("Map Image Url:-", url);
+        return url;
     }
 
     class MessageViewHolder extends RecyclerView.ViewHolder {
@@ -154,11 +165,5 @@ public class ChatConversationAdapter extends RecyclerView.Adapter<RecyclerView.V
             ivLocationImage = itemView.findViewById(R.id.iv_location_image);
             tvTime = itemView.findViewById(R.id.tv_time);
         }
-    }
-
-    public String makeUrl(String latitude, String longitude) {
-        String url = "https://maps.googleapis.com/maps/api/staticmap?zoom=15&size=300x150&maptype=roadmap&markers=color:red%7Clabel:⬤%7C" + latitude + "," + longitude + "&key=" + context.getResources().getString(R.string.google_api_key);
-        Log.e("Map Image Url:-", url);
-        return url;
     }
 }

@@ -180,7 +180,7 @@ public class Constants {
         String URL = ">>>>>URL##";
         String REQUEST = ">>>>>REQUEST##";
         String RESPONSE = ">>>>>RESPONSE##";
-        String NOTIFICATION=">>>>>PUSH##";
+        String NOTIFICATION = ">>>>>PUSH##";
     }
 
     public interface MessageSequeceOrder {
@@ -250,6 +250,23 @@ public class Constants {
     public interface LoginHistory {
         int LOGIN = 1;
         int LOGOUT = 2;
+    }
+
+    public interface BroadCastFilter {
+        String INCOMING_MESSAGE = "INCOMING_MESSAGE";
+    }
+
+    public interface NotificationType {
+        int INCOMING_MESSAGE = 2;
+    }
+
+    public interface BundleKeys {
+        String RECEIVER_ID = "RECEIVER_ID";
+        String SENDER_ID = "SENDER_ID";
+        String MESSAGE = "MESSAGE";
+        String FIRST_NAME = "FIRST_NAME";
+        String LAST_NAME = "LAST_NAME";
+        String PROFILE_PIC = "PROFILE_PIC";
     }
 
 //    {"PostId":"PM00000002","ActionType":"Comments/Likes/All/Unlike","Comments":"Superb","UserById":"17110910"}

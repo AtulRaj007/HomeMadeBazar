@@ -1,9 +1,12 @@
 package com.homemadebazar.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -11,7 +14,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.homemadebazar.R;
 import com.homemadebazar.adapter.ChatConversationAdapter;
@@ -37,7 +39,7 @@ import java.util.Hashtable;
 import id.zelory.compressor.Compressor;
 
 public class ChatActivity extends BaseActivity implements View.OnClickListener {
-    public static String KEY_TARGET_USERID="KEY_TARGET_USERID";
+    public static String KEY_TARGET_USERID = "KEY_TARGET_USERID";
     private ImageView ivBack, ivUserProfile, ivAttachment;
     private EditText etChatMessage;
     private RecyclerView recyclerView;
@@ -48,22 +50,23 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
     private LinearLayoutManager linearLayoutManager;
     private LinearLayout llAttachmentLayout;
     private Uri chatImageUri = null;
+    private IncomingMessageReceiver incomingMessageReceiver = new IncomingMessageReceiver();
 
+    public static Intent getChatIntent(Context context, UserModel targetUserId) {
+        Intent intent = new Intent(context, ChatActivity.class);
+        intent.putExtra(KEY_TARGET_USERID, targetUserId);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        LocalBroadcastManager.getInstance(ChatActivity.this).registerReceiver(incomingMessageReceiver, new IntentFilter(Constants.BroadCastFilter.INCOMING_MESSAGE));
     }
 
-    public static Intent getChatIntent(Context context,UserModel targetUserId){
-        Intent intent=new Intent(context,ChatActivity.class);
-        intent.putExtra(KEY_TARGET_USERID,targetUserId);
-        return intent;
-    }
-
-    private void getBundleData(){
-        targetUserModel= (UserModel) getIntent().getSerializableExtra(KEY_TARGET_USERID);
+    private void getBundleData() {
+        targetUserModel = (UserModel) getIntent().getSerializableExtra(KEY_TARGET_USERID);
     }
 
     @Override
@@ -96,8 +99,12 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         getMessagesApi(userModel.getUserId(), targetUserModel.getUserId(), Constants.MessageSequeceOrder.CURRENT, getTimeStamp(Constants.MessageSequeceOrder.CURRENT));
     }
 
-    private void setUpToolbar() {
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (isFinishing()) {
+            LocalBroadcastManager.getInstance(ChatActivity.this).unregisterReceiver(incomingMessageReceiver);
+        }
     }
 
     @Override
@@ -125,7 +132,8 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                 Utils.gallaryIntent(ChatActivity.this);
                 break;
             case R.id.ll_location_attachment:
-
+                sendChatMessage(userModel.getUserId(), targetUserModel.getUserId(), "", "", Constants.FileType.NONE,
+                        Constants.MessageType.LOCATION, "28.4594965", "77.0266383");
                 break;
         }
     }
@@ -267,12 +275,15 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                                     chatMessageModelArrayList.clear();
                                     chatMessageModelArrayList.addAll(tempMessageModelArrayList);
                                     chatConversationAdapter.notifyDataSetChanged();
+                                    recyclerView.scrollToPosition(chatMessageModelArrayList.size() - 1);
                                 } else if (sequenceOrder.equals(Constants.MessageSequeceOrder.NEW)) {
                                     chatMessageModelArrayList.addAll(tempMessageModelArrayList);
                                     chatConversationAdapter.notifyDataSetChanged();
+                                    recyclerView.scrollToPosition(chatMessageModelArrayList.size() - 1);
                                 } else if (sequenceOrder.equals(Constants.MessageSequeceOrder.OLD)) {
                                     chatMessageModelArrayList.addAll(0, tempMessageModelArrayList);
                                     chatConversationAdapter.notifyDataSetChanged();
+                                    recyclerView.scrollToPosition(chatMessageModelArrayList.size() - 1);
                                 }
 
                             } else {
@@ -289,6 +300,20 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
             });
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), ChatActivity.this, null);
+        }
+    }
+
+
+    private class IncomingMessageReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            System.out.println("New Message Received");
+            String senderId = intent.getStringExtra(Constants.BundleKeys.SENDER_ID);
+            if (!targetUserModel.getUserId().equals(senderId))
+                return;
+            else {
+                getMessagesApi(userModel.getUserId(), targetUserModel.getUserId(), Constants.MessageSequeceOrder.NEW, getTimeStamp(Constants.MessageSequeceOrder.NEW));
+            }
         }
     }
 }

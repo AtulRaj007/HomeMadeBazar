@@ -20,12 +20,12 @@
         android:layout_above="@+id/rl_chat_layout"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/margin_5"
-        android:visibility="gone"
+        android:background="@color/white"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:background="@color/white"
         android:paddingBottom="@dimen/padding_10"
-        android:paddingTop="@dimen/padding_10">
+        android:paddingTop="@dimen/padding_10"
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/ll_camera_attachment"
@@ -43,9 +43,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_16"
                 android:layout_marginTop="@dimen/margin_5"
-                android:text="@string/str_camera" />
+                android:text="@string/str_camera"
+                android:textSize="@dimen/text_16" />
 
         </LinearLayout>
 
@@ -53,8 +53,8 @@
             android:id="@+id/ll_gallery_attachment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
@@ -65,9 +65,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_16"
                 android:layout_marginTop="@dimen/margin_5"
-                android:text="@string/str_gallery" />
+                android:text="@string/str_gallery"
+                android:textSize="@dimen/text_16" />
 
         </LinearLayout>
 
@@ -87,9 +87,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_16"
                 android:layout_marginTop="@dimen/margin_5"
-                android:text="@string/str_location" />
+                android:text="@string/str_location"
+                android:textSize="@dimen/text_16" />
 
         </LinearLayout>
 
@@ -114,7 +114,7 @@
                 android:id="@+id/iv_attachment"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_gravity="bottom"
+                android:layout_gravity="center_vertical"
                 android:layout_marginBottom="7dp"
                 android:layout_marginLeft="@dimen/margin_10"
                 android:layout_marginRight="@dimen/margin_10"

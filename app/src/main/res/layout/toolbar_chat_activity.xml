@@ -28,8 +28,8 @@
 
         <com.homemadebazar.util.CircleImageView
             android:id="@+id/iv_user_profile"
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_toRightOf="@id/iv_back"
             android:src="@drawable/video" />
 
