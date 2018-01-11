@@ -221,4 +221,9 @@ public class DialogUtils {
         dialog.show();
     }
 
+    public static void bookFoodOnSelectedDatesDialog(){
+
+
+    }
+
 }
