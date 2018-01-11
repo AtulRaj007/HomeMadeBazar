@@ -1,7 +1,6 @@
 package com.homemadebazar.network.apicall;
 
 import com.homemadebazar.model.BaseModel;
-import com.homemadebazar.model.ChatMessageModel;
 import com.homemadebazar.model.FoodiePostCommentModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.JSONParsingUtils;
@@ -15,21 +14,24 @@ import java.util.ArrayList;
  * Created by atulraj on 5/1/18.
  */
 
-public class GetPostCommentApiCall extends BaseApiCall {
-    private String postId;
-    private ArrayList<FoodiePostCommentModel> foodiePostCommentModels;
+public class GetContactSyncApiCall extends BaseApiCall {
+    private String userId;
+    private String contactCSVList;
     private BaseModel baseModel;
 
     //    {"PostId":"PM00000002"}
-    public GetPostCommentApiCall(String postId) {
-        this.postId = postId;
+//    {"ParentUserId":"1801062","ContactSinkCSV":"8709646364,8882540094,9453333930,9555872016,9910364363"}
+    public GetContactSyncApiCall(String userId, String contactsCSVList) {
+        this.userId = userId;
+        this.contactCSVList = contactsCSVList;
     }
 
     @Override
     public Object getRequest() {
         JSONObject object = new JSONObject();
         try {
-            object.put("PostId", postId);
+            object.put("ParentUserId", userId);
+            object.put("ContactSinkCSV", contactCSVList);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -40,8 +42,8 @@ public class GetPostCommentApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
-        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.GET_COMMENT_LIST);
-        return Constants.ServerURL.GET_COMMENT_LIST;
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.GET_CONTACT_SYNC);
+        return Constants.ServerURL.GET_CONTACT_SYNC;
     }
 
     @Override
@@ -51,13 +53,10 @@ public class GetPostCommentApiCall extends BaseApiCall {
         }
     }
 
-    public BaseModel getBaseModel() {
-        return baseModel;
-    }
 
     @Override
-    public ArrayList<FoodiePostCommentModel> getResult() {
-        return foodiePostCommentModels;
+    public BaseModel getResult() {
+        return baseModel;
     }
 
     private void parseData(String response) {
@@ -67,8 +66,6 @@ public class GetPostCommentApiCall extends BaseApiCall {
             try {
                 JSONObject object = new JSONObject(response);
                 baseModel = JSONParsingUtils.parseBaseModel(object);
-                if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS)
-                    foodiePostCommentModels = JSONParsingUtils.parseFoodiePostCommentList(object);
             } catch (Exception e) {
                 e.printStackTrace();
             }

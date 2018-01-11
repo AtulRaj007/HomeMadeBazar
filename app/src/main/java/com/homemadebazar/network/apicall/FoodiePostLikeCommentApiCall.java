@@ -13,9 +13,12 @@ import org.json.JSONObject;
 
 public class FoodiePostLikeCommentApiCall extends BaseApiCall {
 
-    private String postId, actionType, comments, actionDoneByUserId;
+    private String postId, actionType, actionDoneByUserId;
     private BaseModel baseModel;
     private int commentsCount, likesCount;
+    private String comments, dateTime;
+    private String userId;
+    private String firstName, lastName, userProfile;
 
     public FoodiePostLikeCommentApiCall(String postId, String actionType, String comments, String actionDoneByUserId) {
         this.postId = postId;
@@ -48,6 +51,13 @@ public class FoodiePostLikeCommentApiCall extends BaseApiCall {
                 baseModel = JSONParsingUtils.parseBaseModel(object);
                 commentsCount = object.optInt("CommentsCount");
                 likesCount = object.optInt("LikesCount");
+                comments = object.optString("Comments");
+                dateTime = object.optString("Datetime");
+                userId = object.optString("UserId");
+                firstName = object.optString("FirstName");
+                lastName = object.optString("LastName");
+                userProfile = object.optString("PosterDPUrl");
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -65,6 +75,30 @@ public class FoodiePostLikeCommentApiCall extends BaseApiCall {
 
     public int getCommentsCount() {
         return commentsCount;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getUserProfile() {
+        return userProfile;
     }
 
     @Override

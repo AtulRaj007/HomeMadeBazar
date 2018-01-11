@@ -90,6 +90,20 @@ public class Constants {
         String DEVICE_LOGIN = BASE_URL + "LoginHistory/DeviceLogin";
         String DEVICE_LOGOUT = BASE_URL + "LoginHistory/DeviceLogout";
         String GET_COMMENT_LIST = BASE_URL + "Flash/ShowCommentsList";
+        String PROFILE_UPDATE = BASE_URL + "Miscellaneous/ProfileUpdate";
+        String GET_CONTACT_SYNC = BASE_URL + "Miscellaneous/GetContactSync";
+        String GET_NOTIFICATION = BASE_URL + "Miscellaneous/GetNotificationBell";
+        String GET_TRANSACTION_REPORT = BASE_URL + "Reports/WalletTransactionReports";
+        String CHANGE_PASSWORD = BASE_URL + "Miscellaneous/PasswordUpdate";
+        String RESET_PASSWORD = BASE_URL + "Miscellaneous/GetResetPassowrd";
+
+//        http://localhost:14013/api/Miscellaneous/GetResetPassowrd
+//        http://localhost:14013/api/Miscellaneous/PasswordUpdate
+//        http://103.54.24.25:200/api/Reports/WalletTransactionReports
+
+//        http://103.54.24.25:200/api/Miscellaneous/GetNotificationBell
+//        http://103.54.24.25:200/api/Miscellaneous/GetContactSync
+//        http://localhost:14013/api/Miscellaneous/ProfileUpdate
 
 //                http://localhost:14013/api/Flash/ShowCommentsList
 
@@ -146,6 +160,7 @@ public class Constants {
         int REQUEST_ADD_BRAND = 110;
         int REQUEST_ADD_PRODUCT = 111;
         int REQUEST_ADD_MONEY = 112;
+        int READ_CONTACTS_REQUEST = 113;
     }
 
     public interface AccountType {
@@ -181,6 +196,7 @@ public class Constants {
         String REQUEST = ">>>>>REQUEST##";
         String RESPONSE = ">>>>>RESPONSE##";
         String NOTIFICATION = ">>>>>PUSH##";
+        String CONTACTS = ">>>>>CONTACTS##";
     }
 
     public interface MessageSequeceOrder {
@@ -235,10 +251,10 @@ public class Constants {
     }
     */
 
-    public interface signInType {
-        String GMAIL = "gmail";
-        String FACEBOOK = "facebook";
-    }
+//    public interface signInType {
+//        String GMAIL = "gmail";
+//        String FACEBOOK = "facebook";
+//    }
 
     public interface PostActionTAG {
         String COMMENTS = "Comments";

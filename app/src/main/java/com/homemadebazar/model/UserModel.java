@@ -19,6 +19,7 @@ public class UserModel extends BaseModel implements Serializable {
     String profilePic;
     double walletBalance;
     String accountId;
+    String aadharNumber;
 
     public double getWalletBalance() {
         return walletBalance;
@@ -108,7 +109,16 @@ public class UserModel extends BaseModel implements Serializable {
         this.profilePic = profilePic;
     }
 
+    public String getAadharNumber() {
+        return aadharNumber;
+    }
+
+    public void setAadharNumber(String aadharNumber) {
+        this.aadharNumber = aadharNumber;
+    }
+
     @Override
+
     public String toString() {
         return "UserModel{" +
                 "userId='" + userId + '\'' +

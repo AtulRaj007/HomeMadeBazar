@@ -201,5 +201,10 @@
     <string name="str_gallery">Gallery</string>
     <string name="str_location">Location</string>
     <string name="str_enter_comment">Write comment here...</string>
+    <string name="hint_current_password">Current Password</string>
+    <string name="hint_new_password">New Password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="text_update_profile">Update Password</string>
+    <string name="str_reset_password">Reset Password</string>
 
 </resources>

@@ -2,6 +2,10 @@ package com.homemadebazar.adapter;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.homemadebazar.R;
+import com.homemadebazar.activity.FoodiePostCommentActivity;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.FoodieFlashPostModel;
 import com.homemadebazar.network.HttpRequestHandler;
@@ -136,9 +141,18 @@ public class FoodieFlashPostAdapter extends RecyclerView.Adapter<FoodieFlashPost
                     performLikeUnlikeComment(foodieFlashPostModelArrayList.get(getAdapterPosition()), Constants.PostActionTAG.LIKES, "", userId);
                     break;
                 case R.id.ll_comment:
-
+                    context.startActivity(FoodiePostCommentActivity.getCommentIntent(context, foodieFlashPostModelArrayList.get(getAdapterPosition()).getPostId()));
                     break;
                 case R.id.ll_share:
+                    Bitmap screenShotBitmap = Utils.takeScreenshot(itemView);
+//                    Intent intent=new Intent(Intent.ACTION_SH)
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.putExtra(Intent.EXTRA_TEXT, "download this image");
+                    String bitmapPath = MediaStore.Images.Media.insertImage(context.getContentResolver(), screenShotBitmap, "title", null);
+                    Uri bitmapUri = Uri.parse(bitmapPath);
+                    intent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
+                    intent.setType("image/*");
+                    context.startActivity(Intent.createChooser(intent, "Share image via..."));
 
                     break;
             }

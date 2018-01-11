@@ -52,6 +52,7 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
             getView().findViewById(R.id.tv_my_wallet).setOnClickListener(this);
             getView().findViewById(R.id.tv_sales_report).setOnClickListener(this);
             getView().findViewById(R.id.tv_transaction_history).setOnClickListener(this);
+            getView().findViewById(R.id.tv_change_password).setOnClickListener(this);
             getView().findViewById(R.id.tv_terms_of_use).setOnClickListener(this);
             getView().findViewById(R.id.tv_privacy_policy).setOnClickListener(this);
             getView().findViewById(R.id.tv_about).setOnClickListener(this);

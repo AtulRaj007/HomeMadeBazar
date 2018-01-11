@@ -27,7 +27,7 @@
             android:textSize="@dimen/text_12" />
 
         <Switch
-            android:id="@+id/switch_pets_allowed"
+            android:id="@+id/switch_sync_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

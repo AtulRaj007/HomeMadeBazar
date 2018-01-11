@@ -209,6 +209,10 @@ public class HomeActivity extends BaseActivity {
                 startActivity(new Intent(HomeActivity.this, TransactionHistoryActivity.class));
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 break;
+            case R.id.tv_change_password:
+                Intent intent = new Intent(HomeActivity.this, ChangePasswordActivity.class);
+                startActivity(intent);
+                break;
             case R.id.tv_terms_of_use:
                 Toast.makeText(HomeActivity.this, "Development Mode", Toast.LENGTH_LONG).show();
                 mDrawerLayout.closeDrawer(Gravity.LEFT);

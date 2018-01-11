@@ -9,10 +9,12 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.homemadebazar.R;
+import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
 import com.homemadebazar.network.apicall.PasswordLoginApiCall;
+import com.homemadebazar.network.apicall.ResetPasswordApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
@@ -52,6 +54,7 @@ public class EnterPasswordActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void initialiseListener() {
         findViewById(R.id.btn_continue).setOnClickListener(this);
+        findViewById(R.id.tv_reset_password).setOnClickListener(this);
     }
 
     @Override
@@ -76,6 +79,14 @@ public class EnterPasswordActivity extends BaseActivity implements View.OnClickL
                 if (isValid()) {
                     doSignIn();
                 }
+                break;
+            case R.id.tv_reset_password:
+                DialogUtils.showAlert(EnterPasswordActivity.this, "Do you want to reset your password.\nPassword will be sent to your mobile number", new Runnable() {
+                    @Override
+                    public void run() {
+                        resetPassword();
+                    }
+                });
                 break;
         }
     }
@@ -109,6 +120,35 @@ public class EnterPasswordActivity extends BaseActivity implements View.OnClickL
                                 Utils.openAccountTypeHomeScreen(EnterPasswordActivity.this, userModel.getAccountType());
                             } else {
                                 DialogUtils.showAlert(EnterPasswordActivity.this, userModel.getStatusMessage());
+                            }
+
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    } else { // Failure
+                        Utils.handleError(e.getMessage(), EnterPasswordActivity.this, null);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            Utils.handleError(e.getMessage(), EnterPasswordActivity.this, null);
+        }
+    }
+
+    private void resetPassword() {
+        try {
+            final ResetPasswordApiCall apiCall = new ResetPasswordApiCall(userId);
+            HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
+
+                @Override
+                public void onComplete(Exception e) {
+                    if (e == null) { // Success
+                        try {
+                            BaseModel baseModel = apiCall.getBaseModel();
+                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                DialogUtils.showAlert(EnterPasswordActivity.this, baseModel.getStatusMessage());
+                            } else {
+                                DialogUtils.showAlert(EnterPasswordActivity.this, baseModel.getStatusMessage());
                             }
 
                         } catch (Exception ex) {

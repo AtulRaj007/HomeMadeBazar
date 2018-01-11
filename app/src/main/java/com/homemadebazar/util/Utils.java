@@ -8,15 +8,19 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 
 import com.homemadebazar.activity.FoodieHomeActivity;
 import com.homemadebazar.activity.HomeActivity;
@@ -261,5 +265,14 @@ public class Utils {
             return 0;
         }
     }
+
+    public static Bitmap takeScreenshot(View rootView) {
+        Bitmap b = Bitmap.createBitmap(rootView.getWidth(), rootView.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+        rootView.draw(c);
+        return b;
+
+    }
+
 
 }

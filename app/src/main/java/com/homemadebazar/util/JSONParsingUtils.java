@@ -14,6 +14,8 @@ import com.homemadebazar.model.IsAccountExistModel;
 import com.homemadebazar.model.MarketPlaceProductBrandModel;
 import com.homemadebazar.model.MarketPlaceProductCategoryModel;
 import com.homemadebazar.model.MarketPlaceProductModel;
+import com.homemadebazar.model.NotificationModel;
+import com.homemadebazar.model.TransactionModel;
 import com.homemadebazar.model.UserModel;
 
 import org.json.JSONArray;
@@ -554,4 +556,68 @@ public class JSONParsingUtils {
         }
         return foodiePostCommentModel;
     }
+
+    public static ArrayList<NotificationModel> parseNotificationList(JSONObject object) {
+        ArrayList<NotificationModel> notificationModelArrayList = new ArrayList<>();
+        try {
+            JSONArray notificationArray = object.optJSONArray("Notification");
+            for (int i = 0; i < notificationArray.length(); i++) {
+                NotificationModel notificationModel = parseNotificationModel(notificationArray.getJSONObject(i));
+                notificationModelArrayList.add(notificationModel);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return notificationModelArrayList;
+    }
+
+    public static NotificationModel parseNotificationModel(JSONObject object) {
+        NotificationModel notificationModel = new NotificationModel();
+        try {
+            notificationModel.setNotificationType(object.optString("NotificationType"));
+            notificationModel.setTitle(object.optString("Title"));
+            notificationModel.setMessage(object.optString("Message"));
+            notificationModel.setSenderUserId(object.optString("SenderUserId"));
+            notificationModel.setSenderName(object.optString("SenderName"));
+            notificationModel.setSenderDp(object.optString("SenderDp"));
+            notificationModel.setReceiverUserId(object.optString("ReceiverUserId"));
+            notificationModel.setReceiverName(object.optString("ReceiverName"));
+            notificationModel.setReceiverDp(object.optString("ReceiverDp"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return notificationModel;
+    }
+
+    public static ArrayList<TransactionModel> parseTransactionReportList(JSONObject object) {
+        ArrayList<TransactionModel> transactionModelArrayList = new ArrayList<>();
+        try {
+            JSONArray reportsArray = object.optJSONArray("Reports");
+            for (int i = 0; i < reportsArray.length(); i++) {
+                TransactionModel transactionModel = parseTransactionModel(reportsArray.getJSONObject(i));
+                transactionModelArrayList.add(transactionModel);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return transactionModelArrayList;
+    }
+
+    public static TransactionModel parseTransactionModel(JSONObject object) {
+        TransactionModel transactionModel = new TransactionModel();
+        try {
+//            transactionModel.setTitle(object.optString(""));
+//            transactionModel.setTransactionId(object.optString(""));
+            transactionModel.setTransactionAmount(object.optString("Amount"));
+            transactionModel.setTransactionMode(object.optString("TrnMode"));
+            transactionModel.setDescription(object.optString("Remarks"));
+            transactionModel.setName(object.optString("Name"));
+            transactionModel.setDateTime(object.optString("DateTime"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return transactionModel;
+    }
+
 }

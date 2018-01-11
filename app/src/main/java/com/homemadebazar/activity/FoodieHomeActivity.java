@@ -52,13 +52,13 @@ public class FoodieHomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foodie_home);
         UserModel userModel = SharedPreference.getUserModel(this);
-        if (userModel != null)
-            Log.d("Foodie user id", userModel.getUserId());
+//        if (userModel != null)
+//            Log.d("Foodie user id", userModel.getUserId());
     }
 
     @Override
     protected void initUI() {
-        userModel=SharedPreference.getUserModel(FoodieHomeActivity.this);
+        userModel = SharedPreference.getUserModel(FoodieHomeActivity.this);
         mDrawerLayout = findViewById(R.id.drawer_layout);
         toolbar = findViewById(R.id.toolbar);
         viewPager = findViewById(R.id.view_pager);
@@ -212,6 +212,10 @@ public class FoodieHomeActivity extends BaseActivity {
                 startActivity(new Intent(FoodieHomeActivity.this, TransactionHistoryActivity.class));
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 break;
+            case R.id.tv_change_password:
+                Intent intent = new Intent(FoodieHomeActivity.this, ChangePasswordActivity.class);
+                startActivity(intent);
+                break;
             case R.id.tv_terms_of_use:
                 Toast.makeText(FoodieHomeActivity.this, "Development Mode", Toast.LENGTH_LONG).show();
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -257,7 +261,7 @@ public class FoodieHomeActivity extends BaseActivity {
         setUpToolbar();
         setUpViewPager();
         setUpTabLayout();
-        deviceLoginLogoutApiCall(userModel.getUserId(), FirebaseInstanceId.getInstance().getToken(),Constants.LoginHistory.LOGIN);
+        deviceLoginLogoutApiCall(userModel.getUserId(), FirebaseInstanceId.getInstance().getToken(), Constants.LoginHistory.LOGIN);
 //        userModel= SharedPreference.getUserModel(HomeActivity.this);
 //        Log.e("UserModel:-",userModel.toString());
 

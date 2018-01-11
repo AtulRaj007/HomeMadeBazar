@@ -2,7 +2,6 @@ package com.homemadebazar.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,47 +9,33 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.homemadebazar.R;
-import com.homemadebazar.adapter.ChatConversationAdapter;
 import com.homemadebazar.adapter.PostCommentAdapter;
 import com.homemadebazar.model.BaseModel;
-import com.homemadebazar.model.ChatMessageModel;
 import com.homemadebazar.model.FoodiePostCommentModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
-import com.homemadebazar.network.UploadFileTask;
 import com.homemadebazar.network.api.ApiCall;
-import com.homemadebazar.network.apicall.GetChatMessageApiCall;
+import com.homemadebazar.network.apicall.FoodiePostLikeCommentApiCall;
 import com.homemadebazar.network.apicall.GetPostCommentApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
 import com.homemadebazar.util.Utils;
-import com.theartofdev.edmodo.cropper.CropImage;
 
-import org.json.JSONObject;
-
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Hashtable;
-
-import id.zelory.compressor.Compressor;
 
 public class FoodiePostCommentActivity extends BaseActivity implements View.OnClickListener {
-    public static String KEY_TARGET_USERID="KEY_TARGET_USERID";
+    public static String KEY_POST_ID = "KEY_POST_ID";
     private ImageView ivBack, ivUserProfile;
     private EditText etChatMessage;
     private RecyclerView recyclerView;
     private UserModel userModel;
-    private UserModel targetUserModel;
-//    private ArrayList<ChatMessageModel> chatMessageModelArrayList = new ArrayList<>();
+    private String postId;
     private PostCommentAdapter postCommentAdapter;
     private LinearLayoutManager linearLayoutManager;
-//    private LinearLayout llAttachmentLayout;
-//    private Uri chatImageUri = null;
-    private ArrayList<FoodiePostCommentModel> foodiePostCommentModelArrayList;
+    private ArrayList<FoodiePostCommentModel> foodiePostCommentModelArrayList = new ArrayList<>();
 
 
     @Override
@@ -59,14 +44,14 @@ public class FoodiePostCommentActivity extends BaseActivity implements View.OnCl
         setContentView(R.layout.activity_foodie_post_comment);
     }
 
-    public static Intent getCommentIntent(Context context,UserModel targetUserId){
-        Intent intent=new Intent(context,FoodiePostCommentActivity.class);
-        intent.putExtra(KEY_TARGET_USERID,targetUserId);
+    public static Intent getCommentIntent(Context context, String postId) {
+        Intent intent = new Intent(context, FoodiePostCommentActivity.class);
+        intent.putExtra(KEY_POST_ID, postId);
         return intent;
     }
 
-    private void getBundleData(){
-        targetUserModel= (UserModel) getIntent().getSerializableExtra(KEY_TARGET_USERID);
+    private void getBundleData() {
+        postId = getIntent().getStringExtra(KEY_POST_ID);
     }
 
     @Override
@@ -78,7 +63,6 @@ public class FoodiePostCommentActivity extends BaseActivity implements View.OnCl
         ivUserProfile = findViewById(R.id.iv_user_profile);
         etChatMessage = findViewById(R.id.et_chat_message);
         recyclerView = findViewById(R.id.recycler_view);
-//        llAttachmentLayout = findViewById(R.id.ll_attachment_layout);
     }
 
     @Override
@@ -88,10 +72,10 @@ public class FoodiePostCommentActivity extends BaseActivity implements View.OnCl
 
     @Override
     protected void setData() {
-//        recyclerView.setLayoutManager(linearLayoutManager);
-//        postCommentAdapter = new PostCommentAdapter(FoodiePostCommentActivity.this, foodiePostCommentModelArrayList, userModel.getUserId());
-//        recyclerView.setAdapter(postCommentAdapter);
-//        getCommentsApiCall(, Constants.MessageSequeceOrder.CURRENT, getTimeStamp(Constants.MessageSequeceOrder.CURRENT));
+        recyclerView.setLayoutManager(linearLayoutManager);
+        postCommentAdapter = new PostCommentAdapter(FoodiePostCommentActivity.this, foodiePostCommentModelArrayList, userModel.getUserId());
+        recyclerView.setAdapter(postCommentAdapter);
+        getCommentsApiCall(postId);
     }
 
     private void setUpToolbar() {
@@ -103,140 +87,69 @@ public class FoodiePostCommentActivity extends BaseActivity implements View.OnCl
         switch (v.getId()) {
             case R.id.iv_chat_send:
                 if (isValid()) {
-//                    sendChatMessage(userModel.getUserId(), targetUserModel.getUserId(), etChatMessage.getText().toString().trim(), "", Constants.FileType.NONE,
-//                            Constants.MessageType.TEXT, "", "");
-//                    etChatMessage.setText("");
+                    performLikeUnlikeComment(postId, Constants.PostActionTAG.COMMENTS, etChatMessage.getText().toString().trim(), userModel.getUserId());
+                    etChatMessage.setText("");
                 }
                 break;
 
         }
     }
 
+    private void performLikeUnlikeComment(String postId, String actionType, String comments, String actionDoneByUserId) {
+        try {
+//            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(context, null);
+//            progressDialog.show();
+
+            final FoodiePostLikeCommentApiCall apiCall = new FoodiePostLikeCommentApiCall(postId, actionType, comments, actionDoneByUserId);
+            HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
+
+                @Override
+                public void onComplete(Exception e) {
+//                    DialogUtils.hideProgressDialog(progressDialog);
+                    if (e == null) { // Success
+                        try {
+                            BaseModel baseModel = apiCall.getResult();
+                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                FoodiePostCommentModel foodiePostCommentModel = new FoodiePostCommentModel();
+                                foodiePostCommentModel.setComments(apiCall.getComments());
+                                foodiePostCommentModel.setSentTime(apiCall.getDateTime());
+                                foodiePostCommentModel.setUserId(apiCall.getUserId());
+                                foodiePostCommentModel.setFirstName(apiCall.getFirstName());
+                                foodiePostCommentModel.setLastName(apiCall.getLastName());
+                                foodiePostCommentModel.setUserProfile(apiCall.getUserProfile());
+
+                                foodiePostCommentModelArrayList.add(foodiePostCommentModel);
+                                postCommentAdapter.notifyDataSetChanged();
+                            } else {
+                                DialogUtils.showAlert(FoodiePostCommentActivity.this, baseModel.getStatusMessage());
+                            }
+
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    } else { // Failure
+                        Utils.handleError(e.getMessage(), FoodiePostCommentActivity.this, null);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            Utils.handleError(e.getMessage(), FoodiePostCommentActivity.this, null);
+        }
+    }
+
     private boolean isValid() {
         if (TextUtils.isEmpty(etChatMessage.getText().toString().trim())) {
-            DialogUtils.showAlert(FoodiePostCommentActivity.this, "You cannot send empty message");
+            DialogUtils.showAlert(FoodiePostCommentActivity.this, "You cannot send empty comment.");
             return false;
         } else {
             return true;
         }
     }
 
-
-//    private String getChatSendUrl(String userId, String receiverId, String text, String fileType, String msgType, String latitude, String longitude) {
-//        String url = Constants.ServerURL.SEND_MESSAGE + "SndrId=" + userId + "&RcrId=" + receiverId + "&text=" + text + "&FileType=" + fileType + "&MsgType=" + msgType
-//                + "&Lati=" + latitude + "&Longi=" + longitude;
-//        System.out.println(Constants.ServiceTAG.URL + url);
-//        return url;
-//    }
-
-
-//    public void sendChatMessage(final String userId, final String receiverId, String text, String imagePath, String fileType, String msgType, String latitude, String longitude) {
-//        String url = getChatSendUrl(userId, receiverId, text, fileType, msgType, latitude, longitude);
-//        try {
-//            File compressImageFile = null;
-//            if (!TextUtils.isEmpty(imagePath))
-//                compressImageFile = new Compressor(this).compressToFile(new File(imagePath));
-//
-//            Hashtable<String, String> multipartParams = new Hashtable<>();
-//
-//            final UploadFileTask fileTask = new UploadFileTask(this, url, compressImageFile != null ? compressImageFile.getPath() : "", multipartParams, "image_url", new UploadFileTask.FileUploadListener() {
-//                @Override
-//                public void onComplete(String response) {
-//                    System.out.println("SendChatMessage Response:-" + response);
-//                    try {
-//
-//                        JSONObject object = new JSONObject(response);
-//                        if (object.optInt("StatusCode") == Constants.ServerResponseCode.SUCCESS) {
-//                            System.out.println("Message Sent");
-//                            getMessagesApi(userId, receiverId, Constants.MessageSequeceOrder.NEW, getTimeStamp(Constants.MessageSequeceOrder.NEW));
-//
-//                        } else {
-//                            DialogUtils.showAlert(FoodiePostCommentActivity.this, object.optString("StatusMessage"));
-//                        }
-//
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                }
-//            });
-//            fileTask.execute();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        switch (requestCode) {
-//            case Constants.Keys.REQUEST_CAMERA:
-//                if (resultCode == RESULT_OK) {
-//                    Uri uri = Utils.getCameraUri();
-//                    System.out.println("Camera URI:-" + uri);
-//                    if (uri != null) {
-////                        ivProductImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-////                        ivProductImage.setImageURI(uri);
-//                        CropImage.activity(uri)
-//                                .start(this);
-//                    }
-//
-//                } else {
-//                    DialogUtils.showAlert(this, "Camera Cancelled");
-//                }
-//                break;
-//            case Constants.Keys.REQUEST_GALLERY:
-//                if (resultCode == RESULT_OK) {
-//                    System.out.println();
-//                    Uri uri = data.getData();
-//                    System.out.println("Gallary URI:-" + uri);
-//                    if (uri != null) {
-////                        ivProductImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-////                        ivProductImage.setImageURI(uri);
-//                        CropImage.activity(uri)
-//                                .start(this);
-//                    }
-//
-//                }
-//
-//                break;
-//            case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
-//                CropImage.ActivityResult result = CropImage.getActivityResult(data);
-//                if (resultCode == RESULT_OK) {
-//                    chatImageUri = result.getUri();
-//                    sendChatMessage(userModel.getUserId(), targetUserModel.getUserId(), "", chatImageUri.getPath(), Constants.FileType.IMAGE, Constants.MessageType.FILE, "", "");
-//                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-//                    Exception error = result.getError();
-//                }
-//
-//                break;
-//
-//
-//        }
-//        super.onActivityResult(requestCode, resultCode, data);
-//    }
-
-//    private String getTimeStamp(String messageSequenceOrder) {
-//        if (messageSequenceOrder.equals(Constants.MessageSequeceOrder.CURRENT))
-//            return "";
-//        else if (messageSequenceOrder.equals(Constants.MessageSequeceOrder.OLD)) {
-//            if (chatMessageModelArrayList.size() > 0)
-//                return chatMessageModelArrayList.get(0).getTimeStamp();
-//            else
-//                return "";
-//        } else if (messageSequenceOrder.equals(Constants.MessageSequeceOrder.NEW)) {
-//            if (chatMessageModelArrayList.size() > 0)
-//                return chatMessageModelArrayList.get(chatMessageModelArrayList.size() - 1).getTimeStamp();
-//            else
-//                return "";
-//        }
-//        return "";
-//    }
-
-
-    private void getCommentsApiCall(String postId, final String sequenceOrder, String timeStamp) {
+    private void getCommentsApiCall(String postId) {
         try {
 
-            final GetPostCommentApiCall apiCall = new GetPostCommentApiCall(postId, sequenceOrder, timeStamp);
+            final GetPostCommentApiCall apiCall = new GetPostCommentApiCall(postId);
             HttpRequestHandler.getInstance(getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
@@ -246,7 +159,9 @@ public class FoodiePostCommentActivity extends BaseActivity implements View.OnCl
                             BaseModel baseModel = apiCall.getBaseModel();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
                                 ArrayList<FoodiePostCommentModel> tempMessageModelArrayList = apiCall.getResult();
-
+                                foodiePostCommentModelArrayList.clear();
+                                foodiePostCommentModelArrayList.addAll(tempMessageModelArrayList);
+                                postCommentAdapter.notifyDataSetChanged();
 
                             } else {
                                 DialogUtils.showAlert(FoodiePostCommentActivity.this, userModel.getStatusMessage());
