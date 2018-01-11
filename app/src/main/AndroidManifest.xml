@@ -214,6 +214,8 @@
 
         </activity>
         <activity android:name=".activity.ChangePasswordActivity"></activity>
+
+        <activity android:name=".activity.FoodiePostCommentActivity" />
     </application>
 
 </manifest>

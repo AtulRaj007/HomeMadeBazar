@@ -1,6 +1,5 @@
 package com.homemadebazar.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.homemadebazar.R;
-import com.homemadebazar.activity.FoodieHomeChefSearchActivity;
 import com.homemadebazar.adapter.FoodieHomeListAdapter;
 import com.homemadebazar.model.HomeChiefNearByModel;
+import com.homemadebazar.util.DialogUtils;
 
 import java.util.ArrayList;
 
@@ -45,8 +44,15 @@ public class FoodieHomeListFragment extends BaseFragment {
         ivSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 Intent intent = new Intent(getActivity(), FoodieHomeChefSearchActivity.class);
                 startActivity(intent);
+                */
+                try {
+                    DialogUtils.bookFoodOnSelectedDatesDialog(getActivity());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

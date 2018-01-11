@@ -37,7 +37,7 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void initialiseListener() {
-        findViewById(R.id.btn_update_profile).setOnClickListener(this);
+        findViewById(R.id.btn_update_password).setOnClickListener(this);
     }
 
     @Override

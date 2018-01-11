@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.HomeShopDetailsActivity;
 import com.homemadebazar.model.HomeChefOrderModel;
+import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.Utils;
 
 import java.util.ArrayList;
@@ -90,7 +91,8 @@ public class HomeChefFoodTimingAdapter extends RecyclerView.Adapter<HomeChefFood
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_book_order:
-                    ((HomeShopDetailsActivity) context).bookOrder(homeChefUserId, homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId(), "2017-12-31","1");
+//                    ((HomeShopDetailsActivity) context).bookOrder(homeChefUserId, homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId(), "2017-12-31","1");
+                    DialogUtils.bookFoodOnSelectedDatesDialog(context);
                     break;
             }
         }

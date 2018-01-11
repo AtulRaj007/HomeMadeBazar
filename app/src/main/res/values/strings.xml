@@ -206,5 +206,7 @@
     <string name="hint_confirm_password">Confirm Password</string>
     <string name="text_update_profile">Update Password</string>
     <string name="str_reset_password">Reset Password</string>
+    <string name="str_change_password">Change Password</string>
+    <string name="str_book">Book</string>
 
 </resources>

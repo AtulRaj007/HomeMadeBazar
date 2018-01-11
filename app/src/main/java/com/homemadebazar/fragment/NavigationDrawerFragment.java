@@ -29,20 +29,12 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
         return inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
     }
 
-//    @Override
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        initUI();
-//        initialiseListener();
-//        setData();
-//    }
-
 
     public void initUI() {
         Log.e(TAG, "===== initUI() =====");
-        ivProfile = (ImageView) getView().findViewById(R.id.iv_profile);
-        tvName = (TextView) getView().findViewById(R.id.tv_name);
-        tvAddress = (TextView) getView().findViewById(R.id.tv_address);
+        ivProfile = getView().findViewById(R.id.iv_profile);
+        tvName = getView().findViewById(R.id.tv_name);
+        tvAddress = getView().findViewById(R.id.tv_address);
     }
 
     public void initialiseListener() {

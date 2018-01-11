@@ -4,9 +4,11 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.IdRes;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -184,7 +186,7 @@ public class DialogUtils {
         dialog.show();
     }
 
-    public static void showScanDialog(Context context, String mobileNumber,final Runnable proceed, final Runnable close) {
+    public static void showScanDialog(Context context, String mobileNumber, final Runnable proceed, final Runnable close) {
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_scan_number, null);
         dialogBuilder.setView(view);
@@ -221,8 +223,24 @@ public class DialogUtils {
         dialog.show();
     }
 
-    public static void bookFoodOnSelectedDatesDialog(){
+    public static void bookFoodOnSelectedDatesDialog(Context context) {
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_order_food_dates, null);
+        dialogBuilder.setView(view);
+        dialogBuilder.setCancelable(true);
 
+        final Dialog dialog = dialogBuilder.create();
+
+        RadioGroup.OnCheckedChangeListener onCheckedChangeListener = new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                System.out.println(checkedId);
+            }
+        };
+
+        ((RadioGroup) view.findViewById(R.id.radio_group)).setOnCheckedChangeListener(onCheckedChangeListener);
+
+        dialog.show();
 
     }
 

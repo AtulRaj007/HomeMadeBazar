@@ -69,7 +69,7 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
             etEmailId.setText(userModel.getEmailId());
             etPhoneNumber.setText(userModel.getMobile());
             etCountry.setText(userModel.getCountryName());
-            if (TextUtils.isEmpty(userModel.getProfilePic())) {
+            if (!TextUtils.isEmpty(userModel.getProfilePic())) {
                 Picasso.with(MyProfileActivity.this).load(userModel.getProfilePic()).into(ivProfilePic);
             }
         }
