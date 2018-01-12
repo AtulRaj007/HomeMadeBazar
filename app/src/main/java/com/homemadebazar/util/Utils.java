@@ -15,7 +15,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -25,10 +24,12 @@ import android.view.View;
 import com.homemadebazar.activity.FoodieHomeActivity;
 import com.homemadebazar.activity.HomeActivity;
 import com.homemadebazar.activity.MarketPlaceHomeActivity;
+import com.homemadebazar.model.FoodDateTimeBookModel;
 
 import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 /**
  * Created by Sumit on 27/08/17.
@@ -274,5 +275,25 @@ public class Utils {
 
     }
 
+    public static ArrayList<FoodDateTimeBookModel> parseFoodBookDateTime(String parseFoodDateTime) {
+//        String temp = "12-01-2018,0,0,0;13-01-2018,0,0,0;14-01-2018,0,0,0;15-01-2018,0,0,0;16-01-2018,0,0,0;17-01-2018,0,0,0;18-01-2018,1,0,0;19-01-2018,1,1,1";
+        ArrayList<FoodDateTimeBookModel> foodDateTimeBookModels = new ArrayList<>();
+        try {
+            String bookTiming[] = parseFoodDateTime.split(";");
+            for (int i = 0; i < bookTiming.length; i++) {
+                String details[] = bookTiming[i].split(",");
+                FoodDateTimeBookModel foodDateTimeBookModel = new FoodDateTimeBookModel();
+                foodDateTimeBookModel.setDate(details[0]);
+                foodDateTimeBookModel.setBreakFast(details[1].equals("1") ? true : false);
+                foodDateTimeBookModel.setLunch(details[2].equals("1") ? true : false);
+                foodDateTimeBookModel.setDinner(details[3].equals("1") ? true : false);
+
+                foodDateTimeBookModels.add(foodDateTimeBookModel);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return foodDateTimeBookModels;
+    }
 
 }

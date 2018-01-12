@@ -13,6 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.homemadebazar.R;
+import com.homemadebazar.model.FoodDateTimeBookModel;
+
+import java.util.ArrayList;
 
 /**
  * Created by atulraj on 24/8/17.
@@ -223,22 +226,58 @@ public class DialogUtils {
         dialog.show();
     }
 
-    public static void bookFoodOnSelectedDatesDialog(Context context) {
+    public static void bookFoodOnSelectedDatesDialog(Context context, String bookingAvailability) {
+
+        ArrayList<FoodDateTimeBookModel> foodDateTimeBookModels = Utils.parseFoodBookDateTime(bookingAvailability);
+
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_order_food_dates, null);
         dialogBuilder.setView(view);
         dialogBuilder.setCancelable(true);
 
         final Dialog dialog = dialogBuilder.create();
+        final RadioGroup radioGroup = view.findViewById(R.id.rg_dinner_date);
+        int selectedRow=-1;
 
         RadioGroup.OnCheckedChangeListener onCheckedChangeListener = new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                System.out.println(checkedId);
+
+
             }
         };
 
-        ((RadioGroup) view.findViewById(R.id.radio_group)).setOnCheckedChangeListener(onCheckedChangeListener);
+        ((RadioGroup) view.findViewById(R.id.rg_dinner_date)).setOnCheckedChangeListener(onCheckedChangeListener);
+
+        view.findViewById(R.id.btn_book_order).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int checkedId=radioGroup.getCheckedRadioButtonId();
+                switch (checkedId) {
+                    case R.id.checkbox_one:
+
+                        break;
+                    case R.id.checkbox_two:
+
+                        break;
+                    case R.id.checkbox_three:
+
+                        break;
+                    case R.id.checkbox_four:
+
+                        break;
+                    case R.id.checkbox_five:
+
+                        break;
+                    case R.id.checkbox_six:
+
+                        break;
+                    case R.id.checkbox_seven:
+
+                        break;
+                }
+            }
+        });
 
         dialog.show();
 
