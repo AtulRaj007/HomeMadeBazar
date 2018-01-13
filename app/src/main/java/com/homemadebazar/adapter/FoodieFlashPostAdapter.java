@@ -74,7 +74,7 @@ public class FoodieFlashPostAdapter extends RecyclerView.Adapter<FoodieFlashPost
     }
 
 
-    private void performLikeUnlikeComment(final FoodieFlashPostModel foodieFlashPostModel, String actionType, String comments, String actionDoneByUserId) {
+    private void performLikeUnlikeComment(final FoodieFlashPostModel foodieFlashPostModel, final String actionType, String comments, String actionDoneByUserId) {
         try {
             final ProgressDialog progressDialog = DialogUtils.getProgressDialog(context, null);
             progressDialog.show();
@@ -91,6 +91,11 @@ public class FoodieFlashPostAdapter extends RecyclerView.Adapter<FoodieFlashPost
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
                                 foodieFlashPostModel.setNoOfComments(apiCall.getCommentsCount());
                                 foodieFlashPostModel.setNoOfLikes(apiCall.getLikesCount());
+                                if (actionType == Constants.PostActionTAG.LIKES) {
+                                    foodieFlashPostModel.setLike(true);
+                                } else {
+                                    foodieFlashPostModel.setLike(false);
+                                }
                                 notifyDataSetChanged();
                             } else {
                                 DialogUtils.showAlert(context, baseModel.getStatusMessage());
@@ -138,7 +143,10 @@ public class FoodieFlashPostAdapter extends RecyclerView.Adapter<FoodieFlashPost
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.ll_like:
-                    performLikeUnlikeComment(foodieFlashPostModelArrayList.get(getAdapterPosition()), Constants.PostActionTAG.LIKES, "", userId);
+                    if (foodieFlashPostModelArrayList.get(getAdapterPosition()).isLike())
+                        performLikeUnlikeComment(foodieFlashPostModelArrayList.get(getAdapterPosition()), Constants.PostActionTAG.UNLIKE, "", userId);
+                    else
+                        performLikeUnlikeComment(foodieFlashPostModelArrayList.get(getAdapterPosition()), Constants.PostActionTAG.LIKES, "", userId);
                     break;
                 case R.id.ll_comment:
                     context.startActivity(FoodiePostCommentActivity.getCommentIntent(context, foodieFlashPostModelArrayList.get(getAdapterPosition()).getPostId()));

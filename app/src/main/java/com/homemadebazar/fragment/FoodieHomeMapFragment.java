@@ -136,7 +136,8 @@ public class FoodieHomeMapFragment extends BaseFragment implements OnMapReadyCal
             tvName.setText(homeChiefNearByModel.getFirstName() + " " + homeChiefNearByModel.getLastName());
             tvShopName.setText(homeChiefNearByModel.getShopName());
             tvAddress.setText(homeChiefNearByModel.getAddress());
-            tvDistance.setText(String.format("%.2f", homeChiefNearByModel.getDistance()) + " Meter Away");
+//            tvDistance.setText(String.format("%.2f", homeChiefNearByModel.getDistance()) + " Meter Away");
+            tvDistance.setText(homeChiefNearByModel.getDistance() + " Meter Away");
         }
     }
 

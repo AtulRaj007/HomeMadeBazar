@@ -109,18 +109,22 @@ public class HomeShopDetailsActivity extends BaseActivity implements View.OnClic
 
     @Override
     protected void setData() {
+        try {
+            if (!TextUtils.isEmpty(homeChefNearByModel.getProfileImage())) {
+                Picasso.with(HomeShopDetailsActivity.this).load(homeChefNearByModel.getProfileImage()).into(ivProfileImage);
+            }
+            tvShopName.setText(homeChefNearByModel.getFirstName() + " " + homeChefNearByModel.getLastName());
+            tvPriceRange.setText(homeChefNearByModel.getPriceRange());
+            tvAddress.setText(homeChefNearByModel.getAddress());
+            tvSpeciality.setText(homeChefNearByModel.getSpeciality());
 
-        if (!TextUtils.isEmpty(homeChefNearByModel.getProfileImage())) {
-            Picasso.with(HomeShopDetailsActivity.this).load(homeChefNearByModel.getProfileImage()).into(ivProfileImage);
-        }
-        tvShopName.setText(homeChefNearByModel.getFirstName() + " " + homeChefNearByModel.getLastName());
-        tvPriceRange.setText(homeChefNearByModel.getPriceRange());
-        tvAddress.setText(homeChefNearByModel.getAddress());
-        tvSpeciality.setText(homeChefNearByModel.getSpeciality());
+            if (homeChefNearByModel.getCoverPhotoArrayList() != null && homeChefNearByModel.getCoverPhotoArrayList().size() > 0) {
+                ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(HomeShopDetailsActivity.this, homeChefNearByModel.getCoverPhotoArrayList());
+                viewPagerCoverImages.setAdapter(imagePagerAdapter);
+            }
 
-        if (homeChefNearByModel.getCoverPhotoArrayList() != null && homeChefNearByModel.getCoverPhotoArrayList().size() > 0) {
-            ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(HomeShopDetailsActivity.this, homeChefNearByModel.getCoverPhotoArrayList());
-            viewPagerCoverImages.setAdapter(imagePagerAdapter);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
@@ -192,6 +196,10 @@ public class HomeShopDetailsActivity extends BaseActivity implements View.OnClic
                 }
                 break;
             case R.id.ll_message:
+
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+                sendIntent.setData(Uri.parse("sms:"));
+                startActivity(sendIntent);
 
                 break;
             case R.id.ll_save:

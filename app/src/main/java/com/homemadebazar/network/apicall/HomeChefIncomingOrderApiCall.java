@@ -1,7 +1,5 @@
 package com.homemadebazar.network.apicall;
 
-import android.util.Log;
-
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.HomeChefIncomingOrderModel;
 import com.homemadebazar.util.Constants;
@@ -29,26 +27,26 @@ public class HomeChefIncomingOrderApiCall extends BaseApiCall {
     }
 
     public Object getRequest() {
-        JSONObject obj = new JSONObject();
+        JSONObject object = new JSONObject();
         try {
-            obj.put("UserId", userId);
-            obj.put("TabSection", tabSection);
+            object.put("UserId", userId);
+            object.put("TabSection", tabSection);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("REQUEST= ", obj + "");
-        return obj;
+        System.out.println(Constants.ServiceTAG.REQUEST + object.toString());
+        return object;
     }
 
     private void parseData(String response) {
-        Log.d("RESPONSE= ", response);
+        System.out.println(Constants.ServiceTAG.RESPONSE + response);
 
         if (response != null && !response.isEmpty()) {
             try {
                 JSONObject object = new JSONObject(response);
                 baseModel = JSONParsingUtils.parseBaseModel(object);
-                homeChefIncomingOrderModelArrayList = JSONParsingUtils.parseHomeChefIncomingOrder(object.optJSONArray("Ordered"),1);
+                homeChefIncomingOrderModelArrayList = JSONParsingUtils.parseHomeChefIncomingOrder(object.optJSONArray("Ordered"), 1);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -66,6 +64,7 @@ public class HomeChefIncomingOrderApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.HOMECHEF_SHOW_ORDERED_LIST);
         return Constants.ServerURL.HOMECHEF_SHOW_ORDERED_LIST;
     }
 

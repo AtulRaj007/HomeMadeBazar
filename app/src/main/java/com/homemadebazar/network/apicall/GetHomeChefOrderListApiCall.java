@@ -1,10 +1,6 @@
 package com.homemadebazar.network.apicall;
 
-import android.util.Log;
-
-import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.HomeChefOrderModel;
-import com.homemadebazar.model.IsAccountExistModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.JSONParsingUtils;
 
@@ -34,12 +30,12 @@ public class GetHomeChefOrderListApiCall extends BaseApiCall {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("REQUEST= ", obj + "");
+        System.out.println(Constants.ServiceTAG.REQUEST + obj.toString());
         return obj;
     }
 
     private void parseData(String response) {
-        Log.d("RESPONSE= ", response);
+        System.out.println(Constants.ServiceTAG.RESPONSE + response);
 
         if (response != null && !response.isEmpty()) {
             try {
@@ -58,6 +54,7 @@ public class GetHomeChefOrderListApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.HOMECHEF_GET_ORDER_DETAILS);
         return Constants.ServerURL.HOMECHEF_GET_ORDER_DETAILS;
     }
 

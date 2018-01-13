@@ -1,7 +1,5 @@
 package com.homemadebazar.network.apicall;
 
-import android.util.Log;
-
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.JSONParsingUtils;
@@ -32,20 +30,12 @@ public class GetWalletBalanceApiCall extends BaseApiCall {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("REQUEST= ", obj + "");
+        System.out.println(Constants.ServiceTAG.REQUEST + obj.toString());
         return obj;
     }
 
-    /*
-    "{
-            ""StatusCode"": ""100"",
-            ""StatusMessage"": ""Successful"",
-            ""AccountId"": ""HMBWA00000003"",
-            ""Amount"": ""100.00""
-}"
-*/
     private void parseData(String response) {
-        Log.d("RESPONSE= ", response);
+        System.out.println(Constants.ServiceTAG.RESPONSE + response);
 
         if (response != null && !response.isEmpty()) {
             try {
@@ -74,6 +64,7 @@ public class GetWalletBalanceApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.GET_WALLET_BALANCE);
         return Constants.ServerURL.GET_WALLET_BALANCE;
     }
 

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.homemadebazar.R;
+import com.homemadebazar.activity.HomeShopDetailsActivity;
 import com.homemadebazar.model.HomeChefOrderModel;
 import com.homemadebazar.util.DialogUtils;
 
@@ -60,6 +61,10 @@ public class HomeChefFoodTimingAdapter extends RecyclerView.Adapter<HomeChefFood
         return homeChefOrderModelArrayList.size();
     }
 
+    public interface BookOrderInterface {
+        void onOrderSelected(String foodDate, int foodTime);
+    }
+
     class LunchViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvFoodName;
         private TextView tvFoodType;
@@ -71,7 +76,7 @@ public class HomeChefFoodTimingAdapter extends RecyclerView.Adapter<HomeChefFood
         private ViewPager viewPager;
         private CircleIndicator circleIndicator;
 
-        public LunchViewHolder(View itemView) {
+        LunchViewHolder(View itemView) {
             super(itemView);
             tvFoodName = itemView.findViewById(R.id.tv_food_name);
             tvFoodType = itemView.findViewById(R.id.tv_food_type);
@@ -89,8 +94,16 @@ public class HomeChefFoodTimingAdapter extends RecyclerView.Adapter<HomeChefFood
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_book_order:
-//                    ((HomeShopDetailsActivity) context).bookOrder(homeChefUserId, homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId(), "2017-12-31","1");
-                    DialogUtils.bookFoodOnSelectedDatesDialog(context, homeChefOrderModelArrayList.get(getAdapterPosition()).getDishAvailability());
+                    System.out.println("Booking Availability:-" + homeChefOrderModelArrayList.get(getAdapterPosition()).getDishAvailability());
+                    DialogUtils.bookFoodOnSelectedDatesDialog(context, homeChefOrderModelArrayList.get(getAdapterPosition()).getDishAvailability(), new BookOrderInterface() {
+                        @Override
+                        public void onOrderSelected(String foodDate, int foodTime) {
+                            System.out.println(">>>>> onOrderSelected" + foodDate);
+                            System.out.println(">>>>> onOrderSelected" + foodTime);
+                            ((HomeShopDetailsActivity) context).bookOrder(homeChefUserId, homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId(), foodDate, String.valueOf(foodTime));
+
+                        }
+                    });
                     break;
             }
         }

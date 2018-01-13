@@ -356,38 +356,38 @@ public class UpdateShopDetailsActivity extends BaseActivity implements View.OnCl
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void ImageUpload(String imagePath, String userId) {
-        System.out.println("Image Upload userId:-" + userId);
-        try {
-            File compressImageFile = new Compressor(UpdateShopDetailsActivity.this).compressToFile(new File(imagePath));
-
-            Hashtable<String, String> multipartParams = new Hashtable<>();
-
-            UploadFileTask fileTask = new UploadFileTask(UpdateShopDetailsActivity.this, Constants.uploadImageURL.PROFILE_IMAGE_UPLOAD + userId, compressImageFile.getPath(), multipartParams, "image_url", new UploadFileTask.FileUploadListener() {
-                @Override
-                public void onComplete(String response) {
-                    System.out.println("image url response " + response);
-                    try {
-                        JSONObject object = new JSONObject(response);
-                        if (object.optString("StatusCode").equals("100")) {
-                            DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Profile Image Updated Successfully");
-                        } else if (object.optString("StatusCode").equals("100")) {
-                            DialogUtils.showAlert(UpdateShopDetailsActivity.this, object.optString("StatusMessage"));
-                        }
-                        String image_url = object.optString("Url");
-                        System.out.println("image url  " + image_url);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Toast.makeText(UpdateShopDetailsActivity.this, "Profile Image Not updated", Toast.LENGTH_LONG).show();
-                    }
-
-                }
-            });
-            fileTask.execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public void ImageUpload(String imagePath, String userId) {
+//        System.out.println("Image Upload userId:-" + userId);
+//        try {
+//            File compressImageFile = new Compressor(UpdateShopDetailsActivity.this).compressToFile(new File(imagePath));
+//
+//            Hashtable<String, String> multipartParams = new Hashtable<>();
+//
+//            UploadFileTask fileTask = new UploadFileTask(UpdateShopDetailsActivity.this, Constants.uploadImageURL.PROFILE_IMAGE_UPLOAD + userId, compressImageFile.getPath(), multipartParams, "image_url", new UploadFileTask.FileUploadListener() {
+//                @Override
+//                public void onComplete(String response) {
+//                    System.out.println("image url response " + response);
+//                    try {
+//                        JSONObject object = new JSONObject(response);
+//                        if (object.optString("StatusCode").equals("100")) {
+//                            DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Profile Image Updated Successfully");
+//                        } else if (object.optString("StatusCode").equals("100")) {
+//                            DialogUtils.showAlert(UpdateShopDetailsActivity.this, object.optString("StatusMessage"));
+//                        }
+//                        String image_url = object.optString("Url");
+//                        System.out.println("image url  " + image_url);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                        Toast.makeText(UpdateShopDetailsActivity.this, "Profile Image Not updated", Toast.LENGTH_LONG).show();
+//                    }
+//
+//                }
+//            });
+//            fileTask.execute();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
     void uploadFile(String userId) {

@@ -52,7 +52,6 @@ public class FoodieMessageRequestAcceptRejectApiCall extends BaseApiCall {
     public void parseResponseCode(Object response) throws JSONException {
         if (response instanceof JSONObject) {
             parseData((JSONObject) response);
-
         }
         super.parseResponseCode(response);
     }

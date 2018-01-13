@@ -16,6 +16,7 @@ import com.homemadebazar.model.HomeChefIncomingOrderModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
+import com.homemadebazar.network.apicall.HomeChefFoodieOrderAcceptRejectApiCall;
 import com.homemadebazar.network.apicall.HomeChefIncomingOrderApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
@@ -94,4 +95,6 @@ public class NewMyOrdersFragment extends BaseFragment {
             Utils.handleError(e.getMessage(), getActivity(), null);
         }
     }
+
+
 }

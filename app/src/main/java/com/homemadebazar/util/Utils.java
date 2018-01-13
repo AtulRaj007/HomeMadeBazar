@@ -57,7 +57,7 @@ public class Utils {
     }
 
     public static void handleError(String message, final Context context, Runnable runnable) {
-        DialogUtils.showAlert(context, message);
+//        DialogUtils.showAlert(context, message);
     }
 
     public static boolean isValid(String input, String type) {

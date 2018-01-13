@@ -22,7 +22,7 @@ public class FoodieHomeChefSearchApiCall extends BaseApiCall {
 
     private String latitude, longitude, foodCategoryId, searchString;
     private BaseModel baseModel;
-    ArrayList<HomeChiefNearByModel> chiefDetailList;
+    private ArrayList<HomeChiefNearByModel> chiefDetailList;
 
     public FoodieHomeChefSearchApiCall(String latitude, String longitude, String foodCategoryId, String searchString) {
         this.latitude = latitude;
@@ -31,24 +31,23 @@ public class FoodieHomeChefSearchApiCall extends BaseApiCall {
         this.searchString = searchString;
     }
 
-    //    {"Lattitude":"","Longtitude":"","FoodCatId":"","SearchString":""}
     public Object getRequest() {
-        JSONObject obj = new JSONObject();
+        JSONObject object = new JSONObject();
         try {
-            obj.put("Lattitude", latitude);
-            obj.put("Longtitude", longitude);
-            obj.put("FoodCatId", foodCategoryId);
-            obj.put("SearchString", searchString);
+            object.put("Lattitude", latitude);
+            object.put("Longtitude", longitude);
+            object.put("FoodCatId", foodCategoryId);
+            object.put("SearchString", searchString);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("REQUEST= ", obj + "");
-        return obj;
+        System.out.println(Constants.ServiceTAG.REQUEST + object.toString());
+        return object;
     }
 
     private void parseData(JSONObject object) {
-        System.out.println("Response:-" + object);
+        System.out.println(Constants.ServiceTAG.RESPONSE + object.toString());
         baseModel = JSONParsingUtils.parseBaseModel(object);
         JSONArray homeChiefDetailsArray = object.optJSONArray("Details");
         chiefDetailList = new ArrayList<>();
@@ -87,6 +86,11 @@ public class FoodieHomeChefSearchApiCall extends BaseApiCall {
 
         }
         super.parseResponseCode(response);
+    }
+
+    @Override
+    public String getServiceURL() {
+        return super.getServiceURL();
     }
 
     @Override

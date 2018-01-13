@@ -1,7 +1,5 @@
 package com.homemadebazar.network.apicall;
 
-import android.util.Log;
-
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.JSONParsingUtils;
@@ -15,62 +13,61 @@ import org.json.JSONObject;
 
 public class SocialLoginApiCall extends BaseApiCall {
 
-    private String uniqueId,emailId,firstName,lastName,deviceToken
-            ,latitude,longitude,pincode,signInType,profilePic;
-    private boolean isSignupRequired=true;
+    private String uniqueId, emailId, firstName, lastName, deviceToken, latitude, longitude, pincode, signInType, profilePic;
+    private boolean isSignupRequired = true;
     private UserModel userModel;
 
-    public SocialLoginApiCall(String uniqueId, String emailId,String firstName, String lastName,
-                               String deviceToken, String latitude, String longitude,
-                              String pinCode,String signInType,String profilePic){
-        this.uniqueId=uniqueId;
-        this.emailId=emailId;
-        this.firstName=firstName;
-        this.lastName=lastName;
-        this.deviceToken=deviceToken;
-        this.latitude=latitude;
-        this.longitude=longitude;
-        this.pincode=pinCode;
-        this.signInType=signInType;
-        this.profilePic=profilePic;
+    public SocialLoginApiCall(String uniqueId, String emailId, String firstName, String lastName,
+                              String deviceToken, String latitude, String longitude,
+                              String pinCode, String signInType, String profilePic) {
+        this.uniqueId = uniqueId;
+        this.emailId = emailId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.deviceToken = deviceToken;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.pincode = pinCode;
+        this.signInType = signInType;
+        this.profilePic = profilePic;
     }
 
     public Object getRequest() {
-        JSONObject obj = new JSONObject();
+        JSONObject object = new JSONObject();
         try {
-            obj.put("EmailId", emailId);
-            obj.put("UniqueId", uniqueId);
-            obj.put("Name", firstName+" "+lastName);
-            obj.put("ProfilePic", "");
-            obj.put("Latitude", latitude);
-            obj.put("Longitude", longitude);
-            obj.put("DeviceType", Constants.deviceType);
-            obj.put("DeviceToken", deviceToken);
-            obj.put("SignInType", signInType);
-            obj.put("PinCode", profilePic);
+            object.put("EmailId", emailId);
+            object.put("UniqueId", uniqueId);
+            object.put("Name", firstName + " " + lastName);
+            object.put("ProfilePic", "");
+            object.put("Latitude", latitude);
+            object.put("Longitude", longitude);
+            object.put("DeviceType", Constants.deviceType);
+            object.put("DeviceToken", deviceToken);
+            object.put("SignInType", signInType);
+            object.put("PinCode", profilePic);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("REQUEST= ", obj+"");
-        return obj;
+        System.out.println(Constants.ServiceTAG.REQUEST + object.toString());
+        return object;
     }
 
     private void parseData(String response) {
-        Log.d("RESPONSE= ", response);
+        System.out.println(Constants.ServiceTAG.RESPONSE + response);
 
         if (response != null && !response.isEmpty()) {
             try {
                 JSONObject object = new JSONObject(response);
-                isSignupRequired=(object.optString("SignUpRequired")).equals("1");
-                userModel= JSONParsingUtils.getUserModel(object);
+                isSignupRequired = (object.optString("SignUpRequired")).equals("1");
+                userModel = JSONParsingUtils.getUserModel(object);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public boolean isSignUpRequired(){
+    public boolean isSignUpRequired() {
         return isSignupRequired;
     }
 
@@ -81,6 +78,7 @@ public class SocialLoginApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.SOCIAL_LOGIN);
         return Constants.ServerURL.SOCIAL_LOGIN;
     }
 

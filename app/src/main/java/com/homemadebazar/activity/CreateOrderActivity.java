@@ -167,15 +167,14 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
     }
 
     private String getDishDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-//        for (int i = 0; i < 7; i++) {
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = new GregorianCalendar();
         calendar.add(Calendar.DATE, dateIndex);
         String day = sdf.format(calendar.getTime());
         Log.i("Selected Day:-", day);
         dateIndex++;
         return day;
-//        }
     }
 
     private String getIndexDate(int postion) {
@@ -432,7 +431,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
     private CreateOrderModel getCreateOrderModel() {
         CreateOrderModel createOrderModel = new CreateOrderModel();
         createOrderModel.setDishName(etDishName.getText().toString().trim());
-        createOrderModel.setFoodCategoryId("1234"); //
+        createOrderModel.setFoodCategoryId(((FoodCategoryModel) sprDishCategory.getSelectedItem()).getFoodCategoryId());
         createOrderModel.setDishPrice(etDishPrice.getText().toString().trim());
         createOrderModel.setMinNoGuest(etMinNoGuest.getText().toString().trim());
         createOrderModel.setMaxNoGuest(etMaxNoGuest.getText().toString().trim());

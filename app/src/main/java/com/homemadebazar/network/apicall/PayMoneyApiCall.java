@@ -63,6 +63,7 @@ public class PayMoneyApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.PAY_MONEY);
         return Constants.ServerURL.PAY_MONEY;
     }
 

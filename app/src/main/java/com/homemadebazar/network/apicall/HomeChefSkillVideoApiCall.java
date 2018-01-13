@@ -1,7 +1,5 @@
 package com.homemadebazar.network.apicall;
 
-import android.util.Log;
-
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.HomeChefSkillHubVideoModel;
 import com.homemadebazar.util.Constants;
@@ -27,19 +25,19 @@ public class HomeChefSkillVideoApiCall extends BaseApiCall {
     }
 
     public Object getRequest() {
-        JSONObject obj = new JSONObject();
+        JSONObject object = new JSONObject();
         try {
-            obj.put("UserId", userId);
+            object.put("UserId", userId);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("REQUEST= ", obj + "");
-        return obj;
+        System.out.println(Constants.ServiceTAG.REQUEST + object.toString());
+        return object;
     }
 
     private void parseData(String response) {
-        Log.d("RESPONSE= ", response);
+        System.out.println(Constants.ServiceTAG.RESPONSE + response);
 
         if (response != null && !response.isEmpty()) {
             try {
@@ -58,6 +56,7 @@ public class HomeChefSkillVideoApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.HOMECHEF_SKILL_HUB_VIDEOS);
         return Constants.ServerURL.HOMECHEF_SKILL_HUB_VIDEOS;
     }
 

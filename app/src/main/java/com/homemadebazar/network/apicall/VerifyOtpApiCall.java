@@ -1,7 +1,5 @@
 package com.homemadebazar.network.apicall;
 
-import android.util.Log;
-
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.JSONParsingUtils;
@@ -19,31 +17,31 @@ public class VerifyOtpApiCall extends BaseApiCall {
     private String otp;
     private BaseModel baseModel;
 
-    public VerifyOtpApiCall(String userId,String otp){
-        this.userId=userId;
-        this.otp=otp;
+    public VerifyOtpApiCall(String userId, String otp) {
+        this.userId = userId;
+        this.otp = otp;
     }
 
     public Object getRequest() {
-        JSONObject obj = new JSONObject();
+        JSONObject object = new JSONObject();
         try {
-            obj.put("UserId", userId);
-            obj.put("Otp", otp);
+            object.put("UserId", userId);
+            object.put("Otp", otp);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("REQUEST= ", obj+"");
-        return obj;
+        System.out.println(Constants.ServiceTAG.URL + object.toString());
+        return object;
     }
 
     private void parseData(String response) {
-        Log.d("RESPONSE= ", response);
+        System.out.println(Constants.ServiceTAG.RESPONSE + response);
 
         if (response != null && !response.isEmpty()) {
             try {
                 JSONObject object = new JSONObject(response);
-                baseModel= JSONParsingUtils.getOtpModel(object);
+                baseModel = JSONParsingUtils.getOtpModel(object);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -57,6 +55,7 @@ public class VerifyOtpApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.VERIFY_OTP);
         return Constants.ServerURL.VERIFY_OTP;
     }
 

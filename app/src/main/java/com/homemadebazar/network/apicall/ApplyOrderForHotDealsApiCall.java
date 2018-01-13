@@ -1,9 +1,6 @@
 package com.homemadebazar.network.apicall;
 
-import android.util.Log;
-
 import com.homemadebazar.model.BaseModel;
-import com.homemadebazar.model.UserModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.JSONParsingUtils;
 
@@ -19,40 +16,29 @@ public class ApplyOrderForHotDealsApiCall extends BaseApiCall {
     private String userId, orderId;
     private BaseModel baseModel;
 
-//    {
-//        "UserId":"17082730",
-//            "Mobile":"9999999878",
-//            "Password":"222222"
-//    }
-
-//    {
-//        "OrderId":"Ord0011", "UserId":"20170142", "DiscTypeId":"DISC00000003", "OfferPeriodInHr":
-//        "5", "OfferDealDate":"2017-11-09"
-//    }
-
     public ApplyOrderForHotDealsApiCall(String userId, String orderId) {
         this.userId = userId;
         this.orderId = orderId;
     }
 
     public Object getRequest() {
-        JSONObject obj = new JSONObject();
+        JSONObject object = new JSONObject();
         try {
-            obj.put("UserId", userId);
-            obj.put("OrderId", orderId);
-            obj.put("DiscTypeId", "DISC00000003");
-            obj.put("OfferPeriodInHr", "30");
-            obj.put("OfferDealDate", "2017-12-27");
+            object.put("UserId", userId);
+            object.put("OrderId", orderId);
+            object.put("DiscTypeId", "DISC00000003");
+            object.put("OfferPeriodInHr", "30");
+            object.put("OfferDealDate", "2017-12-27");
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("REQUEST= ", obj + "");
-        return obj;
+        System.out.println(Constants.ServiceTAG.REQUEST + object.toString());
+        return object;
     }
 
     private void parseData(String response) {
-        Log.d("RESPONSE= ", response);
+        System.out.println(Constants.ServiceTAG.RESPONSE + response);
 
         if (response != null && !response.isEmpty()) {
             try {
@@ -71,6 +57,7 @@ public class ApplyOrderForHotDealsApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.HOMECHEF_APPLY_HOT_DEALS);
         return Constants.ServerURL.HOMECHEF_APPLY_HOT_DEALS;
     }
 

@@ -4,7 +4,6 @@ import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.HomeChiefNearByModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.JSONParsingUtils;
-import com.homemadebazar.util.LogUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +29,7 @@ public class FoodieHomeChiefNearByListApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
-        LogUtils.d(Constants.ServiceTAG.URL, Constants.ServerURL.FOODIE_HOME_CHIEF_NEAR_BY_URL);
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.FOODIE_HOME_CHIEF_NEAR_BY_URL);
         return Constants.ServerURL.FOODIE_HOME_CHIEF_NEAR_BY_URL;
     }
 
@@ -46,12 +45,12 @@ public class FoodieHomeChiefNearByListApiCall extends BaseApiCall {
             e.printStackTrace();
         }
 
-        LogUtils.d(Constants.ServiceTAG.REQUEST, object.toString());
+        System.out.println(Constants.ServiceTAG.REQUEST + object.toString());
         return object;
     }
 
     private void parseData(JSONObject object) {
-        LogUtils.d(Constants.ServiceTAG.RESPONSE, object.toString());
+        System.out.println(Constants.ServiceTAG.RESPONSE + object.toString());
 
         baseModel = JSONParsingUtils.parseBaseModel(object);
         JSONArray homeChiefDetailsArray = object.optJSONArray("Details");

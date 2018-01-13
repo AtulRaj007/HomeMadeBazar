@@ -26,21 +26,21 @@ public class MarketPlaceProductAddBrandApiCall extends BaseApiCall {
     }
 
     public Object getRequest() {
-        JSONObject obj = new JSONObject();
+        JSONObject object = new JSONObject();
         try {
-            obj.put("UserId", userId);
-            obj.put("Name", brandName);
-            obj.put("Description", description);
+            object.put("UserId", userId);
+            object.put("Name", brandName);
+            object.put("Description", description);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("REQUEST= ", obj + "");
-        return obj;
+        System.out.println(Constants.ServiceTAG.REQUEST + object.toString());
+        return object;
     }
 
     private void parseData(String response) {
-        Log.d("RESPONSE= ", response);
+        System.out.println(Constants.ServiceTAG.RESPONSE + response);
 
         if (response != null && !response.isEmpty()) {
             try {
@@ -59,6 +59,7 @@ public class MarketPlaceProductAddBrandApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.MARKETPLACE_ADD_BRAND);
         return Constants.ServerURL.MARKETPLACE_ADD_BRAND;
     }
 

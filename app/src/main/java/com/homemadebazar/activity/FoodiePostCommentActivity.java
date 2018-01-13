@@ -37,17 +37,16 @@ public class FoodiePostCommentActivity extends BaseActivity implements View.OnCl
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<FoodiePostCommentModel> foodiePostCommentModelArrayList = new ArrayList<>();
 
+    public static Intent getCommentIntent(Context context, String postId) {
+        Intent intent = new Intent(context, FoodiePostCommentActivity.class);
+        intent.putExtra(KEY_POST_ID, postId);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foodie_post_comment);
-    }
-
-    public static Intent getCommentIntent(Context context, String postId) {
-        Intent intent = new Intent(context, FoodiePostCommentActivity.class);
-        intent.putExtra(KEY_POST_ID, postId);
-        return intent;
     }
 
     private void getBundleData() {
@@ -78,10 +77,6 @@ public class FoodiePostCommentActivity extends BaseActivity implements View.OnCl
         getCommentsApiCall(postId);
     }
 
-    private void setUpToolbar() {
-
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -97,15 +92,12 @@ public class FoodiePostCommentActivity extends BaseActivity implements View.OnCl
 
     private void performLikeUnlikeComment(String postId, String actionType, String comments, String actionDoneByUserId) {
         try {
-//            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(context, null);
-//            progressDialog.show();
 
             final FoodiePostLikeCommentApiCall apiCall = new FoodiePostLikeCommentApiCall(postId, actionType, comments, actionDoneByUserId);
             HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
                 public void onComplete(Exception e) {
-//                    DialogUtils.hideProgressDialog(progressDialog);
                     if (e == null) { // Success
                         try {
                             BaseModel baseModel = apiCall.getResult();
@@ -113,7 +105,7 @@ public class FoodiePostCommentActivity extends BaseActivity implements View.OnCl
                                 FoodiePostCommentModel foodiePostCommentModel = new FoodiePostCommentModel();
                                 foodiePostCommentModel.setComments(apiCall.getComments());
                                 foodiePostCommentModel.setSentTime(apiCall.getDateTime());
-                                foodiePostCommentModel.setUserId(apiCall.getUserId());
+                                foodiePostCommentModel.setUserId(userModel.getUserId());
                                 foodiePostCommentModel.setFirstName(apiCall.getFirstName());
                                 foodiePostCommentModel.setLastName(apiCall.getLastName());
                                 foodiePostCommentModel.setUserProfile(apiCall.getUserProfile());

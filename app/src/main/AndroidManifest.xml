@@ -31,12 +31,11 @@
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
 
         <meta-data
@@ -117,13 +116,8 @@
         <activity
             android:name=".activity.FoodieHomeActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:windowSoftInputMode="stateHidden" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".activity.MarketPlaceHomeActivity"
             android:screenOrientation="portrait" />
@@ -155,31 +149,33 @@
 
         <activity
             android:name=".activity.HomeShopDetailsActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" />
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
         <activity
             android:name=".activity.FoodieHomeChefSearchActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MarketPlaceOrderDetailsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.MarketPlaceAddProductActivity" />
-        <activity android:name=".activity.MarketPlaceAddCategoryActivity" />
-        <activity android:name=".activity.MarketPlaceAddBrandActivity" />
-        <activity android:name=".activity.PayMoneyMobileInputActivity" />
+        <activity
+            android:name=".activity.MarketPlaceAddProductActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MarketPlaceAddCategoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MarketPlaceAddBrandActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PayMoneyMobileInputActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <service android:name=".fcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -205,17 +201,16 @@
             android:name=".activity.ChatActivity"
             android:label="@string/title_activity_chat"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" />
 
-            <!-- <intent-filter> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
-            <!-- <action android:name="android.intent.action.MAIN"/> -->
-            <!-- </intent-filter> -->
+        <activity
+            android:name=".activity.ChangePasswordActivity"
+            android:screenOrientation="portrait" />
 
-        </activity>
-        <activity android:name=".activity.ChangePasswordActivity"></activity>
+        <activity
+            android:name=".activity.FoodiePostCommentActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.FoodiePostCommentActivity" />
     </application>
 
 </manifest>

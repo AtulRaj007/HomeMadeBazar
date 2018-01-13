@@ -17,18 +17,11 @@ public class SendAddMoneyStatusToServerApiCall extends BaseApiCall {
     private BaseModel baseModel;
     private Double walletBalance;
 
-    //    {"TransactionNumber":"Trans00000004","Status":"Success","AccountId":"HMBWA00000003"}
     public SendAddMoneyStatusToServerApiCall(String transactionId, String status, String accountId) {
         this.transactionId = transactionId;
         this.status = status;
         this.accountId = accountId;
     }
-//    {
-//        "StatusCode": "100",
-//            "StatusMessage": "Successful",
-//            "AccountId": "HMBWA00000003",
-//            "NewWalletAmount": "600.00"
-//    }
 
     private void parseData(String response) {
         System.out.println(Constants.ServiceTAG.RESPONSE + response);
@@ -51,10 +44,10 @@ public class SendAddMoneyStatusToServerApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.SEND_ADD_MONEY_STATUS);
         return Constants.ServerURL.SEND_ADD_MONEY_STATUS;
     }
 
-    //    {"TransactionNumber":"Trans00000004","Status":"Success","AccountId":"HMBWA00000003"}
     public Object getRequest() {
         JSONObject obj = new JSONObject();
         try {

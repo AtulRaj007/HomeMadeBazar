@@ -48,8 +48,9 @@ public class Constants {
     }
 
     public interface ServerURL {
-        String BASE_URL = "http://103.54.24.25:200/api/";
+        //        String BASE_URL = "http://103.54.24.25:200/api/";
         //        String BASE_URL = "http://35.183.8.236/api/";
+        String BASE_URL = "http://18.218.139.27/api/";
         String IS_EMAIL_EXIST = BASE_URL + "RegistrationProcess/IsAccountExist";
         String SEND_OTP = BASE_URL + "RegistrationProcess/SendOtp";
         String VERIFY_OTP = BASE_URL + "RegistrationProcess/VerifyOtp";
@@ -96,7 +97,9 @@ public class Constants {
         String GET_TRANSACTION_REPORT = BASE_URL + "Reports/WalletTransactionReports";
         String CHANGE_PASSWORD = BASE_URL + "Miscellaneous/PasswordUpdate";
         String RESET_PASSWORD = BASE_URL + "Miscellaneous/GetResetPassowrd";
+        String HOMECHEF_FOODIE_ORDER_ACCEPT_REJECT = BASE_URL + "CreateOrder/DoFoodOrderResponse";
 
+//        http://35.183.8.236/api/CreateOrder/DoFoodOrderResponse
 //        http://localhost:14013/api/Miscellaneous/GetResetPassowrd
 //        http://localhost:14013/api/Miscellaneous/PasswordUpdate
 //        http://103.54.24.25:200/api/Reports/WalletTransactionReports
@@ -228,6 +231,12 @@ public class Constants {
         int REJECT = 4;
     }
 
+    public interface DinnerTime {
+        int BREAKFAST = 1;
+        int LUNCH = 2;
+        int DINNER = 3;
+    }
+
     /*
     public enum FileType {
         FILE(1, "image"),
@@ -273,7 +282,12 @@ public class Constants {
     }
 
     public interface NotificationType {
+        int FOODIE_ORDER_BOOKED = 1;
         int INCOMING_MESSAGE = 2;
+        int FOODIE_ORDER_ACCEPT_REJECT = 3;
+        int FRIEND_REQUEST_RECEIVED = 4;
+        int FRIEND_ACCEPTED = 5;
+
     }
 
     public interface BundleKeys {

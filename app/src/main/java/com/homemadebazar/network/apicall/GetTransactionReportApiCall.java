@@ -46,6 +46,7 @@ public class GetTransactionReportApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.GET_TRANSACTION_REPORT);
         return Constants.ServerURL.GET_TRANSACTION_REPORT;
     }
 

@@ -12,11 +12,20 @@ public class FoodieFlashPostModel {
     private String postMessage;
     private String postRatings;
     private String postImageUrl;
+    private boolean isLike;
 
     private String userProfileUrl;
     private String userFirstName;
     private String userLastName;
     private String userId;
+
+    public boolean isLike() {
+        return isLike;
+    }
+
+    public void setLike(boolean like) {
+        isLike = like;
+    }
 
     public int getNoOfComments() {
         return noOfComments;

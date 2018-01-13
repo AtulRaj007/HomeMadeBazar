@@ -4,15 +4,16 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.annotation.IdRes;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.homemadebazar.R;
+import com.homemadebazar.adapter.HomeChefFoodTimingAdapter;
 import com.homemadebazar.model.FoodDateTimeBookModel;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 public class DialogUtils {
 
     public static AlertDialog.Builder dialog = null;
+    public static String bookDate;
 
     public static void showFoodDialog(Context context) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -226,9 +228,9 @@ public class DialogUtils {
         dialog.show();
     }
 
-    public static void bookFoodOnSelectedDatesDialog(Context context, String bookingAvailability) {
+    public static void bookFoodOnSelectedDatesDialog(Context context, String bookingAvailability, final HomeChefFoodTimingAdapter.BookOrderInterface bookOrderInterface) {
 
-        ArrayList<FoodDateTimeBookModel> foodDateTimeBookModels = Utils.parseFoodBookDateTime(bookingAvailability);
+        final ArrayList<FoodDateTimeBookModel> foodDateTimeBookModels = Utils.parseFoodBookDateTime(bookingAvailability);
 
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_order_food_dates, null);
@@ -236,46 +238,31 @@ public class DialogUtils {
         dialogBuilder.setCancelable(true);
 
         final Dialog dialog = dialogBuilder.create();
-        final RadioGroup radioGroup = view.findViewById(R.id.rg_dinner_date);
-        int selectedRow=-1;
-
-        RadioGroup.OnCheckedChangeListener onCheckedChangeListener = new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+        final RadioGroup rgDinnerDate = view.findViewById(R.id.rg_dinner_date);
+        final RadioGroup rgDinnerTime = view.findViewById(R.id.rg_dinner_time);
 
 
-            }
-        };
-
-        ((RadioGroup) view.findViewById(R.id.rg_dinner_date)).setOnCheckedChangeListener(onCheckedChangeListener);
+        ((RadioButton) view.findViewById(R.id.radiobutton_one)).setText(foodDateTimeBookModels.get(0).getDate());
+        ((RadioButton) view.findViewById(R.id.radiobutton_two)).setText(foodDateTimeBookModels.get(1).getDate());
+        ((RadioButton) view.findViewById(R.id.radiobutton_three)).setText(foodDateTimeBookModels.get(2).getDate());
+        ((RadioButton) view.findViewById(R.id.radiobutton_four)).setText(foodDateTimeBookModels.get(3).getDate());
+        ((RadioButton) view.findViewById(R.id.radiobutton_five)).setText(foodDateTimeBookModels.get(4).getDate());
+        ((RadioButton) view.findViewById(R.id.radiobutton_six)).setText(foodDateTimeBookModels.get(5).getDate());
+        ((RadioButton) view.findViewById(R.id.radiobutton_seven)).setText(foodDateTimeBookModels.get(6).getDate());
 
         view.findViewById(R.id.btn_book_order).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int checkedId=radioGroup.getCheckedRadioButtonId();
-                switch (checkedId) {
-                    case R.id.checkbox_one:
-
-                        break;
-                    case R.id.checkbox_two:
-
-                        break;
-                    case R.id.checkbox_three:
-
-                        break;
-                    case R.id.checkbox_four:
-
-                        break;
-                    case R.id.checkbox_five:
-
-                        break;
-                    case R.id.checkbox_six:
-
-                        break;
-                    case R.id.checkbox_seven:
-
-                        break;
-                }
+                int dinnerDateId = rgDinnerDate.getCheckedRadioButtonId();
+                int dinnerTimeId = rgDinnerTime.getCheckedRadioButtonId();
+                System.out.println(">>>>>Date Selected Id:-" + dinnerDateId);
+                System.out.println(">>>>>Time Id:-" + dinnerTimeId);
+                String dinnerDate = getDinnerDateFromId(dinnerDateId, foodDateTimeBookModels);
+                int dinnerTime = getDinnerTimeFromId(dinnerTimeId, foodDateTimeBookModels);
+                System.out.println(">>>>>Dinner Date:-" + dinnerDate);
+                System.out.println(">>>>>Time Id:-" + dinnerTime);
+                bookOrderInterface.onOrderSelected(dinnerDate, dinnerTime);
+                dialog.dismiss();
             }
         });
 
@@ -283,4 +270,44 @@ public class DialogUtils {
 
     }
 
+    private static String getDinnerDateFromId(int id, ArrayList<FoodDateTimeBookModel> foodDateTimeBookModels) {
+        String date = "";
+        switch (id) {
+            case R.id.radiobutton_one:
+                date = foodDateTimeBookModels.get(0).getDate();
+                break;
+            case R.id.radiobutton_two:
+                date = foodDateTimeBookModels.get(1).getDate();
+                break;
+            case R.id.radiobutton_three:
+                date = foodDateTimeBookModels.get(2).getDate();
+                break;
+            case R.id.radiobutton_four:
+                date = foodDateTimeBookModels.get(3).getDate();
+                break;
+            case R.id.radiobutton_five:
+                date = foodDateTimeBookModels.get(4).getDate();
+                break;
+            case R.id.radiobutton_six:
+                date = foodDateTimeBookModels.get(5).getDate();
+                break;
+            case R.id.radiobutton_seven:
+                date = foodDateTimeBookModels.get(6).getDate();
+                break;
+        }
+        return date;
+    }
+
+    private static int getDinnerTimeFromId(int id, ArrayList<FoodDateTimeBookModel> foodDateTimeBookModels) {
+        String time = "";
+        switch (id) {
+            case R.id.rg_breakfast:
+                return Constants.DinnerTime.BREAKFAST;
+            case R.id.rg_lunch:
+                return Constants.DinnerTime.LUNCH;
+            case R.id.rg_dinner:
+                return Constants.DinnerTime.DINNER;
+        }
+        return 0;
+    }
 }

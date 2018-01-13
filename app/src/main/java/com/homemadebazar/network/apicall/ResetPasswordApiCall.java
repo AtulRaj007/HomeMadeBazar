@@ -16,7 +16,6 @@ public class ResetPasswordApiCall extends BaseApiCall {
     private String userId;
     private BaseModel baseModel;
 
-    //    {"UserId":"1801062"}
     public ResetPasswordApiCall(String userId) {
         this.userId = userId;
     }
@@ -41,10 +40,10 @@ public class ResetPasswordApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.RESET_PASSWORD);
         return Constants.ServerURL.RESET_PASSWORD;
     }
 
-    //    {"UserId":"1712265","NewPassword":"11111111","OldPassword":"045258"}
     public Object getRequest() {
         JSONObject obj = new JSONObject();
         try {

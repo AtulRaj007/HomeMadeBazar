@@ -1,7 +1,5 @@
 package com.homemadebazar.network.apicall;
 
-import android.util.Log;
-
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.JSONParsingUtils;
@@ -40,12 +38,12 @@ public class FoodieBookOrderApiCall extends BaseApiCall {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("REQUEST= ", obj + "");
+        System.out.println(Constants.ServiceTAG.URL + obj.toString());
         return obj;
     }
 
     private void parseData(String response) {
-        Log.d("RESPONSE= ", response);
+        System.out.println(Constants.ServiceTAG.RESPONSE + response);
 
         if (response != null && !response.isEmpty()) {
             try {
@@ -54,7 +52,6 @@ public class FoodieBookOrderApiCall extends BaseApiCall {
                 if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
                     bookingId = object.optString("ReqeustRefNo");
                 }
-//                isAccountExistModel = JSONParsingUtils.getAccountExistsModel(object);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -72,6 +69,7 @@ public class FoodieBookOrderApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.FOODIE_BOOK_ORDER);
         return Constants.ServerURL.FOODIE_BOOK_ORDER;
     }
 

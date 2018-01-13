@@ -39,12 +39,12 @@ public class MyShopAddDetailsApiCall extends BaseApiCall {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("REQUEST= ", obj + "");
+        System.out.println(Constants.ServiceTAG.REQUEST + obj.toString());
         return obj;
     }
 
     private void parseData(String response) {
-        Log.d("RESPONSE= ", response);
+        System.out.println(Constants.ServiceTAG.RESPONSE + response);
 
         if (response != null && !response.isEmpty()) {
             try {
@@ -63,6 +63,7 @@ public class MyShopAddDetailsApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.MYSHOP_ADD_DETAILS);
         return Constants.ServerURL.MYSHOP_ADD_DETAILS;
     }
 

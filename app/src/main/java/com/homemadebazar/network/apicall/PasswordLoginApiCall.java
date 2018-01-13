@@ -1,7 +1,5 @@
 package com.homemadebazar.network.apicall;
 
-import android.util.Log;
-
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.JSONParsingUtils;
@@ -15,42 +13,36 @@ import org.json.JSONObject;
 
 public class PasswordLoginApiCall extends BaseApiCall {
 
-    private String userId,mobile,password;
+    private String userId, mobile, password;
     private UserModel userModel;
 
-//    {
-//        "UserId":"17082730",
-//            "Mobile":"9999999878",
-//            "Password":"222222"
-//    }
-
-    public PasswordLoginApiCall(String userId,String mobile,String password){
-        this.userId=userId;
-        this.mobile=mobile;
-        this.password=password;
+    public PasswordLoginApiCall(String userId, String mobile, String password) {
+        this.userId = userId;
+        this.mobile = mobile;
+        this.password = password;
     }
 
     public Object getRequest() {
-        JSONObject obj = new JSONObject();
+        JSONObject object = new JSONObject();
         try {
-            obj.put("UserId", userId);
-            obj.put("Mobile", mobile);
-            obj.put("Password", password);
+            object.put("UserId", userId);
+            object.put("Mobile", mobile);
+            object.put("Password", password);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("REQUEST= ", obj+"");
-        return obj;
+        System.out.println(Constants.ServiceTAG.REQUEST + object.toString());
+        return object;
     }
 
     private void parseData(String response) {
-        Log.d("RESPONSE= ", response);
+        System.out.println(Constants.ServiceTAG.RESPONSE + response);
 
         if (response != null && !response.isEmpty()) {
             try {
                 JSONObject object = new JSONObject(response);
-                userModel= JSONParsingUtils.getUserModel(object);
+                userModel = JSONParsingUtils.getUserModel(object);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -64,6 +56,7 @@ public class PasswordLoginApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.SIGNIN);
         return Constants.ServerURL.SIGNIN;
     }
 

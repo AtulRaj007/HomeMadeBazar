@@ -1,7 +1,5 @@
 package com.homemadebazar.network.apicall;
 
-import android.util.Log;
-
 import com.homemadebazar.model.IsAccountExistModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.JSONParsingUtils;
@@ -15,14 +13,14 @@ import org.json.JSONObject;
 
 public class IsAccountExistApiCall extends BaseApiCall {
 
-    private String countryCode,countryName,mobileNumber,userId;
+    private String countryCode, countryName, mobileNumber, userId;
     private IsAccountExistModel isAccountExistModel;
 
-    public IsAccountExistApiCall(String countryCode,String countryName,String mobileNumber,String userId){
-        this.countryCode=countryCode;
-        this.countryName=countryName;
-        this.mobileNumber=mobileNumber;
-        this.userId=userId;
+    public IsAccountExistApiCall(String countryCode, String countryName, String mobileNumber, String userId) {
+        this.countryCode = countryCode;
+        this.countryName = countryName;
+        this.mobileNumber = mobileNumber;
+        this.userId = userId;
     }
 
     public Object getRequest() {
@@ -31,22 +29,22 @@ public class IsAccountExistApiCall extends BaseApiCall {
             obj.put("CountryCode", countryCode);
             obj.put("CountryName", countryName);
             obj.put("Mobile", mobileNumber);
-            obj.put("UserId",userId);
+            obj.put("UserId", userId);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("REQUEST= ", obj+"");
+        System.out.println(Constants.ServiceTAG.REQUEST + obj.toString());
         return obj;
     }
 
     private void parseData(String response) {
-        Log.d("RESPONSE= ", response);
+        System.out.println(Constants.ServiceTAG.RESPONSE + response);
 
         if (response != null && !response.isEmpty()) {
             try {
                 JSONObject object = new JSONObject(response);
-                isAccountExistModel= JSONParsingUtils.getAccountExistsModel(object);
+                isAccountExistModel = JSONParsingUtils.getAccountExistsModel(object);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -60,6 +58,7 @@ public class IsAccountExistApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.IS_EMAIL_EXIST);
         return Constants.ServerURL.IS_EMAIL_EXIST;
     }
 

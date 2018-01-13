@@ -1,8 +1,5 @@
 package com.homemadebazar.network.apicall;
 
-import android.util.Log;
-
-import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.JSONParsingUtils;
@@ -16,53 +13,53 @@ import org.json.JSONObject;
 
 public class SignupApiCall extends BaseApiCall {
 
-    private String userId,firstName,lastName,emailId,password,accountType,deviceToken,latitude,longitude,pincode;
+    private String userId, firstName, lastName, emailId, password, accountType, deviceToken, latitude, longitude, pincode;
     private UserModel userModel;
 
-    public SignupApiCall(String userId,String firstName,String lastName,String emailId,String password,
-                         String accountType,String deviceToken,String latitude,String longitude,String pinCode){
-        this.userId=userId;
-        this.firstName=firstName;
-        this.lastName=lastName;
-        this.emailId=emailId;
-        this.password=password;
-        this.accountType=accountType;
-        this.deviceToken=deviceToken;
-        this.deviceToken=deviceToken;
-        this.latitude=latitude;
-        this.longitude=longitude;
-        this.pincode=pinCode;
+    public SignupApiCall(String userId, String firstName, String lastName, String emailId, String password,
+                         String accountType, String deviceToken, String latitude, String longitude, String pinCode) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailId = emailId;
+        this.password = password;
+        this.accountType = accountType;
+        this.deviceToken = deviceToken;
+        this.deviceToken = deviceToken;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.pincode = pinCode;
     }
 
     public Object getRequest() {
-        JSONObject obj = new JSONObject();
+        JSONObject object = new JSONObject();
         try {
-            obj.put("UserId", userId);
-            obj.put("FirstName", firstName);
-            obj.put("LastName", lastName);
-            obj.put("EmailId", emailId);
-            obj.put("Password", password);
-            obj.put("AccountType", accountType);
-            obj.put("DeviceToken", deviceToken);
-            obj.put("DeviceType", Constants.deviceType);
-            obj.put("Latitude", latitude);
-            obj.put("Longitude", longitude);
-            obj.put("PinCode", pincode);
+            object.put("UserId", userId);
+            object.put("FirstName", firstName);
+            object.put("LastName", lastName);
+            object.put("EmailId", emailId);
+            object.put("Password", password);
+            object.put("AccountType", accountType);
+            object.put("DeviceToken", deviceToken);
+            object.put("DeviceType", Constants.deviceType);
+            object.put("Latitude", latitude);
+            object.put("Longitude", longitude);
+            object.put("PinCode", pincode);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("REQUEST= ", obj+"");
-        return obj;
+        System.out.println(Constants.ServiceTAG.REQUEST + object.toString());
+        return object;
     }
 
     private void parseData(String response) {
-        Log.d("RESPONSE= ", response);
+        System.out.println(Constants.ServiceTAG.RESPONSE);
 
         if (response != null && !response.isEmpty()) {
             try {
                 JSONObject object = new JSONObject(response);
-                userModel= JSONParsingUtils.getUserModel(object);
+                userModel = JSONParsingUtils.getUserModel(object);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -76,6 +73,7 @@ public class SignupApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.SIGNUP);
         return Constants.ServerURL.SIGNUP;
     }
 

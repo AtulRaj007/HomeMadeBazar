@@ -35,6 +35,7 @@ public class SearchMarketPlaceIngredientsApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.HOMECHEF_SEARCH_MARKETPLACE_INGREDIENTS);
         return Constants.ServerURL.HOMECHEF_SEARCH_MARKETPLACE_INGREDIENTS;
     }
 
@@ -47,11 +48,13 @@ public class SearchMarketPlaceIngredientsApiCall extends BaseApiCall {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println(Constants.ServiceTAG.REQUEST + object.toString());
         return object;
     }
 
     @Override
     public void parseResponseCode(Object response) throws JSONException {
+        System.out.println(Constants.ServiceTAG.RESPONSE + response.toString());
         if (response instanceof JSONObject) {
             baseModel = JSONParsingUtils.parseBaseModel((JSONObject) response);
             dishIngredientsModelArrayList = JSONParsingUtils.parseMarketPlaceIngredientsList((JSONObject) response);

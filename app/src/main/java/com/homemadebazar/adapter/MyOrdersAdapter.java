@@ -1,5 +1,6 @@
 package com.homemadebazar.adapter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -9,10 +10,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.homemadebazar.R;
+import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.HomeChefIncomingOrderModel;
+import com.homemadebazar.network.HttpRequestHandler;
+import com.homemadebazar.network.api.ApiCall;
+import com.homemadebazar.network.apicall.HomeChefFoodieOrderAcceptRejectApiCall;
+import com.homemadebazar.util.Constants;
+import com.homemadebazar.util.DialogUtils;
+import com.homemadebazar.util.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -25,11 +32,6 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private Context context;
     private boolean isScheduledFragment = false;
     private ArrayList<HomeChefIncomingOrderModel> homeChefIncomingOrderModelArrayList;
-
-//    public MyOrdersAdapter(Context context, ArrayList<HomeChefIncomingOrderModel> homeChefIncomingOrderModelArrayList) {
-//        this.context = context;
-//        this.homeChefIncomingOrderModelArrayList = homeChefIncomingOrderModelArrayList;
-//    }
 
     public MyOrdersAdapter(Context context, boolean isScheduledFragment, ArrayList<HomeChefIncomingOrderModel> homeChefIncomingOrderModelArrayList) {
         this.context = context;
@@ -70,14 +72,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-//        if (!isScheduledFragment)
-//            return 2;
-//        else {
-//            if (position % 2 == 0)
-//                return 1;
-//            else
-//                return 2;
-//        }
+
         if (homeChefIncomingOrderModelArrayList.get(position).getType() == 0)
             return 2;
         else
@@ -87,6 +82,45 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemCount() {
         return homeChefIncomingOrderModelArrayList.size();
+    }
+
+    private void FoodieOrderAcceptReject(String bookingReferenceId, String responseType) {
+        try {
+            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(context, null);
+            progressDialog.show();
+
+            final HomeChefFoodieOrderAcceptRejectApiCall apiCall = new HomeChefFoodieOrderAcceptRejectApiCall(bookingReferenceId, responseType);
+            HttpRequestHandler.getInstance(context.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
+
+                @Override
+                public void onComplete(Exception e) {
+                    DialogUtils.hideProgressDialog(progressDialog);
+                    if (e == null) { // Success
+                        try {
+                            BaseModel baseModel = apiCall.getBaseModel();
+                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                DialogUtils.showAlert(context, baseModel.getStatusMessage());
+                            } else {
+                                DialogUtils.showAlert(context, baseModel.getStatusMessage());
+                            }
+
+
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    } else { // Failure
+                        Utils.handleError(e.getMessage(), context, null);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            Utils.handleError(e.getMessage(), context, null);
+        }
+    }
+
+    interface OrderResponse {
+        String ACCEPT = "2";
+        String REJECT = "3";
     }
 
     class MyOrdersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -112,10 +146,10 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_accept:
-                    Toast.makeText(context, "Under development", Toast.LENGTH_SHORT).show();
+                    FoodieOrderAcceptReject(homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getOrderRequestId(), OrderResponse.ACCEPT);
                     break;
                 case R.id.btn_reject:
-                    Toast.makeText(context, "Under development", Toast.LENGTH_SHORT).show();
+                    FoodieOrderAcceptReject(homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getOrderRequestId(), OrderResponse.REJECT);
                     break;
             }
         }

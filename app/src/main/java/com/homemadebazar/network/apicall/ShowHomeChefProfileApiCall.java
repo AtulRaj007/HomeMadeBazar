@@ -1,7 +1,5 @@
 package com.homemadebazar.network.apicall;
 
-import android.util.Log;
-
 import com.homemadebazar.model.HomeChefProfileModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.JSONParsingUtils;
@@ -26,16 +24,15 @@ public class ShowHomeChefProfileApiCall extends BaseApiCall {
         JSONObject obj = new JSONObject();
         try {
             obj.put("UserId", userId);
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("REQUEST= ", obj + "");
+        System.out.println(Constants.ServiceTAG.REQUEST + obj.toString());
         return obj;
     }
 
     private void parseData(String response) {
-        Log.d("RESPONSE= ", response);
+        System.out.println(Constants.ServiceTAG.RESPONSE + response);
 
         if (response != null && !response.isEmpty()) {
             try {
@@ -54,7 +51,8 @@ public class ShowHomeChefProfileApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
-        return Constants.ServerURL.SHOW_HOME_CHEF_PROFILE+userId;
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.SHOW_HOME_CHEF_PROFILE + userId);
+        return Constants.ServerURL.SHOW_HOME_CHEF_PROFILE + userId;
     }
 
     @Override

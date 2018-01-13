@@ -15,6 +15,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.ChatActivity;
+import com.homemadebazar.activity.LoginActivity;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.util.Constants;
 
@@ -50,6 +51,30 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     id = (int) System.currentTimeMillis();
                 }
                 showNotification(intent, remoteMessage.getData().get("Title"), remoteMessage.getData().get("Message"), id);
+            } else if (notificationType == Constants.NotificationType.FOODIE_ORDER_BOOKED) {
+                Intent intent = new Intent(MyFirebaseMessagingService.this, LoginActivity.class);
+                String message = remoteMessage.getData().get("Message");
+                String title = remoteMessage.getData().get("Title");
+                String bookingId = remoteMessage.getData().get("Bookingid");
+                showNotification(intent, title, message, notificationType);
+
+            } else if (notificationType == Constants.NotificationType.FOODIE_ORDER_ACCEPT_REJECT) {
+                Intent intent = new Intent(MyFirebaseMessagingService.this, LoginActivity.class);
+                String message = remoteMessage.getData().get("Message");
+                String title = remoteMessage.getData().get("Title");
+//                String bookingId = remoteMessage.getData().get("Bookingid");
+                showNotification(intent, title, message, notificationType);
+
+            } else if (notificationType == Constants.NotificationType.FRIEND_REQUEST_RECEIVED) {
+                Intent intent = new Intent(MyFirebaseMessagingService.this, LoginActivity.class);
+                String message = remoteMessage.getData().get("Message");
+                String title = remoteMessage.getData().get("Title");
+                showNotification(intent, title, message, notificationType);
+            } else if (notificationType == Constants.NotificationType.FRIEND_ACCEPTED) {
+                Intent intent = new Intent(MyFirebaseMessagingService.this, LoginActivity.class);
+                String message = remoteMessage.getData().get("Message");
+                String title = remoteMessage.getData().get("Title");
+                showNotification(intent, title, message, notificationType);
             }
 
         } catch (Exception e) {
@@ -57,22 +82,23 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
-    private void showNotification(Intent intent, String title, String messageBody, int Id) {
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+    private void showNotification(Intent intent, String title, String messageBody, int id) {
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary))
                 .setContentTitle(title)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(messageBody))
                 .setContentText(messageBody)
                 .setAutoCancel(true)
-                .setSound(defaultSoundUri)
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setContentIntent(pendingIntent);
 
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(1/* ID of row_notification*/, notificationBuilder.build());
+        notificationManager.notify(id/* ID of row_notification*/, notificationBuilder.build());
     }
 }
 

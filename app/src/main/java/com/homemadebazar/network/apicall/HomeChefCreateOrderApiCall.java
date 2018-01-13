@@ -27,6 +27,7 @@ public class HomeChefCreateOrderApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.CREATE_ORDER);
         return Constants.ServerURL.CREATE_ORDER;
     }
 
@@ -60,12 +61,12 @@ public class HomeChefCreateOrderApiCall extends BaseApiCall {
             e.printStackTrace();
         }
 
-        Log.d("REQUEST= ", object + "");
+        System.out.println(Constants.ServiceTAG.RESPONSE + object.toString());
         return object;
     }
 
     private void parseData(JSONObject object) {
-        System.out.println("Response:-" + object);
+        System.out.println(Constants.ServiceTAG.RESPONSE + object.toString());
         baseModel = JSONParsingUtils.parseBaseModel(object);
         orderId = object.optString("OrderId");
     }

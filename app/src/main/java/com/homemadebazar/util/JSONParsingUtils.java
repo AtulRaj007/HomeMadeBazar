@@ -296,6 +296,7 @@ public class JSONParsingUtils {
             foodieFlashPostModel.setPostMessage(object.optString("PostMessage"));
             foodieFlashPostModel.setPostRatings(object.optString("PostRating"));
             foodieFlashPostModel.setPostImageUrl(object.optString("PostImageUrl"));
+            foodieFlashPostModel.setLike(object.optBoolean("IsLike"));
 
             foodieFlashPostModel.setUserProfileUrl(object.optString("PosterDPUrl"));
             foodieFlashPostModel.setUserFirstName(object.optString("FirstName"));

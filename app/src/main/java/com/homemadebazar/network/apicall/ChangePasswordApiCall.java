@@ -18,7 +18,6 @@ public class ChangePasswordApiCall extends BaseApiCall {
     private String newPassword;
     private BaseModel baseModel;
 
-    //    {"UserId":"1801062"}
     public ChangePasswordApiCall(String userId, String oldPassword, String newPassword) {
         this.userId = userId;
         this.oldPassword = oldPassword;
@@ -45,10 +44,10 @@ public class ChangePasswordApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.CHANGE_PASSWORD);
         return Constants.ServerURL.CHANGE_PASSWORD;
     }
 
-    //    {"UserId":"1712265","NewPassword":"11111111","OldPassword":"045258"}
     public Object getRequest() {
         JSONObject obj = new JSONObject();
         try {

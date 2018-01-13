@@ -32,7 +32,7 @@ public class GetNotificationApiCall extends BaseApiCall {
             try {
                 JSONObject object = new JSONObject(response);
                 baseModel = JSONParsingUtils.parseBaseModel(object);
-                notificationModelArrayList=JSONParsingUtils.parseNotificationList(object);
+                notificationModelArrayList = JSONParsingUtils.parseNotificationList(object);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -46,6 +46,7 @@ public class GetNotificationApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.GET_NOTIFICATION);
         return Constants.ServerURL.GET_NOTIFICATION;
     }
 
