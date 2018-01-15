@@ -3,40 +3,40 @@ package com.homemadebazar.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.homemadebazar.R;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.IsAccountExistModel;
-import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
-import com.homemadebazar.network.apicall.IsAccountExistApiCall;
 import com.homemadebazar.network.apicall.SendOtpApiCall;
 import com.homemadebazar.network.apicall.VerifyOtpApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.Utils;
 
-public class VerificationCodeActivity extends BaseActivity implements View.OnClickListener{
+public class VerificationCodeActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = ">>>>>Verification";
-    private static String KEY_USER_ID="KEY_USER_ID";
+    private static String KEY_USER_ID = "KEY_USER_ID";
     private EditText etFirstDigitPswd, etSecondDigitPswd, etThirdDigitPswd, etFourthDigitPswd;
     private IsAccountExistModel isAccountExistModel;
     private String userId;
-    private static String KEY_IS_SOCIAL_LOGIN="KEY_IS_SOCIAL_LOGIN";
-//    private static String KEY_USER_MODEL="KEY_USER_MODEL";
+    private static String KEY_IS_SOCIAL_LOGIN = "KEY_IS_SOCIAL_LOGIN";
+    private static String KEY_MOBILE_NUMBER = "KEY_MOBILE_NUMBER";
+    //    private static String KEY_USER_MODEL="KEY_USER_MODEL";
     private boolean isSocialLogin;
+    private String mobileNumber;
+    private TextView tvVerificationText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +47,11 @@ public class VerificationCodeActivity extends BaseActivity implements View.OnCli
 
     }
 
-    public static Intent getIntent(Context context,String userId,boolean isSocialLogin){
-        Intent intent=new Intent(context,VerificationCodeActivity.class);
-        intent.putExtra(KEY_USER_ID,userId);
-        intent.putExtra(KEY_IS_SOCIAL_LOGIN,isSocialLogin);
+    public static Intent getIntent(Context context, String userId, boolean isSocialLogin, String mobileNumber) {
+        Intent intent = new Intent(context, VerificationCodeActivity.class);
+        intent.putExtra(KEY_USER_ID, userId);
+        intent.putExtra(KEY_IS_SOCIAL_LOGIN, isSocialLogin);
+        intent.putExtra(KEY_MOBILE_NUMBER, mobileNumber);
         return intent;
     }
 
@@ -62,9 +63,10 @@ public class VerificationCodeActivity extends BaseActivity implements View.OnCli
 //        return intent;
 //    }
 
-    public void getDataFromBundle(){
-        userId=getIntent().getStringExtra(KEY_USER_ID);
-        isSocialLogin=getIntent().getBooleanExtra(KEY_IS_SOCIAL_LOGIN,false);
+    public void getDataFromBundle() {
+        userId = getIntent().getStringExtra(KEY_USER_ID);
+        isSocialLogin = getIntent().getBooleanExtra(KEY_IS_SOCIAL_LOGIN, false);
+        mobileNumber = getIntent().getStringExtra(KEY_MOBILE_NUMBER);
     }
 
 
@@ -75,6 +77,7 @@ public class VerificationCodeActivity extends BaseActivity implements View.OnCli
         etSecondDigitPswd = (EditText) findViewById(R.id.et_second_digit_password);
         etThirdDigitPswd = (EditText) findViewById(R.id.et_third_digit_password);
         etFourthDigitPswd = (EditText) findViewById(R.id.et_fourth_digit_password);
+        tvVerificationText = findViewById(R.id.tv_verification_text);
     }
 
     @Override
@@ -96,6 +99,7 @@ public class VerificationCodeActivity extends BaseActivity implements View.OnCli
     @Override
     protected void setData() {
         sendOtp();
+        tvVerificationText.setText(tvVerificationText.getText() + " " + mobileNumber);
     }
 
     private void initialise() {
@@ -104,7 +108,7 @@ public class VerificationCodeActivity extends BaseActivity implements View.OnCli
         imm.showSoftInput(etFirstDigitPswd, InputMethodManager.SHOW_IMPLICIT);
     }
 
-    private void setupToolbar(){
+    private void setupToolbar() {
         findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,10 +120,10 @@ public class VerificationCodeActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_continue:
-                if(isValid())
-                verifyOtp();
+                if (isValid())
+                    verifyOtp();
                 break;
             case R.id.tv_resend_code:
                 sendOtp();
@@ -128,12 +132,11 @@ public class VerificationCodeActivity extends BaseActivity implements View.OnCli
 
     }
 
-    private boolean isValid(){
-        if(etFirstDigitPswd.length()==1 && etSecondDigitPswd.length()==1 && etThirdDigitPswd.length()==1 && etFourthDigitPswd.length()==1)
-        {
+    private boolean isValid() {
+        if (etFirstDigitPswd.length() == 1 && etSecondDigitPswd.length() == 1 && etThirdDigitPswd.length() == 1 && etFourthDigitPswd.length() == 1) {
             return true;
-        }else {
-            DialogUtils.showAlert(VerificationCodeActivity.this,"Please enter OTP");
+        } else {
+            DialogUtils.showAlert(VerificationCodeActivity.this, "Please enter OTP");
             return false;
         }
     }
@@ -216,7 +219,7 @@ public class VerificationCodeActivity extends BaseActivity implements View.OnCli
 
     public void sendOtp() {
         try {
-            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(this,null);
+            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(this, null);
             progressDialog.show();
 
             final SendOtpApiCall apiCall = new SendOtpApiCall(userId);
@@ -227,35 +230,35 @@ public class VerificationCodeActivity extends BaseActivity implements View.OnCli
                     DialogUtils.hideProgressDialog(progressDialog);
                     if (e == null) { // Success
                         try {
-                            BaseModel baseModel=apiCall.getResult();
-                            if(baseModel.getStatusCode()== Constants.ServerResponseCode.SUCCESS){
-                                DialogUtils.showAlert(VerificationCodeActivity.this,baseModel.getStatusMessage());
-                            }else{
-                                DialogUtils.showAlert(VerificationCodeActivity.this,baseModel.getStatusMessage());
+                            BaseModel baseModel = apiCall.getResult();
+                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                DialogUtils.showAlert(VerificationCodeActivity.this, baseModel.getStatusMessage());
+                            } else {
+                                DialogUtils.showAlert(VerificationCodeActivity.this, baseModel.getStatusMessage());
                             }
 
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
                     } else { // Failure
-                        Utils.handleError(e.getMessage(), VerificationCodeActivity.this,null);
+                        Utils.handleError(e.getMessage(), VerificationCodeActivity.this, null);
                     }
                 }
             });
         } catch (Exception e) {
-            Utils.handleError(e.getMessage(), VerificationCodeActivity.this,null);
+            Utils.handleError(e.getMessage(), VerificationCodeActivity.this, null);
         }
     }
 
     public void verifyOtp() {
         try {
-            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(this,null);
+            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(this, null);
             progressDialog.show();
 
-            String inputOtp=etFirstDigitPswd.getText().toString()+etSecondDigitPswd.getText().toString()
-                    +etThirdDigitPswd.getText().toString()+etFourthDigitPswd.getText().toString();
-            Log.d(TAG,"Input Otp :-"+inputOtp);
-            final VerifyOtpApiCall apiCall = new VerifyOtpApiCall(userId,inputOtp);
+            String inputOtp = etFirstDigitPswd.getText().toString() + etSecondDigitPswd.getText().toString()
+                    + etThirdDigitPswd.getText().toString() + etFourthDigitPswd.getText().toString();
+            Log.d(TAG, "Input Otp :-" + inputOtp);
+            final VerifyOtpApiCall apiCall = new VerifyOtpApiCall(userId, inputOtp);
             HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
@@ -263,24 +266,24 @@ public class VerificationCodeActivity extends BaseActivity implements View.OnCli
                     DialogUtils.hideProgressDialog(progressDialog);
                     if (e == null) { // Success
                         try {
-                            BaseModel baseModel=apiCall.getResult();
-                            if(baseModel.getStatusCode()== Constants.ServerResponseCode.SUCCESS){
-                                Toast.makeText(VerificationCodeActivity.this,baseModel.getStatusMessage(),Toast.LENGTH_SHORT).show();
-                                startActivity(SignUpActivity.getIntent(VerificationCodeActivity.this,userId,isSocialLogin));
-                            }else{
-                                DialogUtils.showAlert(VerificationCodeActivity.this,baseModel.getStatusMessage());
+                            BaseModel baseModel = apiCall.getResult();
+                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                Toast.makeText(VerificationCodeActivity.this, baseModel.getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                startActivity(SignUpActivity.getIntent(VerificationCodeActivity.this, userId, isSocialLogin));
+                            } else {
+                                DialogUtils.showAlert(VerificationCodeActivity.this, baseModel.getStatusMessage());
                             }
 
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
                     } else { // Failure
-                        Utils.handleError(e.getMessage(), VerificationCodeActivity.this,null);
+                        Utils.handleError(e.getMessage(), VerificationCodeActivity.this, null);
                     }
                 }
             });
         } catch (Exception e) {
-            Utils.handleError(e.getMessage(), VerificationCodeActivity.this,null);
+            Utils.handleError(e.getMessage(), VerificationCodeActivity.this, null);
         }
     }
 }

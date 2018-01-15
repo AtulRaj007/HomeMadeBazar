@@ -8,7 +8,7 @@
     <string name="str_enter_mobile_number">Enter Your Mobile Number</string>
     <string name="str_continue">CONTINUE</string>
     <string name="str_verification_code">Verification Code</string>
-    <string name="str_verification_text">Please Enter the digit verification code sent to your mobile 9999999999</string>
+    <string name="str_verification_text">Please Enter the digit verification code sent to your mobile </string>
     <string name="str_resend_code"><u>RESEND CODE</u></string>
     <string name="str_home_made_bazar">Home Made Bazar</string>
     <string name="str_first_name">FIRST NAME</string>

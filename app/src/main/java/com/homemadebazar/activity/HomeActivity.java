@@ -92,8 +92,8 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void setUpToolbar() {
-        mToolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
+//        mToolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(mToolbar);
         findViewById(R.id.menu_first).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -35,6 +35,7 @@ public class MarketPlaceHomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_market_place_home);
+        setUpToolbar();
     }
 
     @Override
@@ -78,6 +79,21 @@ public class MarketPlaceHomeActivity extends BaseActivity {
         setUpViewPager();
         setUpTabLayout();
         setUpIcons(0);
+    }
+
+    private void setUpToolbar() {
+//        mToolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(mToolbar);
+        findViewById(R.id.menu_first).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.menu_first:
+                        mDrawerLayout.openDrawer(Gravity.LEFT);
+                        break;
+                }
+            }
+        });
     }
 
 

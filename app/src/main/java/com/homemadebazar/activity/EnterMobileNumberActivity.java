@@ -3,17 +3,14 @@ package com.homemadebazar.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.hbb20.CountryCodePicker;
 import com.homemadebazar.R;
 import com.homemadebazar.model.IsAccountExistModel;
-import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
 import com.homemadebazar.network.apicall.IsAccountExistApiCall;
@@ -24,14 +21,14 @@ import com.homemadebazar.util.Utils;
 
 public class EnterMobileNumberActivity extends BaseActivity implements View.OnClickListener {
     private CountryCodePicker countryCodePicker;
-    private String countryCode,countryName;
+    private String countryCode, countryName;
     private EditText etMobileNumber;
-    private static int MIN_DIGIT_NUMBER=10;
-    private String userId="";
-//    private UserModel userModel;
+    private static int MIN_DIGIT_NUMBER = 10;
+    private String userId = "";
+    //    private UserModel userModel;
     private boolean isSocialLogin;
-    private static String KEY_USER_ID="KEY_USER_ID";
-    private static String KEY_IS_SOCIAL_LOGIN="KEY_IS_SOCIAL_LOGIN";
+    private static String KEY_USER_ID = "KEY_USER_ID";
+    private static String KEY_IS_SOCIAL_LOGIN = "KEY_IS_SOCIAL_LOGIN";
 //    private static String KEY_USER_MODEL="KEY_USER_MODEL";
 
     @Override
@@ -44,14 +41,14 @@ public class EnterMobileNumberActivity extends BaseActivity implements View.OnCl
     @Override
     protected void initUI() {
         getBundleData();
-        if(!TextUtils.isEmpty(userId))
+        if (!TextUtils.isEmpty(userId))
             findViewById(R.id.tv_skip).setVisibility(View.VISIBLE);
         else
-            userId="";
-        countryCodePicker= (CountryCodePicker) findViewById(R.id.ccp_country);
-        etMobileNumber=(EditText)findViewById(R.id.et_mobile_number);
-        countryCode=countryCodePicker.getDefaultCountryCode();
-        countryName=countryCodePicker.getDefaultCountryName();
+            userId = "";
+        countryCodePicker = (CountryCodePicker) findViewById(R.id.ccp_country);
+        etMobileNumber = (EditText) findViewById(R.id.et_mobile_number);
+        countryCode = countryCodePicker.getDefaultCountryCode();
+        countryName = countryCodePicker.getDefaultCountryName();
     }
 
     @Override
@@ -60,18 +57,17 @@ public class EnterMobileNumberActivity extends BaseActivity implements View.OnCl
         countryCodePicker.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
             public void onCountrySelected() {
-                countryCode=countryCodePicker.getSelectedCountryCode();
-                countryName=countryCodePicker.getSelectedCountryName();
+                countryCode = countryCodePicker.getSelectedCountryCode();
+                countryName = countryCodePicker.getSelectedCountryName();
             }
         });
         findViewById(R.id.tv_skip).setOnClickListener(this);
     }
 
-    public static Intent getIntent(Context context,String userId,boolean isSocialLogin)
-    {
-        Intent intent=new Intent(context,EnterMobileNumberActivity.class);
-        intent.putExtra(KEY_USER_ID,userId);
-        intent.putExtra(KEY_IS_SOCIAL_LOGIN,isSocialLogin);
+    public static Intent getIntent(Context context, String userId, boolean isSocialLogin) {
+        Intent intent = new Intent(context, EnterMobileNumberActivity.class);
+        intent.putExtra(KEY_USER_ID, userId);
+        intent.putExtra(KEY_IS_SOCIAL_LOGIN, isSocialLogin);
         return intent;
     }
 
@@ -83,12 +79,12 @@ public class EnterMobileNumberActivity extends BaseActivity implements View.OnCl
 //        return intent;
 //    }
 
-    private void getBundleData(){
+    private void getBundleData() {
         try {
-            userId=getIntent().getStringExtra(KEY_USER_ID);
+            userId = getIntent().getStringExtra(KEY_USER_ID);
 //            userModel=(UserModel) getIntent().getSerializableExtra(KEY_USER_MODEL);
-            isSocialLogin=getIntent().getBooleanExtra(KEY_IS_SOCIAL_LOGIN,false);
-        }catch (Exception e){
+            isSocialLogin = getIntent().getBooleanExtra(KEY_IS_SOCIAL_LOGIN, false);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -99,7 +95,7 @@ public class EnterMobileNumberActivity extends BaseActivity implements View.OnCl
 
     }
 
-    private void setupToolbar(){
+    private void setupToolbar() {
         findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,7 +109,7 @@ public class EnterMobileNumberActivity extends BaseActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_continue:
-                if(isValid())
+                if (isValid())
                     checkEmailExists();
                 break;
             case R.id.tv_skip:
@@ -121,21 +117,19 @@ public class EnterMobileNumberActivity extends BaseActivity implements View.OnCl
 //                {
 //                    startActivity(SignUpActivity.getIntent(EnterMobileNumberActivity.this,userModel,true));
 //                }else {
-                    startActivity(SignUpActivity.getIntent(EnterMobileNumberActivity.this, userId,true));
+                startActivity(SignUpActivity.getIntent(EnterMobileNumberActivity.this, userId, true));
 //                }
                 break;
         }
     }
 
 
-    private boolean isValid(){
-        if(TextUtils.isEmpty(etMobileNumber.getText().toString()))
-        {
-            DialogUtils.showAlert(EnterMobileNumberActivity.this,"Please enter Mobile Number");
+    private boolean isValid() {
+        if (TextUtils.isEmpty(etMobileNumber.getText().toString())) {
+            DialogUtils.showAlert(EnterMobileNumberActivity.this, "Please enter Mobile Number");
             return false;
-        }else if(etMobileNumber.getText().toString().length()< MIN_DIGIT_NUMBER)
-        {
-            DialogUtils.showAlert(EnterMobileNumberActivity.this,"Please enter valid Mobile Number");
+        } else if (etMobileNumber.getText().toString().length() < MIN_DIGIT_NUMBER) {
+            DialogUtils.showAlert(EnterMobileNumberActivity.this, "Please enter valid Mobile Number");
             return false;
         }
         return true;
@@ -143,13 +137,13 @@ public class EnterMobileNumberActivity extends BaseActivity implements View.OnCl
 
     public void checkEmailExists() {
         try {
-            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(this,null);
+            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(this, null);
             progressDialog.show();
 
 //            if(isSocialLogin && userModel!=null)
 //                userId=userModel.getUserId();
 
-            final IsAccountExistApiCall apiCall = new IsAccountExistApiCall(countryCode,countryName,etMobileNumber.getText().toString(),userId);
+            final IsAccountExistApiCall apiCall = new IsAccountExistApiCall(countryCode, countryName, etMobileNumber.getText().toString(), userId);
             HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
@@ -157,27 +151,27 @@ public class EnterMobileNumberActivity extends BaseActivity implements View.OnCl
                     DialogUtils.hideProgressDialog(progressDialog);
                     if (e == null) { // Success
                         try {
-                            IsAccountExistModel isAccountExistModel=apiCall.getResult();
-                            if(isAccountExistModel.getStatusCode()== Constants.ServerResponseCode.SUCCESS){
-                                if(isAccountExistModel.isSignUpRequired()){
-                                    startActivity(VerificationCodeActivity.getIntent(EnterMobileNumberActivity.this,isAccountExistModel.getUserId(),isSocialLogin));
-                                }else {
-                                    startActivity(EnterPasswordActivity.getIntent(EnterMobileNumberActivity.this,isAccountExistModel.getUserId(),isAccountExistModel.getMobile()));
+                            IsAccountExistModel isAccountExistModel = apiCall.getResult();
+                            if (isAccountExistModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                if (isAccountExistModel.isSignUpRequired()) {
+                                    startActivity(VerificationCodeActivity.getIntent(EnterMobileNumberActivity.this, isAccountExistModel.getUserId(), isSocialLogin, countryCode + etMobileNumber.getText().toString().trim()));
+                                } else {
+                                    startActivity(EnterPasswordActivity.getIntent(EnterMobileNumberActivity.this, isAccountExistModel.getUserId(), isAccountExistModel.getMobile()));
                                 }
-                            }else{
-                                DialogUtils.showAlert(EnterMobileNumberActivity.this,isAccountExistModel.getStatusMessage());
+                            } else {
+                                DialogUtils.showAlert(EnterMobileNumberActivity.this, isAccountExistModel.getStatusMessage());
                             }
 
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
                     } else { // Failure
-                        Utils.handleError(e.getMessage(), EnterMobileNumberActivity.this,null);
+                        Utils.handleError(e.getMessage(), EnterMobileNumberActivity.this, null);
                     }
                 }
             });
         } catch (Exception e) {
-            Utils.handleError(e.getMessage(), EnterMobileNumberActivity.this,null);
+            Utils.handleError(e.getMessage(), EnterMobileNumberActivity.this, null);
         }
     }
 }

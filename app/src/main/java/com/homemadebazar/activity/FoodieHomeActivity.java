@@ -51,7 +51,8 @@ public class FoodieHomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foodie_home);
-        UserModel userModel = SharedPreference.getUserModel(this);
+        setUpToolbar();
+//        UserModel userModel = SharedPreference.getUserModel(this);
 //        if (userModel != null)
 //            Log.d("Foodie user id", userModel.getUserId());
     }
@@ -107,8 +108,8 @@ public class FoodieHomeActivity extends BaseActivity {
     }
 
     private void setUpToolbar() {
-        mToolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
+//        mToolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(mToolbar);
         findViewById(R.id.menu_first).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -258,7 +259,6 @@ public class FoodieHomeActivity extends BaseActivity {
 
     @Override
     protected void setData() {
-        setUpToolbar();
         setUpViewPager();
         setUpTabLayout();
         deviceLoginLogoutApiCall(userModel.getUserId(), FirebaseInstanceId.getInstance().getToken(), Constants.LoginHistory.LOGIN);

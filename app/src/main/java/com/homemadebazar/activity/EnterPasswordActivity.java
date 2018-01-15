@@ -86,6 +86,11 @@ public class EnterPasswordActivity extends BaseActivity implements View.OnClickL
                     public void run() {
                         resetPassword();
                     }
+                }, new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
                 });
                 break;
         }
