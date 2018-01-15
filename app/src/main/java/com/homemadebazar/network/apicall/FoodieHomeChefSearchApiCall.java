@@ -1,9 +1,6 @@
 package com.homemadebazar.network.apicall;
 
-import android.util.Log;
-
 import com.homemadebazar.model.BaseModel;
-import com.homemadebazar.model.FoodieFlashPostModel;
 import com.homemadebazar.model.HomeChiefNearByModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.JSONParsingUtils;
@@ -90,7 +87,7 @@ public class FoodieHomeChefSearchApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
-        return super.getServiceURL();
+        return Constants.ServerURL.FOODIE_HOMECHEF_SEARCH;
     }
 
     @Override

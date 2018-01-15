@@ -43,10 +43,11 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_order_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/lb_order_id"
-                    android:text="1232FD12"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_12" />
 
@@ -60,31 +61,25 @@
                 android:orientation="vertical">
 
 
-                <TextView
-                    android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Amit Kumar"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_16" />
-
-
                 <LinearLayout
+                    android:id="@+id/ll_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_designation"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_5"
-                        android:layout_toRightOf="@+id/iv_profile"
-                        android:layout_weight="1"
-                        android:text="IT Engineer | Zensar"
-                        android:textSize="@dimen/text_14" />
 
                     <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Amit Kumar"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_16" />
+
+
+                    <TextView
+                        android:id="@+id/tv_date_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right|center_vertical"
@@ -92,7 +87,20 @@
                         android:text="01:00 PM"
                         android:textSize="@dimen/text_12" />
 
+
                 </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_designation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:layout_toRightOf="@+id/iv_profile"
+                    android:layout_weight="1"
+                    android:text="IT Engineer | Zensar"
+                    android:textSize="@dimen/text_14" />
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -126,31 +134,14 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_dish_time"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/iv_profile"
                         android:layout_weight="1"
                         android:text="Lunch"
-                        android:textSize="@dimen/text_12"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/iv_profile"
-                        android:layout_weight="1"
-                        android:text="Servers 2"
-                        android:textSize="@dimen/text_12"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/iv_profile"
-                        android:layout_weight="1.2"
-                        android:text="1:00 pm - 3:00 pm"
-                        android:textSize="@dimen/text_10"
-                        android:textStyle="bold" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_16" />
 
                 </LinearLayout>
 

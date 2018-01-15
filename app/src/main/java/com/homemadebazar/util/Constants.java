@@ -98,7 +98,9 @@ public class Constants {
         String CHANGE_PASSWORD = BASE_URL + "Miscellaneous/PasswordUpdate";
         String RESET_PASSWORD = BASE_URL + "Miscellaneous/GetResetPassowrd";
         String HOMECHEF_FOODIE_ORDER_ACCEPT_REJECT = BASE_URL + "CreateOrder/DoFoodOrderResponse";
+        String FOODIE_HOMECHEF_SEARCH = BASE_URL + "Foodies/GetFoodSearchByCatDishVendors";
 
+//        http://localhost:14013/api/Foodies/GetFoodSearchByCatDishVendors
 //        http://35.183.8.236/api/CreateOrder/DoFoodOrderResponse
 //        http://localhost:14013/api/Miscellaneous/GetResetPassowrd
 //        http://localhost:14013/api/Miscellaneous/PasswordUpdate
@@ -297,6 +299,12 @@ public class Constants {
         String FIRST_NAME = "FIRST_NAME";
         String LAST_NAME = "LAST_NAME";
         String PROFILE_PIC = "PROFILE_PIC";
+    }
+
+    public interface HomeChefOrder {
+        String NowOrder = "NOW";
+        String SCHEDULED = "SCHEDULED";
+        String COMPLETED = "COMPLETED";
     }
 
 //    {"PostId":"PM00000002","ActionType":"Comments/Likes/All/Unlike","Comments":"Superb","UserById":"17110910"}

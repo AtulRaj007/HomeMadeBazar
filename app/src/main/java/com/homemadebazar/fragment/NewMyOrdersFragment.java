@@ -62,7 +62,7 @@ public class NewMyOrdersFragment extends BaseFragment {
             final ProgressDialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
             progressDialog.show();
 
-            final HomeChefIncomingOrderApiCall apiCall = new HomeChefIncomingOrderApiCall(userModel.getUserId(), "NOW");
+            final HomeChefIncomingOrderApiCall apiCall = new HomeChefIncomingOrderApiCall(userModel.getUserId(), Constants.HomeChefOrder.NowOrder);
             HttpRequestHandler.getInstance(getActivity().getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override

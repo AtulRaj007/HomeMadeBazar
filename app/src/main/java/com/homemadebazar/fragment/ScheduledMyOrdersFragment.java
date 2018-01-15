@@ -69,7 +69,7 @@ public class ScheduledMyOrdersFragment extends BaseFragment {
             final ProgressDialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
             progressDialog.show();
 
-            final HomeChefIncomingOrderApiCall apiCall = new HomeChefIncomingOrderApiCall(userModel.getUserId(), "");
+            final HomeChefIncomingOrderApiCall apiCall = new HomeChefIncomingOrderApiCall(userModel.getUserId(), Constants.HomeChefOrder.SCHEDULED);
             HttpRequestHandler.getInstance(getActivity().getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override

@@ -64,7 +64,7 @@ public class NotificationActivity extends BaseActivity implements SwipeRefreshLa
                 finish();
             }
         });
-        ((TextView) findViewById(R.id.tv_title)).setText("WALLET");
+        ((TextView) findViewById(R.id.tv_title)).setText("NOTIFICATION");
 
     }
 

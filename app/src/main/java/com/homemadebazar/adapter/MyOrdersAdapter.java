@@ -63,6 +63,10 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((MyOrdersViewHolder) holder).tvName.setText(homeChefIncomingOrderModel.getFoodiesFirstName() + " " + homeChefIncomingOrderModel.getFoodiesLastName());
             ((MyOrdersViewHolder) holder).tvDesignation.setText("");
             ((MyOrdersViewHolder) holder).tvDishName.setText(homeChefIncomingOrderModel.getDishName());
+            ((MyOrdersViewHolder) holder).tvOrderId.setText(homeChefIncomingOrderModel.getOrderId());
+            ((MyOrdersViewHolder) holder).tvDateTime.setText(homeChefIncomingOrderModel.getOrderReqDate());
+            ((MyOrdersViewHolder) holder).tvDishTime.setText(homeChefIncomingOrderModel.getOrderFor());
+
 
         } else if (holder instanceof TitleSeparatorViewHolder) {
             ((TitleSeparatorViewHolder) holder).tvTitle.setText(homeChefIncomingOrderModel.getDateTitle());
@@ -125,7 +129,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     class MyOrdersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView ivProfile;
-        private TextView tvName, tvDesignation, tvDishName;
+        private TextView tvName, tvDesignation, tvDishName, tvOrderId, tvDateTime, tvDishTime;
         private Button btnAccept, btnReject;
 
         MyOrdersViewHolder(View itemView) {
@@ -134,6 +138,12 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             tvName = itemView.findViewById(R.id.tv_name);
             tvDesignation = itemView.findViewById(R.id.tv_designation);
             tvDishName = itemView.findViewById(R.id.tv_dish_name);
+
+            tvOrderId = itemView.findViewById(R.id.tv_order_id);
+            tvDateTime = itemView.findViewById(R.id.tv_date_time);
+
+            tvDishTime = itemView.findViewById(R.id.tv_dish_time);
+            tvDishTime = itemView.findViewById(R.id.tv_dish_time);
 
             btnAccept = itemView.findViewById(R.id.btn_accept);
             btnReject = itemView.findViewById(R.id.btn_reject);

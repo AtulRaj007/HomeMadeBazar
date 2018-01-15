@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -29,7 +27,7 @@ import com.homemadebazar.util.Utils;
 import java.util.ArrayList;
 
 
-public class FoodieHomeChefSearchActivity extends BaseActivity {
+public class FoodieHomeChefSearchActivity extends BaseActivity implements View.OnClickListener {
     private RecyclerView rvCategories, rvHomeChef;
     private LinearLayoutManager linearLayoutManager;
     private GridLayoutManager gridLayoutManager;
@@ -65,22 +63,7 @@ public class FoodieHomeChefSearchActivity extends BaseActivity {
 
     @Override
     protected void initialiseListener() {
-        etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+        etSearch.setOnClickListener(this);
 
     }
 
@@ -152,5 +135,14 @@ public class FoodieHomeChefSearchActivity extends BaseActivity {
         });
         ((TextView) findViewById(R.id.tv_title)).setText("Search");
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.et_search:
+                FoodieSearchHomeChefActivity.getFoodieSearchIntent(FoodieHomeChefSearchActivity.this, "");
+                break;
+        }
     }
 }

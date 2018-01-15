@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.homemadebazar.R;
+import com.homemadebazar.activity.FoodieSearchHomeChefActivity;
 import com.homemadebazar.model.FoodCategoryModel;
 import com.squareup.picasso.Picasso;
 
@@ -52,15 +53,16 @@ public class FoodiesCategoryAdapter extends RecyclerView.Adapter<FoodiesCategory
         private ImageView ivCategoryImage;
         private TextView tvCategoryTitle;
 
-        public CategoryViewHolder(View itemView) {
+        CategoryViewHolder(View itemView) {
             super(itemView);
             ivCategoryImage = itemView.findViewById(R.id.iv_category_image);
             tvCategoryTitle = itemView.findViewById(R.id.tv_category_title);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-
+            context.startActivity(FoodieSearchHomeChefActivity.getFoodieSearchIntent(context, foodCategoryModelArrayList.get(getAdapterPosition()).getFoodCategoryId()));
         }
     }
 }

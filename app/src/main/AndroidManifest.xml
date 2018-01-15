@@ -30,12 +30,11 @@
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <meta-data
@@ -117,7 +116,6 @@
             android:name=".activity.FoodieHomeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".activity.MarketPlaceHomeActivity"
             android:screenOrientation="portrait" />
@@ -150,7 +148,6 @@
         <activity
             android:name=".activity.HomeShopDetailsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.FoodieHomeChefSearchActivity"
             android:screenOrientation="portrait" />
@@ -175,7 +172,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".fcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -202,15 +198,13 @@
             android:label="@string/title_activity_chat"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-
         <activity
             android:name=".activity.ChangePasswordActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.FoodiePostCommentActivity"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".activity.FoodieSearchHomeChefActivity"></activity>
     </application>
 
 </manifest>

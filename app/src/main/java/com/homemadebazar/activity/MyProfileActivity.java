@@ -106,10 +106,11 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
         } else if (TextUtils.isEmpty(etAboutYourSelf.getText().toString().trim())) {
             DialogUtils.showAlert(this, "Please enter about your self.");
             return false;
-        } else if (TextUtils.isEmpty(etAadharNumber.getText().toString().trim())) {
+        }
+        /*else if (TextUtils.isEmpty(etAadharNumber.getText().toString().trim())) {
             DialogUtils.showAlert(this, "Please enter aadhar number");
             return false;
-        }
+        }*/
         return true;
     }
 
