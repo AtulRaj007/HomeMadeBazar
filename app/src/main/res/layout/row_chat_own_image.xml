@@ -17,7 +17,8 @@
             android:id="@+id/iv_image"
             android:layout_width="165dp"
             android:layout_height="150dp"
-            android:background="@color/grey" />
+            android:background="@color/grey"
+            android:scaleType="centerCrop" />
 
         <include layout="@layout/layout_chat_own_time" />
 

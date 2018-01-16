@@ -23,15 +23,15 @@ public class FoodieMessengerFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_foodie_messenger,container,false);
+        View view = inflater.inflate(R.layout.fragment_foodie_messenger, container, false);
         return view;
     }
 
     @Override
     protected void initUI() {
-        viewPagerAdapter=new ViewPagerAdapter(getChildFragmentManager());
-        tabLayout=getView().findViewById(R.id.tab_layout);
-        viewPager=getView().findViewById(R.id.view_pager);
+        viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
+        tabLayout = getView().findViewById(R.id.tab_layout);
+        viewPager = getView().findViewById(R.id.view_pager);
     }
 
     @Override
@@ -46,9 +46,10 @@ public class FoodieMessengerFragment extends BaseFragment {
 
     }
 
-    private void setUpViewPager(){
-        viewPagerAdapter.addFragment(new FoodieMessengerFriendsFragment(),"Friends");
-        viewPagerAdapter.addFragment(new FoodieMessengerRequestFragment(),"Request");
+    private void setUpViewPager() {
+        viewPagerAdapter.addFragment(new FoodieMessengerFriendsFragment(), "Friends");
+        viewPagerAdapter.addFragment(new FoodieMessengerRequestFragment(), "Requests");
+        viewPagerAdapter.addFragment(new FoodieMessengerInvitesFragment(), "Invites");
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -68,7 +69,7 @@ public class FoodieMessengerFragment extends BaseFragment {
         viewPager.setAdapter(viewPagerAdapter);
     }
 
-    private void setUpTabLayout(){
+    private void setUpTabLayout() {
         tabLayout.setupWithViewPager(viewPager);
     }
 }

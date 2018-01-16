@@ -8,11 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.HomeShopDetailsActivity;
 import com.homemadebazar.model.HomeChiefNearByModel;
 import com.homemadebazar.util.CircleImageView;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -51,7 +51,7 @@ public class FoodieHomeListAdapter extends RecyclerView.Adapter<FoodieHomeListAd
         }
         if (!TextUtils.isEmpty(homeChiefNearByModelArrayList.get(position).getProfileImage())) {
             try {
-                Picasso.with(context).load(homeChiefNearByModelArrayList.get(position).getProfileImage()).placeholder(R.drawable.profile).into(holder.profilePic);
+                Glide.with(context).load(homeChiefNearByModelArrayList.get(position).getProfileImage()).into(holder.profilePic);
                 holder.tvDistance.setText(String.format("%.2f", homeChiefNearByModelArrayList.get(position).getDistance()) + " Meter Away");
             } catch (Exception e) {
                 e.printStackTrace();

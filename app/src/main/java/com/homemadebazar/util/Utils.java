@@ -3,6 +3,7 @@ package com.homemadebazar.util;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -16,14 +17,25 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.homemadebazar.R;
+import com.homemadebazar.activity.ChangePasswordActivity;
 import com.homemadebazar.activity.FoodieHomeActivity;
 import com.homemadebazar.activity.HomeActivity;
+import com.homemadebazar.activity.LoginActivity;
 import com.homemadebazar.activity.MarketPlaceHomeActivity;
+import com.homemadebazar.activity.MyOrdersActivity;
+import com.homemadebazar.activity.MyProfileActivity;
+import com.homemadebazar.activity.TransactionHistoryActivity;
+import com.homemadebazar.activity.WalletActivity;
+import com.homemadebazar.activity.WebViewActivity;
 import com.homemadebazar.model.FoodDateTimeBookModel;
 
 import java.io.File;
@@ -294,6 +306,63 @@ public class Utils {
             e.printStackTrace();
         }
         return foodDateTimeBookModels;
+    }
+
+    public static void onNavItemClick(final Context context, View v, final String userId) {
+
+        switch (v.getId()) {
+            case R.id.iv_edit_profile:
+                context.startActivity(new Intent(context, MyProfileActivity.class));
+                break;
+            case R.id.tv_my_orders:
+                context.startActivity(new Intent(context, MyOrdersActivity.class));
+                break;
+            case R.id.tv_my_wallet:
+                context.startActivity(new Intent(context, WalletActivity.class));
+                break;
+            case R.id.tv_sales_report:
+                Toast.makeText(context, "Development Mode", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.tv_transaction_history:
+                context.startActivity(new Intent(context, TransactionHistoryActivity.class));
+                break;
+            case R.id.tv_change_password:
+                context.startActivity(new Intent(context, ChangePasswordActivity.class));
+                break;
+            case R.id.tv_terms_of_use:
+                context.startActivity(WebViewActivity.getWebViewIntent(context, Constants.WebViewTitleUrl.TERMS_OF_USE.getTitle(), Constants.WebViewTitleUrl.TERMS_OF_USE.getUrl()));
+                break;
+            case R.id.tv_privacy_policy:
+                context.startActivity(WebViewActivity.getWebViewIntent(context, Constants.WebViewTitleUrl.PRIVACY_POLICY.getTitle(), Constants.WebViewTitleUrl.PRIVACY_POLICY.getUrl()));
+                break;
+            case R.id.tv_about:
+                context.startActivity(WebViewActivity.getWebViewIntent(context, Constants.WebViewTitleUrl.ABOUT_US.getTitle(), Constants.WebViewTitleUrl.ABOUT_US.getUrl()));
+                break;
+            case R.id.tv_logout:
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                alertDialogBuilder.setTitle("HomeMadeBazar");
+                alertDialogBuilder.setMessage("Are you sure you want to exit...");
+                alertDialogBuilder.setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                String deviceToken = FirebaseInstanceId.getInstance().getToken();
+                                ServiceUtils.deviceLoginLogoutApiCall(context, userId, deviceToken, Constants.LoginHistory.LOGOUT);
+                                SharedPreference.clearSharedPreference(context);
+                                context.startActivity(new Intent(context, LoginActivity.class));
+                                ((Activity) context).finish();
+                            }
+                        });
+                alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                alertDialogBuilder.show();
+                break;
+        }
+
     }
 
 }

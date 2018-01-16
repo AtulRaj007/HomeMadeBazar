@@ -10,11 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.model.ChatMessageModel;
 import com.homemadebazar.util.Constants;
-import com.homemadebazar.util.PicassoTrustAll;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -105,17 +104,19 @@ public class ChatConversationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 ((MessageViewHolder) holder).tvTime.setText(chatMessageModel.getSentTime());
             } else if (holder instanceof ImageViewHolder) {
                 if (!TextUtils.isEmpty(chatMessageModel.getShareFile())) {
-                    Picasso.with(context).load(chatMessageModel.getShareFile()).into(((ImageViewHolder) holder).ivChatImage);
+                    Glide.with(context).load(chatMessageModel.getShareFile()).into(((ImageViewHolder) holder).ivChatImage);
                 }
                 ((ImageViewHolder) holder).tvTime.setText(chatMessageModel.getSentTime());
 
             } else if (holder instanceof LocationViewHolder) {
                 if (!TextUtils.isEmpty(chatMessageModel.getLatitude()) && !TextUtils.isEmpty(chatMessageModel.getLongitude())) {
                     String locationImageUrl = makeUrl(chatMessageModel.getLatitude(), chatMessageModel.getLongitude());
-//                    Picasso.with(context).load(locationImageUrl).into(((LocationViewHolder) holder).ivLocationImage);
-                    PicassoTrustAll.getInstance(context)
-                            .load(locationImageUrl)
-                            .into(((LocationViewHolder) holder).ivLocationImage);
+                    System.out.println("Location Image Url:-" + locationImageUrl);
+                    Glide.with(context).load(locationImageUrl).into(((LocationViewHolder) holder).ivLocationImage);
+//                    PicassoTrustAll.getInstance(context)
+//                            .load(locationImageUrl)
+//                            .into(((LocationViewHolder) holder).ivLocationImage);
+
                 }
                 ((LocationViewHolder) holder).tvTime.setText(chatMessageModel.getSentTime());
             }
@@ -130,7 +131,8 @@ public class ChatConversationAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     public String makeUrl(String latitude, String longitude) {
-        String url = "https://maps.googleapis.com/maps/api/staticmap?zoom=15&size=300x150&maptype=roadmap&markers=color:red%7Clabel:⬤%7C" + latitude + "," + longitude + "&key=" + context.getResources().getString(R.string.google_api_key);
+//        String url = "https://maps.googleapis.com/maps/api/staticmap?zoom=15&size=300x150&maptype=roadmap&markers=color:red%7Clabel:⬤%7C" + latitude + "," + longitude + "&key=" + context.getResources().getString(R.string.google_api_key);
+        String url = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=12&size=200x200";
         Log.e("Map Image Url:-", url);
         return url;
     }

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.UserModel;
@@ -21,7 +22,6 @@ import com.homemadebazar.util.CircleImageView;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.Utils;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -50,7 +50,7 @@ public class FoodieMessengerRequestAdapter extends RecyclerView.Adapter<FoodieMe
     public void onBindViewHolder(RequestViewHolder holder, int position) {
         holder.tvName.setText(reqDataList.get(position).getFirstName() + " " + reqDataList.get(position).getLastName());
         if (!TextUtils.isEmpty(reqDataList.get(position).getProfilePic()))
-            Picasso.with(context).load(reqDataList.get(position).getProfilePic()).placeholder(R.drawable.profile).into(holder.profileImage);
+            Glide.with(context).load(reqDataList.get(position).getProfilePic()).into(holder.profileImage);
 
     }
 

@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.FoodieSearchHomeChefActivity;
 import com.homemadebazar.model.FoodCategoryModel;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -39,7 +39,7 @@ public class FoodiesCategoryAdapter extends RecyclerView.Adapter<FoodiesCategory
     public void onBindViewHolder(CategoryViewHolder holder, int position) {
         FoodCategoryModel foodCategoryModel = foodCategoryModelArrayList.get(position);
         if (!TextUtils.isEmpty(foodCategoryModel.getThumbnail())) {
-            Picasso.with(context).load(foodCategoryModel.getThumbnail()).into(holder.ivCategoryImage);
+            Glide.with(context).load(foodCategoryModel.getThumbnail()).into(holder.ivCategoryImage);
         }
         holder.tvCategoryTitle.setText(foodCategoryModel.getName());
     }

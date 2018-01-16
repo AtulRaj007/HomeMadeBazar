@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -24,7 +25,6 @@ import com.homemadebazar.model.HomeChiefNearByModel;
 import com.homemadebazar.util.CircleImageView;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.Utils;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -131,7 +131,7 @@ public class FoodieHomeMapFragment extends BaseFragment implements OnMapReadyCal
             tempPosition = position;
             homeChiefNearByModel = dataList.get(pos);
             if (!TextUtils.isEmpty(homeChiefNearByModel.getProfileImage())) {
-                Picasso.with(getActivity()).load(homeChiefNearByModel.getProfileImage()).into(profileImageView);
+                Glide.with(getActivity()).load(homeChiefNearByModel.getProfileImage()).into(profileImageView);
             }
             tvName.setText(homeChiefNearByModel.getFirstName() + " " + homeChiefNearByModel.getLastName());
             tvShopName.setText(homeChiefNearByModel.getShopName());

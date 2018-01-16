@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.model.MarketPlaceProductCategoryModel;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -38,7 +38,7 @@ public class MarketPlaceManageCategoryAdapter extends RecyclerView.Adapter<Marke
     public void onBindViewHolder(CategoryViewHolder holder, int position) {
         MarketPlaceProductCategoryModel marketPlaceProductCategoryModel = marketPlaceProductCategoryModelArrayList.get(position);
         if (!TextUtils.isEmpty(marketPlaceProductCategoryModel.getCategoryUrl())) {
-            Picasso.with(context).load(marketPlaceProductCategoryModel.getCategoryUrl()).into(holder.ivCategoryImage);
+            Glide.with(context).load(marketPlaceProductCategoryModel.getCategoryUrl()).into(holder.ivCategoryImage);
         }
         holder.tvCategoryId.setText(marketPlaceProductCategoryModel.getProductCategoryId());
         holder.tvCategoryName.setText(marketPlaceProductCategoryModel.getName());
@@ -60,7 +60,7 @@ public class MarketPlaceManageCategoryAdapter extends RecyclerView.Adapter<Marke
             tvCategoryId = itemView.findViewById(R.id.tv_category_id);
             tvCategoryName = itemView.findViewById(R.id.tv_category_name);
             tvCategoryDesc = itemView.findViewById(R.id.tv_category_desc);
-            ivCategoryImage=itemView.findViewById(R.id.iv_category_image);
+            ivCategoryImage = itemView.findViewById(R.id.iv_category_image);
         }
     }
 }

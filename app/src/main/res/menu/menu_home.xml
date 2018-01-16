@@ -10,7 +10,7 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/menu_first"
+        android:id="@+id/menu_notification"
         android:title=""
         app:actionLayout="@layout/custom_notification_menu_item"
         app:showAsAction="always" />

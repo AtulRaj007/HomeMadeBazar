@@ -7,20 +7,34 @@
 
     <ImageView
         android:id="@+id/iv_category_image"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:scaleType="centerCrop"
+        android:scaleType="centerCrop" />
 
-        />
 
-    <TextView
-        android:id="@+id/tv_category_title"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text=""
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_16" />
+        android:layout_below="@id/iv_category_image"
+        android:background="@color/colorPrimary"
+        android:padding="@dimen/padding_5">
 
+        <TextView
+            android:id="@+id/tv_category_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/iv_arrow"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_16" />
+
+        <ImageView
+            android:id="@+id/iv_arrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_foodie_arrow" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

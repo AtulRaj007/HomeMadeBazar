@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.MarketPlaceManageActivity;
 import com.homemadebazar.activity.UpdateShopDetailsActivity;
@@ -32,7 +33,6 @@ import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
 import com.homemadebazar.util.Utils;
-import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.json.JSONObject;
@@ -122,7 +122,7 @@ public class MarketPlaceMyShopFragment extends BaseFragment implements View.OnCl
                                     tvAddress.setText(homeChefProfileModel.getAddress() + "");
                                     tvSpeciality.setText(homeChefProfileModel.getSpeciality() + "");
                                     if (!TextUtils.isEmpty(homeChefProfileModel.getProfilePicture()))
-                                        Picasso.with(getActivity()).load(homeChefProfileModel.getProfilePicture()).into(ivProfileImage);
+                                        Glide.with(getActivity()).load(homeChefProfileModel.getProfilePicture()).into(ivProfileImage);
                                     ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(getActivity(), homeChefProfileModel.getCoverPhotoUrl());
                                     viewPager.setAdapter(imagePagerAdapter);
                                     circleIndicator.setViewPager(viewPager);

@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.model.MarketPlaceProductModel;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -39,7 +39,7 @@ public class MarketPlaceProductAdpater extends RecyclerView.Adapter<MarketPlaceP
     public void onBindViewHolder(MyProductsHolder holder, int position) {
         MarketPlaceProductModel marketPlaceProductModel = marketPlaceProductModelArrayList.get(position);
         if (!TextUtils.isEmpty(marketPlaceProductModel.getImageUrl())) {
-            Picasso.with(context).load(marketPlaceProductModel.getImageUrl()).into(holder.ivProductImage);
+            Glide.with(context).load(marketPlaceProductModel.getImageUrl()).into(holder.ivProductImage);
         }
         holder.tvName.setText(marketPlaceProductModel.getProductName());
         holder.tvCategory.setText(marketPlaceProductModel.getCategory());

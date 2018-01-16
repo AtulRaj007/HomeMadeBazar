@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class FoodieSearchHomeChefActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foodie_search_home_chef);
+        setUpToolbar();
     }
 
     @Override
@@ -121,5 +123,15 @@ public class FoodieSearchHomeChefActivity extends BaseActivity {
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), FoodieSearchHomeChefActivity.this, null);
         }
+    }
+
+    private void setUpToolbar() {
+        ((TextView) findViewById(R.id.tv_title)).setText("");
+        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

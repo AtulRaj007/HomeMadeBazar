@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.adapter.ImagePagerAdapter;
 import com.homemadebazar.adapter.ViewPagerAdapter;
@@ -34,7 +35,6 @@ import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
 import com.homemadebazar.util.Utils;
-import com.squareup.picasso.Picasso;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -111,7 +111,7 @@ public class HomeShopDetailsActivity extends BaseActivity implements View.OnClic
     protected void setData() {
         try {
             if (!TextUtils.isEmpty(homeChefNearByModel.getProfileImage())) {
-                Picasso.with(HomeShopDetailsActivity.this).load(homeChefNearByModel.getProfileImage()).into(ivProfileImage);
+                Glide.with(HomeShopDetailsActivity.this).load(homeChefNearByModel.getProfileImage()).into(ivProfileImage);
             }
             tvShopName.setText(homeChefNearByModel.getFirstName() + " " + homeChefNearByModel.getLastName());
             tvPriceRange.setText(homeChefNearByModel.getPriceRange());

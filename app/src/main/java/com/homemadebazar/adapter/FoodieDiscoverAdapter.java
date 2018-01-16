@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.HomeChefOrderModel;
@@ -23,7 +24,6 @@ import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
 import com.homemadebazar.util.Utils;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -61,7 +61,7 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
         holder.tvName.setText(homeChefOrderModelArrayList.get(position).getFirstName() + " " + homeChefOrderModelArrayList.get(position).getLastName());
         holder.tvRating.setText("5.0");
         if (TextUtils.isEmpty(homeChefOrderModelArrayList.get(position).getProfilePic()))
-            Picasso.with(context).load(homeChefOrderModelArrayList.get(position).getProfilePic()).into(holder.ivProfilePic);
+            Glide.with(context).load(homeChefOrderModelArrayList.get(position).getProfilePic()).into(holder.ivProfilePic);
     }
 
     @Override

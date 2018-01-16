@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.YouTubePlayerActivity;
 import com.homemadebazar.model.HomeChefSkillHubVideoModel;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -41,7 +41,7 @@ public class SkillHubAdapter extends RecyclerView.Adapter<SkillHubAdapter.SkillH
         holder.tvName.setText(homeChefSkillHubVideoModel.getTitle());
         holder.tvDescription.setText(homeChefSkillHubVideoModel.getDescription());
         if (!TextUtils.isEmpty(homeChefSkillHubVideoModel.getThumbNailUrl())) {
-            Picasso.with(context).load(homeChefSkillHubVideoModel.getThumbNailUrl()).into(holder.ivVideoThumbnail);
+            Glide.with(context).load(homeChefSkillHubVideoModel.getThumbNailUrl()).into(holder.ivVideoThumbnail);
         }
 
     }

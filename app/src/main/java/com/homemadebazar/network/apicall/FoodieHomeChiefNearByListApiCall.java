@@ -95,10 +95,6 @@ public class FoodieHomeChiefNearByListApiCall extends BaseApiCall {
         return coverPhotoArrayList;
     }
 
-    public ArrayList<HomeChiefNearByModel> getHomeChiefDetailList() {
-        return chiefDetailList;
-    }
-
     @Override
     public void parseResponseCode(Object response) throws JSONException {
         if (response instanceof JSONObject) {
@@ -108,8 +104,12 @@ public class FoodieHomeChiefNearByListApiCall extends BaseApiCall {
         super.parseResponseCode(response);
     }
 
-    @Override
-    public BaseModel getResult() {
+    public BaseModel getBaseModel() {
         return baseModel;
+    }
+
+    @Override
+    public ArrayList<HomeChiefNearByModel> getResult() {
+        return chiefDetailList;
     }
 }

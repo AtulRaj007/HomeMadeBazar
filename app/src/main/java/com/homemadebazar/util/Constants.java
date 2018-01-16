@@ -239,6 +239,28 @@ public class Constants {
         int DINNER = 3;
     }
 
+    public enum WebViewTitleUrl {
+        TERMS_OF_USE("Terms Of Use", "https://www.google.co.in"),
+        PRIVACY_POLICY("Privacy Policy", "https://www.facebook.com/"),
+        ABOUT_US("About", "https://www.google.co.in/");
+
+        String title;
+        String url;
+
+        WebViewTitleUrl(String title, String url) {
+            this.title = title;
+            this.url = url;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+    }
+
     /*
     public enum FileType {
         FILE(1, "image"),

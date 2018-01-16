@@ -1,20 +1,18 @@
 package com.homemadebazar.activity;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.homemadebazar.R;
@@ -23,13 +21,9 @@ import com.homemadebazar.fragment.FoodieDiscoverFragment;
 import com.homemadebazar.fragment.FoodieFlashFragment;
 import com.homemadebazar.fragment.FoodieHomeFragment;
 import com.homemadebazar.fragment.FoodieMessengerFragment;
-import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.UserModel;
-import com.homemadebazar.network.HttpRequestHandler;
-import com.homemadebazar.network.api.ApiCall;
-import com.homemadebazar.network.apicall.DeviceLoginLogoutApiCall;
 import com.homemadebazar.util.Constants;
-import com.homemadebazar.util.DialogUtils;
+import com.homemadebazar.util.ServiceUtils;
 import com.homemadebazar.util.SharedPreference;
 import com.homemadebazar.util.Utils;
 
@@ -52,6 +46,8 @@ public class FoodieHomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foodie_home);
         setUpToolbar();
+        String deviceToken = FirebaseInstanceId.getInstance().getToken();
+        ServiceUtils.deviceLoginLogoutApiCall(FoodieHomeActivity.this, userModel.getUserId(), deviceToken, Constants.LoginHistory.LOGIN);
 //        UserModel userModel = SharedPreference.getUserModel(this);
 //        if (userModel != null)
 //            Log.d("Foodie user id", userModel.getUserId());
@@ -108,13 +104,13 @@ public class FoodieHomeActivity extends BaseActivity {
     }
 
     private void setUpToolbar() {
-//        mToolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(mToolbar);
-        findViewById(R.id.menu_first).setOnClickListener(new View.OnClickListener() {
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        findViewById(R.id.menu_notification).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
-                    case R.id.menu_first:
+                    case R.id.menu_notification:
                         mDrawerLayout.openDrawer(Gravity.LEFT);
                         break;
                 }
@@ -153,46 +149,48 @@ public class FoodieHomeActivity extends BaseActivity {
 
     }
 
-    public void deviceLoginLogoutApiCall(String userId, String token, final int loginHistory) {
-        try {
-            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(this, null);
-            if (loginHistory == Constants.LoginHistory.LOGOUT) {
-                progressDialog.show();
-            }
-
-            final DeviceLoginLogoutApiCall apiCall = new DeviceLoginLogoutApiCall(userId, token, loginHistory);
-            HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
-
-                @Override
-                public void onComplete(Exception e) {
-                    if (loginHistory == Constants.LoginHistory.LOGOUT)
-                        DialogUtils.hideProgressDialog(progressDialog);
-                    if (e == null) { // Success
-                        try {
-                            BaseModel baseModel = apiCall.getResult();
-                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                if (loginHistory == Constants.LoginHistory.LOGOUT)
-                                    Toast.makeText(FoodieHomeActivity.this, baseModel.getStatusMessage(), Toast.LENGTH_SHORT).show();
-                            } else {
-                                DialogUtils.showAlert(FoodieHomeActivity.this, baseModel.getStatusMessage());
-                            }
-
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    } else { // Failure
-                        Utils.handleError(e.getMessage(), FoodieHomeActivity.this, null);
-                    }
-                }
-            });
-        } catch (Exception e) {
-            Utils.handleError(e.getMessage(), FoodieHomeActivity.this, null);
-        }
-    }
+//    public void deviceLoginLogoutApiCall(String userId, String token, final int loginHistory) {
+//        try {
+//            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(this, null);
+//            if (loginHistory == Constants.LoginHistory.LOGOUT) {
+//                progressDialog.show();
+//            }
+//
+//            final DeviceLoginLogoutApiCall apiCall = new DeviceLoginLogoutApiCall(userId, token, loginHistory);
+//            HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
+//
+//                @Override
+//                public void onComplete(Exception e) {
+//                    if (loginHistory == Constants.LoginHistory.LOGOUT)
+//                        DialogUtils.hideProgressDialog(progressDialog);
+//                    if (e == null) { // Success
+//                        try {
+//                            BaseModel baseModel = apiCall.getResult();
+//                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+//                                if (loginHistory == Constants.LoginHistory.LOGOUT)
+//                                    Toast.makeText(FoodieHomeActivity.this, baseModel.getStatusMessage(), Toast.LENGTH_SHORT).show();
+//                            } else {
+//                                DialogUtils.showAlert(FoodieHomeActivity.this, baseModel.getStatusMessage());
+//                            }
+//
+//                        } catch (Exception ex) {
+//                            ex.printStackTrace();
+//                        }
+//                    } else { // Failure
+//                        Utils.handleError(e.getMessage(), FoodieHomeActivity.this, null);
+//                    }
+//                }
+//            });
+//        } catch (Exception e) {
+//            Utils.handleError(e.getMessage(), FoodieHomeActivity.this, null);
+//        }
+//    }
 
     public void onNavItemClick(View v) {
         Log.e(TAG, "Click:-" + v.getId());
-        switch (v.getId()) {
+        mDrawerLayout.closeDrawer(Gravity.LEFT);
+        Utils.onNavItemClick(FoodieHomeActivity.this, v, userModel.getUserId());
+     /*   switch (v.getId()) {
             case R.id.iv_edit_profile:
                 startActivity(new Intent(FoodieHomeActivity.this, MyProfileActivity.class));
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -238,7 +236,7 @@ public class FoodieHomeActivity extends BaseActivity {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
                                 String deviceToken = FirebaseInstanceId.getInstance().getToken();
-                                deviceLoginLogoutApiCall(userModel.getUserId(), deviceToken, Constants.LoginHistory.LOGOUT);
+                                ServiceUtils.deviceLoginLogoutApiCall(FoodieHomeActivity.this, userModel.getUserId(), deviceToken, Constants.LoginHistory.LOGOUT);
                                 SharedPreference.clearSharedPreference(FoodieHomeActivity.this);
                                 startActivity(new Intent(FoodieHomeActivity.this, LoginActivity.class));
                                 finish();
@@ -254,16 +252,50 @@ public class FoodieHomeActivity extends BaseActivity {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 break;
 
+        }*/
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.e(TAG, "Id:-" + item.getItemId());
+        switch (item.getItemId()) {
+            case R.id.menu_notification:
+                startActivity(new Intent(FoodieHomeActivity.this, NotificationActivity.class));
+                return true;
+            case R.id.menu_second:
+//                ((MarketPlaceFragment)viewPagerAdapter.getItem(2)).setGridLayout();
+                return false;
+            default:
+                super.onOptionsItemSelected(item);
         }
+        return false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        Log.e(TAG, "====== onCreateOptionsMenu ======");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.menu_home);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return onOptionsItemSelected(item);
+            }
+        });
+        final MenuItem notificationMenuItem = menu.findItem(R.id.menu_notification);
+        notificationMenuItem.getActionView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onOptionsItemSelected(notificationMenuItem);
+            }
+        });
+        return true;
     }
 
     @Override
     protected void setData() {
         setUpViewPager();
         setUpTabLayout();
-        deviceLoginLogoutApiCall(userModel.getUserId(), FirebaseInstanceId.getInstance().getToken(), Constants.LoginHistory.LOGIN);
-//        userModel= SharedPreference.getUserModel(HomeActivity.this);
-//        Log.e("UserModel:-",userModel.toString());
 
     }
 }

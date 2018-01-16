@@ -8,11 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.ChatActivity;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.util.CircleImageView;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -40,7 +40,7 @@ public class FoodieMessengerFriendsAdapter extends RecyclerView.Adapter<FoodieMe
         holder.tvName.setText(friendList.get(position).getFirstName() + " " + friendList.get(position).getLastName());
         try {
             if (!TextUtils.isEmpty(friendList.get(position).getProfilePic()))
-                Picasso.with(context).load(friendList.get(position).getProfilePic()).into(holder.imageView);
+                Glide.with(context).load(friendList.get(position).getProfilePic()).into(holder.imageView);
         } catch (Exception e) {
             e.printStackTrace();
         }

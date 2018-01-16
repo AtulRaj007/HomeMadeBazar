@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.MessegeInviteParticipateModel;
@@ -20,7 +21,6 @@ import com.homemadebazar.network.apicall.MessengerJoinSendRequestApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.Utils;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -51,7 +51,7 @@ public class MessengerInviteParticipatesRecyclerAdapter extends RecyclerView.Ada
         holder.name.setText(messegeInviteParticipateModel.getfName() + " " + messegeInviteParticipateModel.getlName());
         holder.address.setText(messegeInviteParticipateModel.getAddress());
         if (!TextUtils.isEmpty(messegeInviteParticipateModel.getProfileImage())) {
-            Picasso.with(context).load(messegeInviteParticipateModel.getProfileImage()).into(holder.ivProfilePic);
+            Glide.with(context).load(messegeInviteParticipateModel.getProfileImage()).into(holder.ivProfilePic);
         }
         holder.btnRequestType.setText(messegeInviteParticipateModel.getStatus());
     }

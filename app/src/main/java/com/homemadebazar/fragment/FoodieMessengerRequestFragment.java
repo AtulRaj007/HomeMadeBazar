@@ -1,10 +1,8 @@
 package com.homemadebazar.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.homemadebazar.R;
-import com.homemadebazar.activity.FoodieMessengerInviteParticipateActivity;
 import com.homemadebazar.adapter.FoodieMessengerRequestAdapter;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.UserModel;
@@ -30,13 +27,13 @@ import java.util.ArrayList;
  * Created by atulraj on 22/11/17.
  */
 
-public class FoodieMessengerRequestFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class FoodieMessengerRequestFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     ArrayList<UserModel> reqDataList = new ArrayList<>();
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private FoodieMessengerRequestAdapter foodieMessengerRequestAdapter;
-    private CardView inviteNewParticipate;
+    //    private CardView inviteNewParticipate;
     private UserModel userModel;
 
     @Nullable
@@ -52,14 +49,14 @@ public class FoodieMessengerRequestFragment extends BaseFragment implements Swip
         swipeRefreshLayout = getView().findViewById(R.id.swipe_refresh_layout);
         recyclerView = getView().findViewById(R.id.recycler_view);
         linearLayoutManager = new LinearLayoutManager(getActivity());
-        inviteNewParticipate = getView().findViewById(R.id.card_send_invites);
+//        inviteNewParticipate = getView().findViewById(R.id.card_send_invites);
     }
 
     @Override
     protected void initialiseListener() {
         reqDataList = new ArrayList<>();
         swipeRefreshLayout.setOnRefreshListener(this);
-        inviteNewParticipate.setOnClickListener(this);
+//        inviteNewParticipate.setOnClickListener(this);
         userModel = SharedPreference.getUserModel(getActivity());
     }
 
@@ -112,14 +109,4 @@ public class FoodieMessengerRequestFragment extends BaseFragment implements Swip
         getFriendRequestListApiCall(userModel.getUserId());
     }
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.card_send_invites:
-                Intent invitePaticipateIntent = new Intent(getActivity(), FoodieMessengerInviteParticipateActivity.class);
-                startActivity(invitePaticipateIntent);
-                break;
-        }
-    }
 }

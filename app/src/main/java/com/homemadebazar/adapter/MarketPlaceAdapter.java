@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.model.IngredientsRowsModel;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -43,10 +43,10 @@ public class MarketPlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         IngredientsRowsModel ingredientsRowsModel = ingredientsRowsModelArrayList.get(position);
         if (holder instanceof DishViewHolder) {
             ((DishViewHolder) holder).tvDishName.setText(ingredientsRowsModel.getDishName());
-        } else if(holder instanceof IngredientViewHolder){
-            if(ingredientsRowsModel.getMarketPlaceProductModel()!=null) {
+        } else if (holder instanceof IngredientViewHolder) {
+            if (ingredientsRowsModel.getMarketPlaceProductModel() != null) {
                 if (!TextUtils.isEmpty(ingredientsRowsModel.getMarketPlaceProductModel().getImageUrl()))
-                    Picasso.with(context).load(ingredientsRowsModel.getMarketPlaceProductModel().getImageUrl()).into(((IngredientViewHolder) holder).ivDishImage);
+                    Glide.with(context).load(ingredientsRowsModel.getMarketPlaceProductModel().getImageUrl()).into(((IngredientViewHolder) holder).ivDishImage);
                 ((IngredientViewHolder) holder).tvDishName.setText(ingredientsRowsModel.getMarketPlaceProductModel().getProductName());
                 ((IngredientViewHolder) holder).tvDishQuantity.setText("");
                 ((IngredientViewHolder) holder).tvDishDescription.setText(ingredientsRowsModel.getMarketPlaceProductModel().getDescription());

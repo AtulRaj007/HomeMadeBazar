@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -47,7 +47,7 @@ public class ImagePagerAdapter extends PagerAdapter {
         ImageView imageView = view.findViewById(R.id.iv_image);
         if (!TextUtils.isEmpty(imageArrayList.get(position))) {
             try {
-                Picasso.with(context).load(imageArrayList.get(position)).into(imageView);
+                Glide.with(context).load(imageArrayList.get(position)).into(imageView);
             } catch (Exception e) {
                 e.printStackTrace();
             }

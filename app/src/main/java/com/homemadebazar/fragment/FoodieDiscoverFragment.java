@@ -66,15 +66,15 @@ public class FoodieDiscoverFragment extends BaseFragment {
 
     private void getHomeChefHotDealsOrders(String userId) {
         try {
-            final Dialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
-            progressDialog.show();
+//            final Dialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
+//            progressDialog.show();
 
             final GetListOfOrdersChefApiCall apiCall = new GetListOfOrdersChefApiCall(userId, Constants.FoodType.BREAKFAST);
             HttpRequestHandler.getInstance(getActivity().getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
                 public void onComplete(Exception e) {
-                    progressDialog.hide();
+//                    progressDialog.hide();
                     if (e == null) { // Success
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();

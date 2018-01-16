@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.UploadFileTask;
@@ -22,7 +23,6 @@ import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
 import com.homemadebazar.util.Utils;
-import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.json.JSONObject;
@@ -97,7 +97,7 @@ public class FoodieAddPostActivity extends BaseActivity implements View.OnClickL
         nameText.setText(userModel.getFirstName() + " " + userModel.getLastName());
         try {
             if (!TextUtils.isEmpty(userModel.getProfilePic()))
-                Picasso.with(this).load(userModel.getProfilePic()).into(profileImage);
+                Glide.with(this).load(userModel.getProfilePic()).into(profileImage);
         } catch (Exception e) {
             e.printStackTrace();
         }

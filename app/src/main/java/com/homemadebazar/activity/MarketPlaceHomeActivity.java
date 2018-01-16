@@ -1,24 +1,29 @@
 package com.homemadebazar.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.homemadebazar.R;
 import com.homemadebazar.adapter.ViewPagerAdapter;
 import com.homemadebazar.fragment.MarketPlaceMyProductsFragment;
 import com.homemadebazar.fragment.MarketPlaceMyShopFragment;
 import com.homemadebazar.fragment.MarketPlaceOrdersFragment;
+import com.homemadebazar.model.UserModel;
+import com.homemadebazar.util.Constants;
+import com.homemadebazar.util.ServiceUtils;
 import com.homemadebazar.util.SharedPreference;
+import com.homemadebazar.util.Utils;
 
 public class MarketPlaceHomeActivity extends BaseActivity {
     private static final String TAG = ">>>>> MarketPlace >>";
@@ -29,6 +34,7 @@ public class MarketPlaceHomeActivity extends BaseActivity {
     private int tabIconsSelected[] = {R.drawable.ic_marketplace_order, R.drawable.ic_marketplace_myshop, R.drawable.ic_marketplace_myproduct};
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private UserModel userModel;
 
 
     @Override
@@ -36,10 +42,13 @@ public class MarketPlaceHomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_market_place_home);
         setUpToolbar();
+        String deviceToken = FirebaseInstanceId.getInstance().getToken();
+        ServiceUtils.deviceLoginLogoutApiCall(MarketPlaceHomeActivity.this, userModel.getUserId(), deviceToken, Constants.LoginHistory.LOGIN);
     }
 
     @Override
     protected void initUI() {
+        userModel = SharedPreference.getUserModel(MarketPlaceHomeActivity.this);
         mDrawerLayout = findViewById(R.id.drawer_layout);
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager = findViewById(R.id.view_pager);
@@ -84,11 +93,11 @@ public class MarketPlaceHomeActivity extends BaseActivity {
     private void setUpToolbar() {
 //        mToolbar = findViewById(R.id.toolbar);
 //        setSupportActionBar(mToolbar);
-        findViewById(R.id.menu_first).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.menu_notification).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
-                    case R.id.menu_first:
+                    case R.id.menu_notification:
                         mDrawerLayout.openDrawer(Gravity.LEFT);
                         break;
                 }
@@ -137,9 +146,48 @@ public class MarketPlaceHomeActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.e(TAG, "Id:-" + item.getItemId());
+        switch (item.getItemId()) {
+            case R.id.menu_notification:
+                startActivity(new Intent(MarketPlaceHomeActivity.this, NotificationActivity.class));
+                return true;
+            case R.id.menu_second:
+//                ((MarketPlaceFragment)viewPagerAdapter.getItem(2)).setGridLayout();
+                return false;
+            default:
+                super.onOptionsItemSelected(item);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        Log.e(TAG, "====== onCreateOptionsMenu ======");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.menu_home);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return onOptionsItemSelected(item);
+            }
+        });
+        final MenuItem notificationMenuItem = menu.findItem(R.id.menu_notification);
+        notificationMenuItem.getActionView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onOptionsItemSelected(notificationMenuItem);
+            }
+        });
+        return true;
+    }
+
     public void onNavItemClick(View v) {
         Log.e(TAG, "Click:-" + v.getId());
-        switch (v.getId()) {
+        mDrawerLayout.closeDrawer(Gravity.LEFT);
+        Utils.onNavItemClick(MarketPlaceHomeActivity.this, v, userModel.getUserId());
+    /*    switch (v.getId()) {
             case R.id.iv_edit_profile:
                 startActivity(new Intent(MarketPlaceHomeActivity.this, MyProfileActivity.class));
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -199,6 +247,6 @@ public class MarketPlaceHomeActivity extends BaseActivity {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 break;
 
-        }
+        }*/
     }
 }

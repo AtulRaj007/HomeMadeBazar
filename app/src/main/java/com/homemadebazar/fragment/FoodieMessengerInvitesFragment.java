@@ -1,22 +1,24 @@
 package com.homemadebazar.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.homemadebazar.R;
-import com.homemadebazar.adapter.FoodieHomeListAdapter;
+import com.homemadebazar.adapter.MessengerInviteParticipatesRecyclerAdapter;
 import com.homemadebazar.model.BaseModel;
-import com.homemadebazar.model.HomeChiefNearByModel;
+import com.homemadebazar.model.MessegeInviteParticipateModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
-import com.homemadebazar.network.apicall.FoodieHomeChiefNearByListApiCall;
+import com.homemadebazar.network.apicall.MessengerInviteParticipateApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
@@ -25,51 +27,57 @@ import com.homemadebazar.util.Utils;
 import java.util.ArrayList;
 
 /**
- * Created by atulraj on 22/11/17.
+ * Created by sonu on 12/9/2017.
  */
 
-public class FoodieHomeListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class FoodieMessengerInvitesFragment extends BaseFragment {
     private RecyclerView recyclerView;
-    private LinearLayoutManager linearLayoutManager;
-    private FoodieHomeListAdapter foodieHomeListAdapter;
-    private ArrayList<HomeChiefNearByModel> homeChiefNearByModelArrayList = new ArrayList<>();
+    private Toolbar toolbar;
     private UserModel userModel;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private ArrayList<MessegeInviteParticipateModel> dataList;
+
+    private TextView toolbarTitle;
+    private MessengerInviteParticipatesRecyclerAdapter adapter;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_foodie_home_list, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_messenger_invites, container, false);
     }
 
     @Override
     protected void initUI() {
-        userModel = SharedPreference.getUserModel(getActivity());
-        recyclerView = getView().findViewById(R.id.recycler_view);
-        swipeRefreshLayout = getView().findViewById(R.id.swipe_refresh_layout);
+        toolbar = getView().findViewById(R.id.toolbar);
+        recyclerView = getView().findViewById(R.id.participates_recycler_view);
     }
 
     @Override
     protected void initialiseListener() {
-        swipeRefreshLayout.setOnRefreshListener(this);
+        dataList = new ArrayList<>();
+        userModel = SharedPreference.getUserModel(getActivity());
     }
 
     @Override
     protected void setData() {
-        foodieHomeListAdapter = new FoodieHomeListAdapter(getActivity(), homeChiefNearByModelArrayList);
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(foodieHomeListAdapter);
-        getChiefDetailListApiCall();
+        setRecyclerAdapter();
+        getInviteParticipateListApiCall();
+    }
+
+    private void setRecyclerAdapter() {
+        adapter = new MessengerInviteParticipatesRecyclerAdapter(getActivity(), dataList, userModel.getUserId());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
     }
 
 
-    public void getChiefDetailListApiCall() {
+//    {"StatusCode":"100","StatusMessage":"Successful","RequestObjects":[{"EmailId":"atul.raj@gmail.com","FName":"Atul","LName":"Jio","Mobile":"8709646364","UserId":"1801062","Distance":0,"Address":"","Pincode":"","DP":"","Status":"Request Not sent","StatusInNumeric":-1}]}
+
+    private void getInviteParticipateListApiCall() {
         try {
 //            final Dialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
 //            progressDialog.show();
 
-            final FoodieHomeChiefNearByListApiCall apiCall = new FoodieHomeChiefNearByListApiCall(userModel.getUserId(), "28.5244", "77.1855");
+            final MessengerInviteParticipateApiCall apiCall = new MessengerInviteParticipateApiCall(userModel.getUserId(), "28.5244", "77.1855");
             HttpRequestHandler.getInstance(getActivity()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
@@ -77,12 +85,12 @@ public class FoodieHomeListFragment extends BaseFragment implements SwipeRefresh
 //                    progressDialog.hide();
                     if (e == null) { // Success
                         try {
-                            BaseModel baseModel = apiCall.getBaseModel();
+                            BaseModel baseModel = apiCall.getResult();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
                                 // DialogUtils.showAlert(getActivity(), "HomeChiefDetailList size:-" + apiCall.getHomeChiefDetailList().size());
-                                homeChiefNearByModelArrayList.clear();
-                                homeChiefNearByModelArrayList.addAll(apiCall.getResult());
-                                foodieHomeListAdapter.notifyDataSetChanged();
+                                dataList.clear();
+                                dataList.addAll(apiCall.getData());
+                                setRecyclerAdapter();
                             } else {
                                 DialogUtils.showAlert(getActivity(), baseModel.getStatusMessage());
                             }
@@ -98,10 +106,5 @@ public class FoodieHomeListFragment extends BaseFragment implements SwipeRefresh
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), getActivity(), null);
         }
-    }
-
-    @Override
-    public void onRefresh() {
-        getChiefDetailListApiCall();
     }
 }

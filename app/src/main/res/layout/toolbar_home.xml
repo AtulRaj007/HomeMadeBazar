@@ -10,7 +10,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/menu_first"
+            android:id="@+id/menu_notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/margin_10"
-            android:layout_toRightOf="@id/menu_first"
+            android:layout_toRightOf="@id/menu_notification"
             android:text=""
             android:textAllCaps="false"
             android:textColor="@color/white"

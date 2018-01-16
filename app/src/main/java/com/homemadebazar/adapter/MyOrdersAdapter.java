@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.HomeChefIncomingOrderModel;
@@ -20,7 +21,6 @@ import com.homemadebazar.network.apicall.HomeChefFoodieOrderAcceptRejectApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.Utils;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -57,7 +57,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         HomeChefIncomingOrderModel homeChefIncomingOrderModel = homeChefIncomingOrderModelArrayList.get(position);
         if (holder instanceof MyOrdersViewHolder) {
             if (!TextUtils.isEmpty(homeChefIncomingOrderModel.getFoodiesDp())) {
-                Picasso.with(context).load(homeChefIncomingOrderModel.getFoodiesDp()).into(((MyOrdersViewHolder) holder).ivProfile);
+                Glide.with(context).load(homeChefIncomingOrderModel.getFoodiesDp()).into(((MyOrdersViewHolder) holder).ivProfile);
             }
 
             ((MyOrdersViewHolder) holder).tvName.setText(homeChefIncomingOrderModel.getFoodiesFirstName() + " " + homeChefIncomingOrderModel.getFoodiesLastName());
