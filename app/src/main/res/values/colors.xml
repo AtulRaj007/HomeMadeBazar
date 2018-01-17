@@ -2,8 +2,8 @@
 <resources>
     <!--<color name="colorPrimary">#f24055</color>-->
     <color name="colorPrimary">#EF4C1B</color>
-    <color name="colorPrimaryDark">#f24055</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimaryDark">#EF4C1B</color>
+    <color name="colorAccent">#EF4C1B</color>
 
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
@@ -17,4 +17,5 @@
     <!--<color name="background_screen">#D3D3D3</color>-->
     <color name="background_screen">#1B1B1B</color>
     <color name="navigation_title_color">#FFFFFF</color>
+    <color name="nav_line_background">#FFFFFF</color>
 </resources>

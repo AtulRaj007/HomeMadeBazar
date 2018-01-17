@@ -49,5 +49,9 @@
     <dimen name="custom_tab_bottom_height">80dp</dimen>
     <dimen name="padding_40">40dp</dimen>
     <dimen name="margin_60">60dp</dimen>
+    <dimen name="nav_left_margin">25dp</dimen>
+    <dimen name="nav_bottom_margin">5dp</dimen>
+    <dimen name="nav_top_margin">5dp</dimen>
     <item name="dim_grid_first_row_weight" format="float" type="dimen">1.4</item>
+    <dimen name="nav_line_height">0.05dp</dimen>
 </resources>

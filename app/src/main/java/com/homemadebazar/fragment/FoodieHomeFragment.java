@@ -36,7 +36,6 @@ public class FoodieHomeFragment extends BaseFragment {
         viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         tabLayout = getView().findViewById(R.id.tab_layout);
         viewPager = getView().findViewById(R.id.view_pager);
-
     }
 
     @Override
@@ -51,8 +50,10 @@ public class FoodieHomeFragment extends BaseFragment {
     }
 
     private void setUpViewPager() {
-        viewPagerAdapter.addFragment(new FoodieHomeChefSearchFragment(), "Home");
+        viewPagerAdapter.addFragment(new FoodieHomeChefSearchFragment(), "Near Me");
         viewPagerAdapter.addFragment(new FoodieHomeListFragment(), "List");
+        viewPagerAdapter.addFragment(new FoodieHomeChefBookmarkFragment(), "Favourites");
+
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

@@ -8,18 +8,25 @@
 
     <include layout="@layout/layout_navigation_header" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/nav_line_height"
+        android:layout_marginBottom="@dimen/nav_bottom_margin"
+        android:layout_marginTop="@dimen/nav_top_margin"
+        android:background="@color/nav_line_background" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rl_header"
-        android:layout_marginLeft="@dimen/margin_25"
         android:orientation="vertical">
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10">
+            android:layout_marginBottom="@dimen/nav_bottom_margin"
+            android:layout_marginLeft="@dimen/nav_left_margin"
+            android:layout_marginTop="@dimen/nav_top_margin">
 
             <ImageView
                 android:id="@+id/tv_edit_address"
@@ -29,21 +36,38 @@
 
             <TextView
                 android:id="@+id/tv_my_orders"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_10"
+                android:layout_weight="1"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="@dimen/margin_5"
                 android:text="@string/str_my_orders"
                 android:textColor="@color/navigation_title_color" />
 
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/margin_20"
+                android:src="@drawable/ic_foodie_arrow" />
+
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/nav_line_height"
+            android:layout_marginBottom="@dimen/nav_bottom_margin"
+            android:layout_marginTop="@dimen/nav_top_margin"
+            android:background="@color/nav_line_background" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10">
+            android:layout_marginBottom="@dimen/nav_bottom_margin"
+            android:layout_marginLeft="@dimen/nav_left_margin"
+            android:layout_marginTop="@dimen/nav_top_margin">
 
             <ImageView
                 android:layout_width="30dp"
@@ -52,21 +76,38 @@
 
             <TextView
                 android:id="@+id/tv_my_wallet"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_10"
+                android:layout_weight="1"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="@dimen/margin_5"
                 android:text="@string/str_my_wallet"
                 android:textColor="@color/navigation_title_color" />
 
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/margin_20"
+                android:src="@drawable/ic_foodie_arrow" />
+
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/nav_line_height"
+            android:layout_marginBottom="@dimen/nav_bottom_margin"
+            android:layout_marginTop="@dimen/nav_top_margin"
+            android:background="@color/nav_line_background" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10">
+            android:layout_marginBottom="@dimen/nav_bottom_margin"
+            android:layout_marginLeft="@dimen/nav_left_margin"
+            android:layout_marginTop="@dimen/nav_top_margin">
 
             <ImageView
                 android:layout_width="30dp"
@@ -75,21 +116,38 @@
 
             <TextView
                 android:id="@+id/tv_sales_report"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_10"
+                android:layout_weight="1"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="@dimen/margin_5"
                 android:text="@string/str_sales_report"
                 android:textColor="@color/navigation_title_color" />
 
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/margin_20"
+                android:src="@drawable/ic_foodie_arrow" />
+
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/nav_line_height"
+            android:layout_marginBottom="@dimen/nav_bottom_margin"
+            android:layout_marginTop="@dimen/nav_top_margin"
+            android:background="@color/nav_line_background" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10">
+            android:layout_marginBottom="@dimen/nav_bottom_margin"
+            android:layout_marginLeft="@dimen/nav_left_margin"
+            android:layout_marginTop="@dimen/nav_top_margin">
 
             <ImageView
                 android:layout_width="30dp"
@@ -98,22 +156,30 @@
 
             <TextView
                 android:id="@+id/tv_transaction_history"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_10"
+                android:layout_weight="1"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="@dimen/margin_5"
                 android:text="@string/str_transaction_history"
                 android:textColor="@color/navigation_title_color" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/margin_20"
+                android:src="@drawable/ic_foodie_arrow" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginBottom="@dimen/margin_10"
-            android:layout_marginTop="@dimen/margin_10"
-            android:background="@color/white" />
+            android:layout_height="@dimen/nav_line_height"
+            android:layout_marginBottom="@dimen/nav_bottom_margin"
+            android:layout_marginTop="@dimen/nav_top_margin"
+            android:background="@color/nav_line_background" />
 
         <!--<TextView-->
         <!--android:layout_width="match_parent"-->
@@ -126,7 +192,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10">
+            android:layout_marginBottom="@dimen/nav_bottom_margin"
+            android:layout_marginLeft="@dimen/nav_left_margin"
+            android:layout_marginTop="@dimen/nav_top_margin">
 
             <ImageView
                 android:layout_width="30dp"
@@ -135,21 +203,38 @@
 
             <TextView
                 android:id="@+id/tv_change_password"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_10"
+                android:layout_weight="1"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="@dimen/margin_5"
                 android:text="@string/str_change_password"
                 android:textColor="@color/navigation_title_color" />
 
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/margin_20"
+                android:src="@drawable/ic_foodie_arrow" />
+
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/nav_line_height"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_10"
+            android:background="@color/nav_line_background" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10">
+            android:layout_marginBottom="@dimen/nav_bottom_margin"
+            android:layout_marginLeft="@dimen/nav_left_margin"
+            android:layout_marginTop="@dimen/nav_top_margin">
 
             <ImageView
                 android:layout_width="30dp"
@@ -158,21 +243,38 @@
 
             <TextView
                 android:id="@+id/tv_terms_of_use"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_10"
+                android:layout_weight="1"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="@dimen/margin_5"
                 android:text="@string/str_terms_of_use"
                 android:textColor="@color/navigation_title_color" />
 
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/margin_20"
+                android:src="@drawable/ic_foodie_arrow" />
+
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/nav_line_height"
+            android:layout_marginBottom="@dimen/nav_bottom_margin"
+            android:layout_marginTop="@dimen/nav_top_margin"
+            android:background="@color/nav_line_background" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10">
+            android:layout_marginBottom="@dimen/nav_bottom_margin"
+            android:layout_marginLeft="@dimen/nav_left_margin"
+            android:layout_marginTop="@dimen/nav_top_margin">
 
             <ImageView
                 android:layout_width="30dp"
@@ -181,21 +283,38 @@
 
             <TextView
                 android:id="@+id/tv_privacy_policy"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_10"
+                android:layout_weight="1"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="@dimen/margin_5"
                 android:text="@string/str_privacy_policy"
                 android:textColor="@color/navigation_title_color" />
 
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/margin_20"
+                android:src="@drawable/ic_foodie_arrow" />
+
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/nav_line_height"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_10"
+            android:background="@color/nav_line_background" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10">
+            android:layout_marginBottom="@dimen/nav_bottom_margin"
+            android:layout_marginLeft="@dimen/nav_left_margin"
+            android:layout_marginTop="@dimen/nav_top_margin">
 
             <ImageView
                 android:layout_width="30dp"
@@ -204,22 +323,39 @@
 
             <TextView
                 android:id="@+id/tv_about"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_10"
+                android:layout_weight="1"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="@dimen/margin_5"
                 android:text="@string/str_about"
                 android:textColor="@color/navigation_title_color" />
 
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/margin_20"
+                android:src="@drawable/ic_foodie_arrow" />
+
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/nav_line_height"
+            android:layout_marginBottom="@dimen/nav_bottom_margin"
+            android:layout_marginTop="@dimen/nav_top_margin"
+            android:background="@color/nav_line_background" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_30">
+            android:layout_marginBottom="@dimen/nav_bottom_margin"
+            android:layout_marginLeft="@dimen/nav_left_margin"
+            android:layout_marginTop="@dimen/nav_top_margin">
 
             <ImageView
                 android:layout_width="30dp"
@@ -228,16 +364,31 @@
 
             <TextView
                 android:id="@+id/tv_logout"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/margin_10"
+                android:layout_weight="1"
                 android:text="@string/str_logout"
                 android:textColor="@color/navigation_title_color"
                 android:textSize="@dimen/text_18" />
 
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/margin_20"
+                android:src="@drawable/ic_foodie_arrow" />
+
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/nav_line_height"
+            android:layout_marginBottom="@dimen/nav_bottom_margin"
+            android:layout_marginTop="@dimen/nav_top_margin"
+            android:background="@color/nav_line_background" />
 
 
     </LinearLayout>
