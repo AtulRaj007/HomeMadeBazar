@@ -1,9 +1,11 @@
 package com.homemadebazar.activity;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.homemadebazar.R;
 import com.homemadebazar.model.BaseModel;
@@ -24,6 +26,7 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
+        setUpToolbar();
     }
 
     @Override
@@ -48,7 +51,7 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_update_profile:
+            case R.id.btn_update_password:
                 if (isValid())
                     changePassword();
                 break;
@@ -74,12 +77,15 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
 
     private void changePassword() {
         try {
+            final Dialog progressDialog = DialogUtils.getProgressDialog(ChangePasswordActivity.this, null);
+            progressDialog.show();
             final ChangePasswordApiCall apiCall = new ChangePasswordApiCall(userModel.getUserId(), etCurrentPassword.getText().toString().trim(), etNewPassword.getText().toString().trim());
             HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
                 public void onComplete(Exception e) {
                     if (e == null) { // Success
+                        DialogUtils.hideProgressDialog(progressDialog);
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
@@ -99,6 +105,16 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), ChangePasswordActivity.this, null);
         }
+    }
+
+    private void setUpToolbar() {
+        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        ((TextView) findViewById(R.id.tv_title)).setText("Change Password");
     }
 
 }

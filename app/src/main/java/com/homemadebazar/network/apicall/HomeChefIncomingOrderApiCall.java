@@ -46,7 +46,8 @@ public class HomeChefIncomingOrderApiCall extends BaseApiCall {
             try {
                 JSONObject object = new JSONObject(response);
                 baseModel = JSONParsingUtils.parseBaseModel(object);
-                homeChefIncomingOrderModelArrayList = JSONParsingUtils.parseHomeChefIncomingOrder(object.optJSONArray("Ordered"), 1);
+                if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS)
+                    homeChefIncomingOrderModelArrayList = JSONParsingUtils.parseHomeChefIncomingOrder(object.optJSONArray("Ordered"), 1);
             } catch (Exception e) {
                 e.printStackTrace();
             }

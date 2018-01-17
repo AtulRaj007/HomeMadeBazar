@@ -11,29 +11,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * Created by atulraj on 10/12/17.
+ * Created by Sumit on 27/08/17.
  */
 
-public class GetHomeChefOrderListApiCall extends BaseApiCall {
+public class GetListOfHotDealsApiCall extends BaseApiCall {
 
     private String userId;
     private BaseModel baseModel;
     private ArrayList<HomeChefOrderModel> homeChefOrderModelArrayList;
 
-    public GetHomeChefOrderListApiCall(String userId) {
+
+    public GetListOfHotDealsApiCall(String userId) {
         this.userId = userId;
-    }
-
-    public Object getRequest() {
-        JSONObject obj = new JSONObject();
-        try {
-            obj.put("UserId", userId);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        System.out.println(Constants.ServiceTAG.REQUEST + obj.toString());
-        return obj;
     }
 
     private void parseData(String response) {
@@ -43,7 +32,7 @@ public class GetHomeChefOrderListApiCall extends BaseApiCall {
             try {
                 JSONObject object = new JSONObject(response);
                 baseModel = JSONParsingUtils.parseBaseModel(object);
-                homeChefOrderModelArrayList = JSONParsingUtils.parseHomeChefOrderList1(object);
+                homeChefOrderModelArrayList = JSONParsingUtils.parseHotDealList(object);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -57,8 +46,20 @@ public class GetHomeChefOrderListApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
-        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.HOMECHEF_GET_ORDER_DETAILS);
-        return Constants.ServerURL.HOMECHEF_GET_ORDER_DETAILS;
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.LIST_OF_HOT_DEALS);
+        return Constants.ServerURL.LIST_OF_HOT_DEALS;
+    }
+
+    public Object getRequest() {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("UserId", userId);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        System.out.println(Constants.ServiceTAG.REQUEST + obj.toString());
+        return obj;
     }
 
     public BaseModel getBaseModel() {

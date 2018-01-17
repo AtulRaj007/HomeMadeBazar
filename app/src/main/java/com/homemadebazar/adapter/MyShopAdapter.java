@@ -17,7 +17,7 @@ import com.homemadebazar.model.HomeChefOrderModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
-import com.homemadebazar.network.apicall.ApplyOrderForHotDealsApiCall;
+import com.homemadebazar.network.apicall.AddPromoteBusinessApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
@@ -40,10 +40,6 @@ public class MyShopAdapter extends RecyclerView.Adapter<MyShopAdapter.MyShopView
         this.context = context;
         this.homeChefOrderModelArrayList = homeChefOrderModelArrayList;
         userModel = SharedPreference.getUserModel(context);
-    }
-
-    public MyShopAdapter(Context context) {
-        this.context = context;
     }
 
     @Override
@@ -81,11 +77,11 @@ public class MyShopAdapter extends RecyclerView.Adapter<MyShopAdapter.MyShopView
         private ViewPager viewPager;
         private CircleIndicator circleIndicator;
 
-        public MyShopViewHolder(View itemView) {
+        MyShopViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_name);
             tvDescription = itemView.findViewById(R.id.tv_description);
-            tvPermoteBusiness = itemView.findViewById(R.id.tv_permote_business);
+            tvPermoteBusiness = itemView.findViewById(R.id.tv_promote_business);
 
             ivDeleteOrder = itemView.findViewById(R.id.iv_delete_order);
             ivEditOrder = itemView.findViewById(R.id.iv_edit_order);
@@ -111,18 +107,18 @@ public class MyShopAdapter extends RecyclerView.Adapter<MyShopAdapter.MyShopView
                 case R.id.iv_edit_order:
                     Toast.makeText(context, "Under Development", Toast.LENGTH_SHORT).show();
                     break;
-                case R.id.tv_permote_business:
-                    applyForHotDeals(userModel.getUserId(), homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId());
+                case R.id.tv_promote_business:
+                    applyForHotDeals(homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId());
                     break;
             }
         }
 
-        public void applyForHotDeals(String userId, String orderId) {
+        void applyForHotDeals(String orderId) {
             try {
                 final Dialog progressDialog = DialogUtils.getProgressDialog(context, null);
                 progressDialog.show();
 
-                final ApplyOrderForHotDealsApiCall apiCall = new ApplyOrderForHotDealsApiCall(userId, orderId);
+                final AddPromoteBusinessApiCall apiCall = new AddPromoteBusinessApiCall(orderId);
                 HttpRequestHandler.getInstance(context.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                     @Override

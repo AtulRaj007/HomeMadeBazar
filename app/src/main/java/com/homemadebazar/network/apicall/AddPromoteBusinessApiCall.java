@@ -1,39 +1,24 @@
 package com.homemadebazar.network.apicall;
 
 import com.homemadebazar.model.BaseModel;
-import com.homemadebazar.model.HomeChefOrderModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.JSONParsingUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 /**
- * Created by atulraj on 10/12/17.
+ * Created by Sumit on 27/08/17.
  */
 
-public class GetHomeChefOrderListApiCall extends BaseApiCall {
+public class AddPromoteBusinessApiCall extends BaseApiCall {
 
-    private String userId;
+    private String orderId;
     private BaseModel baseModel;
-    private ArrayList<HomeChefOrderModel> homeChefOrderModelArrayList;
+    private String promoteBusinessId;
 
-    public GetHomeChefOrderListApiCall(String userId) {
-        this.userId = userId;
-    }
-
-    public Object getRequest() {
-        JSONObject obj = new JSONObject();
-        try {
-            obj.put("UserId", userId);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        System.out.println(Constants.ServiceTAG.REQUEST + obj.toString());
-        return obj;
+    public AddPromoteBusinessApiCall(String orderId) {
+        this.orderId = orderId;
     }
 
     private void parseData(String response) {
@@ -43,7 +28,7 @@ public class GetHomeChefOrderListApiCall extends BaseApiCall {
             try {
                 JSONObject object = new JSONObject(response);
                 baseModel = JSONParsingUtils.parseBaseModel(object);
-                homeChefOrderModelArrayList = JSONParsingUtils.parseHomeChefOrderList1(object);
+                promoteBusinessId = object.optString("PromotBussinessId");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -51,14 +36,30 @@ public class GetHomeChefOrderListApiCall extends BaseApiCall {
     }
 
     @Override
-    public ArrayList<HomeChefOrderModel> getResult() {
-        return homeChefOrderModelArrayList;
+    public BaseModel getResult() {
+        return baseModel;
     }
 
     @Override
     public String getServiceURL() {
-        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.HOMECHEF_GET_ORDER_DETAILS);
-        return Constants.ServerURL.HOMECHEF_GET_ORDER_DETAILS;
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.APPLY_PROMOTE_BUSINESS);
+        return Constants.ServerURL.APPLY_PROMOTE_BUSINESS;
+    }
+
+    public Object getRequest() {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("OrderID", orderId);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        System.out.println(Constants.ServiceTAG.REQUEST + obj.toString());
+        return obj;
+    }
+
+    public String getPromoteBusinessId() {
+        return promoteBusinessId;
     }
 
     public BaseModel getBaseModel() {

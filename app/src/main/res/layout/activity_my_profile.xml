@@ -91,13 +91,18 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/et_country"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/enter_country"
-                android:padding="@dimen/padding_10"
-                android:singleLine="true" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_country"
+                    android:padding="@dimen/padding_10"
+                    android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -120,12 +125,18 @@
                 android:text="@string/str_or"
                 android:textColor="@color/black" />
 
-            <EditText
-                android:id="@+id/et_university_name"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_university_name"
-                android:padding="@dimen/padding_10" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_university_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_university_name"
+                    android:padding="@dimen/padding_10" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"

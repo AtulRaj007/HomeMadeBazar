@@ -1,6 +1,5 @@
 package com.homemadebazar.fragment;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,13 +10,12 @@ import android.view.ViewGroup;
 
 import com.homemadebazar.R;
 import com.homemadebazar.adapter.FoodieDiscoverAdapter;
-import com.homemadebazar.adapter.HomeChefFoodTimingAdapter;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.HomeChefOrderModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
-import com.homemadebazar.network.apicall.GetListOfOrdersChefApiCall;
+import com.homemadebazar.network.apicall.GetListOfHotDealsApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
@@ -47,7 +45,7 @@ public class FoodieDiscoverFragment extends BaseFragment {
     @Override
     protected void initUI() {
         userModel = SharedPreference.getUserModel(getActivity());
-        foodieDiscoverAdapter = new FoodieDiscoverAdapter(getActivity(),homeChefOrderModelArrayList);
+        foodieDiscoverAdapter = new FoodieDiscoverAdapter(getActivity(), homeChefOrderModelArrayList);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView = getView().findViewById(R.id.recycler_view);
     }
@@ -69,7 +67,7 @@ public class FoodieDiscoverFragment extends BaseFragment {
 //            final Dialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
 //            progressDialog.show();
 
-            final GetListOfOrdersChefApiCall apiCall = new GetListOfOrdersChefApiCall(userId, Constants.FoodType.BREAKFAST);
+            final GetListOfHotDealsApiCall apiCall = new GetListOfHotDealsApiCall(userId);
             HttpRequestHandler.getInstance(getActivity().getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override

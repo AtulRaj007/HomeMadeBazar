@@ -121,6 +121,7 @@ public class EnterPasswordActivity extends BaseActivity implements View.OnClickL
                             UserModel userModel = apiCall.getResult();
                             if (userModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
                                 Log.d(TAG, userModel.toString());
+                                Utils.hideSoftKeyboard(EnterPasswordActivity.this);
                                 SharedPreference.saveUserModel(EnterPasswordActivity.this, userModel);
                                 Utils.openAccountTypeHomeScreen(EnterPasswordActivity.this, userModel.getAccountType());
                             } else {

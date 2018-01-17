@@ -29,7 +29,7 @@
             android:id="@+id/tab_layout"
             style="@style/BottomTabStyle"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="@dimen/custom_tab_bottom_height"
             android:layout_alignParentBottom="true"
             android:elevation="5dp"
             app:tabGravity="fill"

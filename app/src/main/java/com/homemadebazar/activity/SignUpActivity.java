@@ -242,8 +242,8 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
         } else if (!Utils.isValid(emailId, Utils.TYPE_EMAIL)) {
             DialogUtils.showAlert(SignUpActivity.this, "Please enter valid emailId");
             return false;
-        } else if (password.length() < 6) {
-            DialogUtils.showAlert(SignUpActivity.this, "Password must contain at least 6 digits");
+        } else if (!Utils.checkPassword(password)) {
+            DialogUtils.showAlert(SignUpActivity.this, "Password must contain combination of text,digit and special character and minium 8 digits.");
             return false;
         } else if (!password.equals(confirmPassword)) {
             DialogUtils.showAlert(SignUpActivity.this, "Password and confirm password doesnot match");
@@ -315,10 +315,8 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
                             UserModel userModel = apiCall.getResult();
                             if (userModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
                                 Log.d(TAG, userModel.toString());
+                                Utils.hideSoftKeyboard(SignUpActivity.this);
                                 SharedPreference.saveUserModel(SignUpActivity.this, userModel);
-//                                Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
-//                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                                startActivity(intent);
                                 Utils.openAccountTypeHomeScreen(SignUpActivity.this, userModel.getAccountType());
                             } else {
                                 DialogUtils.showAlert(SignUpActivity.this, userModel.getStatusMessage());

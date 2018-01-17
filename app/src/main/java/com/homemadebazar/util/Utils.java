@@ -22,6 +22,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -42,6 +43,8 @@ import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Sumit on 27/08/17.
@@ -251,6 +254,13 @@ public class Utils {
         return null;
     }
 
+    public static void hideSoftKeyboard(Activity context) {
+        if (context.getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(context.getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
     public static boolean checkLocationPermission(Context context) {
         int currentAPIVersion = Build.VERSION.SDK_INT;
         if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
@@ -363,6 +373,21 @@ public class Utils {
                 break;
         }
 
+    }
+
+
+    static Pattern letter = Pattern.compile("[a-zA-z]");
+    static Pattern digit = Pattern.compile("[0-9]");
+    static Pattern special = Pattern.compile("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+    static Pattern eight = Pattern.compile(".{8}");
+
+    public static boolean checkPassword(String password) {
+        Matcher hasLetter = letter.matcher(password);
+        Matcher hasDigit = digit.matcher(password);
+        Matcher hasSpecial = special.matcher(password);
+        boolean isMinEightDigit = password.length() >= 8 ? true : false;
+        return hasLetter.find() && hasDigit.find() && hasSpecial.find()
+                && isMinEightDigit;
     }
 
 }

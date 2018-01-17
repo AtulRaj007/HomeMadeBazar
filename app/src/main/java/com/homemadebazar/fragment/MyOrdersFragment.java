@@ -1,7 +1,6 @@
 package com.homemadebazar.fragment;
 
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -16,15 +15,7 @@ import android.view.ViewGroup;
 
 import com.homemadebazar.R;
 import com.homemadebazar.adapter.ViewPagerAdapter;
-import com.homemadebazar.model.HomeChefSkillHubVideoModel;
-import com.homemadebazar.network.HttpRequestHandler;
-import com.homemadebazar.network.api.ApiCall;
-import com.homemadebazar.network.apicall.HomeChefIncomingOrderApiCall;
-import com.homemadebazar.network.apicall.HomeChefSkillVideoApiCall;
-import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.Utils;
-
-import java.util.ArrayList;
 
 public class MyOrdersFragment extends BaseFragment {
     private static final String TAG = ">>>>>MyOrdersFragment";
@@ -60,11 +51,26 @@ public class MyOrdersFragment extends BaseFragment {
         viewPagerAdapter.addFragment(new ScheduledMyOrdersFragment(), "Scheduled");
         mViewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(mViewPager);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Utils.hideSoftKeyboard(getActivity());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        Log.e(TAG, "===== onCreateOptionsMenu =====");
         super.onCreateOptionsMenu(menu, inflater);
     }
 

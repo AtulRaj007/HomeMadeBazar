@@ -12,6 +12,7 @@ import com.homemadebazar.R;
 import com.homemadebazar.adapter.ViewPagerAdapter;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.util.SharedPreference;
+import com.homemadebazar.util.Utils;
 
 /**
  * Created by atulraj on 22/11/17.
@@ -35,7 +36,6 @@ public class FoodieHomeFragment extends BaseFragment {
         viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         tabLayout = getView().findViewById(R.id.tab_layout);
         viewPager = getView().findViewById(R.id.view_pager);
-//        fabSearch = getView().findViewById(R.id.fab_search);
 
     }
 
@@ -54,6 +54,22 @@ public class FoodieHomeFragment extends BaseFragment {
         viewPagerAdapter.addFragment(new FoodieHomeChefSearchFragment(), "Home");
         viewPagerAdapter.addFragment(new FoodieHomeListFragment(), "List");
         viewPager.setAdapter(viewPagerAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Utils.hideSoftKeyboard(getActivity());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private void setUpTabLayout() {

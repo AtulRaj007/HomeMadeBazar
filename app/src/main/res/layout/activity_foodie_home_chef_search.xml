@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:hint="@string/hint_search_home_chef"
+            android:focusable="false"
             android:textColorHint="@color/white"
             android:textSize="@dimen/text_16" />
 

@@ -99,7 +99,12 @@ public class Constants {
         String RESET_PASSWORD = BASE_URL + "Miscellaneous/GetResetPassowrd";
         String HOMECHEF_FOODIE_ORDER_ACCEPT_REJECT = BASE_URL + "CreateOrder/DoFoodOrderResponse";
         String FOODIE_HOMECHEF_SEARCH = BASE_URL + "Foodies/GetFoodSearchByCatDishVendors";
+        String APPLY_PROMOTE_BUSINESS = BASE_URL + "Miscellaneous/ApplyPramotBussiness";
+        String LIST_OF_HOT_DEALS = BASE_URL + "Foodies/GetListOfHotDeals";
 
+
+//        http://localhost:14013/api/Foodies/GetListOfHotDeals
+//        http://localhost:14013/api/Miscellaneous/ApplyPramotBussiness
 //        http://localhost:14013/api/Foodies/GetFoodSearchByCatDishVendors
 //        http://35.183.8.236/api/CreateOrder/DoFoodOrderResponse
 //        http://localhost:14013/api/Miscellaneous/GetResetPassowrd

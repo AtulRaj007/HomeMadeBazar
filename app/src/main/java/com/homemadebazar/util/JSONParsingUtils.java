@@ -82,7 +82,7 @@ public class JSONParsingUtils {
 
     public static BaseModel parseBaseModel(JSONObject object) {
         BaseModel baseModel = new BaseModel();
-        baseModel.setStatusCode(Integer.parseInt(object.optString("StatusCode")));
+        baseModel.setStatusCode(Integer.parseInt(object.optString("StatusCode").trim()));
         baseModel.setStatusMessage(object.optString("StatusMessage"));
         return baseModel;
     }
@@ -203,7 +203,29 @@ public class JSONParsingUtils {
 
         return homeChefOrderModelArrayList;
     }
-
+/*
+    {
+//        "DishName": "ffg",
+//            "Price": 55,
+//            "MinGuest": 22,
+//            "MaxGuest": 258,
+//            "DishDescription": "xx",
+//            "RuleDescription": "dcn",
+//            "DishAvailable": "13-01-2018,0,0,0;14-01-2018,0,0,0;15-01-2018,0,0,0;16-01-2018,0,0,0;17-01-2018,0,0,0;18-01-2018,0,0,0;19-01-2018,0,0,0;20-01-2018,0,0,0",
+            "DinnerTime": "54021",
+            "LunchTime": "4521",
+            "BreakFastTime": "1720",
+//            "OrderId": "E4C01AAE",
+            "Drink": "water",
+            "IsPetAllow": "False",
+            "VegNonType": "True",
+            "CoverImage": [
+        "http://18.218.139.27/api/Profile/GetImage?Source=ImageGallary%5C%5C1801132%5CAddCoverPhoto%5CIMG-20180113-WA0000.jpg",
+                "http://18.218.139.27/api/Profile/GetImage?Source=ImageGallary%5C%5C1801132%5CAddCoverPhoto%5CIMG-20180112-WA0009.jpg",
+                "http://18.218.139.27/api/Profile/GetImage?Source=ImageGallary%5C%5C1801132%5CAddCoverPhoto%5CIMG-20180113-WA0000.jpg",
+                "http://18.218.139.27/api/Profile/GetImage?Source=ImageGallary%5C%5C1801132%5CAddCoverPhoto%5CIMG-20180112-WA0009.jpg"
+                    ]
+    }*/
     private static HomeChefOrderModel parseHomeChefOrder(JSONObject object) {
         HomeChefOrderModel homeChefOrderModel = new HomeChefOrderModel();
         try {
@@ -231,6 +253,65 @@ public class JSONParsingUtils {
 //            homeChefOrderModel.setDinnerTime(object.optString("DinnerTime"));
 
             homeChefOrderModel.setOrderTime(object.optString("OrderTime"));
+
+            JSONArray array = object.getJSONArray("CoverImage");
+            homeChefOrderModel.setFoodImagesArrayList(getCoverPhotoArrayList(array));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return homeChefOrderModel;
+
+    }
+
+    public static ArrayList<HomeChefOrderModel> parseHotDealList(JSONObject object) {
+        ArrayList<HomeChefOrderModel> homeChefOrderModelArrayList = new ArrayList<>();
+        try {
+            JSONArray OrdersArray = object.optJSONArray("Details");
+            for (int i = 0; i < OrdersArray.length(); i++) {
+                HomeChefOrderModel homeChefOrderModel = parseHotDealModel(OrdersArray.getJSONObject(i));
+                homeChefOrderModel.setUserId(object.optString("UserId"));
+                homeChefOrderModel.setFirstName(object.optString("FirstName"));
+                homeChefOrderModel.setLastName(object.optString("LastName"));
+                homeChefOrderModel.setProfilePic(object.optString("DP"));
+                homeChefOrderModelArrayList.add(homeChefOrderModel);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return homeChefOrderModelArrayList;
+    }
+
+
+    private static HomeChefOrderModel parseHotDealModel(JSONObject object) {
+        HomeChefOrderModel homeChefOrderModel = new HomeChefOrderModel();
+        try {
+
+            homeChefOrderModel.setOrderId(object.optString("OrderId"));
+            homeChefOrderModel.setDishName(object.optString("DishName"));
+//            homeChefOrderModel.setCategory(object.optString(""));
+            homeChefOrderModel.setPrice(object.optString("Price"));
+            homeChefOrderModel.setMinGuest(object.optString("MinGuest"));
+            homeChefOrderModel.setMaxGuest(object.optString("MaxGuest"));
+//            homeChefOrderModel.setDiscount(object.optString(""));
+//            homeChefOrderModel.setPetsAllowed(object.optBoolean());
+//            homeChefOrderModel.setDrinks(object.optString());
+//            homeChefOrderModel.setVegNonVeg(object.optString());
+
+            homeChefOrderModel.setOrderType(object.optString("OrderType"));
+            homeChefOrderModel.setRules(object.optString("RuleDescription"));
+            homeChefOrderModel.setDescription(object.optString("DishDescription"));
+//            homeChefOrderModel.setOrderFromDate(object.optString("OrderFromDT"));
+//            homeChefOrderModel.setOrderValidTill(object.optString("OrderValid"));
+
+            homeChefOrderModel.setDishAvailability(object.optString("DishAvailable"));
+//            homeChefOrderModel.setBreakFastTime(object.optString("Bearkfast"));
+//            homeChefOrderModel.setLunchTime(object.optString("Lunch"));
+//            homeChefOrderModel.setDinnerTime(object.optString("DinnerTime"));
+
+//            homeChefOrderModel.setOrderTime(object.optString("OrderTime"));
 
             JSONArray array = object.getJSONArray("FoodImage");
             homeChefOrderModel.setFoodImagesArrayList(getCoverPhotoArrayList(array));
@@ -620,5 +701,9 @@ public class JSONParsingUtils {
         }
         return transactionModel;
     }
+
+
+
+
 
 }

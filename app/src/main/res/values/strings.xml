@@ -147,7 +147,7 @@
     <string name="hint_search_for_recipe">Search for recipes</string>
     <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
     <string name="str_about_dish">About Dish</string>
-    <string name="permote_business">PERMOTE BUSINESS</string>
+    <string name="permote_business">PROMOTE BUSINESS</string>
     <string name="str_search_text_marketplace">Search for ingredients, dishes</string>
 
     <string-array name="array_post_type">

@@ -120,6 +120,7 @@ public class MarketPlaceHomeActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 setUpIcons(position);
+                Utils.hideSoftKeyboard(MarketPlaceHomeActivity.this);
             }
 
             @Override

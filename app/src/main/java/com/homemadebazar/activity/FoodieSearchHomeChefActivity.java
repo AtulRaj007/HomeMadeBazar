@@ -17,13 +17,11 @@ import com.homemadebazar.R;
 import com.homemadebazar.adapter.FoodieHomeListAdapter;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.HomeChiefNearByModel;
-import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
 import com.homemadebazar.network.apicall.FoodieHomeChefSearchApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
-import com.homemadebazar.util.SharedPreference;
 import com.homemadebazar.util.Utils;
 
 import java.util.ArrayList;
@@ -33,7 +31,6 @@ public class FoodieSearchHomeChefActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private FoodieHomeListAdapter foodieHomeListAdapter;
-    private UserModel userModel;
     private ArrayList<HomeChiefNearByModel> homeChiefNearByModelArrayList = new ArrayList<>();
     private EditText etSearch;
     private String foodCategoryId;
@@ -54,7 +51,6 @@ public class FoodieSearchHomeChefActivity extends BaseActivity {
     @Override
     protected void initUI() {
         getDataFromBundle();
-        userModel = SharedPreference.getUserModel(FoodieSearchHomeChefActivity.this);
         recyclerView = findViewById(R.id.recycler_view);
         etSearch = findViewById(R.id.et_search);
     }
@@ -88,7 +84,6 @@ public class FoodieSearchHomeChefActivity extends BaseActivity {
             searchHomeChefApiCall("", "", foodCategoryId, "");
     }
 
-    //    http://localhost:14013/api/Foodies/GetFoodSearchByCatDishVendors;
     public void searchHomeChefApiCall(String latitude, String longitude, String foodCategoryId, String searchString) {
         try {
             final Dialog progressDialog = DialogUtils.getProgressDialog(this, null);
@@ -126,7 +121,7 @@ public class FoodieSearchHomeChefActivity extends BaseActivity {
     }
 
     private void setUpToolbar() {
-        ((TextView) findViewById(R.id.tv_title)).setText("");
+        ((TextView) findViewById(R.id.tv_title)).setText("HomeChef List");
         findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

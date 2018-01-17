@@ -15,7 +15,6 @@ import android.widget.EditText;
 
 import com.homemadebazar.R;
 import com.homemadebazar.activity.FoodieSearchHomeChefActivity;
-import com.homemadebazar.adapter.FoodieHomeListAdapter;
 import com.homemadebazar.adapter.FoodiesCategoryAdapter;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.FoodCategoryModel;
@@ -40,7 +39,7 @@ public class FoodieHomeChefSearchFragment extends BaseFragment implements View.O
     private ArrayList<FoodCategoryModel> foodCategoryModelArrayList = new ArrayList<>();
     private EditText etSearch;
     private ArrayList<HomeChiefNearByModel> homeChiefNearByModelArrayList = new ArrayList<>();
-//    private FoodieHomeListAdapter foodieHomeListAdapter;
+    //    private FoodieHomeListAdapter foodieHomeListAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
 
 //    @Override
@@ -155,7 +154,7 @@ public class FoodieHomeChefSearchFragment extends BaseFragment implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.et_search:
-                FoodieSearchHomeChefActivity.getFoodieSearchIntent(getActivity(), "");
+                startActivity(FoodieSearchHomeChefActivity.getFoodieSearchIntent(getActivity(), ""));
                 break;
         }
     }

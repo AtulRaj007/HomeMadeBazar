@@ -26,6 +26,7 @@ import com.homemadebazar.activity.CreateOrderActivity;
 import com.homemadebazar.activity.UpdateShopDetailsActivity;
 import com.homemadebazar.adapter.ImagePagerAdapter;
 import com.homemadebazar.adapter.MyShopAdapter;
+import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.HomeChefOrderModel;
 import com.homemadebazar.model.HomeChefProfileModel;
 import com.homemadebazar.model.UserModel;
@@ -310,29 +311,27 @@ public class MyShopFragment extends BaseFragment implements View.OnClickListener
 
     public void getOrderDetails() {
         try {
-            final Dialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
-            progressDialog.show();
+//            final Dialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
+//            progressDialog.show();
 
             final GetHomeChefOrderListApiCall apiCall = new GetHomeChefOrderListApiCall(userModel.getUserId());
             HttpRequestHandler.getInstance(getActivity().getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
                 public void onComplete(Exception e) {
-                    DialogUtils.hideProgressDialog(progressDialog);
+//                    DialogUtils.hideProgressDialog(progressDialog);
                     if (e == null) { // Success
                         try {
-                            ArrayList<HomeChefOrderModel> tempHomeChefOrderModelArrayList = apiCall.getResult();
-                            homeChefOrderModelArrayList.clear();
-                            homeChefOrderModelArrayList.addAll(tempHomeChefOrderModelArrayList);
-                            Collections.reverse(homeChefOrderModelArrayList);
-                            myShopAdapter.notifyDataSetChanged();
-                            System.out.println(">>>>>> ");
-                            //                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-//                                Log.d(TAG, userModel.toString());
-//                                uploadFile(userModel.getUserId());
-//                            } else {
-//                                DialogUtils.showAlert(getActivity(), userModel.getStatusMessage());
-//                            }
+                            BaseModel baseModel = apiCall.getBaseModel();
+                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                ArrayList<HomeChefOrderModel> tempHomeChefOrderModelArrayList = apiCall.getResult();
+                                homeChefOrderModelArrayList.clear();
+                                homeChefOrderModelArrayList.addAll(tempHomeChefOrderModelArrayList);
+                                Collections.reverse(homeChefOrderModelArrayList);
+                                myShopAdapter.notifyDataSetChanged();
+                            } else {
+                                DialogUtils.showAlert(getActivity(), userModel.getStatusMessage());
+                            }
 
                         } catch (Exception ex) {
                             ex.printStackTrace();

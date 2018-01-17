@@ -128,13 +128,12 @@ public class FoodieHomeActivity extends BaseActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                Log.e(TAG, "onPageScrolled:-" + position);
             }
 
             @Override
             public void onPageSelected(int position) {
-//                Log.e(TAG, "onPageSelected:-" + position);
                 setUpIcons(position);
+                Utils.hideSoftKeyboard(FoodieHomeActivity.this);
             }
 
             @Override

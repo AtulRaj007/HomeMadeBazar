@@ -83,7 +83,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_permote_business"
+                    android:id="@+id/tv_promote_business"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/colorPrimary"
