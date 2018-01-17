@@ -311,7 +311,7 @@ public class Utils {
     public static void onNavItemClick(final Context context, View v, final String userId) {
 
         switch (v.getId()) {
-            case R.id.iv_edit_profile:
+            case R.id.rl_header:
                 context.startActivity(new Intent(context, MyProfileActivity.class));
                 break;
             case R.id.tv_my_orders:

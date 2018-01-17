@@ -47,7 +47,7 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
                 finish();
             }
         });
-        ((TextView) findViewById(R.id.tv_title)).setText("");
+        ((TextView) findViewById(R.id.tv_title)).setText("My Profile");
 
     }
 
@@ -60,7 +60,6 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
         etPhoneNumber = findViewById(R.id.et_phone_number);
         etCountry = findViewById(R.id.et_country);
         etAboutYourSelf = findViewById(R.id.et_about_your_self);
-        etAadharNumber = findViewById(R.id.et_aadhar_number);
         ivProfilePic = findViewById(R.id.iv_profile_pic);
 
         if (userModel != null) {

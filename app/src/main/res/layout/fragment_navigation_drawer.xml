@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/background_screen"
     android:clickable="true"
     android:orientation="vertical">
 
@@ -35,7 +35,8 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="@dimen/margin_5"
-                android:text="@string/str_my_orders" />
+                android:text="@string/str_my_orders"
+                android:textColor="@color/navigation_title_color" />
 
         </LinearLayout>
 
@@ -57,7 +58,8 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="@dimen/margin_5"
-                android:text="@string/str_my_wallet" />
+                android:text="@string/str_my_wallet"
+                android:textColor="@color/navigation_title_color" />
 
         </LinearLayout>
 
@@ -79,7 +81,8 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="@dimen/margin_5"
-                android:text="@string/str_sales_report" />
+                android:text="@string/str_sales_report"
+                android:textColor="@color/navigation_title_color" />
 
         </LinearLayout>
 
@@ -101,15 +104,16 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="@dimen/margin_5"
-                android:text="@string/str_transaction_history" />
+                android:text="@string/str_transaction_history"
+                android:textColor="@color/navigation_title_color" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:layout_marginBottom="@dimen/margin_10"
             android:layout_marginTop="@dimen/margin_10"
-            android:background="@color/grey" />
+            android:background="@color/white" />
 
         <!--<TextView-->
         <!--android:layout_width="match_parent"-->
@@ -137,7 +141,8 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="@dimen/margin_5"
-                android:text="@string/str_change_password" />
+                android:text="@string/str_change_password"
+                android:textColor="@color/navigation_title_color" />
 
         </LinearLayout>
 
@@ -159,7 +164,8 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="@dimen/margin_5"
-                android:text="@string/str_terms_of_use" />
+                android:text="@string/str_terms_of_use"
+                android:textColor="@color/navigation_title_color" />
 
         </LinearLayout>
 
@@ -181,7 +187,8 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="@dimen/margin_5"
-                android:text="@string/str_privacy_policy" />
+                android:text="@string/str_privacy_policy"
+                android:textColor="@color/navigation_title_color" />
 
         </LinearLayout>
 
@@ -203,7 +210,8 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="@dimen/margin_5"
-                android:text="@string/str_about" />
+                android:text="@string/str_about"
+                android:textColor="@color/navigation_title_color" />
 
         </LinearLayout>
 
@@ -226,7 +234,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/margin_10"
                 android:text="@string/str_logout"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/navigation_title_color"
                 android:textSize="@dimen/text_18" />
 
         </LinearLayout>

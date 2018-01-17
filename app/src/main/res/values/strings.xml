@@ -5,7 +5,7 @@
     <string name="str_get_home_food">Get Home Food on the Move</string>
     <string name="str_or">OR</string>
     <string name="str_connect_with_social_account">Connect with Social Account</string>
-    <string name="str_enter_mobile_number">Enter Your Mobile Number</string>
+    <string name="str_enter_mobile_number">Enter Mobile Number</string>
     <string name="str_continue">CONTINUE</string>
     <string name="str_verification_code">Verification Code</string>
     <string name="str_verification_text">Please Enter the digit verification code sent to your mobile </string>
@@ -208,5 +208,8 @@
     <string name="str_reset_password">Reset Password</string>
     <string name="str_change_password">Change Password</string>
     <string name="str_book">Book</string>
+    <string name="hint_company">Enter Company Name</string>
+    <string name="hint_university_name">Enter University Name</string>
+    <string name="hint_about_your_self">About Your Self</string>
 
 </resources>

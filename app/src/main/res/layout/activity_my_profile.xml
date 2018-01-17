@@ -17,21 +17,12 @@
             android:layout_marginRight="@dimen/margin_20"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_30"
-                android:text="@string/str_my_profile"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_25" />
-
             <ImageView
                 android:id="@+id/iv_profile_pic"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_30"
                 android:src="@drawable/profile" />
 
             <TextView
@@ -42,68 +33,114 @@
                 android:text="@string/str_upload_pic"
                 android:textColor="@color/black" />
 
-            <EditText
-                android:id="@+id/et_first_name"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_20"
-                android:singleLine="true"
-                android:padding="@dimen/padding_10"
-                android:hint="@string/str_first_name" />
+                android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/et_last_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:padding="@dimen/padding_10"
-                android:hint="@string/hint_last_name" />
+                <EditText
+                    android:id="@+id/et_first_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:hint="@string/str_first_name"
+                    android:padding="@dimen/padding_10"
+                    android:singleLine="true" />
 
-            <EditText
-                android:id="@+id/et_email_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:padding="@dimen/padding_10"
-                android:hint="@string/str_email_id" />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/et_phone_number"
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:lines="1"
-                android:padding="@dimen/padding_10"
-                android:hint="@string/str_enter_mobile_number" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_last_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_last_name"
+                    android:padding="@dimen/padding_10"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_email_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/str_email_id"
+                    android:padding="@dimen/padding_10"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/str_enter_mobile_number"
+                    android:lines="1"
+                    android:padding="@dimen/padding_10" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <EditText
                 android:id="@+id/et_country"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
+                android:hint="@string/enter_country"
                 android:padding="@dimen/padding_10"
-                android:hint="@string/enter_country" />
+                android:singleLine="true" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <EditText
+                    android:id="@+id/et_company_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_company"
+                    android:padding="@dimen/padding_10" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_5"
-                android:layout_marginTop="@dimen/margin_10"
-                android:text="@string/str_about_your_self"
+                android:layout_gravity="center"
+                android:text="@string/str_or"
                 android:textColor="@color/black" />
 
             <EditText
-                android:id="@+id/et_about_your_self"
+                android:id="@+id/et_university_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="2" />
+                android:hint="@string/hint_university_name"
+                android:padding="@dimen/padding_10" />
 
-            <EditText
-                android:id="@+id/et_aadhar_number"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:singleLine="true"
-                android:hint="@string/aadhar_number" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_about_your_self"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_about_your_self"
+                    android:lines="1"
+                    android:maxLines="2"
+                    android:padding="@dimen/padding_10" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/btn_update_profile"
@@ -111,9 +148,9 @@
                 android:layout_height="@dimen/button_height"
                 android:layout_marginBottom="@dimen/margin_30"
                 android:layout_marginTop="@dimen/margin_30"
-                android:textColor="@color/white"
                 android:background="@drawable/button_round_primary"
-                android:text="@string/str_update_profile" />
+                android:text="@string/str_update_profile"
+                android:textColor="@color/white" />
 
         </LinearLayout>
     </ScrollView>

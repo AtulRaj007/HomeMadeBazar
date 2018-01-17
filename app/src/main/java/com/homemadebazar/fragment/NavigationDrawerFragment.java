@@ -6,13 +6,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.homemadebazar.R;
 import com.homemadebazar.activity.FoodieHomeActivity;
 import com.homemadebazar.activity.HomeActivity;
 import com.homemadebazar.activity.MarketPlaceHomeActivity;
+import com.homemadebazar.model.UserModel;
+import com.homemadebazar.util.SharedPreference;
 
 /**
  * Created by HP on 7/29/2017.
@@ -20,8 +21,8 @@ import com.homemadebazar.activity.MarketPlaceHomeActivity;
 
 public class NavigationDrawerFragment extends BaseFragment implements View.OnClickListener {
     private static String TAG = ">>>>>NavigationFragment";
-    private ImageView ivProfile;
-    private TextView tvName, tvAddress;
+    private TextView tvName, tvMobileNumber;
+    private UserModel userModel;
 
     @Nullable
     @Override
@@ -32,14 +33,14 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 
     public void initUI() {
         Log.e(TAG, "===== initUI() =====");
-        ivProfile = getView().findViewById(R.id.iv_profile);
+        userModel = SharedPreference.getUserModel(getActivity());
         tvName = getView().findViewById(R.id.tv_name);
-        tvAddress = getView().findViewById(R.id.tv_address);
+        tvMobileNumber = getView().findViewById(R.id.tv_mobile_number);
     }
 
     public void initialiseListener() {
         if (getView() != null) {
-            getView().findViewById(R.id.iv_edit_profile).setOnClickListener(this);
+            getView().findViewById(R.id.rl_header).setOnClickListener(this);
             getView().findViewById(R.id.tv_my_orders).setOnClickListener(this);
             getView().findViewById(R.id.tv_my_wallet).setOnClickListener(this);
             getView().findViewById(R.id.tv_sales_report).setOnClickListener(this);
@@ -53,13 +54,14 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 
     }
 
-    public void updateUI(String profilePath, String name, String address) {
+    public void updateUI(String profilePath, String name, String mobileNumber) {
         tvName.setText(name);
-        tvAddress.setText(address);
+        tvMobileNumber.setText(mobileNumber);
     }
 
     public void setData() {
-
+        tvName.setText(userModel.getFirstName() + " " + userModel.getLastName());
+        tvMobileNumber.setText(userModel.getCountryCode() + userModel.getMobile());
     }
 
     @Override
