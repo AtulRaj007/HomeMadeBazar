@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
-import com.homemadebazar.activity.HomeShopDetailsActivity;
+import com.homemadebazar.activity.HomeShopViewActivity;
 import com.homemadebazar.model.HomeChiefNearByModel;
 import com.homemadebazar.util.CircleImageView;
 
@@ -80,7 +80,7 @@ public class FoodieHomeListAdapter extends RecyclerView.Adapter<FoodieHomeListAd
 
         @Override
         public void onClick(View v) {
-            context.startActivity(HomeShopDetailsActivity.getIntent(context, homeChiefNearByModelArrayList.get(getAdapterPosition())));
+            context.startActivity(HomeShopViewActivity.getIntent(context, homeChiefNearByModelArrayList.get(getAdapterPosition())));
         }
     }
 }

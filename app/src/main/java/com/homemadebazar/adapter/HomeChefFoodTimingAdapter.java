@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.homemadebazar.R;
-import com.homemadebazar.activity.HomeShopDetailsActivity;
+import com.homemadebazar.activity.HomeShopViewActivity;
 import com.homemadebazar.model.HomeChefOrderModel;
 import com.homemadebazar.util.DialogUtils;
 
@@ -100,7 +100,7 @@ public class HomeChefFoodTimingAdapter extends RecyclerView.Adapter<HomeChefFood
                         public void onOrderSelected(String foodDate, int foodTime) {
                             System.out.println(">>>>> onOrderSelected" + foodDate);
                             System.out.println(">>>>> onOrderSelected" + foodTime);
-                            ((HomeShopDetailsActivity) context).bookOrder(homeChefUserId, homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId(), foodDate, String.valueOf(foodTime));
+                            ((HomeShopViewActivity) context).bookOrder(homeChefUserId, homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId(), foodDate, String.valueOf(foodTime));
 
                         }
                     });

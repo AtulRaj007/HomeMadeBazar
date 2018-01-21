@@ -55,7 +55,7 @@ public class SkillHubAdapter extends RecyclerView.Adapter<SkillHubAdapter.SkillH
         private TextView tvName, tvDescription;
         private ImageView ivVideoThumbnail;
 
-        public SkillHubViewHolder(View itemView) {
+        SkillHubViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_name);
             tvDescription = itemView.findViewById(R.id.tv_description);

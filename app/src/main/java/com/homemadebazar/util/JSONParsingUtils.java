@@ -174,7 +174,7 @@ public class JSONParsingUtils {
             homeChefOrderModel.setLunchTime(object.optString("Lunch"));
             homeChefOrderModel.setDinnerTime(object.optString("DinnerTime"));
 
-            JSONArray array = object.getJSONArray("FoodImage");
+            JSONArray array = object.optJSONArray("FoodImage");
             homeChefOrderModel.setFoodImagesArrayList(getCoverPhotoArrayList(array));
 
         } catch (Exception e) {
@@ -254,7 +254,7 @@ public class JSONParsingUtils {
 
             homeChefOrderModel.setOrderTime(object.optString("OrderTime"));
 
-            JSONArray array = object.getJSONArray("CoverImage");
+            JSONArray array = object.optJSONArray("FoodImage");
             homeChefOrderModel.setFoodImagesArrayList(getCoverPhotoArrayList(array));
 
         } catch (Exception e) {

@@ -255,14 +255,14 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:elevation="5dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:tabBackground="@color/colorPrimary"
-            app:tabIndicatorColor="@color/white"
+            app:tabBackground="@color/grey"
+            app:tabIndicatorColor="@color/colorPrimary"
             app:tabIndicatorHeight="2dp"
+            app:tabSelectedTextColor="@color/colorPrimary"
             app:tabTextAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:tabTextColor="@color/white"
+            app:tabTextColor="@color/black"
 
             />
 

@@ -246,7 +246,7 @@ public class Constants {
 
     public enum WebViewTitleUrl {
         TERMS_OF_USE("Terms Of Use", "https://www.google.co.in"),
-        PRIVACY_POLICY("Privacy Policy", "https://www.facebook.com/"),
+        PRIVACY_POLICY("Privacy Policy", "https://www.google.co.in/"),
         ABOUT_US("About", "https://www.google.co.in/");
 
         String title;
@@ -265,34 +265,6 @@ public class Constants {
             return url;
         }
     }
-
-    /*
-    public enum FileType {
-        FILE(1, "image"),
-        VIDEO(2, "video"),
-        AUDIO(3, "audio");
-        int value;
-        String fileName;
-
-        FileType(int value, String fileName) {
-            this.value = value;
-            this.fileName = fileName;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        public String getFileName() {
-            return fileName;
-        }
-    }
-    */
-
-//    public interface signInType {
-//        String GMAIL = "gmail";
-//        String FACEBOOK = "facebook";
-//    }
 
     public interface PostActionTAG {
         String COMMENTS = "Comments";

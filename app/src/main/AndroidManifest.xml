@@ -147,7 +147,7 @@
         </provider>
 
         <activity
-            android:name=".activity.HomeShopDetailsActivity"
+            android:name=".activity.HomeShopViewActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FoodieHomeChefSearchActivity"

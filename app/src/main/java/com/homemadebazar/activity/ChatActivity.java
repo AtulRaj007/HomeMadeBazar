@@ -14,7 +14,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.adapter.ChatConversationAdapter;
 import com.homemadebazar.model.BaseModel;
@@ -40,7 +42,7 @@ import id.zelory.compressor.Compressor;
 
 public class ChatActivity extends BaseActivity implements View.OnClickListener {
     public static String KEY_TARGET_USERID = "KEY_TARGET_USERID";
-    private ImageView ivBack, ivUserProfile, ivAttachment;
+    private ImageView ivBack, ivAttachment;
     private EditText etChatMessage;
     private RecyclerView recyclerView;
     private UserModel userModel;
@@ -51,6 +53,8 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
     private LinearLayout llAttachmentLayout;
     private Uri chatImageUri = null;
     private IncomingMessageReceiver incomingMessageReceiver = new IncomingMessageReceiver();
+    private ImageView ivUserProfile;
+    private TextView tvUserName;
 
     public static Intent getChatIntent(Context context, UserModel targetUserId) {
         Intent intent = new Intent(context, ChatActivity.class);
@@ -75,6 +79,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         linearLayoutManager = new LinearLayoutManager(ChatActivity.this);
         userModel = SharedPreference.getUserModel(ChatActivity.this);
         ivBack = findViewById(R.id.iv_back);
+        tvUserName = findViewById(R.id.tv_username);
         ivUserProfile = findViewById(R.id.iv_user_profile);
         ivAttachment = findViewById(R.id.iv_attachment);
         etChatMessage = findViewById(R.id.et_chat_message);
@@ -85,6 +90,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void initialiseListener() {
         ivAttachment.setOnClickListener(this);
+        ivBack.setOnClickListener(this);
         findViewById(R.id.iv_chat_send).setOnClickListener(this);
         findViewById(R.id.ll_camera_attachment).setOnClickListener(this);
         findViewById(R.id.ll_gallery_attachment).setOnClickListener(this);
@@ -93,6 +99,10 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void setData() {
+        tvUserName.setText(targetUserModel.getFirstName() + " " + targetUserModel.getLastName());
+        if (!TextUtils.isEmpty(targetUserModel.getProfilePic()))
+            Glide.with(this).load(targetUserModel.getProfilePic()).into(ivUserProfile);
+
         recyclerView.setLayoutManager(linearLayoutManager);
         chatConversationAdapter = new ChatConversationAdapter(ChatActivity.this, chatMessageModelArrayList, userModel.getUserId());
         recyclerView.setAdapter(chatConversationAdapter);
@@ -134,6 +144,9 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
             case R.id.ll_location_attachment:
                 sendChatMessage(userModel.getUserId(), targetUserModel.getUserId(), "", "", Constants.FileType.NONE,
                         Constants.MessageType.LOCATION, "28.4594965", "77.0266383");
+                break;
+            case R.id.iv_back:
+                finish();
                 break;
         }
     }

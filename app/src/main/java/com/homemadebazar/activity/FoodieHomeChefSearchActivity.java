@@ -54,12 +54,12 @@ public class FoodieHomeChefSearchActivity extends BaseActivity implements View.O
         etSearch = findViewById(R.id.et_search);
     }
 
-    private void setRecyclerAdapter(ArrayList<HomeChiefNearByModel> dataList) {
-        foodieHomeListAdapter = new FoodieHomeListAdapter(FoodieHomeChefSearchActivity.this, dataList);
-        linearLayoutManager = new LinearLayoutManager(FoodieHomeChefSearchActivity.this);
-        rvHomeChef.setLayoutManager(linearLayoutManager);
-        rvHomeChef.setAdapter(foodieHomeListAdapter);
-    }
+//    private void setRecyclerAdapter(ArrayList<HomeChiefNearByModel> dataList) {
+//        foodieHomeListAdapter = new FoodieHomeListAdapter(FoodieHomeChefSearchActivity.this, dataList);
+//        linearLayoutManager = new LinearLayoutManager(FoodieHomeChefSearchActivity.this);
+//        rvHomeChef.setLayoutManager(linearLayoutManager);
+//        rvHomeChef.setAdapter(foodieHomeListAdapter);
+//    }
 
     @Override
     protected void initialiseListener() {
@@ -141,7 +141,7 @@ public class FoodieHomeChefSearchActivity extends BaseActivity implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.et_search:
-                FoodieSearchHomeChefActivity.getFoodieSearchIntent(FoodieHomeChefSearchActivity.this, "");
+//                FoodieSearchHomeChefActivity.getFoodieSearchIntent(FoodieHomeChefSearchActivity.this, "");
                 break;
         }
     }

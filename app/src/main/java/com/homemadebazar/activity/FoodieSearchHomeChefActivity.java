@@ -34,6 +34,7 @@ public class FoodieSearchHomeChefActivity extends BaseActivity {
     private ArrayList<HomeChiefNearByModel> homeChiefNearByModelArrayList = new ArrayList<>();
     private EditText etSearch;
     private String foodCategoryId;
+    private TextView tvNoRecordFound;
 
     public static Intent getFoodieSearchIntent(Context context, String foodCategoryId) {
         Intent intent = new Intent(context, FoodieSearchHomeChefActivity.class);
@@ -53,6 +54,7 @@ public class FoodieSearchHomeChefActivity extends BaseActivity {
         getDataFromBundle();
         recyclerView = findViewById(R.id.recycler_view);
         etSearch = findViewById(R.id.et_search);
+        tvNoRecordFound = findViewById(R.id.tv_no_record_found);
     }
 
     private void getDataFromBundle() {
@@ -102,6 +104,12 @@ public class FoodieSearchHomeChefActivity extends BaseActivity {
                                 homeChiefNearByModelArrayList.clear();
                                 homeChiefNearByModelArrayList.addAll(apiCall.getHomeChiefDetailList());
                                 foodieHomeListAdapter.notifyDataSetChanged();
+                                tvNoRecordFound.setVisibility(View.GONE);
+
+                            } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.NO_RECORD_FOUND) {
+                                homeChiefNearByModelArrayList.clear();
+                                foodieHomeListAdapter.notifyDataSetChanged();
+                                tvNoRecordFound.setVisibility(View.VISIBLE);
 
                             } else {
                                 DialogUtils.showAlert(FoodieSearchHomeChefActivity.this, baseModel.getStatusMessage());

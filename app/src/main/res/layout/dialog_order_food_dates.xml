@@ -75,12 +75,13 @@
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/margin_30"
-            android:layout_marginTop="@dimen/margin_30"
             android:layout_marginLeft="@dimen/margin_20"
             android:layout_marginRight="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_30"
             android:background="@color/colorPrimary"
             android:paddingBottom="@dimen/padding_5"
-            android:paddingTop="@dimen/padding_5" />
+            android:paddingTop="@dimen/padding_5"
+            android:visibility="gone" />
 
 
         <RadioGroup
@@ -90,7 +91,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <RadioButton
                 android:id="@+id/rg_breakfast"

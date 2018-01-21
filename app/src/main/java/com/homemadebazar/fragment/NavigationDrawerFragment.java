@@ -13,6 +13,7 @@ import com.homemadebazar.activity.FoodieHomeActivity;
 import com.homemadebazar.activity.HomeActivity;
 import com.homemadebazar.activity.MarketPlaceHomeActivity;
 import com.homemadebazar.model.UserModel;
+import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.SharedPreference;
 
 /**
@@ -36,6 +37,11 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
         userModel = SharedPreference.getUserModel(getActivity());
         tvName = getView().findViewById(R.id.tv_name);
         tvMobileNumber = getView().findViewById(R.id.tv_mobile_number);
+
+        if (userModel.getAccountType().equals(Constants.AccountType.FOODIE)) {
+            getView().findViewById(R.id.ll_sales_report).setVisibility(View.GONE);
+            getView().findViewById(R.id.view_sales_report).setVisibility(View.GONE);
+        }
     }
 
     public void initialiseListener() {

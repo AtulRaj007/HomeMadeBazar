@@ -26,6 +26,7 @@
             android:layout_gravity="center_vertical"
             android:hint="@string/hint_search_home_chef"
             android:imeOptions="actionSearch"
+            android:singleLine="true"
             android:textColorHint="@color/white"
             android:textSize="@dimen/text_16" />
 
@@ -35,6 +36,9 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background_screen"
         android:layout_below="@+id/ll_search" />
+
+    <include layout="@layout/layout_no_record" />
 
 </RelativeLayout>

@@ -38,7 +38,7 @@ import com.homemadebazar.util.Utils;
 
 import me.relex.circleindicator.CircleIndicator;
 
-public class HomeShopDetailsActivity extends BaseActivity implements View.OnClickListener {
+public class HomeShopViewActivity extends BaseActivity implements View.OnClickListener {
     public static final String KEY_HOME_CHEF_NEARBY_MODEL = "KEY_HOME_CHEF_NEARBY_MODEL";
     public static String KEY_USER_ID = "KEY_USER_ID";
     private TabLayout tabLayout;
@@ -53,7 +53,7 @@ public class HomeShopDetailsActivity extends BaseActivity implements View.OnClic
     private CircleIndicator circleIndicator;
 
     public static Intent getIntent(Context context, HomeChiefNearByModel homeChiefNearByModel) {
-        Intent intent = new Intent(context, HomeShopDetailsActivity.class);
+        Intent intent = new Intent(context, HomeShopViewActivity.class);
         intent.putExtra(KEY_HOME_CHEF_NEARBY_MODEL, homeChiefNearByModel);
         return intent;
     }
@@ -84,7 +84,7 @@ public class HomeShopDetailsActivity extends BaseActivity implements View.OnClic
     @Override
     protected void initUI() {
         getDataFromBundle();
-        userModel = SharedPreference.getUserModel(HomeShopDetailsActivity.this);
+        userModel = SharedPreference.getUserModel(HomeShopViewActivity.this);
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
         viewPagerCoverImages = findViewById(R.id.view_pager_cover);
@@ -111,7 +111,7 @@ public class HomeShopDetailsActivity extends BaseActivity implements View.OnClic
     protected void setData() {
         try {
             if (!TextUtils.isEmpty(homeChefNearByModel.getProfileImage())) {
-                Glide.with(HomeShopDetailsActivity.this).load(homeChefNearByModel.getProfileImage()).into(ivProfileImage);
+                Glide.with(HomeShopViewActivity.this).load(homeChefNearByModel.getProfileImage()).into(ivProfileImage);
             }
             tvShopName.setText(homeChefNearByModel.getFirstName() + " " + homeChefNearByModel.getLastName());
             tvPriceRange.setText(homeChefNearByModel.getPriceRange());
@@ -119,7 +119,7 @@ public class HomeShopDetailsActivity extends BaseActivity implements View.OnClic
             tvSpeciality.setText(homeChefNearByModel.getSpeciality());
 
             if (homeChefNearByModel.getCoverPhotoArrayList() != null && homeChefNearByModel.getCoverPhotoArrayList().size() > 0) {
-                ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(HomeShopDetailsActivity.this, homeChefNearByModel.getCoverPhotoArrayList());
+                ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(HomeShopViewActivity.this, homeChefNearByModel.getCoverPhotoArrayList());
                 viewPagerCoverImages.setAdapter(imagePagerAdapter);
             }
 
@@ -154,7 +154,7 @@ public class HomeShopDetailsActivity extends BaseActivity implements View.OnClic
 
     public void bookOrder(String homeChefUserId, String orderId, String bookedDate, String orderBookedFor) {
         try {
-            final Dialog progressDialog = DialogUtils.getProgressDialog(HomeShopDetailsActivity.this, null);
+            final Dialog progressDialog = DialogUtils.getProgressDialog(HomeShopViewActivity.this, null);
             progressDialog.show();
 
             final FoodieBookOrderApiCall apiCall = new FoodieBookOrderApiCall(userModel.getUserId(), homeChefUserId, orderId, bookedDate, orderBookedFor);
@@ -167,21 +167,21 @@ public class HomeShopDetailsActivity extends BaseActivity implements View.OnClic
                         try {
                             BaseModel baseModel = apiCall.getResult();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                DialogUtils.showAlert(HomeShopDetailsActivity.this, "Order is successfully booked" + "\n Booking Id is :-" + apiCall.getBookingId());
+                                DialogUtils.showAlert(HomeShopViewActivity.this, "Order is successfully booked" + "\n Booking Id is :-" + apiCall.getBookingId());
                             } else {
-                                DialogUtils.showAlert(HomeShopDetailsActivity.this, baseModel.getStatusMessage());
+                                DialogUtils.showAlert(HomeShopViewActivity.this, baseModel.getStatusMessage());
                             }
 
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
                     } else { // Failure
-                        Utils.handleError(e.getMessage(), HomeShopDetailsActivity.this, null);
+                        Utils.handleError(e.getMessage(), HomeShopViewActivity.this, null);
                     }
                 }
             });
         } catch (Exception e) {
-            Utils.handleError(e.getMessage(), HomeShopDetailsActivity.this, null);
+            Utils.handleError(e.getMessage(), HomeShopViewActivity.this, null);
         }
     }
 
@@ -189,8 +189,8 @@ public class HomeShopDetailsActivity extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_call:
-                if (ContextCompat.checkSelfPermission(HomeShopDetailsActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(HomeShopDetailsActivity.this, new String[]{Manifest.permission.CALL_PHONE}, Constants.Keys.REQUEST_CALL_PHONE);
+                if (ContextCompat.checkSelfPermission(HomeShopViewActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(HomeShopViewActivity.this, new String[]{Manifest.permission.CALL_PHONE}, Constants.Keys.REQUEST_CALL_PHONE);
                 } else {
                     startCall();
                 }
@@ -210,7 +210,7 @@ public class HomeShopDetailsActivity extends BaseActivity implements View.OnClic
 
     private void startCall() {
         try {
-            if (ContextCompat.checkSelfPermission(HomeShopDetailsActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(HomeShopViewActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                 Intent intent = new Intent(Intent.ACTION_CALL);
                 intent.setData(Uri.parse("tel:" + homeChefNearByModel.getMobile()));
                 startActivity(intent);

@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.homemadebazar.R;
-import com.homemadebazar.activity.HomeShopDetailsActivity;
+import com.homemadebazar.activity.HomeShopViewActivity;
 import com.homemadebazar.adapter.HomeChefFoodTimingAdapter;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.HomeChefOrderModel;
@@ -37,11 +37,11 @@ public class HomeChefDinnerFragment extends BaseFragment {
 
     @Override
     protected void initUI() {
-        userId = getArguments().getString(HomeShopDetailsActivity.KEY_USER_ID);
+        userId = getArguments().getString(HomeShopViewActivity.KEY_USER_ID);
         recyclerView = getView().findViewById(R.id.recycler_view);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
-        homeChefLunchAdapter = new HomeChefFoodTimingAdapter(getActivity(),userId, homeChefOrderModelArrayList);
+        homeChefLunchAdapter = new HomeChefFoodTimingAdapter(getActivity(), userId, homeChefOrderModelArrayList);
         recyclerView.setAdapter(homeChefLunchAdapter);
     }
 
@@ -80,6 +80,9 @@ public class HomeChefDinnerFragment extends BaseFragment {
                                 ArrayList<HomeChefOrderModel> tempHomeChefOrderModelArrayList = apiCall.getResult();
                                 homeChefOrderModelArrayList.clear();
                                 homeChefOrderModelArrayList.addAll(tempHomeChefOrderModelArrayList);
+                                homeChefLunchAdapter.notifyDataSetChanged();
+                            } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.NO_RECORD_FOUND) {
+                                homeChefOrderModelArrayList.clear();
                                 homeChefLunchAdapter.notifyDataSetChanged();
                             } else {
                                 DialogUtils.showAlert(getActivity(), baseModel.getStatusMessage());

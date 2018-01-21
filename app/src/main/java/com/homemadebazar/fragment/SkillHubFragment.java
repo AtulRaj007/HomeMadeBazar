@@ -1,8 +1,8 @@
 package com.homemadebazar.fragment;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -20,7 +20,6 @@ import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
 import com.homemadebazar.network.apicall.HomeChefSkillVideoApiCall;
-import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
 import com.homemadebazar.util.Utils;
 
@@ -30,13 +29,14 @@ import java.util.ArrayList;
  * Created by HP on 7/29/2017.
  */
 
-public class SkillHubFragment extends BaseFragment {
+public class SkillHubFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView recyclerView;
     private SkillHubAdapter skillHubAdapter;
     private LinearLayoutManager linearLayoutManager;
     private UserModel userModel;
     private EditText etSearch;
     private ImageView ivClearSearch;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private ArrayList<HomeChefSkillHubVideoModel> homeChefSkillHubVideoModelArrayList = new ArrayList<>();
     private ArrayList<HomeChefSkillHubVideoModel> videoModelsArrayList = new ArrayList<>();
 
@@ -53,6 +53,7 @@ public class SkillHubFragment extends BaseFragment {
         linearLayoutManager = new LinearLayoutManager(getActivity());
         etSearch = getView().findViewById(R.id.et_search);
         ivClearSearch = getView().findViewById(R.id.iv_clear_search);
+        swipeRefreshLayout = getView().findViewById(R.id.swipe_refresh_layout);
     }
 
     public void initialiseListener() {
@@ -110,33 +111,25 @@ public class SkillHubFragment extends BaseFragment {
         skillHubAdapter = new SkillHubAdapter(getActivity(), homeChefSkillHubVideoModelArrayList);
         recyclerView.setAdapter(skillHubAdapter);
         getSkillHubVideos();
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     public void getSkillHubVideos() {
         try {
-            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
-            progressDialog.show();
-
             final HomeChefSkillVideoApiCall apiCall = new HomeChefSkillVideoApiCall(userModel.getUserId());
             HttpRequestHandler.getInstance(getActivity().getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
                 public void onComplete(Exception e) {
-                    DialogUtils.hideProgressDialog(progressDialog);
                     if (e == null) { // Success
                         try {
+                            swipeRefreshLayout.setRefreshing(false);
                             ArrayList<HomeChefSkillHubVideoModel> tempHomeChefSkillHubVideoArrayList = apiCall.getResult();
                             homeChefSkillHubVideoModelArrayList.clear();
                             videoModelsArrayList.clear();
                             homeChefSkillHubVideoModelArrayList.addAll(tempHomeChefSkillHubVideoArrayList);
                             videoModelsArrayList.addAll(tempHomeChefSkillHubVideoArrayList);
                             skillHubAdapter.notifyDataSetChanged();
-                     /*       if (isAccountExistModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-
-                            } else {
-                                DialogUtils.showAlert(getActivity(), isAccountExistModel.getStatusMessage());
-                            }*/
-
 
                         } catch (Exception ex) {
                             ex.printStackTrace();
@@ -149,5 +142,10 @@ public class SkillHubFragment extends BaseFragment {
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), getActivity(), null);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        getSkillHubVideos();
     }
 }

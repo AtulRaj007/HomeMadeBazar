@@ -2,17 +2,17 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
-    app:contentInsetEnd="0dp"
-    app:contentInsetLeft="0dp"
-    app:contentInsetRight="0dp"
-    app:contentInsetStart="0dp"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="@color/colorPrimary"
     android:contentInsetEnd="0dp"
     android:contentInsetLeft="0dp"
     android:contentInsetRight="0dp"
-    android:contentInsetStart="0dp">
+    android:contentInsetStart="0dp"
+    app:contentInsetEnd="0dp"
+    app:contentInsetLeft="0dp"
+    app:contentInsetRight="0dp"
+    app:contentInsetStart="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,16 +31,16 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_toRightOf="@id/iv_back"
-            android:src="@drawable/video" />
+            android:src="@drawable/profile" />
 
         <TextView
-            android:id="@+id/tv_toolbar_title"
+            android:id="@+id/tv_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/margin_10"
             android:layout_toRightOf="@id/iv_user_profile"
-            android:text="sadfsafdasfas"
+            android:text=""
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/text_18" />

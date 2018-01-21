@@ -1,13 +1,14 @@
 package com.homemadebazar.fragment;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.homemadebazar.R;
 import com.homemadebazar.adapter.MyOrdersAdapter;
@@ -28,10 +29,12 @@ import java.util.ArrayList;
  * Created by Sumit on 30/07/17.
  */
 
-public class ScheduledMyOrdersFragment extends BaseFragment {
+public class ScheduledMyOrdersFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView recyclerView;
     private MyOrdersAdapter myOrdersAdapter;
     private UserModel userModel;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView tvNoRecordFound;
     private ArrayList<HomeChefIncomingOrderModel> homeChefIncomingOrderModelArrayList = new ArrayList<>();
 
     @Nullable
@@ -39,17 +42,11 @@ public class ScheduledMyOrdersFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_schedule_myorders, container, false);
     }
-//
-//    @Override
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        initUI();
-//        initialiseListener();
-//        setData();
-//    }
 
     public void initUI() {
-        recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerView);
+        recyclerView = getView().findViewById(R.id.recyclerView);
+        swipeRefreshLayout = getView().findViewById(R.id.swipe_refresh_layout);
+        tvNoRecordFound = getView().findViewById(R.id.tv_no_record_found);
         userModel = SharedPreference.getUserModel(getActivity());
     }
 
@@ -66,24 +63,26 @@ public class ScheduledMyOrdersFragment extends BaseFragment {
 
     private void getBookOrderedList() {
         try {
-            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
-            progressDialog.show();
-
+            swipeRefreshLayout.setRefreshing(true);
             final HomeChefIncomingOrderApiCall apiCall = new HomeChefIncomingOrderApiCall(userModel.getUserId(), Constants.HomeChefOrder.SCHEDULED);
             HttpRequestHandler.getInstance(getActivity().getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
                 public void onComplete(Exception e) {
-                    DialogUtils.hideProgressDialog(progressDialog);
                     if (e == null) { // Success
                         try {
+                            swipeRefreshLayout.setRefreshing(false);
                             BaseModel baseModel = apiCall.getBaseModel();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
                                 ArrayList<HomeChefIncomingOrderModel> tempHomeChefIncomingOrderArrayList = apiCall.getResult();
                                 homeChefIncomingOrderModelArrayList.clear();
                                 homeChefIncomingOrderModelArrayList.addAll(tempHomeChefIncomingOrderArrayList);
                                 myOrdersAdapter.notifyDataSetChanged();
-
+                                tvNoRecordFound.setVisibility(View.GONE);
+                            } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.NO_RECORD_FOUND) {
+                                homeChefIncomingOrderModelArrayList.clear();
+                                myOrdersAdapter.notifyDataSetChanged();
+                                tvNoRecordFound.setVisibility(View.VISIBLE);
 
                             } else {
                                 DialogUtils.showAlert(getActivity(), baseModel.getStatusMessage());
@@ -101,5 +100,10 @@ public class ScheduledMyOrdersFragment extends BaseFragment {
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), getActivity(), null);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        getBookOrderedList();
     }
 }

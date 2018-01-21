@@ -211,5 +211,6 @@
     <string name="hint_company">Enter Company Name</string>
     <string name="hint_university_name">Enter University Name</string>
     <string name="hint_about_your_self">About Your Self</string>
+    <string name="str_no_record_found">No Record Found.</string>
 
 </resources>

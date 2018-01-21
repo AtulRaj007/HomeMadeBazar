@@ -30,8 +30,8 @@ public class MyOrdersFragment extends BaseFragment {
     }
 
     public void initUI() {
-        tabLayout = (TabLayout) getView().findViewById(R.id.tab_layout);
-        mViewPager = (ViewPager) getView().findViewById(R.id.view_pager);
+        tabLayout = getView().findViewById(R.id.tab_layout);
+        mViewPager = getView().findViewById(R.id.view_pager);
         viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
     }
 
@@ -80,8 +80,5 @@ public class MyOrdersFragment extends BaseFragment {
         return super.onOptionsItemSelected(item);
 
     }
-
-//    http://35.183.8.236/api/CreateOrder/ShowOrderedList
-//{"UserId":"17112218","TabSection":"NOW"}
 
 }

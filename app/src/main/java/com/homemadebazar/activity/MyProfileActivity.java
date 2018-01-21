@@ -147,8 +147,8 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
                     Uri uri = Utils.getCameraUri();
                     System.out.println("Camera URI:-" + uri);
                     if (uri != null) {
-                        ivProfilePic.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                        ivProfilePic.setImageURI(uri);
+//                        ivProfilePic.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//                        ivProfilePic.setImageURI(uri);
                         CropImage.activity(uri)
                                 .start(this);
                     }
@@ -176,6 +176,8 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
                 if (resultCode == RESULT_OK) {
                     profilePicUri = result.getUri();
+                    ivProfilePic.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    ivProfilePic.setImageURI(profilePicUri);
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                     Exception error = result.getError();
                 }
@@ -200,18 +202,6 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
         return "";
     }
 
-//    {
-//        "StatusCode": "100",
-//            "StatusMessage": "Successful",
-//            "LName": "",
-//            "FName": "",
-//            "DPStatus": "",
-//            "Country": "",
-//            "Email": "",
-//            "Mobile": "9654489095",
-//            "UserId": "1801060",
-//            "Url": "http://103.54.24.25:200/api/Profile/GetImage?Source=ImageGallary%5C%5C1801060%5CDP%5Cjoin.jpg"
-//    }
 
     public void updateUserProfile(String imagePath) {
         String url = getProfileUpdateUrl();

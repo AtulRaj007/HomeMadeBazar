@@ -19,6 +19,7 @@ import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
 import com.homemadebazar.network.apicall.FoodiePostLikeCommentApiCall;
 import com.homemadebazar.network.apicall.GetPostCommentApiCall;
+import com.homemadebazar.util.CircleImageView;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
@@ -28,13 +29,14 @@ import java.util.ArrayList;
 
 public class FoodiePostCommentActivity extends BaseActivity implements View.OnClickListener {
     public static String KEY_POST_ID = "KEY_POST_ID";
-    private ImageView ivBack, ivUserProfile;
+    private ImageView ivBack;
     private EditText etChatMessage;
     private RecyclerView recyclerView;
     private UserModel userModel;
     private String postId;
     private PostCommentAdapter postCommentAdapter;
     private LinearLayoutManager linearLayoutManager;
+    private CircleImageView ivUserProfile;
     private ArrayList<FoodiePostCommentModel> foodiePostCommentModelArrayList = new ArrayList<>();
 
     public static Intent getCommentIntent(Context context, String postId) {
@@ -59,7 +61,7 @@ public class FoodiePostCommentActivity extends BaseActivity implements View.OnCl
         linearLayoutManager = new LinearLayoutManager(FoodiePostCommentActivity.this);
         userModel = SharedPreference.getUserModel(FoodiePostCommentActivity.this);
         ivBack = findViewById(R.id.iv_back);
-        ivUserProfile = findViewById(R.id.iv_user_profile);
+//        ivUserProfile = findViewById(R.id.iv_user_profile);
         etChatMessage = findViewById(R.id.et_chat_message);
         recyclerView = findViewById(R.id.recycler_view);
     }

@@ -51,11 +51,6 @@ public class WebViewActivity extends BaseActivity {
     @Override
     public void initialiseListener() {
         webView.getSettings().setJavaScriptEnabled(true);
-    /*    if (title.equalsIgnoreCase(getString(R.string.privacy_policy))) {
-            webView.loadUrl("file:///android_asset/verification.html");
-        } else {
-            webView.loadUrl("file:///android_asset/terms_condition.html");
-        }*/
     }
 
     @Override

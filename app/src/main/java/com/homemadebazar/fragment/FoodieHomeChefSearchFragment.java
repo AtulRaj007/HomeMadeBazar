@@ -104,40 +104,40 @@ public class FoodieHomeChefSearchFragment extends BaseFragment implements View.O
         }).execute(Constants.ServerURL.GET_FOOD_CATEGORIES);
     }
 
-    private void searchHomeChef(String foodCategoryId, String searchString) {
-        try {
-            final Dialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
-            progressDialog.show();
-
-            final FoodieHomeChefSearchApiCall apiCall = new FoodieHomeChefSearchApiCall("28.5244", "77.1855", foodCategoryId, searchString);
-            HttpRequestHandler.getInstance(getActivity()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
-
-                @Override
-                public void onComplete(Exception e) {
-                    progressDialog.hide();
-                    if (e == null) { // Success
-                        try {
-                            BaseModel baseModel = apiCall.getResult();
-                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                // DialogUtils.showAlert(getActivity(), "HomeChiefDetailList size:-" + apiCall.getHomeChiefDetailList().size());
-                                homeChiefNearByModelArrayList = apiCall.getHomeChiefDetailList();
-
-                            } else {
-                                DialogUtils.showAlert(getActivity(), baseModel.getStatusMessage());
-                            }
-
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    } else { // Failure
-                        Utils.handleError(e.getMessage(), getActivity(), null);
-                    }
-                }
-            });
-        } catch (Exception e) {
-            Utils.handleError(e.getMessage(), getActivity(), null);
-        }
-    }
+//    private void searchHomeChef(String foodCategoryId, String searchString) {
+//        try {
+//            final Dialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
+//            progressDialog.show();
+//
+//            final FoodieHomeChefSearchApiCall apiCall = new FoodieHomeChefSearchApiCall("28.5244", "77.1855", foodCategoryId, searchString);
+//            HttpRequestHandler.getInstance(getActivity()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
+//
+//                @Override
+//                public void onComplete(Exception e) {
+//                    progressDialog.hide();
+//                    if (e == null) { // Success
+//                        try {
+//                            BaseModel baseModel = apiCall.getResult();
+//                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+//                                // DialogUtils.showAlert(getActivity(), "HomeChiefDetailList size:-" + apiCall.getHomeChiefDetailList().size());
+//                                homeChiefNearByModelArrayList = apiCall.getHomeChiefDetailList();
+//
+//                            } else {
+//                                DialogUtils.showAlert(getActivity(), baseModel.getStatusMessage());
+//                            }
+//
+//                        } catch (Exception ex) {
+//                            ex.printStackTrace();
+//                        }
+//                    } else { // Failure
+//                        Utils.handleError(e.getMessage(), getActivity(), null);
+//                    }
+//                }
+//            });
+//        } catch (Exception e) {
+//            Utils.handleError(e.getMessage(), getActivity(), null);
+//        }
+//    }
 
 //    private void setupToolbar() {
 //        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {

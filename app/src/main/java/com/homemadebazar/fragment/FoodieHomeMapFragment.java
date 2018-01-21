@@ -20,7 +20,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.homemadebazar.R;
-import com.homemadebazar.activity.HomeShopDetailsActivity;
+import com.homemadebazar.activity.HomeShopViewActivity;
 import com.homemadebazar.model.HomeChiefNearByModel;
 import com.homemadebazar.util.CircleImageView;
 import com.homemadebazar.util.Constants;
@@ -69,7 +69,7 @@ public class FoodieHomeMapFragment extends BaseFragment implements OnMapReadyCal
         memberInfoLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(HomeShopDetailsActivity.getIntent(getActivity(), homeChiefNearByModel));
+                startActivity(HomeShopViewActivity.getIntent(getActivity(), homeChiefNearByModel));
             }
         });
     }
