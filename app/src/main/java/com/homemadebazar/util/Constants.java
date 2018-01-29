@@ -101,6 +101,7 @@ public class Constants {
         String FOODIE_HOMECHEF_SEARCH = BASE_URL + "Foodies/GetFoodSearchByCatDishVendors";
         String APPLY_PROMOTE_BUSINESS = BASE_URL + "Miscellaneous/ApplyPramotBussiness";
         String LIST_OF_HOT_DEALS = BASE_URL + "Foodies/GetListOfHotDeals";
+        String GET_USER_PROFILE_DETAILS = BASE_URL + "Miscellaneous/GetUserProfileDetails";
 
 
 //        http://localhost:14013/api/Foodies/GetListOfHotDeals

@@ -15,6 +15,7 @@ import com.homemadebazar.model.MarketPlaceProductBrandModel;
 import com.homemadebazar.model.MarketPlaceProductCategoryModel;
 import com.homemadebazar.model.MarketPlaceProductModel;
 import com.homemadebazar.model.NotificationModel;
+import com.homemadebazar.model.OtherUserProfileDetailsModel;
 import com.homemadebazar.model.TransactionModel;
 import com.homemadebazar.model.UserModel;
 
@@ -203,29 +204,30 @@ public class JSONParsingUtils {
 
         return homeChefOrderModelArrayList;
     }
-/*
-    {
-//        "DishName": "ffg",
-//            "Price": 55,
-//            "MinGuest": 22,
-//            "MaxGuest": 258,
-//            "DishDescription": "xx",
-//            "RuleDescription": "dcn",
-//            "DishAvailable": "13-01-2018,0,0,0;14-01-2018,0,0,0;15-01-2018,0,0,0;16-01-2018,0,0,0;17-01-2018,0,0,0;18-01-2018,0,0,0;19-01-2018,0,0,0;20-01-2018,0,0,0",
-            "DinnerTime": "54021",
-            "LunchTime": "4521",
-            "BreakFastTime": "1720",
-//            "OrderId": "E4C01AAE",
-            "Drink": "water",
-            "IsPetAllow": "False",
-            "VegNonType": "True",
-            "CoverImage": [
-        "http://18.218.139.27/api/Profile/GetImage?Source=ImageGallary%5C%5C1801132%5CAddCoverPhoto%5CIMG-20180113-WA0000.jpg",
-                "http://18.218.139.27/api/Profile/GetImage?Source=ImageGallary%5C%5C1801132%5CAddCoverPhoto%5CIMG-20180112-WA0009.jpg",
-                "http://18.218.139.27/api/Profile/GetImage?Source=ImageGallary%5C%5C1801132%5CAddCoverPhoto%5CIMG-20180113-WA0000.jpg",
-                "http://18.218.139.27/api/Profile/GetImage?Source=ImageGallary%5C%5C1801132%5CAddCoverPhoto%5CIMG-20180112-WA0009.jpg"
-                    ]
-    }*/
+
+    /*
+        {
+    //        "DishName": "ffg",
+    //            "Price": 55,
+    //            "MinGuest": 22,
+    //            "MaxGuest": 258,
+    //            "DishDescription": "xx",
+    //            "RuleDescription": "dcn",
+    //            "DishAvailable": "13-01-2018,0,0,0;14-01-2018,0,0,0;15-01-2018,0,0,0;16-01-2018,0,0,0;17-01-2018,0,0,0;18-01-2018,0,0,0;19-01-2018,0,0,0;20-01-2018,0,0,0",
+                "DinnerTime": "54021",
+                "LunchTime": "4521",
+                "BreakFastTime": "1720",
+    //            "OrderId": "E4C01AAE",
+                "Drink": "water",
+                "IsPetAllow": "False",
+                "VegNonType": "True",
+                "CoverImage": [
+            "http://18.218.139.27/api/Profile/GetImage?Source=ImageGallary%5C%5C1801132%5CAddCoverPhoto%5CIMG-20180113-WA0000.jpg",
+                    "http://18.218.139.27/api/Profile/GetImage?Source=ImageGallary%5C%5C1801132%5CAddCoverPhoto%5CIMG-20180112-WA0009.jpg",
+                    "http://18.218.139.27/api/Profile/GetImage?Source=ImageGallary%5C%5C1801132%5CAddCoverPhoto%5CIMG-20180113-WA0000.jpg",
+                    "http://18.218.139.27/api/Profile/GetImage?Source=ImageGallary%5C%5C1801132%5CAddCoverPhoto%5CIMG-20180112-WA0009.jpg"
+                        ]
+        }*/
     private static HomeChefOrderModel parseHomeChefOrder(JSONObject object) {
         HomeChefOrderModel homeChefOrderModel = new HomeChefOrderModel();
         try {
@@ -703,7 +705,28 @@ public class JSONParsingUtils {
     }
 
 
-
+    public static OtherUserProfileDetailsModel parseOtherUserModel(JSONObject object) {
+        OtherUserProfileDetailsModel userModel = new OtherUserProfileDetailsModel();
+        userModel.setUserId(object.optString("UserId"));
+        userModel.setCountryCode(object.optString("CountryCode"));
+        userModel.setCountryName(object.optString("CountryName"));
+        userModel.setMobile(object.optString("Mobile"));
+        userModel.setFirstName(object.optString("Fname"));
+        userModel.setLastName(object.optString("Lname"));
+        userModel.setEmailId(object.optString("EmailId"));
+        userModel.setAccountType(object.optString("AccountType"));
+        userModel.setProfilePic(object.optString("Url"));
+        userModel.setAddress(object.optString("Address"));
+        userModel.setCompanyName(object.optString("CompanyName"));
+        userModel.setDpStatus(object.optString("DPStatus"));
+        userModel.setIsMobileVerified(object.optString("IsMobileVarified"));
+        userModel.setLatitude(object.optString("Latitude"));
+        userModel.setLongitude(object.optString("Longitude"));
+        userModel.setPinCode(object.optString("Pincode"));
+        userModel.setUniversityName(object.optString("UniversityName"));
+        userModel.setFriendRequestStatus(object.optString("FrndRequestStatus"));
+        return userModel;
+    }
 
 
 }

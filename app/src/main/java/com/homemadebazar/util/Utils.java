@@ -2,6 +2,7 @@ package com.homemadebazar.util;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import com.homemadebazar.activity.MyProfileActivity;
 import com.homemadebazar.activity.TransactionHistoryActivity;
 import com.homemadebazar.activity.WalletActivity;
 import com.homemadebazar.activity.WebViewActivity;
+import com.homemadebazar.fragment.UserProfileFragment;
 import com.homemadebazar.model.FoodDateTimeBookModel;
 
 import java.io.File;
@@ -388,6 +390,12 @@ public class Utils {
         boolean isMinEightDigit = password.length() >= 8 ? true : false;
         return hasLetter.find() && hasDigit.find() && hasSpecial.find()
                 && isMinEightDigit;
+    }
+
+    public static void showUserProfile(Activity context) {
+        FragmentTransaction ft = context.getFragmentManager().beginTransaction();
+        UserProfileFragment userProfileFragment = new UserProfileFragment();
+        userProfileFragment.show(ft, "Dialog");
     }
 
 }
