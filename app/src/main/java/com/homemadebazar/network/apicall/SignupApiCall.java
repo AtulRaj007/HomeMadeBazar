@@ -13,11 +13,11 @@ import org.json.JSONObject;
 
 public class SignupApiCall extends BaseApiCall {
 
-    private String userId, firstName, lastName, emailId, password, accountType, deviceToken, latitude, longitude, pincode;
+    private String userId, firstName, lastName, emailId, password, accountType, deviceToken, latitude, longitude, address, pincode;
     private UserModel userModel;
 
     public SignupApiCall(String userId, String firstName, String lastName, String emailId, String password,
-                         String accountType, String deviceToken, String latitude, String longitude, String pinCode) {
+                         String accountType, String deviceToken, String latitude, String longitude, String address, String pinCode) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -28,6 +28,7 @@ public class SignupApiCall extends BaseApiCall {
         this.deviceToken = deviceToken;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.address = address;
         this.pincode = pinCode;
     }
 
@@ -45,6 +46,7 @@ public class SignupApiCall extends BaseApiCall {
             object.put("Latitude", latitude);
             object.put("Longitude", longitude);
             object.put("PinCode", pincode);
+            object.put("Address", address);
 
         } catch (JSONException e) {
             e.printStackTrace();

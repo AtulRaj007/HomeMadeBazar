@@ -56,7 +56,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
     private int[] selectedRole = {R.drawable.home_chef_selected, R.drawable.foodie_selected, R.drawable.market_place_selected};
     private int[] unSelectedRole = {R.drawable.home_chef_unselected, R.drawable.foodie_unselected, R.drawable.market_place_unselected};
     private ImageView ivHomeChef, ivFoodie, ivMarketPlace;
-    private String firstName, lastName, emailId, password, confirmPassword;
+    private String firstName, lastName, emailId, password, confirmPassword, originalAddress;
     private String userId;
     private String deviceToken = "", pinCode = "";
     private double latitude, longitude;
@@ -229,6 +229,8 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
         emailId = ((EditText) findViewById(R.id.et_email_id)).getText().toString().trim();
         password = ((EditText) findViewById(R.id.et_password)).getText().toString().trim();
         confirmPassword = ((EditText) findViewById(R.id.et_confirm_password)).getText().toString().trim();
+        originalAddress = ((EditText) findViewById(R.id.et_address)).getText().toString().trim();
+        pinCode = ((EditText) findViewById(R.id.et_pincode)).getText().toString().trim();
 
         if (TextUtils.isEmpty(firstName)) {
             DialogUtils.showAlert(SignUpActivity.this, "Please enter first name");
@@ -304,7 +306,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
             progressDialog.show();
 
             final SignupApiCall apiCall = new SignupApiCall(userId, firstName, lastName, emailId, password,
-                    String.valueOf(userRole.getRole()), deviceToken, latitude + "", longitude + "", pinCode);
+                    String.valueOf(userRole.getRole()), deviceToken, latitude + "", longitude + "", originalAddress, pinCode);
             HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override

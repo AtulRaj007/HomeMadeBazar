@@ -29,7 +29,7 @@ import id.zelory.compressor.Compressor;
 
 public class MyProfileActivity extends BaseActivity implements View.OnClickListener {
     private UserModel userModel;
-    private EditText etFirstName, etLastName, etEmailId, etPhoneNumber, etCountry, etAboutYourSelf, etAadharNumber;
+    private EditText etFirstName, etLastName, etEmailId, etPhoneNumber, etCountry, etAboutYourSelf, etCompanyName, etUniversityName;
     private ImageView ivProfilePic;
     private Uri profilePicUri = null;
 
@@ -60,6 +60,8 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
         etPhoneNumber = findViewById(R.id.et_phone_number);
         etCountry = findViewById(R.id.et_country);
         etAboutYourSelf = findViewById(R.id.et_about_your_self);
+        etCompanyName = findViewById(R.id.et_company_name);
+        etUniversityName = findViewById(R.id.et_university_name);
         ivProfilePic = findViewById(R.id.iv_profile_pic);
 
         if (userModel != null) {
@@ -193,7 +195,7 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
     private String getProfileUpdateUrl() {
         try {
             String url = Constants.ServerURL.PROFILE_UPDATE + "?UserId=" + userModel.getUserId() + "&FName=" + etFirstName.getText().toString() + "&LName=" + etLastName.getText().toString() + "&Email=" + etEmailId.getText().toString() + "&Country=" + etCountry.getText().toString() +
-                    "&DPStatus=" + etAboutYourSelf.getText().toString() + "&Mobile=" + etPhoneNumber.getText().toString();
+                    "&DPStatus=" + etAboutYourSelf.getText().toString() + "&Mobile=" + etPhoneNumber.getText().toString() + "&CompanyName=" + etCompanyName.getText().toString() + "&UniversityName=" + etUniversityName.getText().toString();
             System.out.println(Constants.ServiceTAG.URL + url);
             return url;
         } catch (Exception e) {
@@ -227,6 +229,8 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
                             String mobileNumber = object.optString("Mobile");
                             String dpStatus = object.optString("DPStatus");
                             String profileUrl = object.optString("Url");
+                            String companyName = object.optString("CompanyName");
+                            String universityName = object.optString("UniversityName");
 
                             userModel.setProfilePic(profileUrl);
                             SharedPreference.saveUserModel(MyProfileActivity.this, userModel);
@@ -256,6 +260,4 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
             e.printStackTrace();
         }
     }
-
-
 }
