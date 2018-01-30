@@ -1,5 +1,6 @@
 package com.homemadebazar.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import com.homemadebazar.R;
 import com.homemadebazar.activity.HomeShopViewActivity;
 import com.homemadebazar.model.HomeChiefNearByModel;
 import com.homemadebazar.util.CircleImageView;
+import com.homemadebazar.util.Utils;
 
 import java.util.ArrayList;
 
@@ -76,11 +78,18 @@ public class FoodieHomeListAdapter extends RecyclerView.Adapter<FoodieHomeListAd
             tvAddress = itemView.findViewById(R.id.tv_address);
             tvDistance = itemView.findViewById(R.id.tv_distance);
             itemView.setOnClickListener(this);
+            profilePic.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            context.startActivity(HomeShopViewActivity.getIntent(context, homeChiefNearByModelArrayList.get(getAdapterPosition())));
+            switch (v.getId()) {
+                case R.id.iv_profile_pic:
+                    Utils.showUserProfile((Activity) context);
+                    break;
+                default:
+                    context.startActivity(HomeShopViewActivity.getIntent(context, homeChiefNearByModelArrayList.get(getAdapterPosition())));
+            }
         }
     }
 }

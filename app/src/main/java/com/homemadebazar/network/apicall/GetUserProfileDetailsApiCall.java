@@ -1,5 +1,6 @@
 package com.homemadebazar.network.apicall;
 
+import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.OtherUserProfileDetailsModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.JSONParsingUtils;
@@ -15,6 +16,7 @@ public class GetUserProfileDetailsApiCall extends BaseApiCall {
 
     private String userId, forUserId;
     private OtherUserProfileDetailsModel userModel;
+    private BaseModel baseModel;
 
     public GetUserProfileDetailsApiCall(String userId, String forUserId) {
         this.userId = userId;
@@ -40,6 +42,7 @@ public class GetUserProfileDetailsApiCall extends BaseApiCall {
         if (response != null && !response.isEmpty()) {
             try {
                 JSONObject object = new JSONObject(response);
+                baseModel = JSONParsingUtils.parseBaseModel(object);
                 userModel = JSONParsingUtils.parseOtherUserModel(object);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -56,6 +59,10 @@ public class GetUserProfileDetailsApiCall extends BaseApiCall {
     public String getServiceURL() {
         System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.GET_USER_PROFILE_DETAILS);
         return Constants.ServerURL.GET_USER_PROFILE_DETAILS;
+    }
+
+    public BaseModel getBaseModel() {
+        return baseModel;
     }
 
     @Override

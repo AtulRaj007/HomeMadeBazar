@@ -395,7 +395,7 @@ public class Utils {
     public static void showUserProfile(Activity context) {
         FragmentTransaction ft = context.getFragmentManager().beginTransaction();
         UserProfileFragment userProfileFragment = new UserProfileFragment();
-        userProfileFragment.show(ft, "Dialog");
+        userProfileFragment.show(ft, "User Profile Dialog");
     }
 
 }
