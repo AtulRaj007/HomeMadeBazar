@@ -130,21 +130,46 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_price_range" />
+
+                <!--<android.support.design.widget.TextInputLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+
+                <!--<EditText-->
+                <!--android:id="@+id/et_price_range"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:hint="@string/hint_enter_price_range"-->
+                <!--android:singleLine="true"-->
+                <!--android:textSize="@dimen/text_16"-->
+
+                <!--/>-->
+
+                <!--</android.support.design.widget.TextInputLayout>-->
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/et_price_range"
-                        android:layout_width="match_parent"
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/spr_min_price"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="@string/hint_enter_price_range"
-                        android:singleLine="true"
-                        android:textSize="@dimen/text_16"
+                        android:layout_weight="1"
+                        android:entries="@array/price" />
 
-                        />
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/spr_max_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:entries="@array/price" />
 
-                </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
 
 
                 <android.support.design.widget.TextInputLayout

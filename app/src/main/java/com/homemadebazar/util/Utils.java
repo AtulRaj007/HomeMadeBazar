@@ -398,4 +398,15 @@ public class Utils {
         userProfileFragment.show(ft, "User Profile Dialog");
     }
 
+    public static ArrayList<String> getPriceArray(String title) {
+        ArrayList<String> priceArray = new ArrayList<>();
+        if (!TextUtils.isEmpty(title)) {
+            priceArray.add(title);
+        }
+        for (int i = 20; i <= 1000; i += 20) {
+            priceArray.add(String.valueOf(i));
+        }
+        return priceArray;
+    }
+
 }

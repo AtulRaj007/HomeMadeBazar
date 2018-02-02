@@ -212,5 +212,61 @@
     <string name="hint_university_name">Enter University Name</string>
     <string name="hint_about_your_self">About Your Self</string>
     <string name="str_no_record_found">No Record Found.</string>
+    <string name="str_price_range">Select Price Range</string>
+
+
+    <string-array name="price">
+        <item></item>
+        <item>20</item>
+        <item>40</item>
+        <item>60</item>
+        <item>80</item>
+        <item>100</item>
+        <item>120</item>
+        <item>140</item>
+        <item>160</item>
+        <item>180</item>
+        <item>200</item>
+        <item>220</item>
+        <item>240</item>
+        <item>260</item>
+        <item>280</item>
+        <item>300</item>
+        <item>320</item>
+        <item>340</item>
+        <item>360</item>
+        <item>380</item>
+        <item>400</item>
+        <item>420</item>
+        <item>440</item>
+        <item>460</item>
+        <item>480</item>
+        <item>500</item>
+        <item>520</item>
+        <item>540</item>
+        <item>560</item>
+        <item>580</item>
+        <item>600</item>
+        <item>620</item>
+        <item>640</item>
+        <item>660</item>
+        <item>680</item>
+        <item>700</item>
+        <item>720</item>
+        <item>740</item>
+        <item>760</item>
+        <item>780</item>
+        <item>800</item>
+        <item>820</item>
+        <item>840</item>
+        <item>860</item>
+        <item>880</item>
+        <item>900</item>
+        <item>920</item>
+        <item>940</item>
+        <item>960</item>
+        <item>980</item>
+        <item>1000</item>
+    </string-array>
 
 </resources>

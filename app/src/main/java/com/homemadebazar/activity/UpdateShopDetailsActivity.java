@@ -14,11 +14,12 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
@@ -28,10 +29,10 @@ import com.android.volley.toolbox.Volley;
 import com.homemadebazar.R;
 import com.homemadebazar.Template.Template;
 import com.homemadebazar.model.BaseModel;
+import com.homemadebazar.model.HomeChefProfileModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.MultiPartRequest;
-import com.homemadebazar.network.UploadFileTask;
 import com.homemadebazar.network.api.ApiCall;
 import com.homemadebazar.network.apicall.MyShopAddDetailsApiCall;
 import com.homemadebazar.util.Constants;
@@ -39,13 +40,8 @@ import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
 import com.homemadebazar.util.Utils;
 
-import org.json.JSONObject;
-
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Hashtable;
-
-import id.zelory.compressor.Compressor;
 
 public class UpdateShopDetailsActivity extends BaseActivity implements View.OnClickListener {
 
@@ -59,6 +55,8 @@ public class UpdateShopDetailsActivity extends BaseActivity implements View.OnCl
     private MultiPartRequest mMultiPartRequest;
     private ArrayList<File> mFile = new ArrayList<File>();
     private UserModel userModel;
+    private Spinner sprMinPrice, sprMaxPrice;
+    private HomeChefProfileModel profileModel;
 
     public static String getPath(final Context context, final Uri uri) {
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
@@ -121,6 +119,7 @@ public class UpdateShopDetailsActivity extends BaseActivity implements View.OnCl
     protected void initUI() {
         mRequest = Volley.newRequestQueue(UpdateShopDetailsActivity.this);
         userModel = SharedPreference.getUserModel(UpdateShopDetailsActivity.this);
+        profileModel = SharedPreference.getProfileModel(UpdateShopDetailsActivity.this);
 
         ivFirstCoverPhoto = findViewById(R.id.iv_first_cover_photo);
         ivSecondCoverPhoto = findViewById(R.id.iv_second_cover_photo);
@@ -129,9 +128,11 @@ public class UpdateShopDetailsActivity extends BaseActivity implements View.OnCl
         ivFifthCoverPhoto = findViewById(R.id.iv_fifth_cover_photo);
 
         etShopName = findViewById(R.id.et_shop_name);
-        etPriceRange = findViewById(R.id.et_price_range);
         etShopAddress = findViewById(R.id.et_shop_address);
         etFoodSpeciality = findViewById(R.id.et_food_speciality);
+
+        sprMinPrice = findViewById(R.id.spr_min_price);
+        sprMaxPrice = findViewById(R.id.spr_max_price);
 
         btnSave = findViewById(R.id.btn_save);
 
@@ -151,6 +152,34 @@ public class UpdateShopDetailsActivity extends BaseActivity implements View.OnCl
 
     @Override
     protected void setData() {
+
+        ArrayList<String> minPriceArrayList = Utils.getPriceArray("Min Price");
+        ArrayAdapter<String> minAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, minPriceArrayList);
+        sprMinPrice.setAdapter(minAdapter);
+
+        ArrayList<String> maxPriceArrayList = Utils.getPriceArray("Max Price");
+        ArrayAdapter<String> maxAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, maxPriceArrayList);
+        sprMinPrice.setAdapter(maxAdapter);
+
+        if (profileModel != null) {
+            try {
+                etShopName.setText(profileModel.getShopName());
+                etShopAddress.setText(profileModel.getAddress());
+                etFoodSpeciality.setText(profileModel.getSpeciality());
+                String priceRange = profileModel.getPriceRange();
+                if (!TextUtils.isEmpty(priceRange)) {
+                    String rangesArray[] = priceRange.split("-");
+                    if (rangesArray.length == 2) {
+                        sprMinPrice.setSelection((Integer.parseInt(rangesArray[0]) / 20));
+                        sprMaxPrice.setSelection((Integer.parseInt(rangesArray[1]) / 20));
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
 
     }
 
@@ -269,19 +298,22 @@ public class UpdateShopDetailsActivity extends BaseActivity implements View.OnCl
         if (TextUtils.isEmpty(etShopName.getText().toString().trim())) {
             DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Please enter shop name.");
             return false;
-        } else if (TextUtils.isEmpty(etPriceRange.getText().toString().trim())) {
+        }
+        /*else if (TextUtils.isEmpty(etPriceRange.getText().toString().trim())) {
             DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Please enter price range.");
             return false;
-        } else if (TextUtils.isEmpty(etShopAddress.getText().toString().trim())) {
+        }*/
+        else if (TextUtils.isEmpty(etShopAddress.getText().toString().trim())) {
             DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Please enter address.");
             return false;
         } else if (TextUtils.isEmpty(etFoodSpeciality.getText().toString().trim())) {
             DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Please enter food speciality.");
             return false;
-        } else if (mFile.size() == 0) {
+        }
+    /*    else if (mFile.size() == 0) {
             DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Please select cover photo.");
             return false;
-        }
+        }*/
         return true;
     }
 
@@ -356,40 +388,6 @@ public class UpdateShopDetailsActivity extends BaseActivity implements View.OnCl
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-//    public void ImageUpload(String imagePath, String userId) {
-//        System.out.println("Image Upload userId:-" + userId);
-//        try {
-//            File compressImageFile = new Compressor(UpdateShopDetailsActivity.this).compressToFile(new File(imagePath));
-//
-//            Hashtable<String, String> multipartParams = new Hashtable<>();
-//
-//            UploadFileTask fileTask = new UploadFileTask(UpdateShopDetailsActivity.this, Constants.uploadImageURL.PROFILE_IMAGE_UPLOAD + userId, compressImageFile.getPath(), multipartParams, "image_url", new UploadFileTask.FileUploadListener() {
-//                @Override
-//                public void onComplete(String response) {
-//                    System.out.println("image url response " + response);
-//                    try {
-//                        JSONObject object = new JSONObject(response);
-//                        if (object.optString("StatusCode").equals("100")) {
-//                            DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Profile Image Updated Successfully");
-//                        } else if (object.optString("StatusCode").equals("100")) {
-//                            DialogUtils.showAlert(UpdateShopDetailsActivity.this, object.optString("StatusMessage"));
-//                        }
-//                        String image_url = object.optString("Url");
-//                        System.out.println("image url  " + image_url);
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                        Toast.makeText(UpdateShopDetailsActivity.this, "Profile Image Not updated", Toast.LENGTH_LONG).show();
-//                    }
-//
-//                }
-//            });
-//            fileTask.execute();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-
     void uploadFile(String userId) {
         final ProgressDialog progressDialog = new ProgressDialog(UpdateShopDetailsActivity.this);
         progressDialog.setMessage("Uploading File ... Please wait");
@@ -437,7 +435,7 @@ public class UpdateShopDetailsActivity extends BaseActivity implements View.OnCl
             progressDialog.show();
 
             final MyShopAddDetailsApiCall apiCall = new MyShopAddDetailsApiCall(userModel.getUserId(), etShopName.getText().toString().trim(),
-                    etPriceRange.getText().toString().trim(), etShopAddress.getText().toString().trim(), etFoodSpeciality.getText().toString().trim());
+                    "", etShopAddress.getText().toString().trim(), etFoodSpeciality.getText().toString().trim());
             HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
@@ -448,7 +446,18 @@ public class UpdateShopDetailsActivity extends BaseActivity implements View.OnCl
                             BaseModel baseModel = apiCall.getResult();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
                                 Log.d(TAG, userModel.toString());
-                                uploadFile(userModel.getUserId());
+                                if (mFile.size() > 0) {
+                                    uploadFile(userModel.getUserId());
+                                } else {
+                                    progressDialog.hide();
+                                    DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Shop Details updated Successfully.", new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            setResult(RESULT_OK);
+                                            finish();
+                                        }
+                                    });
+                                }
                             } else {
                                 DialogUtils.showAlert(UpdateShopDetailsActivity.this, userModel.getStatusMessage());
                             }

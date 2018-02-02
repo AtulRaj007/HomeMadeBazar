@@ -3,6 +3,7 @@ package com.homemadebazar.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.homemadebazar.model.HomeChefProfileModel;
 import com.homemadebazar.model.UserModel;
 
 import java.io.IOException;
@@ -17,6 +18,7 @@ public class SharedPreference {
     public static String PREF_NAME = "RipplePreference";
     public static SharedPreferences sSharedPreference;
     public static String USER_MODEL = "USER_MODEL";
+    public static String PROFILE_MODEL = "PROFILE_MODEL";
 
     public static void setStringPreference(Context context, String key, String value) {
         sSharedPreference = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -53,6 +55,32 @@ public class SharedPreference {
         }
         return userModel;
     }
+
+    public static void saveProfileModel(Context context, HomeChefProfileModel homeChefProfileModel) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        try {
+            editor.putString(PROFILE_MODEL, ObjectSerializer.serialize(homeChefProfileModel));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        editor.commit();
+    }
+
+    public static HomeChefProfileModel getProfileModel(Context context) {
+        HomeChefProfileModel homeChefProfileModel=new HomeChefProfileModel();
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        try {
+            homeChefProfileModel = (HomeChefProfileModel) ObjectSerializer.deserialize(prefs.getString(PROFILE_MODEL, ObjectSerializer.serialize(new HomeChefProfileModel())));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return homeChefProfileModel;
+    }
+
+
 
     public static void clearSharedPreference(Context context){
         SharedPreferences prefs=context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);

@@ -280,6 +280,7 @@ public class MyShopFragment extends BaseFragment implements View.OnClickListener
                             HomeChefProfileModel homeChefProfileModel = apiCall.getResult();
                             if (homeChefProfileModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
                                 try {
+                                    SharedPreference.saveProfileModel(getActivity(), homeChefProfileModel);
                                     tvShopName.setText(homeChefProfileModel.getShopName() + "");
                                     tvPriceRange.setText(homeChefProfileModel.getPriceRange() + "");
                                     tvAddress.setText(homeChefProfileModel.getAddress() + "");
