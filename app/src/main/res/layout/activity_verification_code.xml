@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/str_verification_code"
-            android:textColor="@color/black"
+            android:textColor="@color/heading_color"
             android:textSize="@dimen/text_20" />
 
         <TextView
@@ -29,7 +29,7 @@
             android:layout_marginTop="@dimen/margin_20"
             android:gravity="center"
             android:text="@string/str_verification_text"
-            android:textColor="@color/black" />
+            android:textColor="@color/sub_heading_color" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -101,7 +101,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/margin_30"
             android:text="@string/str_resend_code"
-            android:textColor="@color/black" />
+            android:textColor="@color/sub_heading_color" />
     </LinearLayout>
 
 

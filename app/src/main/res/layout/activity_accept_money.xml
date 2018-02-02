@@ -30,7 +30,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/margin_10"
             android:text="@string/str_scan_this_code"
-            android:textColor="@color/black"
+            android:textColor="@color/heading_color"
             android:textSize="@dimen/text_18" />
 
         <ImageView
@@ -39,7 +39,7 @@
             android:layout_height="250dp"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/margin_20"
-            android:src="@color/grey"
+            android:src="@color/background_screen"
 
             />
 
@@ -50,7 +50,7 @@
             android:layout_marginBottom="@dimen/margin_10"
             android:layout_marginTop="@dimen/margin_20"
             android:text="@string/str_or_enter_mobile_number"
-            android:textColor="@color/black"
+            android:textColor="@color/sub_heading_color"
             android:textSize="@dimen/text_18" />
 
         <TextView
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/margin_10"
-            android:text="9999999999"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/text_18"
             android:textStyle="bold" />

@@ -27,7 +27,7 @@
         android:background="@color/colorPrimary"
         android:padding="@dimen/margin_10"
         android:text="@string/str_products"
-        android:textColor="@color/black"
+        android:textColor="@color/heading_color"
         android:textSize="@dimen/text_16" />
 
     <android.support.v7.widget.RecyclerView

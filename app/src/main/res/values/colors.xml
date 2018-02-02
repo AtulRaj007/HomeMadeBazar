@@ -1,21 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--<color name="colorPrimary">#f24055</color>-->
-    <color name="colorPrimary">#EF4C1B</color>
-    <color name="colorPrimaryDark">#EF4C1B</color>
-    <color name="colorAccent">#EF4C1B</color>
+
 
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="grey">#D3D3D3</color>
     <color name="transparent_grey">#D3D3D3</color>
 
-    <color name="black_heading_color">#343434</color>
     <color name="blue_social">#4da0ce</color>
-    <color name="sub_heading_pink_color">#fcd9dd</color>
 
     <!--<color name="background_screen">#D3D3D3</color>-->
-    <color name="background_screen">#1B1B1B</color>
     <color name="navigation_title_color">#FFFFFF</color>
-    <color name="nav_line_background">#FFFFFF</color>
+    <color name="nav_line_background">#D3D3D3</color>
+
+    <!-- Old Theme -->
+    <!--<color name="colorPrimary">#EF4C1B</color>-->
+    <!--<color name="colorPrimaryDark">#EF4C1B</color>-->
+    <!--<color name="colorAccent">#EF4C1B</color>-->
+
+    <!--<color name="background_screen">#1B1B1B</color>-->
+
+    <color name="black_heading_color">#343434</color>
+
+    <color name="sub_heading_pink_color">#fcd9dd</color>
+
+    <!--<color name="button_color">#EF4C1B</color>-->
+
+    <!-- Theme 1 -->
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#E8D9D8</color>
+    <color name="colorAccent">#EF4C1B</color>
+
+    <color name="background_screen">#E8D9D8</color>
+
+    <color name="heading_color">#312A2B</color>
+
+    <color name="sub_heading_color">#D0CFCF</color>
+
+    <color name="button_color">#FF5666</color>
+
+    <!-- Theme 2 -->
+    <!--<color name="colorPrimary">#E01F1F</color>-->
+    <!--<color name="colorPrimaryDark">#E01F1F</color>-->
+    <!--<color name="colorAccent">#EF4C1B</color>-->
+
+    <!--<color name="background_screen">#FFFFFF</color>-->
+
+    <!--<color name="heading_color">#040303</color>-->
+
+    <!--<color name="sub_heading_color">#B0E69A</color>-->
+
+    <!--<color name="button_color">#FFD12D</color>-->
+
 </resources>

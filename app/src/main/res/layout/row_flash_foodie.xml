@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sonu kumar"
-                    android:textColor="@color/black"
+                    android:textColor="@color/heading_color"
                     android:textSize="@dimen/text_16"
                     android:textStyle="bold" />
 
@@ -47,7 +47,8 @@
                     android:id="@+id/tv_post_datetime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="12 Dec 2017" />
+                    android:textColor="@color/sub_heading_color"
+                    android:text="" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"

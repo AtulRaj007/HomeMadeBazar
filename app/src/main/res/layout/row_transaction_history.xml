@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Transaction Id:"
-                android:textColor="@color/black" />
+                android:textColor="@color/heading_color" />
 
             <TextView
                 android:id="@+id/tv_transaction_id"
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/lb_order_id"
                 android:text=" #20123DER"
-                android:textColor="@color/black" />
+                android:textColor="@color/heading_color" />
 
         </LinearLayout>
 
@@ -75,7 +75,7 @@
                         android:layout_toRightOf="@+id/iv_profile"
                         android:layout_weight="1"
                         android:text="Red Chilli"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/heading_color" />
 
                     <TextView
                         android:id="@+id/tv_time"

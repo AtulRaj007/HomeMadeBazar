@@ -34,9 +34,9 @@
             android:elevation="5dp"
             app:tabGravity="fill"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/white"
+            app:tabSelectedTextColor="@color/colorPrimary"
             app:tabTextAppearance="@style/SmallTabTextSize"
-            app:tabTextColor="@color/black_heading_color" />
+            app:tabTextColor="@color/heading_color" />
 
     </RelativeLayout>
 

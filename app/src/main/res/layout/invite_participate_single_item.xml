@@ -53,7 +53,7 @@
             android:layout_height="@dimen/button_height"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/margin_5"
-            android:background="@color/colorPrimary"
+            android:background="@color/button_color"
             android:text="@string/str_join"
             android:textAllCaps="false"
             android:textColor="@color/white"

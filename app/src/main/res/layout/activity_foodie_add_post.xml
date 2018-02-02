@@ -49,7 +49,7 @@
                 android:layout_marginTop="@dimen/margin_5"
                 android:layout_toRightOf="@id/profile_image"
                 android:text="Sonu Kumar"
-                android:textColor="@color/black"
+                android:textColor="@color/heading_color"
                 android:textSize="@dimen/text_16" />
 
             <Spinner

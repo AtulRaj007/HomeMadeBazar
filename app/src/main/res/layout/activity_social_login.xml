@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="@string/str_choose_account"
             android:textSize="@dimen/text_20"
-            android:textColor="@color/black"
+            android:textColor="@color/heading_color"
             android:layout_gravity="center"
             />
 

@@ -93,7 +93,7 @@
             android:id="@+id/btn_add"
             android:layout_width="120dp"
             android:layout_height="@dimen/button_height"
-            android:background="@color/colorPrimary"
+            android:background="@color/button_color"
             android:text="@string/str_add"
             android:textColor="@color/white" />
 
@@ -107,8 +107,9 @@
             android:id="@+id/btn_cancel"
             android:layout_width="120dp"
             android:layout_height="@dimen/button_height"
+            android:textColor="@color/white"
             android:layout_alignParentRight="true"
-            android:background="@color/cardview_dark_background"
+            android:background="@color/button_color"
             android:text="@string/str_cancel" />
 
 

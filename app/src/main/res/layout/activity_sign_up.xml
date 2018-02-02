@@ -24,7 +24,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/margin_30"
             android:text="@string/str_home_made_bazar"
-            android:textColor="@color/black"
+            android:textColor="@color/heading_color"
             android:textSize="@dimen/text_25" />
 
         <EditText
@@ -133,7 +133,7 @@
                     android:layout_marginTop="@dimen/text_5"
                     android:text="@string/str_home_chef"
                     android:layout_gravity="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/heading_color"
                     android:textSize="@dimen/text_12" />
 
                 <TextView
@@ -143,7 +143,7 @@
                     android:layout_marginTop="@dimen/margin_5"
                     android:gravity="center"
                     android:text="@string/str_home_chef_desc"
-                    android:textColor="@color/black"
+                    android:textColor="@color/sub_heading_color"
                     android:textSize="@dimen/text_10" />
 
             </LinearLayout>
@@ -170,7 +170,7 @@
                     android:layout_marginTop="@dimen/text_5"
                     android:text="@string/str_foodie"
                     android:layout_gravity="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/heading_color"
                     android:textSize="@dimen/text_12" />
 
                 <TextView
@@ -180,7 +180,7 @@
                     android:layout_marginTop="@dimen/margin_5"
                     android:gravity="center"
                     android:text="@string/str_foodie_desc"
-                    android:textColor="@color/black"
+                    android:textColor="@color/sub_heading_color"
                     android:textSize="@dimen/text_10" />
 
             </LinearLayout>
@@ -206,7 +206,7 @@
                     android:layout_marginTop="@dimen/text_5"
                     android:layout_gravity="center"
                     android:text="@string/str_marketplace"
-                    android:textColor="@color/black"
+                    android:textColor="@color/heading_color"
                     android:textSize="@dimen/text_12" />
 
                 <TextView
@@ -216,7 +216,7 @@
                     android:layout_marginTop="@dimen/margin_5"
                     android:gravity="center"
                     android:text="@string/str_marketplace_desc"
-                    android:textColor="@color/black"
+                    android:textColor="@color/sub_heading_color"
                     android:textSize="@dimen/text_10" />
 
             </LinearLayout>

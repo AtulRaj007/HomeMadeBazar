@@ -59,7 +59,7 @@
                             android:layout_marginTop="@dimen/margin_5"
                             android:gravity="center"
                             android:text="@string/total_balance"
-                            android:textColor="@color/white"
+                            android:textColor="@color/heading_color"
                             android:textSize="@dimen/text_18" />
 
                         <TextView
@@ -69,7 +69,7 @@
                             android:gravity="center"
                             android:paddingTop="@dimen/padding_5"
                             android:text="Rs 0"
-                            android:textColor="@color/white"
+                            android:textColor="@color/sub_heading_color"
                             android:textSize="@dimen/text_18"
                             android:textStyle="bold" />
 
@@ -102,7 +102,7 @@
                                 android:background="@color/colorPrimary"
                                 android:padding="@dimen/padding_5"
                                 android:text="@string/transfer_to_bank"
-                                android:textColor="@color/white"
+                                android:textColor="@color/sub_heading_color"
                                 android:textSize="@dimen/text_15" />
 
                         </RelativeLayout>
@@ -150,7 +150,7 @@
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_10"
                             android:text="@string/add_money"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/sub_heading_color" />
 
                     </LinearLayout>
 
@@ -181,7 +181,7 @@
                             android:layout_height="wrap_content"
                             android:padding="@dimen/padding_10"
                             android:text="@string/pay_money"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/sub_heading_color" />
 
                     </LinearLayout>
 
@@ -219,7 +219,7 @@
                         android:layout_gravity="center_horizontal"
                         android:paddingBottom="@dimen/padding_20"
                         android:text="@string/accept_money"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/sub_heading_color" />
 
                 </LinearLayout>
 
