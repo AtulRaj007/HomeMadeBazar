@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.homemadebazar.R;
@@ -35,7 +36,8 @@ public class MarketPlaceHomeActivity extends BaseActivity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private UserModel userModel;
-
+    private Toolbar mToolbar;
+    private String[] titles = {"Orders", "My Shop", "My Products"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +93,8 @@ public class MarketPlaceHomeActivity extends BaseActivity {
     }
 
     private void setUpToolbar() {
-//        mToolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(mToolbar);
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         findViewById(R.id.menu_notification).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,6 +139,7 @@ public class MarketPlaceHomeActivity extends BaseActivity {
     }
 
     private void setUpIcons(int selectedPosition) {
+        ((TextView) findViewById(R.id.tv_toolbar_title)).setText(titles[selectedPosition]);
         for (int i = 0; i < viewPagerAdapter.fragmentArrayList.size(); i++) {
             if (selectedPosition == i) {
                 tabLayout.getTabAt(i).setIcon(tabIconsSelected[i]);
@@ -188,66 +191,5 @@ public class MarketPlaceHomeActivity extends BaseActivity {
         Log.e(TAG, "Click:-" + v.getId());
         mDrawerLayout.closeDrawer(Gravity.LEFT);
         Utils.onNavItemClick(MarketPlaceHomeActivity.this, v, userModel.getUserId());
-    /*    switch (v.getId()) {
-            case R.id.iv_edit_profile:
-                startActivity(new Intent(MarketPlaceHomeActivity.this, MyProfileActivity.class));
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_my_orders:
-                startActivity(new Intent(MarketPlaceHomeActivity.this, MyOrdersActivity.class));
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_my_wallet:
-                startActivity(new Intent(MarketPlaceHomeActivity.this, WalletActivity.class));
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_sales_report:
-                Toast.makeText(MarketPlaceHomeActivity.this, "Development Mode", Toast.LENGTH_LONG).show();
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_transaction_history:
-                startActivity(new Intent(MarketPlaceHomeActivity.this, TransactionHistoryActivity.class));
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_change_password:
-                Intent intent = new Intent(MarketPlaceHomeActivity.this, ChangePasswordActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.tv_terms_of_use:
-                Toast.makeText(MarketPlaceHomeActivity.this, "Development Mode", Toast.LENGTH_LONG).show();
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_privacy_policy:
-                Toast.makeText(MarketPlaceHomeActivity.this, "Development Mode", Toast.LENGTH_LONG).show();
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_about:
-                Toast.makeText(MarketPlaceHomeActivity.this, "Development Mode", Toast.LENGTH_LONG).show();
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_logout:
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setTitle("HomeMadeBazar");
-                alertDialogBuilder.setMessage("Are you sure you want to exit...");
-                alertDialogBuilder.setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                SharedPreference.clearSharedPreference(MarketPlaceHomeActivity.this);
-                                startActivity(new Intent(MarketPlaceHomeActivity.this, LoginActivity.class));
-                                finish();
-                            }
-                        });
-                alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                alertDialogBuilder.show();
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-
-        }*/
     }
 }

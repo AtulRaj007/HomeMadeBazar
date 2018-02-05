@@ -213,6 +213,11 @@
     <string name="hint_about_your_self">About Your Self</string>
     <string name="str_no_record_found">No Record Found.</string>
     <string name="str_price_range">Select Price Range</string>
+    <string name="hint_rules_one">First Rule</string>
+    <string name="hint_rules_second">Second Rule</string>
+    <string name="hint_rules_three">Third Rule</string>
+    <string name="hint_rules_four">Fourth Rule</string>
+    <string name="hint_rules_fifth">Fifth Rule</string>
 
 
     <string-array name="price">

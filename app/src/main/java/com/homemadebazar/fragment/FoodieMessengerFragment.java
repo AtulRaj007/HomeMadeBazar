@@ -49,7 +49,7 @@ public class FoodieMessengerFragment extends BaseFragment {
     private void setUpViewPager() {
         viewPagerAdapter.addFragment(new FoodieMessengerFriendsFragment(), "Friends");
         viewPagerAdapter.addFragment(new FoodieMessengerRequestFragment(), "Requests");
-        viewPagerAdapter.addFragment(new FoodieMessengerInvitesFragment(), "Invites");
+        viewPagerAdapter.addFragment(new FoodieMessengerInvitesFragment(), "Network");
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

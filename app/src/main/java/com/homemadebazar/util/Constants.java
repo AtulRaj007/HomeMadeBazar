@@ -102,8 +102,11 @@ public class Constants {
         String APPLY_PROMOTE_BUSINESS = BASE_URL + "Miscellaneous/ApplyPramotBussiness";
         String LIST_OF_HOT_DEALS = BASE_URL + "Foodies/GetListOfHotDeals";
         String GET_USER_PROFILE_DETAILS = BASE_URL + "Miscellaneous/GetUserProfileDetails";
+        String SAVE_FAVOURITE = BASE_URL + "Miscellaneous/SaveFavourite";
+        String GET_LIST_OF_FAVOURITE_HOME_CHEF = BASE_URL + "Foodies/GetLstOfFavouritesHomeChif";
 
-
+//        http://localhost:14013/api/Foodies/GetLstOfFavouritesHomeChif
+//[1:34 PM, 2/3/2018] Pankaj Idea: http://localhost:14013/api/Miscellaneous/SaveFavourite
 //        http://localhost:14013/api/Foodies/GetListOfHotDeals
 //        http://localhost:14013/api/Miscellaneous/ApplyPramotBussiness
 //        http://localhost:14013/api/Foodies/GetFoodSearchByCatDishVendors
@@ -310,4 +313,22 @@ public class Constants {
 //    {"PostId":"PM00000002","ActionType":"Comments/Likes/All/Unlike","Comments":"Superb","UserById":"17110910"}
 
 //    {Message=Foodie foodie has booked an order., Bookingid=HMB00000022, Title=HomeMadeBazar, NotificationType=1}
+
+//    1. grey shadow in tab
+//2. height small tab
+//3. corners round and shadow
+//4. Favourites -> Functionality
+//5. cards size height come
+//6. Profile
+//7. Home chef cover photo height
+//8. Users share for incoming orders.
+//            9. Messenger -> Invites -> Network
+//10. Market Place Order -> Need Discuss
+//11. Categories -> Provide categoreis for videos
+//
+//12. Open in google maps
+//
+//---- **** ------
+//        80%   ->
+//        20 %  ->
 }

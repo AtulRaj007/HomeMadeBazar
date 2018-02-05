@@ -17,6 +17,7 @@ import com.homemadebazar.model.HomeChiefNearByModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
+import com.homemadebazar.network.apicall.FoodieHomeChiefFavouriteListApiCall;
 import com.homemadebazar.network.apicall.FoodieHomeChiefNearByListApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
@@ -70,7 +71,7 @@ public class FoodieHomeChefBookmarkFragment extends BaseFragment implements Swip
 //            final Dialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
 //            progressDialog.show();
 
-            final FoodieHomeChiefNearByListApiCall apiCall = new FoodieHomeChiefNearByListApiCall(userModel.getUserId(), "28.5244", "77.1855");
+            final FoodieHomeChiefFavouriteListApiCall apiCall = new FoodieHomeChiefFavouriteListApiCall(userModel.getUserId());
             HttpRequestHandler.getInstance(getActivity()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override

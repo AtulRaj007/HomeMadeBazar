@@ -159,7 +159,7 @@ public class UpdateShopDetailsActivity extends BaseActivity implements View.OnCl
 
         ArrayList<String> maxPriceArrayList = Utils.getPriceArray("Max Price");
         ArrayAdapter<String> maxAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, maxPriceArrayList);
-        sprMinPrice.setAdapter(maxAdapter);
+        sprMaxPrice.setAdapter(maxAdapter);
 
         if (profileModel != null) {
             try {

@@ -81,9 +81,11 @@ public class NotificationActivity extends BaseActivity implements SwipeRefreshLa
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                ArrayList<NotificationModel> tempNotificationList = apiCall.getResult();
                                 notificationModelArrayList.clear();
-                                notificationModelArrayList.addAll(tempNotificationList);
+                                notificationModelArrayList.addAll(apiCall.getResult());
+                                notificationAdapter.notifyDataSetChanged();
+                            } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.NO_RECORD_FOUND) {
+                                notificationModelArrayList.clear();
                                 notificationAdapter.notifyDataSetChanged();
                             } else {
                                 DialogUtils.showAlert(NotificationActivity.this, baseModel.getStatusMessage());

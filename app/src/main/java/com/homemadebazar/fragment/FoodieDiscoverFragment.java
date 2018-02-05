@@ -81,6 +81,9 @@ public class FoodieDiscoverFragment extends BaseFragment {
                                 homeChefOrderModelArrayList.clear();
                                 homeChefOrderModelArrayList.addAll(tempHomeChefOrderModelArrayList);
                                 foodieDiscoverAdapter.notifyDataSetChanged();
+                            } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.NO_RECORD_FOUND) {
+                                homeChefOrderModelArrayList.clear();
+                                foodieDiscoverAdapter.notifyDataSetChanged();
                             } else {
                                 DialogUtils.showAlert(getActivity(), baseModel.getStatusMessage());
                             }

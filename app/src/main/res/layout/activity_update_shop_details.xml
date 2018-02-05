@@ -157,6 +157,7 @@
 
                     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                         android:id="@+id/spr_min_price"
+                        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -164,6 +165,7 @@
 
                     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                         android:id="@+id/spr_max_price"
+                        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

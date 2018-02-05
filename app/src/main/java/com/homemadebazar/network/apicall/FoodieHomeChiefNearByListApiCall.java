@@ -76,6 +76,7 @@ public class FoodieHomeChiefNearByListApiCall extends BaseApiCall {
             homeChiefNearByModel.setPriceRange(detailObj.optString("PriceRange"));
             homeChiefNearByModel.setShopName(detailObj.optString("ShopName"));
             homeChiefNearByModel.setSpeciality(detailObj.optString("Speciality"));
+            homeChiefNearByModel.setFavourite(detailObj.optInt("IsFavourite") == 1 ? true : false);
             homeChiefNearByModel.setCoverPhotoArrayList(getCoverPhotoArray(detailObj.optString("CoverPhotoShow")));
 
             chiefDetailList.add(homeChiefNearByModel);

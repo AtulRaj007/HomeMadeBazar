@@ -148,110 +148,11 @@ public class FoodieHomeActivity extends BaseActivity {
 
     }
 
-//    public void deviceLoginLogoutApiCall(String userId, String token, final int loginHistory) {
-//        try {
-//            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(this, null);
-//            if (loginHistory == Constants.LoginHistory.LOGOUT) {
-//                progressDialog.show();
-//            }
-//
-//            final DeviceLoginLogoutApiCall apiCall = new DeviceLoginLogoutApiCall(userId, token, loginHistory);
-//            HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
-//
-//                @Override
-//                public void onComplete(Exception e) {
-//                    if (loginHistory == Constants.LoginHistory.LOGOUT)
-//                        DialogUtils.hideProgressDialog(progressDialog);
-//                    if (e == null) { // Success
-//                        try {
-//                            BaseModel baseModel = apiCall.getResult();
-//                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-//                                if (loginHistory == Constants.LoginHistory.LOGOUT)
-//                                    Toast.makeText(FoodieHomeActivity.this, baseModel.getStatusMessage(), Toast.LENGTH_SHORT).show();
-//                            } else {
-//                                DialogUtils.showAlert(FoodieHomeActivity.this, baseModel.getStatusMessage());
-//                            }
-//
-//                        } catch (Exception ex) {
-//                            ex.printStackTrace();
-//                        }
-//                    } else { // Failure
-//                        Utils.handleError(e.getMessage(), FoodieHomeActivity.this, null);
-//                    }
-//                }
-//            });
-//        } catch (Exception e) {
-//            Utils.handleError(e.getMessage(), FoodieHomeActivity.this, null);
-//        }
-//    }
 
     public void onNavItemClick(View v) {
         Log.e(TAG, "Click:-" + v.getId());
         mDrawerLayout.closeDrawer(Gravity.LEFT);
         Utils.onNavItemClick(FoodieHomeActivity.this, v, userModel.getUserId());
-     /*   switch (v.getId()) {
-            case R.id.iv_edit_profile:
-                startActivity(new Intent(FoodieHomeActivity.this, MyProfileActivity.class));
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_my_orders:
-                startActivity(new Intent(FoodieHomeActivity.this, MyOrdersActivity.class));
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_my_wallet:
-                startActivity(new Intent(FoodieHomeActivity.this, WalletActivity.class));
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_sales_report:
-                Toast.makeText(FoodieHomeActivity.this, "Development Mode", Toast.LENGTH_LONG).show();
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_transaction_history:
-                startActivity(new Intent(FoodieHomeActivity.this, TransactionHistoryActivity.class));
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_change_password:
-                Intent intent = new Intent(FoodieHomeActivity.this, ChangePasswordActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.tv_terms_of_use:
-                Toast.makeText(FoodieHomeActivity.this, "Development Mode", Toast.LENGTH_LONG).show();
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_privacy_policy:
-                Toast.makeText(FoodieHomeActivity.this, "Development Mode", Toast.LENGTH_LONG).show();
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_about:
-                Toast.makeText(FoodieHomeActivity.this, "Development Mode", Toast.LENGTH_LONG).show();
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_logout:
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setTitle("HomeMadeBazar");
-                alertDialogBuilder.setMessage("Are you sure you want to exit...");
-                alertDialogBuilder.setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                String deviceToken = FirebaseInstanceId.getInstance().getToken();
-                                ServiceUtils.deviceLoginLogoutApiCall(FoodieHomeActivity.this, userModel.getUserId(), deviceToken, Constants.LoginHistory.LOGOUT);
-                                SharedPreference.clearSharedPreference(FoodieHomeActivity.this);
-                                startActivity(new Intent(FoodieHomeActivity.this, LoginActivity.class));
-                                finish();
-                            }
-                        });
-                alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                alertDialogBuilder.show();
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-
-        }*/
     }
 
     @Override

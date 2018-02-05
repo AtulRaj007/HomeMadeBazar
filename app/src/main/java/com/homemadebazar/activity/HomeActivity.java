@@ -88,8 +88,8 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void setUpToolbar() {
-//        mToolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(mToolbar);
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         findViewById(R.id.menu_notification).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,108 +183,7 @@ public class HomeActivity extends BaseActivity {
         Log.e(TAG, "Click:-" + v.getId());
         mDrawerLayout.closeDrawer(Gravity.LEFT);
         Utils.onNavItemClick(HomeActivity.this, v, userModel.getUserId());
-    /*    switch (v.getId()) {
-            case R.id.iv_edit_profile:
-                startActivity(new Intent(HomeActivity.this, MyProfileActivity.class));
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_my_orders:
-                startActivity(new Intent(HomeActivity.this, MyOrdersActivity.class));
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_my_wallet:
-                startActivity(new Intent(HomeActivity.this, WalletActivity.class));
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_sales_report:
-                Toast.makeText(HomeActivity.this, "Development Mode", Toast.LENGTH_LONG).show();
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_transaction_history:
-                startActivity(new Intent(HomeActivity.this, TransactionHistoryActivity.class));
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_change_password:
-                Intent intent = new Intent(HomeActivity.this, ChangePasswordActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.tv_terms_of_use:
-                Toast.makeText(HomeActivity.this, "Development Mode", Toast.LENGTH_LONG).show();
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_privacy_policy:
-                Toast.makeText(HomeActivity.this, "Development Mode", Toast.LENGTH_LONG).show();
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_about:
-                Toast.makeText(HomeActivity.this, "Development Mode", Toast.LENGTH_LONG).show();
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-            case R.id.tv_logout:
-
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setTitle("HomeMadeBazar");
-                alertDialogBuilder.setMessage("Are you sure you want to exit...");
-                alertDialogBuilder.setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                String deviceToken = FirebaseInstanceId.getInstance().getToken();
-                                deviceLoginLogoutApiCall(userModel.getUserId(), deviceToken, Constants.LoginHistory.LOGOUT);
-                                SharedPreference.clearSharedPreference(HomeActivity.this);
-                                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-                                finish();
-                            }
-                        });
-                alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                alertDialogBuilder.show();
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                break;
-
-        }*/
     }
-
-//    public void deviceLoginLogoutApiCall(String userId, String token, final int loginHistory) {
-//        try {
-//            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(this, null);
-//            if (loginHistory == Constants.LoginHistory.LOGOUT) {
-//                progressDialog.show();
-//            }
-//
-//            final DeviceLoginLogoutApiCall apiCall = new DeviceLoginLogoutApiCall(userId, token, loginHistory);
-//            HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
-//
-//                @Override
-//                public void onComplete(Exception e) {
-//                    if (loginHistory == Constants.LoginHistory.LOGOUT)
-//                        DialogUtils.hideProgressDialog(progressDialog);
-//                    if (e == null) { // Success
-//                        try {
-//                            BaseModel baseModel = apiCall.getResult();
-//                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-//                                if (loginHistory == Constants.LoginHistory.LOGOUT)
-//                                    Toast.makeText(HomeActivity.this, baseModel.getStatusMessage(), Toast.LENGTH_SHORT).show();
-//                            } else {
-//                                DialogUtils.showAlert(HomeActivity.this, baseModel.getStatusMessage());
-//                            }
-//
-//                        } catch (Exception ex) {
-//                            ex.printStackTrace();
-//                        }
-//                    } else { // Failure
-//                        Utils.handleError(e.getMessage(), HomeActivity.this, null);
-//                    }
-//                }
-//            });
-//        } catch (Exception e) {
-//            Utils.handleError(e.getMessage(), HomeActivity.this, null);
-//        }
-//    }
 
     @Override
     public void onBackPressed() {

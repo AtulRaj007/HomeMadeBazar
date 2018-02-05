@@ -26,6 +26,7 @@ public class HomeChiefNearByModel implements Serializable {
     private String priceRange;
     private String shopName;
     private String speciality;
+    private boolean isFavourite;
     private ArrayList<String> coverPhotoArrayList;
 
     public String getUserId() {
@@ -170,5 +171,13 @@ public class HomeChiefNearByModel implements Serializable {
 
     public void setCoverPhotoArrayList(ArrayList<String> coverPhotoArrayList) {
         this.coverPhotoArrayList = coverPhotoArrayList;
+    }
+
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
     }
 }

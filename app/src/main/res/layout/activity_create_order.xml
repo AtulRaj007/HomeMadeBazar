@@ -37,7 +37,7 @@
                 android:orientation="horizontal">
 
 
-                <Spinner
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spr_dish_category"
                     style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="0dp"
@@ -50,21 +50,14 @@
                     android:tooltipText="Dish Category" />
 
 
-                <android.support.design.widget.TextInputLayout
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spr_dish_price"
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_10"
-                    android:layout_weight="1">
-
-                    <EditText
-                        android:id="@+id/et_dish_price"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:digits="0123456789"
-                        android:hint="@string/hint_dish_price"
-                        android:textSize="@dimen/edit_text_create_order_text_size" />
-                </android.support.design.widget.TextInputLayout>
+                    android:layout_weight="1"
+                    android:textSize="@dimen/edit_text_create_order_text_size" />
 
             </LinearLayout>
 
@@ -73,37 +66,22 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputLayout
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spr_min_no_guest"
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/margin_10"
-                    android:layout_weight="1">
+                    android:layout_weight="1" />
 
-                    <EditText
-                        android:id="@+id/et_min_no_guest"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_minimum_guest"
-                        android:inputType="number"
-                        android:digits="0123456789"
-                        android:textSize="@dimen/edit_text_create_order_text_size" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spr_max_no_guest"
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_10"
-                    android:layout_weight="1">
-
-                    <EditText
-                        android:id="@+id/et_max_no_guest"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_max_guest"
-                        android:inputType="number"
-                        android:digits="0123456789"
-                        android:textSize="@dimen/edit_text_create_order_text_size" />
-                </android.support.design.widget.TextInputLayout>
+                    android:layout_weight="1"
+                    android:textSize="@dimen/edit_text_create_order_text_size" />
 
 
             </LinearLayout>
@@ -113,22 +91,14 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputLayout
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spr_discount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                     android:layout_marginRight="@dimen/margin_10"
-                    android:layout_weight="1">
-
-                    <EditText
-                        android:id="@+id/et_discount"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_any_discount"
-                        android:inputType="number"
-                        android:digits="0123456789"
-                        android:textSize="@dimen/edit_text_create_order_text_size" />
-                </android.support.design.widget.TextInputLayout>
-
+                    android:layout_weight="1"
+                    android:textSize="@dimen/edit_text_create_order_text_size" />
 
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -157,23 +127,16 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputLayout
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spr_drinks"
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/margin_10"
-                    android:layout_weight="1">
-
-                    <EditText
-                        android:id="@+id/et_drinks"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_drinks"
-                        android:inputType="text"
-                        android:textSize="@dimen/edit_text_create_order_text_size" />
-                </android.support.design.widget.TextInputLayout>
+                    android:layout_weight="1" />
 
 
-                <Spinner
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                     android:id="@+id/spr_veg_nonveg"
                     style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                     android:layout_width="0dp"
@@ -186,16 +149,17 @@
 
             </LinearLayout>
 
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/et_rules"
+                    android:id="@+id/et_rules_one"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hint_rules_guest"
-                    android:lines="3"
+                    android:hint="@string/hint_rules_one"
+                    android:singleLine="true"
                     android:textSize="@dimen/edit_text_create_order_text_size" />
             </android.support.design.widget.TextInputLayout>
 
@@ -204,13 +168,65 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/et_description"
+                    android:id="@+id/et_rules_two"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hint_description_dish"
-                    android:lines="3"
+                    android:hint="@string/hint_rules_second"
+                    android:singleLine="true"
                     android:textSize="@dimen/edit_text_create_order_text_size" />
+
             </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_rules_three"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_rules_three"
+                    android:singleLine="true"
+                    android:textSize="@dimen/edit_text_create_order_text_size" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_rules_four"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_rules_four"
+                    android:singleLine="true"
+                    android:textSize="@dimen/edit_text_create_order_text_size" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_rules_five"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_rules_fifth"
+                    android:singleLine="true"
+                    android:textSize="@dimen/edit_text_create_order_text_size" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <EditText
+                android:id="@+id/et_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_description_dish"
+                android:lines="3"
+                android:textSize="@dimen/edit_text_create_order_text_size" />
 
 
             <TextView

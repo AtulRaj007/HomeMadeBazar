@@ -46,7 +46,7 @@
     <dimen name="text_16">16sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="margin_100">100dp</dimen>
-    <dimen name="custom_tab_bottom_height">80dp</dimen>
+    <dimen name="custom_tab_bottom_height">70dp</dimen>
     <dimen name="padding_40">40dp</dimen>
     <dimen name="margin_60">60dp</dimen>
     <dimen name="nav_left_margin">25dp</dimen>
@@ -55,4 +55,7 @@
     <item name="dim_grid_first_row_weight" format="float" type="dimen">1.4</item>
     <dimen name="nav_line_height">0.05dp</dimen>
     <dimen name="cardview_elevation">10dp</dimen>
+    <dimen name="custom_tab_elevation">10dp</dimen>
+    <dimen name="shop_cover_photo_height">220dp</dimen>
+    <dimen name="custom_card_elevation">10dp</dimen>
 </resources>

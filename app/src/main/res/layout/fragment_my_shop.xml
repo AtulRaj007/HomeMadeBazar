@@ -24,12 +24,12 @@
                 <RelativeLayout
                     android:id="@+id/rl_cover_photo"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp">
+                    android:layout_height="@dimen/shop_cover_photo_height">
 
                     <android.support.v4.view.ViewPager
                         android:id="@+id/view_pager"
                         android:layout_width="match_parent"
-                        android:layout_height="160dp"
+                        android:layout_height="match_parent"
                         android:background="@color/bt_very_light_gray"
                         android:scaleType="centerInside" />
 

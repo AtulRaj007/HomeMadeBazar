@@ -44,8 +44,8 @@ import java.util.GregorianCalendar;
 
 public class CreateOrderActivity extends BaseActivity implements View.OnClickListener {
     private UserModel userModel;
-    private EditText etDishName, etDishPrice, etMinNoGuest, etMaxNoGuest, etDiscount, etDrinks, etGuestRules, etDescription;
-    private Spinner sprDishCategory, sprVeg;
+    private EditText etDishName, etFirstRule, etSecondRule, etThirdRule, etFourthRule, etFifthRule, etDescription;
+    private Spinner sprDishCategory, sprDishPrice, sprVeg, sprDrinks, sprMinNoOfGuest, sprMaxNoOfGuest, sprDiscount;
     private Switch switchPetsAllowed;
     private String foodType[] = {"Veg", "NonVeg"};
     private RequestQueue mRequest;
@@ -92,6 +92,11 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
 
             };
     private int dateIndex = 0;
+    private String drinks[] = {"Alcoholic", "Non-Alcoholic"};
+
+//    sprDishCategory,sprDishPrice,sprVeg,sprDrinks,sprMinNoOfGuest,sprMaxNoOfGuest,sprDiscount;
+
+//    etDishName,etFirstRule,etSecondRule,etThirdRule,etFourthRule,etFifthRule,etDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,17 +110,22 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
         mRequest = Volley.newRequestQueue(CreateOrderActivity.this);
         initialiseFoodAvailability();
         userModel = SharedPreference.getUserModel(CreateOrderActivity.this);
+
         etDishName = findViewById(R.id.et_dish_name);
-        etDishPrice = findViewById(R.id.et_dish_price);
-        etMinNoGuest = findViewById(R.id.et_min_no_guest);
-        etMaxNoGuest = findViewById(R.id.et_max_no_guest);
-        etDiscount = findViewById(R.id.et_discount);
-        etDrinks = findViewById(R.id.et_drinks);
-        etGuestRules = findViewById(R.id.et_rules);
+        etFirstRule = findViewById(R.id.et_rules_one);
+        etSecondRule = findViewById(R.id.et_rules_two);
+        etThirdRule = findViewById(R.id.et_rules_three);
+        etFourthRule = findViewById(R.id.et_rules_four);
+        etFifthRule = findViewById(R.id.et_rules_five);
         etDescription = findViewById(R.id.et_description);
 
         sprDishCategory = findViewById(R.id.spr_dish_category);
+        sprDishPrice = findViewById(R.id.spr_dish_price);
         sprVeg = findViewById(R.id.spr_veg_nonveg);
+        sprDrinks = findViewById(R.id.spr_drinks);
+        sprMinNoOfGuest = findViewById(R.id.spr_min_no_guest);
+        sprMaxNoOfGuest = findViewById(R.id.spr_max_no_guest);
+        sprDiscount = findViewById(R.id.spr_discount);
 
         switchPetsAllowed = findViewById(R.id.switch_pets_allowed);
 
@@ -154,8 +164,27 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
     protected void setData() {
         DialogUtils.showFoodDialog(CreateOrderActivity.this);
         getFoodCategories();
+
+        /* Spinner Adapter */
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(CreateOrderActivity.this, R.layout.simple_list_item, foodType);
         sprVeg.setAdapter(adapter);
+
+        ArrayAdapter<String> drinksAdapter = new ArrayAdapter<String>(CreateOrderActivity.this, R.layout.simple_list_item, drinks);
+        sprDrinks.setAdapter(drinksAdapter);
+
+        ArrayAdapter<String> minGuestAdapter = new ArrayAdapter<String>(this, R.layout.simple_list_item, getGuestArray("Min Guest"));
+        sprMinNoOfGuest.setAdapter(minGuestAdapter);
+
+        ArrayAdapter<String> maxGuestAdapter = new ArrayAdapter<String>(this, R.layout.simple_list_item, getGuestArray("Max Guest"));
+        sprMaxNoOfGuest.setAdapter(maxGuestAdapter);
+
+        ArrayList<String> priceArrayList = Utils.getPriceArray("Price");
+        ArrayAdapter<String> dishPriceAdapter = new ArrayAdapter<String>(this, R.layout.simple_list_item, priceArrayList);
+        sprDishPrice.setAdapter(dishPriceAdapter);
+
+        ArrayAdapter<String> discountAdapter = new ArrayAdapter<String>(this, R.layout.simple_list_item, getDiscountArrayList("Discount (%)"));
+        sprDiscount.setAdapter(discountAdapter);
+
     }
 
     private void initialiseFoodAvailability() {
@@ -164,6 +193,24 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
             findViewById(resourceIds[i]).setOnClickListener(this);
         }
 
+    }
+
+    private ArrayList<String> getDiscountArrayList(String title) {
+        ArrayList<String> discountArrayList = new ArrayList<>();
+        discountArrayList.add(title);
+        for (int i = 5; i <= 50; i++) {
+            discountArrayList.add(String.valueOf(i));
+        }
+        return discountArrayList;
+    }
+
+    private ArrayList<String> getGuestArray(String title) {
+        ArrayList<String> guestArrayList = new ArrayList<>();
+        guestArrayList.add(title);
+        for (int i = 1; i <= 50; i++) {
+            guestArrayList.add(String.valueOf(i));
+        }
+        return guestArrayList;
     }
 
     private String getDishDate() {
@@ -219,24 +266,6 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
         if (TextUtils.isEmpty(etDishName.getText().toString().trim())) {
             DialogUtils.showAlert(CreateOrderActivity.this, "Please enter dish name.");
             return false;
-        } else if (TextUtils.isEmpty(etDishPrice.getText().toString().trim())) {
-            DialogUtils.showAlert(CreateOrderActivity.this, "Please enter dish price.");
-            return false;
-        } else if (TextUtils.isEmpty(etMinNoGuest.getText().toString().trim())) {
-            DialogUtils.showAlert(CreateOrderActivity.this, "Please enter minimum no of guest.");
-            return false;
-        } else if (TextUtils.isEmpty(etMaxNoGuest.getText().toString().trim())) {
-            DialogUtils.showAlert(CreateOrderActivity.this, "Please enter max no of guest.");
-            return false;
-        } else if (TextUtils.isEmpty(etDiscount.getText().toString().trim())) {
-            DialogUtils.showAlert(CreateOrderActivity.this, "Please enter discount amount.");
-            return false;
-        } else if (TextUtils.isEmpty(etDrinks.getText().toString().trim())) {
-            DialogUtils.showAlert(CreateOrderActivity.this, "Please enter drinks allowed.");
-            return false;
-        } else if (TextUtils.isEmpty(etGuestRules.getText().toString().trim())) {
-            DialogUtils.showAlert(CreateOrderActivity.this, "Please enter guest rules if any.");
-            return false;
         } else if (TextUtils.isEmpty(etDescription.getText().toString().trim())) {
             DialogUtils.showAlert(CreateOrderActivity.this, "Please enter description.");
             return false;
@@ -260,6 +289,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 if (isValid()) {
                     createOrder();
                 }
+//                etGuestRules.getText().toString().trim();
 
                 break;
             case R.id.btn_edit_timings:
@@ -307,6 +337,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 DialogUtils.showMediaDialog(CreateOrderActivity.this, new Runnable() {
                     @Override
                     public void run() {
+//                        etGuestRules.getText().toString().trim()
                         // Camera
                         Utils.cameraIntent(CreateOrderActivity.this);
                     }
@@ -330,7 +361,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 }, new Runnable() {
                     @Override
                     public void run() {
-                        // Gallary
+                        // GallaryetGuestRules.getText().toString().trim()
                         Utils.gallaryIntent(CreateOrderActivity.this);
                     }
                 });
@@ -353,6 +384,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 break;
             default:
                 if ((int) view.getTag() == Constants.FoodTiming.Unselected) {
+//                    etGuestRules.getText().toString().trim()
                     ((ImageView) view).setBackgroundColor(getResources().getColor(R.color.white));
                     ((ImageView) view).setImageResource(R.drawable.ic_date_selected);
                     view.setTag(Constants.FoodTiming.Selected);
@@ -363,6 +395,22 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 }
         }
     }
+/*
+    private void getFoodCategories() {
+        new GetRequest(CreateOrderActivity.this, new GetRequest.ApiCompleteListener() {
+            @Override
+            public void onApiCompleteListener(String response) {
+                System.out.println("====== Categories ======" + response);
+                ArrayList<FoodCategoryModel> foodCategoryModelArrayList = JSONParsingUtils.parseFoodCetGuestRules.getText().toString().trim()
+                ategoryModel(response);
+                ArrayAdapter<FoodCategoryModel> spinnerAdapter = new ArrayAdapter<FoodCategoryModel>(CreateOrderActivity.this, android.R.layout.simple_list_item_1, foodCategoryModelArrayList);
+                spinnerAdapter.setDropDownViewResource(R.layout
+                        .simple_list_item);
+                sprDishCategory.setAdapter(spinnerAdapter);
+            }
+        }).execute(Constants.ServerURL.GET_FOOD_CATEGORIES);
+    }
+    */
 
     private void getFoodCategories() {
         new GetRequest(CreateOrderActivity.this, new GetRequest.ApiCompleteListener() {
@@ -384,7 +432,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
             case Constants.Keys.REQUEST_CAMERA:
                 if (resultCode == RESULT_OK) {
                     setImage(Utils.getCameraUri());
-
+//                    etGuestRules.getText().toString().trim()
                 } else {
                     DialogUtils.showAlert(CreateOrderActivity.this, "Camera Cancelled");
                 }
@@ -410,6 +458,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 coverPhotoArray[0] = uri.getPath();
                 break;
             case 1:
+//                etGuestRules.getText().toString().trim()
                 ivSecondFoodPhoto.setImageURI(uri);
                 coverPhotoArray[1] = uri.getPath();
                 break;
@@ -432,14 +481,14 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
         CreateOrderModel createOrderModel = new CreateOrderModel();
         createOrderModel.setDishName(etDishName.getText().toString().trim());
         createOrderModel.setFoodCategoryId(((FoodCategoryModel) sprDishCategory.getSelectedItem()).getFoodCategoryId());
-        createOrderModel.setDishPrice(etDishPrice.getText().toString().trim());
-        createOrderModel.setMinNoGuest(etMinNoGuest.getText().toString().trim());
-        createOrderModel.setMaxNoGuest(etMaxNoGuest.getText().toString().trim());
-        createOrderModel.setDiscount(etDiscount.getText().toString().trim());
+        createOrderModel.setDishPrice(sprDishPrice.getSelectedItem().toString());
+        createOrderModel.setMinNoGuest(sprMinNoOfGuest.getSelectedItem().toString());
+        createOrderModel.setMaxNoGuest(sprMaxNoOfGuest.getSelectedItem().toString());
+        createOrderModel.setDiscount(sprDiscount.getSelectedItem().toString());
         createOrderModel.setPetsAllowed(switchPetsAllowed.isChecked());//
-        createOrderModel.setDrinks(etDrinks.getText().toString().trim());
+        createOrderModel.setDrinks(sprDrinks.getSelectedItem().toString());
         createOrderModel.setVeg(sprVeg.getSelectedItemPosition() == 0 ? true : false); //
-        createOrderModel.setGuestRules(etGuestRules.getText().toString().trim());
+        createOrderModel.setGuestRules(getRulesForOrder());
         createOrderModel.setDescription(etDescription.getText().toString().trim());
         createOrderModel.setDishAvailableDay(dishAvailability);//
 
@@ -449,6 +498,10 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
 
 
         return createOrderModel;
+    }
+
+    private String getRulesForOrder() {
+        return "";
     }
 
     public void createOrder() {

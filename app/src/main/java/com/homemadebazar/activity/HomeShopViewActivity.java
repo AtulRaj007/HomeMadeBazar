@@ -31,6 +31,7 @@ import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
 import com.homemadebazar.network.apicall.FoodieBookOrderApiCall;
+import com.homemadebazar.network.apicall.SaveFavouriteApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
@@ -204,6 +205,10 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.ll_save:
 
+                if (!homeChefNearByModel.isFavourite())
+                    saveHomeChef();
+                else
+                    DialogUtils.showAlert(HomeShopViewActivity.this, "HomeChef is already bookmarked.");
                 break;
         }
     }
@@ -229,5 +234,39 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
         }
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private void saveHomeChef() {
+        try {
+            final Dialog progressDialog = DialogUtils.getProgressDialog(HomeShopViewActivity.this, null);
+            progressDialog.show();
+
+            final SaveFavouriteApiCall apiCall = new SaveFavouriteApiCall(userModel.getUserId(), homeChefNearByModel.getUserId());
+            HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
+
+                @Override
+                public void onComplete(Exception e) {
+                    progressDialog.hide();
+                    if (e == null) { // Success
+                        try {
+                            BaseModel baseModel = apiCall.getResult();
+                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                DialogUtils.showAlert(HomeShopViewActivity.this, "HomeChef is saved.");
+                                homeChefNearByModel.setFavourite(true);
+                            } else {
+                                DialogUtils.showAlert(HomeShopViewActivity.this, baseModel.getStatusMessage());
+                            }
+
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    } else { // Failure
+                        Utils.handleError(e.getMessage(), HomeShopViewActivity.this, null);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            Utils.handleError(e.getMessage(), HomeShopViewActivity.this, null);
+        }
     }
 }

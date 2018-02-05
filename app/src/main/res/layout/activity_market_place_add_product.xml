@@ -52,7 +52,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <Spinner
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                             android:id="@+id/spr_product_category"
                             style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                             android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <Spinner
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                             android:id="@+id/spr_product_brand"
                             style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                             android:layout_width="match_parent"
@@ -118,8 +118,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="@dimen/margin_20"
-                            android:textColor="@color/sub_heading_color"
                             android:text="@string/str_add_picture"
+                            android:textColor="@color/sub_heading_color"
                             android:textSize="@dimen/text_16" />
 
                     </LinearLayout>
