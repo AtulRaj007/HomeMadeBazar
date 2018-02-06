@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/custom_tab_bottom_height"
         android:layout_alignParentBottom="true"
+        android:background="@drawable/elevated_action_bar"
         android:elevation="@dimen/custom_tab_elevation"
         app:tabGravity="fill"
         app:tabMode="fixed"
