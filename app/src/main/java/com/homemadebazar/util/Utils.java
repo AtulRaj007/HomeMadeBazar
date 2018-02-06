@@ -35,6 +35,7 @@ import com.homemadebazar.activity.LoginActivity;
 import com.homemadebazar.activity.MarketPlaceHomeActivity;
 import com.homemadebazar.activity.MyOrdersActivity;
 import com.homemadebazar.activity.MyProfileActivity;
+import com.homemadebazar.activity.ProfileViewActivity;
 import com.homemadebazar.activity.TransactionHistoryActivity;
 import com.homemadebazar.activity.WalletActivity;
 import com.homemadebazar.activity.WebViewActivity;
@@ -57,6 +58,10 @@ public class Utils {
     public static final String TYPE_PHONE_NUMBER = "phone_number";
     public static final String TYPE_EMAIL = "email";
     public static Uri cameraUri;
+    static Pattern letter = Pattern.compile("[a-zA-z]");
+    static Pattern digit = Pattern.compile("[0-9]");
+    static Pattern special = Pattern.compile("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+    static Pattern eight = Pattern.compile(".{8}");
 
     public static void generateKeyHash(Context mContext) {
         try {
@@ -159,7 +164,6 @@ public class Utils {
             fragment.startActivityForResult(Intent.createChooser(gallaryIntent, "Select Picture"), Constants.Keys.REQUEST_GALLERY);
         }
     }
-
 
     public static String getRealPathFromURI(Uri contentURI, Context context) {
         String result;
@@ -377,12 +381,6 @@ public class Utils {
 
     }
 
-
-    static Pattern letter = Pattern.compile("[a-zA-z]");
-    static Pattern digit = Pattern.compile("[0-9]");
-    static Pattern special = Pattern.compile("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
-    static Pattern eight = Pattern.compile(".{8}");
-
     public static boolean checkPassword(String password) {
         Matcher hasLetter = letter.matcher(password);
         Matcher hasDigit = digit.matcher(password);
@@ -409,4 +407,7 @@ public class Utils {
         return priceArray;
     }
 
+    public static void showProfile(Context context, String userId) {
+        context.startActivity(ProfileViewActivity.getProfileIntent(context, userId));
+    }
 }

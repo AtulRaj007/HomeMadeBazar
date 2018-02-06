@@ -58,4 +58,5 @@
     <dimen name="custom_tab_elevation">10dp</dimen>
     <dimen name="shop_cover_photo_height">220dp</dimen>
     <dimen name="custom_card_elevation">10dp</dimen>
+    <dimen name="text_22">22sp</dimen>
 </resources>

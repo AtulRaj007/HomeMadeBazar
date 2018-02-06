@@ -109,10 +109,11 @@
             android:name=".activity.UpdateShopDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
 
         </activity>
         <activity
@@ -217,7 +218,10 @@
         <activity
             android:name=".activity.WebViewActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".activity.ProfileViewActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>

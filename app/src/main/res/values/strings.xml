@@ -218,6 +218,10 @@
     <string name="hint_rules_three">Third Rule</string>
     <string name="hint_rules_four">Fourth Rule</string>
     <string name="hint_rules_fifth">Fifth Rule</string>
+    <string name="str_name">Name</string>
+    <string name="str_country">Country</string>
+    <string name="str_company_name">Company Name</string>
+    <string name="str_university_name">University Name</string>
 
 
     <string-array name="price">

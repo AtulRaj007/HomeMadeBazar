@@ -1,6 +1,5 @@
 package com.homemadebazar.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -85,7 +84,8 @@ public class FoodieHomeListAdapter extends RecyclerView.Adapter<FoodieHomeListAd
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.iv_profile_pic:
-                    Utils.showUserProfile((Activity) context);
+//                    Utils.showUserProfile((Activity) context);
+                    Utils.showProfile(context, homeChiefNearByModelArrayList.get(getAdapterPosition()).getUserId());
                     break;
                 default:
                     context.startActivity(HomeShopViewActivity.getIntent(context, homeChiefNearByModelArrayList.get(getAdapterPosition())));
