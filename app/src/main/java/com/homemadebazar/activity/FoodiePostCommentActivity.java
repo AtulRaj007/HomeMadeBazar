@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.homemadebazar.R;
 import com.homemadebazar.adapter.PostCommentAdapter;
@@ -19,7 +20,6 @@ import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
 import com.homemadebazar.network.apicall.FoodiePostLikeCommentApiCall;
 import com.homemadebazar.network.apicall.GetPostCommentApiCall;
-import com.homemadebazar.util.CircleImageView;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
@@ -36,7 +36,6 @@ public class FoodiePostCommentActivity extends BaseActivity implements View.OnCl
     private String postId;
     private PostCommentAdapter postCommentAdapter;
     private LinearLayoutManager linearLayoutManager;
-    private CircleImageView ivUserProfile;
     private ArrayList<FoodiePostCommentModel> foodiePostCommentModelArrayList = new ArrayList<>();
 
     public static Intent getCommentIntent(Context context, String postId) {
@@ -49,6 +48,7 @@ public class FoodiePostCommentActivity extends BaseActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foodie_post_comment);
+        setupToolbar();
     }
 
     private void getBundleData() {
@@ -61,7 +61,6 @@ public class FoodiePostCommentActivity extends BaseActivity implements View.OnCl
         linearLayoutManager = new LinearLayoutManager(FoodiePostCommentActivity.this);
         userModel = SharedPreference.getUserModel(FoodiePostCommentActivity.this);
         ivBack = findViewById(R.id.iv_back);
-//        ivUserProfile = findViewById(R.id.iv_user_profile);
         etChatMessage = findViewById(R.id.et_chat_message);
         recyclerView = findViewById(R.id.recycler_view);
     }
@@ -90,6 +89,17 @@ public class FoodiePostCommentActivity extends BaseActivity implements View.OnCl
                 break;
 
         }
+    }
+
+    private void setupToolbar() {
+        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        ((TextView) findViewById(R.id.tv_title)).setText("COMMENTS");
+
     }
 
     private void performLikeUnlikeComment(String postId, String actionType, String comments, String actionDoneByUserId) {

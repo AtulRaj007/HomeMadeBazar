@@ -149,3 +149,4 @@ public class SkillHubFragment extends BaseFragment implements SwipeRefreshLayout
         getSkillHubVideos();
     }
 }
+

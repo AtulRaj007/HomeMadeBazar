@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_screen">
 
-    <include layout="@layout/toolbar_chat_activity" />
+    <include layout="@layout/toolbar_color_back" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"

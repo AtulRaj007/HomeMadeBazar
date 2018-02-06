@@ -316,6 +316,11 @@ public class Constants {
         String TopChefs = "3";
     }
 
+    public interface SkillHubViewType {
+        int TITLE = 0;
+        int VIDEO = 1;
+    }
+
 //    {"PostId":"PM00000002","ActionType":"Comments/Likes/All/Unlike","Comments":"Superb","UserById":"17110910"}
 
 //    {Message=Foodie foodie has booked an order., Bookingid=HMB00000022, Title=HomeMadeBazar, NotificationType=1}

@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.YouTubePlayerActivity;
 import com.homemadebazar.model.HomeChefSkillHubVideoModel;
+import com.homemadebazar.util.Constants;
 
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ import java.util.ArrayList;
  * Created by Sumit on 31/07/17.
  */
 
-public class SkillHubAdapter extends RecyclerView.Adapter<SkillHubAdapter.SkillHubViewHolder> {
+public class SkillHubAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     ArrayList<HomeChefSkillHubVideoModel> homeChefSkillHubVideoModelArrayList;
     private Context context;
 
@@ -31,17 +32,30 @@ public class SkillHubAdapter extends RecyclerView.Adapter<SkillHubAdapter.SkillH
     }
 
     @Override
-    public SkillHubViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new SkillHubViewHolder(LayoutInflater.from(context).inflate(R.layout.row_skill_hub, parent, false));
+    public int getItemViewType(int position) {
+        return homeChefSkillHubVideoModelArrayList.get(position).getViewType();
     }
 
     @Override
-    public void onBindViewHolder(SkillHubViewHolder holder, int position) {
-        HomeChefSkillHubVideoModel homeChefSkillHubVideoModel = homeChefSkillHubVideoModelArrayList.get(position);
-        holder.tvName.setText(homeChefSkillHubVideoModel.getTitle());
-        holder.tvDescription.setText(homeChefSkillHubVideoModel.getDescription());
-        if (!TextUtils.isEmpty(homeChefSkillHubVideoModel.getThumbNailUrl())) {
-            Glide.with(context).load(homeChefSkillHubVideoModel.getThumbNailUrl()).into(holder.ivVideoThumbnail);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == Constants.SkillHubViewType.TITLE) {
+            return new TitleViewHolder((LayoutInflater.from(context).inflate(R.layout.row_title, parent, false)));
+        } else {
+            return new SkillHubViewHolder(LayoutInflater.from(context).inflate(R.layout.row_skill_hub, parent, false));
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof TitleViewHolder) {
+            ((TitleViewHolder) holder).tvCategoryName.setText(homeChefSkillHubVideoModelArrayList.get(position).getCategoryName());
+        } else {
+            HomeChefSkillHubVideoModel homeChefSkillHubVideoModel = homeChefSkillHubVideoModelArrayList.get(position);
+            ((SkillHubViewHolder) holder).tvName.setText(homeChefSkillHubVideoModel.getTitle());
+            ((SkillHubViewHolder) holder).tvDescription.setText(homeChefSkillHubVideoModel.getDescription());
+            if (!TextUtils.isEmpty(homeChefSkillHubVideoModel.getThumbNailUrl())) {
+                Glide.with(context).load(homeChefSkillHubVideoModel.getThumbNailUrl()).into(((SkillHubViewHolder) holder).ivVideoThumbnail);
+            }
         }
 
     }
@@ -73,4 +87,15 @@ public class SkillHubAdapter extends RecyclerView.Adapter<SkillHubAdapter.SkillH
         }
 
     }
+
+    class TitleViewHolder extends RecyclerView.ViewHolder {
+        private TextView tvCategoryName;
+
+        public TitleViewHolder(View itemView) {
+            super(itemView);
+            tvCategoryName = itemView.findViewById(R.id.tv_title);
+        }
+    }
+
+
 }

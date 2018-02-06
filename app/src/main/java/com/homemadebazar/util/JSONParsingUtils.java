@@ -344,6 +344,7 @@ public class JSONParsingUtils {
             homeChefSkillHubVideoModel.setDescription(object.optString("Description"));
             homeChefSkillHubVideoModel.setThumbNailUrl(object.optString("ThumbnailUrl"));
             homeChefSkillHubVideoModel.setYoutubeUrl(object.optString("YoutubeUrl"));
+            homeChefSkillHubVideoModel.setCategoryId(object.optString("VCategoryId"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -355,8 +356,19 @@ public class JSONParsingUtils {
         try {
             JSONArray array = object.optJSONArray("SkillHub");
             for (int i = 0; i < array.length(); i++) {
-                HomeChefSkillHubVideoModel homeChefSkillHubVideoModel = parseSkillHubVideoModel(array.getJSONObject(i));
-                homeChefSkillHubVideoModelArrayList.add(homeChefSkillHubVideoModel);
+                JSONObject obj = array.getJSONObject(i);
+                HomeChefSkillHubVideoModel titleVideoModel = new HomeChefSkillHubVideoModel();
+                titleVideoModel.setViewType(Constants.SkillHubViewType.TITLE);
+                String categoryName = obj.getString("VCategory");
+                titleVideoModel.setCategoryName(categoryName);
+                homeChefSkillHubVideoModelArrayList.add(titleVideoModel);
+                JSONArray listArray = obj.optJSONArray("List");
+                for (int j = 0; j < listArray.length(); j++) {
+                    HomeChefSkillHubVideoModel homeChefSkillHubVideoModel = parseSkillHubVideoModel(listArray.getJSONObject(j));
+                    homeChefSkillHubVideoModel.setViewType(Constants.SkillHubViewType.VIDEO);
+                    homeChefSkillHubVideoModel.setCategoryName(categoryName);
+                    homeChefSkillHubVideoModelArrayList.add(homeChefSkillHubVideoModel);
+                }
             }
 
         } catch (Exception e) {
@@ -645,6 +657,7 @@ public class JSONParsingUtils {
             foodiePostCommentModel.setLastName(object.optString("LastName"));
             foodiePostCommentModel.setComments(object.optString("Comments"));
             foodiePostCommentModel.setUserProfile(object.optString("PosterDPUrl"));
+            foodiePostCommentModel.setSentTime(object.optString("Datetime"));
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -153,7 +153,6 @@ public class FoodieFlashPostAdapter extends RecyclerView.Adapter<FoodieFlashPost
                     break;
                 case R.id.ll_share:
                     Bitmap screenShotBitmap = Utils.takeScreenshot(itemView);
-//                    Intent intent=new Intent(Intent.ACTION_SH)
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.putExtra(Intent.EXTRA_TEXT, "download this image");
                     String bitmapPath = MediaStore.Images.Media.insertImage(context.getContentResolver(), screenShotBitmap, "title", null);

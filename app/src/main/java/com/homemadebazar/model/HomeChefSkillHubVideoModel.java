@@ -11,6 +11,9 @@ public class HomeChefSkillHubVideoModel {
     private String title;
     private String youtubeUrl;
     private String thumbNailUrl;
+    private String categoryName;
+    private String categoryId;
+    private int viewType = 2;  // 1-> Title  2-> Video
 
     public String getId() {
         return id;
@@ -50,5 +53,29 @@ public class HomeChefSkillHubVideoModel {
 
     public void setThumbNailUrl(String thumbNailUrl) {
         this.thumbNailUrl = thumbNailUrl;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public int getViewType() {
+        return viewType;
+    }
+
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
     }
 }

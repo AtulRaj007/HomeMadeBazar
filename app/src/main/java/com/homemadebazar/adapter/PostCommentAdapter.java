@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.homemadebazar.R;
-import com.homemadebazar.model.ChatMessageModel;
 import com.homemadebazar.model.FoodiePostCommentModel;
 import com.homemadebazar.util.Constants;
 
@@ -53,10 +52,10 @@ public class PostCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
         if (viewType == Constants.CommentViewType.MESSAGE_TEXT_OWN) {
-            view = LayoutInflater.from(context).inflate(R.layout.row_chat_own_text, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.row_comment_own_text, parent, false);
             return new CommentViewHolder(view);
         } else if (viewType == Constants.CommentViewType.MESSAGE_TEXT_OTHER) {
-            view = LayoutInflater.from(context).inflate(R.layout.row_chat_other_text, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.row_comment_other_text, parent, false);
             return new CommentViewHolder(view);
         }
         return null;
@@ -67,6 +66,7 @@ public class PostCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         try {
             FoodiePostCommentModel foodiePostCommentModel = foodiePostCommentModelArrayList.get(position);
             if (holder instanceof CommentViewHolder) {
+                ((CommentViewHolder) holder).tvName.setText(foodiePostCommentModel.getFirstName() + " " + foodiePostCommentModel.getLastName());
                 ((CommentViewHolder) holder).tvMessage.setText(foodiePostCommentModel.getComments());
                 ((CommentViewHolder) holder).tvTime.setText(foodiePostCommentModel.getSentTime());
             }
@@ -81,10 +81,11 @@ public class PostCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     class CommentViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvMessage, tvTime;
+        private TextView tvMessage, tvTime, tvName;
 
         CommentViewHolder(View itemView) {
             super(itemView);
+            tvName = itemView.findViewById(R.id.tv_name);
             tvMessage = itemView.findViewById(R.id.tv_message);
             tvTime = itemView.findViewById(R.id.tv_time);
         }
