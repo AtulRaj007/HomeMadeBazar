@@ -60,7 +60,7 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
 
         holder.tvName.setText(homeChefOrderModelArrayList.get(position).getFirstName() + " " + homeChefOrderModelArrayList.get(position).getLastName());
         holder.tvRating.setText("5.0");
-        if (TextUtils.isEmpty(homeChefOrderModelArrayList.get(position).getProfilePic()))
+        if (!TextUtils.isEmpty(homeChefOrderModelArrayList.get(position).getProfilePic()))
             Glide.with(context).load(homeChefOrderModelArrayList.get(position).getProfilePic()).into(holder.ivProfilePic);
     }
 

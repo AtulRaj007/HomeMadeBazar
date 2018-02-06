@@ -2,6 +2,8 @@ package com.homemadebazar.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.homemadebazar.R;
 import com.homemadebazar.adapter.FoodieDiscoverAdapter;
+import com.homemadebazar.adapter.ViewPagerAdapter;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.HomeChefOrderModel;
 import com.homemadebazar.model.UserModel;
@@ -33,6 +36,9 @@ public class FoodieDiscoverFragment extends BaseFragment {
     private FoodieDiscoverAdapter foodieDiscoverAdapter;
     private ArrayList<HomeChefOrderModel> homeChefOrderModelArrayList = new ArrayList<>();
     private UserModel userModel;
+    private ViewPager viewPager;
+    private ViewPagerAdapter viewPagerAdapter;
+    private TabLayout tabLayout;
 //    private HomeChefFoodTimingAdapter homeChefLunchAdapter;
 
     @Nullable
@@ -45,9 +51,12 @@ public class FoodieDiscoverFragment extends BaseFragment {
     @Override
     protected void initUI() {
         userModel = SharedPreference.getUserModel(getActivity());
-        foodieDiscoverAdapter = new FoodieDiscoverAdapter(getActivity(), homeChefOrderModelArrayList);
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView = getView().findViewById(R.id.recycler_view);
+        viewPager = getView().findViewById(R.id.view_pager);
+        tabLayout = getView().findViewById(R.id.tab_layout);
+        viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
+//        foodieDiscoverAdapter = new FoodieDiscoverAdapter(getActivity(), homeChefOrderModelArrayList);
+//        linearLayoutManager = new LinearLayoutManager(getActivity());
+//        recyclerView = getView().findViewById(R.id.recycler_view);
     }
 
     @Override
@@ -57,47 +66,41 @@ public class FoodieDiscoverFragment extends BaseFragment {
 
     @Override
     protected void setData() {
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(foodieDiscoverAdapter);
-        getHomeChefHotDealsOrders(userModel.getUserId());
+        setUpViewPager();
+        setUpTabLayout();
+//        recyclerView.setLayoutManager(linearLayoutManager);
+//        recyclerView.setAdapter(foodieDiscoverAdapter);
+//        getHomeChefHotDealsOrders(userModel.getUserId());
     }
 
-    private void getHomeChefHotDealsOrders(String userId) {
-        try {
-//            final Dialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
-//            progressDialog.show();
+    //    Create categories like Top Deals, Meals under Rs. 100, Top Chefs.
+    private void setUpViewPager() {
+        viewPagerAdapter.addFragment(new FoodieTopDealsFragment(), "Top Deals");
+        viewPagerAdapter.addFragment(new FoodieMealsUnderPriceFragment(), "Meals Under 100");
+        viewPagerAdapter.addFragment(new FoodieTopChefFragment(), "Top Chefs");
 
-            final GetListOfHotDealsApiCall apiCall = new GetListOfHotDealsApiCall(userId);
-            HttpRequestHandler.getInstance(getActivity().getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
+        viewPager.setAdapter(viewPagerAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                @Override
-                public void onComplete(Exception e) {
-//                    progressDialog.hide();
-                    if (e == null) { // Success
-                        try {
-                            BaseModel baseModel = apiCall.getBaseModel();
-                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                ArrayList<HomeChefOrderModel> tempHomeChefOrderModelArrayList = apiCall.getResult();
-                                homeChefOrderModelArrayList.clear();
-                                homeChefOrderModelArrayList.addAll(tempHomeChefOrderModelArrayList);
-                                foodieDiscoverAdapter.notifyDataSetChanged();
-                            } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.NO_RECORD_FOUND) {
-                                homeChefOrderModelArrayList.clear();
-                                foodieDiscoverAdapter.notifyDataSetChanged();
-                            } else {
-                                DialogUtils.showAlert(getActivity(), baseModel.getStatusMessage());
-                            }
+            }
 
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    } else { // Failure
-                        Utils.handleError(e.getMessage(), getActivity(), null);
-                    }
-                }
-            });
-        } catch (Exception e) {
-            Utils.handleError(e.getMessage(), getActivity(), null);
-        }
+            @Override
+            public void onPageSelected(int position) {
+                Utils.hideSoftKeyboard(getActivity());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
+
+    private void setUpTabLayout() {
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+
 }

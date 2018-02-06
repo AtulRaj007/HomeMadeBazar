@@ -15,7 +15,7 @@
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@color/colorPrimary" />
+            android:background="@color/grey" />
 
         <ImageView
             android:id="@+id/iv_profile_pic"

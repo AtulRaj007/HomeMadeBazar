@@ -16,13 +16,14 @@ import java.util.ArrayList;
 
 public class GetListOfHotDealsApiCall extends BaseApiCall {
 
-    private String userId;
+    private String userId, tabRequestId;
     private BaseModel baseModel;
     private ArrayList<HomeChefOrderModel> homeChefOrderModelArrayList;
 
 
-    public GetListOfHotDealsApiCall(String userId) {
+    public GetListOfHotDealsApiCall(String userId, String tabRequestId) {
         this.userId = userId;
+        this.tabRequestId = tabRequestId;
     }
 
     private void parseData(String response) {
@@ -32,7 +33,9 @@ public class GetListOfHotDealsApiCall extends BaseApiCall {
             try {
                 JSONObject object = new JSONObject(response);
                 baseModel = JSONParsingUtils.parseBaseModel(object);
-                homeChefOrderModelArrayList = JSONParsingUtils.parseHotDealList(object);
+                if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                    homeChefOrderModelArrayList = JSONParsingUtils.parseHotDealList(object);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -50,10 +53,12 @@ public class GetListOfHotDealsApiCall extends BaseApiCall {
         return Constants.ServerURL.LIST_OF_HOT_DEALS;
     }
 
+    //    {"UserId":"","TabRequestId":"1"}
     public Object getRequest() {
         JSONObject obj = new JSONObject();
         try {
             obj.put("UserId", userId);
+            obj.put("TabRequestId", tabRequestId);
 
         } catch (JSONException e) {
             e.printStackTrace();

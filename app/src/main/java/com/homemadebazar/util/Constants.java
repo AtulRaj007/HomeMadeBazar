@@ -42,10 +42,33 @@ public class Constants {
         }
     }
 
+    public enum WebViewTitleUrl {
+        TERMS_OF_USE("Terms Of Use", "https://www.google.co.in"),
+        PRIVACY_POLICY("Privacy Policy", "https://www.google.co.in/"),
+        ABOUT_US("About", "https://www.google.co.in/");
+
+        String title;
+        String url;
+
+        WebViewTitleUrl(String title, String url) {
+            this.title = title;
+            this.url = url;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+    }
+
     public interface FoodTiming {
         int Selected = 1;
         int Unselected = 0;
     }
+
 
     public interface ServerURL {
         //        String BASE_URL = "http://103.54.24.25:200/api/";
@@ -138,7 +161,6 @@ public class Constants {
 //        http://localhost:14013/api/MarketPlace/GetProdCategoryList?UserId=
     }
 
-
     public interface uploadImageURL {
         String PROFILE_IMAGE_UPLOAD = ServerURL.BASE_URL + "Profile/DPProfileImage?UserId=";
         String COVER_PHOTO_IMAGE_UPLOAD = ServerURL.BASE_URL + "MyShop/AddHomeChefCoverPhoto?UserId=";
@@ -177,14 +199,14 @@ public class Constants {
         int READ_CONTACTS_REQUEST = 113;
     }
 
+//    file_type(response) : 1 - image, 2 - video, 3 - audio
+//    message_type(response) : 1 - text, 2 - file, 3 - location
+
     public interface AccountType {
         String HOME_CHEF = "1";
         String FOODIE = "2";
         String MARKET_PLACE = "3";
     }
-
-//    file_type(response) : 1 - image, 2 - video, 3 - audio
-//    message_type(response) : 1 - text, 2 - file, 3 - location
 
     public interface FoodType {
         String BREAKFAST = "1";
@@ -248,28 +270,6 @@ public class Constants {
         int DINNER = 3;
     }
 
-    public enum WebViewTitleUrl {
-        TERMS_OF_USE("Terms Of Use", "https://www.google.co.in"),
-        PRIVACY_POLICY("Privacy Policy", "https://www.google.co.in/"),
-        ABOUT_US("About", "https://www.google.co.in/");
-
-        String title;
-        String url;
-
-        WebViewTitleUrl(String title, String url) {
-            this.title = title;
-            this.url = url;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-    }
-
     public interface PostActionTAG {
         String COMMENTS = "Comments";
         String LIKES = "Likes";
@@ -308,6 +308,12 @@ public class Constants {
         String NowOrder = "NOW";
         String SCHEDULED = "SCHEDULED";
         String COMPLETED = "COMPLETED";
+    }
+
+    public interface DiscoverTab {
+        String TopDeals = "1";
+        String MealsUnderPrice = "2";
+        String TopChefs = "3";
     }
 
 //    {"PostId":"PM00000002","ActionType":"Comments/Likes/All/Unlike","Comments":"Superb","UserById":"17110910"}

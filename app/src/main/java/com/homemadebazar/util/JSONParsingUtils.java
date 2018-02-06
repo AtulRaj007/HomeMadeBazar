@@ -269,14 +269,25 @@ public class JSONParsingUtils {
     public static ArrayList<HomeChefOrderModel> parseHotDealList(JSONObject object) {
         ArrayList<HomeChefOrderModel> homeChefOrderModelArrayList = new ArrayList<>();
         try {
-            JSONArray OrdersArray = object.optJSONArray("Details");
-            for (int i = 0; i < OrdersArray.length(); i++) {
-                HomeChefOrderModel homeChefOrderModel = parseHotDealModel(OrdersArray.getJSONObject(i));
-                homeChefOrderModel.setUserId(object.optString("UserId"));
-                homeChefOrderModel.setFirstName(object.optString("FirstName"));
-                homeChefOrderModel.setLastName(object.optString("LastName"));
-                homeChefOrderModel.setProfilePic(object.optString("DP"));
-                homeChefOrderModelArrayList.add(homeChefOrderModel);
+            JSONArray detailsArray = object.optJSONArray("Details");
+            for (int i = 0; i < detailsArray.length(); i++) {
+                JSONObject hotDealsObject = detailsArray.getJSONObject(i);
+                String userId = hotDealsObject.optString("UserId");
+                String firstName = hotDealsObject.optString("FirstName");
+                String lastName = hotDealsObject.optString("LastName");
+                String profilePic = hotDealsObject.optString("DP");
+                String mobile = hotDealsObject.optString("Mobile");
+                String email = hotDealsObject.optString("Email");
+
+                JSONArray orderArray = hotDealsObject.optJSONArray("OrderDetails");
+                for (int j = 0; j < orderArray.length(); j++) {
+                    HomeChefOrderModel homeChefOrderModel = parseHotDealModel(orderArray.getJSONObject(i));
+                    homeChefOrderModel.setUserId(userId);
+                    homeChefOrderModel.setFirstName(firstName);
+                    homeChefOrderModel.setLastName(lastName);
+                    homeChefOrderModel.setProfilePic(profilePic);
+                    homeChefOrderModelArrayList.add(homeChefOrderModel);
+                }
             }
 
         } catch (Exception e) {
@@ -315,7 +326,7 @@ public class JSONParsingUtils {
 
 //            homeChefOrderModel.setOrderTime(object.optString("OrderTime"));
 
-            JSONArray array = object.getJSONArray("FoodImage");
+            JSONArray array = object.getJSONArray("CoverImage");
             homeChefOrderModel.setFoodImagesArrayList(getCoverPhotoArrayList(array));
 
         } catch (Exception e) {
