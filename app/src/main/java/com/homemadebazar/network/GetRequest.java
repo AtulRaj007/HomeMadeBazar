@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.homemadebazar.util.Constants;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,6 +36,7 @@ public class GetRequest extends AsyncTask<String, Void, String> {
         HttpURLConnection urlConnection = null;
 
         try {
+            System.out.println(Constants.ServiceTAG.URL + strings[0]);
             url = new URL(strings[0]);
             urlConnection = (HttpURLConnection) url.openConnection();
 
@@ -55,7 +58,7 @@ public class GetRequest extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String s) {
-        Log.e("Response", "" + server_response);
+        System.out.println(Constants.ServiceTAG.RESPONSE + s);
         if (apiCompleteListener != null) {
             apiCompleteListener.onApiCompleteListener(s);
         }
