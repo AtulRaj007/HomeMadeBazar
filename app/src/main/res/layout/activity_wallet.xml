@@ -44,6 +44,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/ll_total_balance"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="0.55"
@@ -59,7 +60,7 @@
                             android:layout_marginTop="@dimen/margin_5"
                             android:gravity="center"
                             android:text="@string/total_balance"
-                            android:textColor="@color/heading_color"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/text_18" />
 
                         <TextView
@@ -69,7 +70,7 @@
                             android:gravity="center"
                             android:paddingTop="@dimen/padding_5"
                             android:text="Rs 0"
-                            android:textColor="@color/sub_heading_color"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/text_18"
                             android:textStyle="bold" />
 
@@ -95,14 +96,14 @@
                             android:layout_height="match_parent">
 
                             <TextView
-                                android:id="@+id/tv_sent_to_box"
+                                android:id="@+id/tv_sent_to_bank"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:background="@color/colorPrimary"
                                 android:padding="@dimen/padding_5"
                                 android:text="@string/transfer_to_bank"
-                                android:textColor="@color/sub_heading_color"
+                                android:textColor="@color/white"
                                 android:textSize="@dimen/text_15" />
 
                         </RelativeLayout>

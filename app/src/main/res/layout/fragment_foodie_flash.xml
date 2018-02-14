@@ -55,10 +55,9 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/button_color"
-        app:rippleColor="@color/button_color"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:backgroundTint="@color/green"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/add" />
 </RelativeLayout>

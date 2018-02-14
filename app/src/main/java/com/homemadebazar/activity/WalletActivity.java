@@ -66,6 +66,17 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void setData() {
         getWalletBalance();
+        try {
+            if (userModel.getWalletBalance() > 0) {
+                findViewById(R.id.ll_total_balance).setBackgroundColor(getResources().getColor(R.color.green));
+                findViewById(R.id.tv_sent_to_bank).setBackgroundColor(getResources().getColor(R.color.green));
+            } else {
+                findViewById(R.id.ll_total_balance).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                findViewById(R.id.tv_sent_to_bank).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void getWalletBalance() {
