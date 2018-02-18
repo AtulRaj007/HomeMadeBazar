@@ -54,9 +54,6 @@ public class FoodieDiscoverFragment extends BaseFragment {
         viewPager = getView().findViewById(R.id.view_pager);
         tabLayout = getView().findViewById(R.id.tab_layout);
         viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-//        foodieDiscoverAdapter = new FoodieDiscoverAdapter(getActivity(), homeChefOrderModelArrayList);
-//        linearLayoutManager = new LinearLayoutManager(getActivity());
-//        recyclerView = getView().findViewById(R.id.recycler_view);
     }
 
     @Override
@@ -68,12 +65,8 @@ public class FoodieDiscoverFragment extends BaseFragment {
     protected void setData() {
         setUpViewPager();
         setUpTabLayout();
-//        recyclerView.setLayoutManager(linearLayoutManager);
-//        recyclerView.setAdapter(foodieDiscoverAdapter);
-//        getHomeChefHotDealsOrders(userModel.getUserId());
     }
 
-    //    Create categories like Top Deals, Meals under Rs. 100, Top Chefs.
     private void setUpViewPager() {
         viewPagerAdapter.addFragment(new FoodieTopDealsFragment(), "Top Deals");
         viewPagerAdapter.addFragment(new FoodieMealsUnderPriceFragment(), "Meals Under 100");

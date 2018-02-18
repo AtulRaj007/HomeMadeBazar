@@ -47,10 +47,10 @@
     <color name="colorPrimary">#E01F1F</color>
     <color name="colorPrimaryDark">#E01F1F</color>
     <color name="colorAccent">#EF4C1B</color>
-    <color name="background_screen">#C0C0C0</color>
+    <color name="background_screen">#EDEDED</color>
     <color name="heading_color">#040303</color>
     <color name="sub_heading_color">#666362</color> <!-- grey -->
-    <color name="button_color">#99A328</color>
+    <color name="button_color">#32CD32</color>
     <color name="green">#00FF00</color>   <!-- grayish black -> <!-dollar green --> <!-- blue -->
 
 </resources>

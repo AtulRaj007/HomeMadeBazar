@@ -49,14 +49,12 @@ public class FoodieMessengerRequestFragment extends BaseFragment implements Swip
         swipeRefreshLayout = getView().findViewById(R.id.swipe_refresh_layout);
         recyclerView = getView().findViewById(R.id.recycler_view);
         linearLayoutManager = new LinearLayoutManager(getActivity());
-//        inviteNewParticipate = getView().findViewById(R.id.card_send_invites);
     }
 
     @Override
     protected void initialiseListener() {
         reqDataList = new ArrayList<>();
         swipeRefreshLayout.setOnRefreshListener(this);
-//        inviteNewParticipate.setOnClickListener(this);
         userModel = SharedPreference.getUserModel(getActivity());
     }
 

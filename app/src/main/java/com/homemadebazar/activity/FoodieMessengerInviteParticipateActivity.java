@@ -11,14 +11,12 @@ import android.widget.TextView;
 
 import com.homemadebazar.R;
 import com.homemadebazar.adapter.MessengerInviteParticipatesRecyclerAdapter;
-import com.homemadebazar.fragment.FoodieHomeListFragment;
-import com.homemadebazar.fragment.FoodieHomeMapFragment;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.MessegeInviteParticipateModel;
+import com.homemadebazar.model.UserLocation;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
-import com.homemadebazar.network.apicall.FoodieHomeChiefNearByListApiCall;
 import com.homemadebazar.network.apicall.MessengerInviteParticipateApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
@@ -36,8 +34,8 @@ public class FoodieMessengerInviteParticipateActivity extends BaseActivity {
     private Toolbar toolbar;
     private UserModel userModel;
     private ArrayList<MessegeInviteParticipateModel> dataList;
-
     private TextView toolbarTitle;
+    private UserLocation userLocation;
     private MessengerInviteParticipatesRecyclerAdapter adapter;
 
     @Override
@@ -49,6 +47,7 @@ public class FoodieMessengerInviteParticipateActivity extends BaseActivity {
 
     @Override
     protected void initUI() {
+        userLocation = SharedPreference.getUserLocation(this);
         toolbar = findViewById(R.id.toolbar);
         recyclerView = findViewById(R.id.participates_recycler_view);
     }
@@ -66,7 +65,7 @@ public class FoodieMessengerInviteParticipateActivity extends BaseActivity {
     }
 
     private void setRecyclerAdapter() {
-        adapter = new MessengerInviteParticipatesRecyclerAdapter(this,dataList,userModel.getUserId());
+        adapter = new MessengerInviteParticipatesRecyclerAdapter(this, dataList, userModel.getUserId());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
@@ -85,14 +84,13 @@ public class FoodieMessengerInviteParticipateActivity extends BaseActivity {
 
     }
 
-//    {"StatusCode":"100","StatusMessage":"Successful","RequestObjects":[{"EmailId":"atul.raj@gmail.com","FName":"Atul","LName":"Jio","Mobile":"8709646364","UserId":"1801062","Distance":0,"Address":"","Pincode":"","DP":"","Status":"Request Not sent","StatusInNumeric":-1}]}
 
     private void getInviteParticipateListApiCall() {
         try {
             final Dialog progressDialog = DialogUtils.getProgressDialog(this, null);
             progressDialog.show();
 
-            final MessengerInviteParticipateApiCall apiCall = new MessengerInviteParticipateApiCall(userModel.getUserId(), "28.5244", "77.1855");
+            final MessengerInviteParticipateApiCall apiCall = new MessengerInviteParticipateApiCall(userModel.getUserId(), userLocation.getLatitude(), userLocation.getLongitude());
             HttpRequestHandler.getInstance(this).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override

@@ -222,6 +222,7 @@
     <string name="str_country">Country</string>
     <string name="str_company_name">Company Name</string>
     <string name="str_university_name">University Name</string>
+    <string name="str_shopping_list">Shopping List</string>
 
 
     <string-array name="price">

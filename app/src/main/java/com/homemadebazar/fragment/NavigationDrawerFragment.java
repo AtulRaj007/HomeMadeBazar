@@ -38,10 +38,10 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
         tvName = getView().findViewById(R.id.tv_name);
         tvMobileNumber = getView().findViewById(R.id.tv_mobile_number);
 
-        if (userModel.getAccountType().equals(Constants.AccountType.FOODIE)) {
-            getView().findViewById(R.id.ll_sales_report).setVisibility(View.GONE);
-            getView().findViewById(R.id.view_sales_report).setVisibility(View.GONE);
-        }
+//        if (userModel.getAccountType().equals(Constants.AccountType.FOODIE)) {
+//            getView().findViewById(R.id.ll_sales_report).setVisibility(View.GONE);
+//            getView().findViewById(R.id.view_sales_report).setVisibility(View.GONE);
+//        }
     }
 
     public void initialiseListener() {

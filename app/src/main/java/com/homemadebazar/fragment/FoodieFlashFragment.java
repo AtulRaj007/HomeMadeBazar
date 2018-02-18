@@ -100,15 +100,12 @@ public class FoodieFlashFragment extends BaseFragment implements SwipeRefreshLay
 
     public void getFoodieFlashPosts() {
         try {
-//            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
-//            progressDialog.show();
             swipeRefreshLayout.setRefreshing(true);
             final FoodieGetPostsApiCall apiCall = new FoodieGetPostsApiCall(userModel.getUserId());
             HttpRequestHandler.getInstance(getActivity().getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
                 public void onComplete(Exception e) {
-//                    DialogUtils.hideProgressDialog(progressDialog);
                     swipeRefreshLayout.setRefreshing(false);
                     if (e == null) { // Success
                         try {

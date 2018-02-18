@@ -170,6 +170,7 @@ public class HomeActivity extends BaseActivity {
             public void onPageSelected(int position) {
                 setUpIcons(position);
                 Utils.hideSoftKeyboard(HomeActivity.this);
+                viewPagerAdapter.getItem(position).onResume();
             }
 
             @Override

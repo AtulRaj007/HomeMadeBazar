@@ -18,13 +18,13 @@ import java.util.ArrayList;
 public class FoodieHomeChiefNearByListApiCall extends BaseApiCall {
     private String userId;
     private BaseModel baseModel;
-    private String lat, lang;
+    private double latitude, langitude;
     private ArrayList<HomeChiefNearByModel> chiefDetailList;
 
-    public FoodieHomeChiefNearByListApiCall(String userId, String lat, String lang) {
+    public FoodieHomeChiefNearByListApiCall(String userId, double latitude, double langitude) {
         this.userId = userId;
-        this.lat = lat;
-        this.lang = lang;
+        this.latitude = latitude;
+        this.langitude = langitude;
     }
 
     @Override
@@ -38,8 +38,8 @@ public class FoodieHomeChiefNearByListApiCall extends BaseApiCall {
         JSONObject object = new JSONObject();
         try {
             object.put("UserId", userId);
-            object.put("Lattitude", lat);
-            object.put("Longtitude", lang);
+            object.put("Lattitude", latitude);
+            object.put("Longtitude", langitude);
 
         } catch (Exception e) {
             e.printStackTrace();

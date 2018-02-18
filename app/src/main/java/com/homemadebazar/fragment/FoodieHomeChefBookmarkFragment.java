@@ -68,20 +68,16 @@ public class FoodieHomeChefBookmarkFragment extends BaseFragment implements Swip
 
     public void getChiefDetailListApiCall() {
         try {
-//            final Dialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
-//            progressDialog.show();
 
             final FoodieHomeChiefFavouriteListApiCall apiCall = new FoodieHomeChiefFavouriteListApiCall(userModel.getUserId());
             HttpRequestHandler.getInstance(getActivity()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
                 public void onComplete(Exception e) {
-//                    progressDialog.hide();
                     if (e == null) { // Success
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                // DialogUtils.showAlert(getActivity(), "HomeChiefDetailList size:-" + apiCall.getHomeChiefDetailList().size());
                                 homeChiefNearByModelArrayList.clear();
                                 homeChiefNearByModelArrayList.addAll(apiCall.getResult());
                                 foodieHomeListAdapter.notifyDataSetChanged();

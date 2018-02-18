@@ -6,12 +6,14 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
-import com.homemadebazar.model.IngredientsRowsModel;
+import com.homemadebazar.model.MarketPlaceProductModel;
+import com.homemadebazar.shopping.MarketPlaceShoppingCart;
 
 import java.util.ArrayList;
 
@@ -19,72 +21,80 @@ import java.util.ArrayList;
  * Created by Sumit on 31/07/17.
  */
 
-public class MarketPlaceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MarketPlaceAdapter extends RecyclerView.Adapter<MarketPlaceAdapter.ProductViewHolder> {
 
     private Context context;
-    private ArrayList<IngredientsRowsModel> ingredientsRowsModelArrayList;
+    private ArrayList<MarketPlaceProductModel> marketPlaceProductModelArrayList;
+    private MarketPlaceShoppingCart marketPlaceShoppingCart;
 
-    public MarketPlaceAdapter(Context context, ArrayList<IngredientsRowsModel> ingredientsRowsModelArrayList) {
+    public MarketPlaceAdapter(Context context, ArrayList<MarketPlaceProductModel> marketPlaceProductModelArrayList, MarketPlaceShoppingCart marketPlaceShoppingCart) {
         this.context = context;
-        this.ingredientsRowsModelArrayList = ingredientsRowsModelArrayList;
+        this.marketPlaceProductModelArrayList = marketPlaceProductModelArrayList;
+        this.marketPlaceShoppingCart = marketPlaceShoppingCart;
     }
 
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == 0)
-            return new DishViewHolder(LayoutInflater.from(context).inflate(R.layout.row_list_marketplace_header, parent, false));
-        else
-            return new IngredientViewHolder(LayoutInflater.from(context).inflate(R.layout.row_list_marketplace, parent, false));
+    public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ProductViewHolder(LayoutInflater.from(context).inflate(R.layout.row_list_marketplace, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        IngredientsRowsModel ingredientsRowsModel = ingredientsRowsModelArrayList.get(position);
-        if (holder instanceof DishViewHolder) {
-            ((DishViewHolder) holder).tvDishName.setText(ingredientsRowsModel.getDishName());
-        } else if (holder instanceof IngredientViewHolder) {
-            if (ingredientsRowsModel.getMarketPlaceProductModel() != null) {
-                if (!TextUtils.isEmpty(ingredientsRowsModel.getMarketPlaceProductModel().getImageUrl()))
-                    Glide.with(context).load(ingredientsRowsModel.getMarketPlaceProductModel().getImageUrl()).into(((IngredientViewHolder) holder).ivDishImage);
-                ((IngredientViewHolder) holder).tvDishName.setText(ingredientsRowsModel.getMarketPlaceProductModel().getProductName());
-                ((IngredientViewHolder) holder).tvDishQuantity.setText("");
-                ((IngredientViewHolder) holder).tvDishDescription.setText(ingredientsRowsModel.getMarketPlaceProductModel().getDescription());
-            }
+    public void onBindViewHolder(ProductViewHolder holder, int position) {
+        MarketPlaceProductModel productModel = marketPlaceProductModelArrayList.get(position);
+        if (!TextUtils.isEmpty(productModel.getImageUrl()))
+            Glide.with(context).load(productModel.getImageUrl()).into(holder.ivProductImage);
+        holder.tvProductName.setText(productModel.getProductName());
+        holder.tvDescription.setText(productModel.getDescription());
+        holder.tvBrandName.setText(productModel.getBrand());
+        holder.tvPrice.setText(productModel.getPrice());
+        if (productModel.getStatus() == 0) {
+            holder.btnAdd.setText("ADD");
+        } else {
+            holder.btnAdd.setText("REMOVE");
         }
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return ingredientsRowsModelArrayList.get(position).getType();
     }
 
     @Override
     public int getItemCount() {
-        return ingredientsRowsModelArrayList.size();
+        return marketPlaceProductModelArrayList.size();
     }
 
-    class DishViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvDishName;
 
-        DishViewHolder(View itemView) {
+    class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private ImageView ivProductImage;
+        private TextView tvProductName;
+        private TextView tvBrandName;
+        private TextView tvDescription;
+        private Button btnAdd;
+        private TextView tvPrice;
+
+        ProductViewHolder(View itemView) {
             super(itemView);
-            tvDishName = itemView.findViewById(R.id.tv_dish_name);
+            ivProductImage = itemView.findViewById(R.id.iv_product_image);
+            tvProductName = itemView.findViewById(R.id.tv_product_name);
+            tvBrandName = itemView.findViewById(R.id.tv_brand);
+            tvDescription = itemView.findViewById(R.id.tv_description);
+            tvPrice = itemView.findViewById(R.id.tv_price);
+            btnAdd = itemView.findViewById(R.id.btn_add);
+            btnAdd.setOnClickListener(this);
         }
-    }
 
-    class IngredientViewHolder extends RecyclerView.ViewHolder {
-        private ImageView ivDishImage;
-        private TextView tvDishName;
-        private TextView tvDishQuantity;
-        private TextView tvDishDescription;
-
-        IngredientViewHolder(View itemView) {
-            super(itemView);
-            ivDishImage = itemView.findViewById(R.id.iv_dish_image);
-            tvDishName = itemView.findViewById(R.id.tv_dish_name);
-            tvDishQuantity = itemView.findViewById(R.id.tv_dish_quantity);
-            tvDishDescription = itemView.findViewById(R.id.tv_dish_desc);
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.btn_add:
+                    if (marketPlaceProductModelArrayList.get(getAdapterPosition()).getStatus() == 0) {
+                        marketPlaceProductModelArrayList.get(getAdapterPosition()).setStatus(1);
+                        marketPlaceShoppingCart.addProductToCart(context, marketPlaceProductModelArrayList.get(getAdapterPosition()));
+                        notifyDataSetChanged();
+                    } else {
+                        marketPlaceProductModelArrayList.get(getAdapterPosition()).setStatus(0);
+                        marketPlaceShoppingCart.removeProductToCart(context, marketPlaceProductModelArrayList.get(getAdapterPosition()));
+                        notifyDataSetChanged();
+                    }
+                    break;
+            }
         }
     }
 }

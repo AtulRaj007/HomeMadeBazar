@@ -1,14 +1,22 @@
 package com.homemadebazar.activity;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.zxing.BarcodeFormat;
@@ -19,6 +27,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.homemadebazar.R;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.util.SharedPreference;
+import com.homemadebazar.util.Utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,8 +35,12 @@ import java.util.Map;
 import static android.graphics.Color.BLACK;
 import static android.graphics.Color.WHITE;
 
-public class AcceptMoneyActivity extends BaseActivity {
+public class AcceptMoneyActivity extends BaseActivity implements View.OnClickListener {
+    private static final int REQUEST_STORAGE_PERMISSION = 105;
     private UserModel userModel;
+    private TextView tvMobileNumber;
+    private ImageView ivShare;
+    private LinearLayout llRootLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +62,20 @@ public class AcceptMoneyActivity extends BaseActivity {
 
     @Override
     protected void initUI() {
-        userModel= SharedPreference.getUserModel(AcceptMoneyActivity.this);
-
+        userModel = SharedPreference.getUserModel(AcceptMoneyActivity.this);
+        tvMobileNumber = findViewById(R.id.tv_mobile_number);
+        ivShare = findViewById(R.id.iv_share);
+        llRootLayout = findViewById(R.id.ll_root_layout);
     }
 
     @Override
     protected void initialiseListener() {
-
+        ivShare.setOnClickListener(this);
     }
 
     @Override
     protected void setData() {
+        tvMobileNumber.setText(userModel.getMobile());
         try {
             //setting size of qr code
             WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
@@ -70,9 +86,6 @@ public class AcceptMoneyActivity extends BaseActivity {
             int height = point.y;
             int smallestDimension = width < height ? width : height;
 
-//            EditText qrInput = (EditText) findViewById(R.id.et_enter_text);
-//            String qrCodeData = qrInput.getText().toString();
-            //setting parameters for qr code
             String charset = "UTF-8"; // or "ISO-8859-1"
             Map<EncodeHintType, ErrorCorrectionLevel> hintMap = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
             hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
@@ -108,5 +121,42 @@ public class AcceptMoneyActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_share:
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION);
+                } else {
+                    Bitmap screenShotBitmap = Utils.takeScreenshot(llRootLayout);
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.putExtra(Intent.EXTRA_TEXT, "download this image");
+                    String bitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(), screenShotBitmap, "title", null);
+                    Uri bitmapUri = Uri.parse(bitmapPath);
+                    intent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
+                    intent.setType("image/*");
+                    startActivity(Intent.createChooser(intent, "Share QR via..."));
+                }
+
+                break;
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_STORAGE_PERMISSION && grantResults.length > 0) {
+            Bitmap screenShotBitmap = Utils.takeScreenshot(llRootLayout);
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_TEXT, "download this image");
+            String bitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(), screenShotBitmap, "title", null);
+            Uri bitmapUri = Uri.parse(bitmapPath);
+            intent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
+            intent.setType("image/*");
+            startActivity(Intent.createChooser(intent, "Share QR via..."));
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

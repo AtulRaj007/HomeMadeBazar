@@ -23,18 +23,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/nav_bottom_margin"
                 android:layout_marginLeft="@dimen/nav_left_margin"
-                android:layout_marginTop="@dimen/nav_top_margin">
+                android:layout_marginTop="@dimen/margin_10">
 
                 <ImageView
                     android:id="@+id/tv_edit_address"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_nav_myorder" />
+                    android:layout_width="@dimen/nav_icon_width"
+                    android:layout_height="@dimen/nav_icon_height"
+                    android:src="@drawable/ic_myorders" />
 
                 <TextView
                     android:id="@+id/tv_my_orders"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/margin_10"
                     android:layout_weight="1"
                     android:background="?android:attr/selectableItemBackground"
@@ -67,14 +68,15 @@
                 android:layout_marginTop="@dimen/nav_top_margin">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_nav_wallet" />
+                    android:layout_width="@dimen/nav_icon_width"
+                    android:layout_height="@dimen/nav_icon_height"
+                    android:src="@drawable/ic_mywallet" />
 
                 <TextView
                     android:id="@+id/tv_my_wallet"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/margin_10"
                     android:layout_weight="1"
                     android:background="?android:attr/selectableItemBackground"
@@ -97,7 +99,8 @@
                 android:layout_height="@dimen/nav_line_height"
                 android:layout_marginBottom="@dimen/nav_bottom_margin"
                 android:layout_marginTop="@dimen/nav_top_margin"
-                android:background="@color/nav_line_background" />
+                android:background="@color/nav_line_background"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/ll_sales_report"
@@ -105,7 +108,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/nav_bottom_margin"
                 android:layout_marginLeft="@dimen/nav_left_margin"
-                android:layout_marginTop="@dimen/nav_top_margin">
+                android:layout_marginTop="@dimen/nav_top_margin"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="30dp"
@@ -149,14 +153,15 @@
                 android:layout_marginTop="@dimen/nav_top_margin">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_nav_transaction_history" />
+                    android:layout_width="@dimen/nav_icon_width"
+                    android:layout_height="@dimen/nav_icon_height"
+                    android:src="@drawable/ic_transactionhistory" />
 
                 <TextView
                     android:id="@+id/tv_transaction_history"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/margin_10"
                     android:layout_weight="1"
                     android:background="?android:attr/selectableItemBackground"
@@ -189,14 +194,15 @@
                 android:layout_marginTop="@dimen/nav_top_margin">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_nav_termsofuse" />
+                    android:layout_width="@dimen/nav_icon_width"
+                    android:layout_height="@dimen/nav_icon_height"
+                    android:src="@drawable/ic_nav_changepassword" />
 
                 <TextView
                     android:id="@+id/tv_change_password"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/margin_10"
                     android:layout_weight="1"
                     android:background="?android:attr/selectableItemBackground"
@@ -229,14 +235,15 @@
                 android:layout_marginTop="@dimen/nav_top_margin">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_nav_termsofuse" />
+                    android:layout_width="@dimen/nav_icon_width"
+                    android:layout_height="@dimen/nav_icon_height"
+                    android:src="@drawable/ic_termsofuse" />
 
                 <TextView
                     android:id="@+id/tv_terms_of_use"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/margin_10"
                     android:layout_weight="1"
                     android:background="?android:attr/selectableItemBackground"
@@ -269,14 +276,15 @@
                 android:layout_marginTop="@dimen/nav_top_margin">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_nav_privacy" />
+                    android:layout_width="@dimen/nav_icon_width"
+                    android:layout_height="@dimen/nav_icon_height"
+                    android:src="@drawable/ic_privacypolicy" />
 
                 <TextView
                     android:id="@+id/tv_privacy_policy"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/margin_10"
                     android:layout_weight="1"
                     android:background="?android:attr/selectableItemBackground"
@@ -309,14 +317,15 @@
                 android:layout_marginTop="@dimen/nav_top_margin">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_nav_about" />
+                    android:layout_width="@dimen/nav_icon_width"
+                    android:layout_height="@dimen/nav_icon_height"
+                    android:src="@drawable/ic_about" />
 
                 <TextView
                     android:id="@+id/tv_about"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/margin_10"
                     android:layout_weight="1"
                     android:background="?android:attr/selectableItemBackground"
@@ -350,15 +359,14 @@
                 android:layout_marginTop="@dimen/nav_top_margin">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_nav_logout" />
+                    android:layout_width="@dimen/nav_icon_width"
+                    android:layout_height="@dimen/nav_icon_height"
+                    android:src="@drawable/ic_logout" />
 
                 <TextView
                     android:id="@+id/tv_logout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/margin_10"
                     android:layout_weight="1"

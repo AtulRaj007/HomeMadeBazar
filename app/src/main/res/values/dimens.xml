@@ -59,4 +59,6 @@
     <dimen name="shop_cover_photo_height">220dp</dimen>
     <dimen name="custom_card_elevation">10dp</dimen>
     <dimen name="text_22">22sp</dimen>
+    <dimen name="nav_icon_height">40dp</dimen>
+    <dimen name="nav_icon_width">40dp</dimen>
 </resources>

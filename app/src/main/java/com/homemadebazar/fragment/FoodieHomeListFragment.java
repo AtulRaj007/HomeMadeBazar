@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.share.Share;
 import com.homemadebazar.R;
 import com.homemadebazar.adapter.FoodieHomeListAdapter;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.HomeChiefNearByModel;
+import com.homemadebazar.model.UserLocation;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
@@ -35,6 +37,7 @@ public class FoodieHomeListFragment extends BaseFragment implements SwipeRefresh
     private ArrayList<HomeChiefNearByModel> homeChiefNearByModelArrayList = new ArrayList<>();
     private UserModel userModel;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private UserLocation userLocation;
 
     @Nullable
     @Override
@@ -44,6 +47,7 @@ public class FoodieHomeListFragment extends BaseFragment implements SwipeRefresh
 
     @Override
     protected void initUI() {
+        userLocation = SharedPreference.getUserLocation(getActivity());
         userModel = SharedPreference.getUserModel(getActivity());
         recyclerView = getView().findViewById(R.id.recycler_view);
         swipeRefreshLayout = getView().findViewById(R.id.swipe_refresh_layout);
@@ -66,15 +70,12 @@ public class FoodieHomeListFragment extends BaseFragment implements SwipeRefresh
 
     public void getChiefDetailListApiCall() {
         try {
-//            final Dialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
-//            progressDialog.show();
 
-            final FoodieHomeChiefNearByListApiCall apiCall = new FoodieHomeChiefNearByListApiCall(userModel.getUserId(), "28.5244", "77.1855");
+            final FoodieHomeChiefNearByListApiCall apiCall = new FoodieHomeChiefNearByListApiCall(userModel.getUserId(), userLocation.getLatitude(), userLocation.getLongitude());
             HttpRequestHandler.getInstance(getActivity()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
                 public void onComplete(Exception e) {
-//                    progressDialog.hide();
                     if (e == null) { // Success
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();

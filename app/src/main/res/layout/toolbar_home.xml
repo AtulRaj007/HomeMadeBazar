@@ -3,7 +3,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/background_screen">
+    android:background="@color/colorPrimary">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:tint="@color/colorPrimary"
+            android:tint="@color/white"
             android:padding="@dimen/padding_10"
             android:src="@drawable/menu" />
 
@@ -27,7 +27,7 @@
             android:layout_toRightOf="@id/menu_notification"
             android:text=""
             android:textAllCaps="false"
-            android:textColor="@color/heading_color"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_18" />
 
     </RelativeLayout>

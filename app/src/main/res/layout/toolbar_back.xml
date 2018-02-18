@@ -2,34 +2,35 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:background="@color/background_screen"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/iv_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/back"/>
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back"
+            android:tint="@color/white" />
 
-    <TextView
-        android:id="@+id/tv_sync_social_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/padding_10"
-        android:paddingRight="@dimen/padding_10"
-        android:paddingTop="@dimen/padding_5"
-        android:paddingBottom="@dimen/padding_5"
-        android:layout_marginRight="@dimen/margin_10"
-        android:layout_alignParentRight="true"
-        android:textSize="@dimen/text_14"
-        android:background="@drawable/background_border_white"
-        android:text="@string/str_sync_social_data"
-        android:visibility="gone"
-        android:textColor="@color/colorPrimary" />
+        <TextView
+            android:id="@+id/tv_sync_social_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_10"
+            android:background="@drawable/background_border_white"
+            android:paddingBottom="@dimen/padding_5"
+            android:paddingLeft="@dimen/padding_10"
+            android:paddingRight="@dimen/padding_10"
+            android:paddingTop="@dimen/padding_5"
+            android:text="@string/str_sync_social_data"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

@@ -127,7 +127,10 @@ public class Constants {
         String GET_USER_PROFILE_DETAILS = BASE_URL + "Miscellaneous/GetUserProfileDetails";
         String SAVE_FAVOURITE = BASE_URL + "Miscellaneous/SaveFavourite";
         String GET_LIST_OF_FAVOURITE_HOME_CHEF = BASE_URL + "Foodies/GetLstOfFavouritesHomeChif";
+        String MARKET_PLACE_PRODUCT_SEARCH = BASE_URL + "MarketPlace/MarketplaceSearch";
+        String HOMECHEF_BOOK_PRODUCT = BASE_URL + "MarketPlace/BuyProduct";
 
+//        http://18.218.139.27/api/MarketPlace/MarketplaceSearch
 //        http://localhost:14013/api/Foodies/GetLstOfFavouritesHomeChif
 //[1:34 PM, 2/3/2018] Pankaj Idea: http://localhost:14013/api/Miscellaneous/SaveFavourite
 //        http://localhost:14013/api/Foodies/GetListOfHotDeals

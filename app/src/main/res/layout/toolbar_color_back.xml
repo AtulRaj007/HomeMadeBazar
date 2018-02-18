@@ -3,12 +3,13 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background_screen">
+    android:background="@color/colorPrimary">
 
     <ImageView
         android:id="@+id/iv_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:tint="@color/white"
         android:src="@drawable/back" />
 
 
@@ -19,7 +20,7 @@
         android:layout_marginLeft="@dimen/margin_40"
         android:text=""
         android:textAllCaps="false"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="@dimen/text_15" />
 
 </android.support.v7.widget.Toolbar>

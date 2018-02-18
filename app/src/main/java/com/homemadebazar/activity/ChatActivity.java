@@ -10,10 +10,12 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +23,7 @@ import com.homemadebazar.R;
 import com.homemadebazar.adapter.ChatConversationAdapter;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.ChatMessageModel;
+import com.homemadebazar.model.UserLocation;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.UploadFileTask;
@@ -55,6 +58,8 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
     private IncomingMessageReceiver incomingMessageReceiver = new IncomingMessageReceiver();
     private ImageView ivUserProfile;
     private TextView tvUserName;
+    private UserLocation userLocation;
+    private RelativeLayout rlTopLayout;
 
     public static Intent getChatIntent(Context context, UserModel targetUserId) {
         Intent intent = new Intent(context, ChatActivity.class);
@@ -77,6 +82,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
     protected void initUI() {
         getBundleData();
         linearLayoutManager = new LinearLayoutManager(ChatActivity.this);
+        userLocation = SharedPreference.getUserLocation(ChatActivity.this);
         userModel = SharedPreference.getUserModel(ChatActivity.this);
         ivBack = findViewById(R.id.iv_back);
         tvUserName = findViewById(R.id.tv_username);
@@ -85,6 +91,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         etChatMessage = findViewById(R.id.et_chat_message);
         recyclerView = findViewById(R.id.recycler_view);
         llAttachmentLayout = findViewById(R.id.ll_attachment_layout);
+        rlTopLayout = findViewById(R.id.rl_top_layout);
     }
 
     @Override
@@ -95,6 +102,13 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.ll_camera_attachment).setOnClickListener(this);
         findViewById(R.id.ll_gallery_attachment).setOnClickListener(this);
         findViewById(R.id.ll_location_attachment).setOnClickListener(this);
+        rlTopLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                llAttachmentLayout.setVisibility(View.GONE);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -143,7 +157,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.ll_location_attachment:
                 sendChatMessage(userModel.getUserId(), targetUserModel.getUserId(), "", "", Constants.FileType.NONE,
-                        Constants.MessageType.LOCATION, "28.4594965", "77.0266383");
+                        Constants.MessageType.LOCATION, String.valueOf(userLocation.getLatitude()), String.valueOf(userLocation.getLongitude()));
                 break;
             case R.id.iv_back:
                 finish();

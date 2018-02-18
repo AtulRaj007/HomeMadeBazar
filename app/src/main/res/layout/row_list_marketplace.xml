@@ -15,9 +15,9 @@
         android:layout_marginTop="@dimen/margin_10">
 
         <ImageView
-            android:id="@+id/iv_dish_image"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:id="@+id/iv_product_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginLeft="@dimen/margin_5"
             android:layout_marginRight="@dimen/margin_5"
             android:background="@color/grey"
@@ -32,7 +32,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_dish_name"
+                android:id="@+id/tv_product_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -40,38 +40,48 @@
                 android:textSize="@dimen/text_14" />
 
             <TextView
-                android:id="@+id/tv_dish_quantity"
+                android:id="@+id/tv_brand"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_dish_name"
+                android:layout_below="@id/tv_product_name"
+                android:layout_marginTop="@dimen/margin_5"
                 android:text=""
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_14" />
 
             <TextView
-                android:id="@+id/tv_dish_desc"
+                android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_dish_quantity"
+                android:layout_below="@id/tv_brand"
+                android:layout_marginTop="@dimen/margin_5"
                 android:text=""
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_14" />
 
-
-            <Button
-                android:id="@+id/btn_add"
+            <TextView
+                android:id="@+id/tv_description"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/margin_5"
-                android:background="@drawable/button_oval_primary"
-                android:text="ADD"
-                android:textAllCaps="false"
-                android:textColor="@color/white" />
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_price"
+                android:layout_marginTop="@dimen/margin_5"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_14" />
 
 
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/margin_5"
+            android:background="@drawable/button_oval_primary"
+            android:text="ADD"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
 
 
     </LinearLayout>

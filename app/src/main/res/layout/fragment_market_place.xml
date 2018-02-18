@@ -49,8 +49,10 @@
         android:layout_marginBottom="@dimen/margin_10"
         android:layout_marginTop="@dimen/margin_10"
         android:background="@drawable/button_oval_primary"
-        android:text="@string/str_checkout"
+        android:text="@string/str_shopping_list"
         android:textColor="@color/white"
         android:textSize="@dimen/text_12" />
+
+    <include layout="@layout/layout_no_record" />
 
 </RelativeLayout>

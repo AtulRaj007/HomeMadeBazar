@@ -562,6 +562,20 @@ public class JSONParsingUtils {
         return marketPlaceProductModelArrayList;
     }
 
+    public static ArrayList<MarketPlaceProductModel> parseMarketPlaceProductModelList(JSONObject object) {
+        ArrayList<MarketPlaceProductModel> marketPlaceProductModelArrayList = new ArrayList<>();
+        try {
+            JSONArray jsonArray = object.optJSONArray("SearchItems");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                MarketPlaceProductModel marketPlaceProductModel = parseMarketPlaceSearchProductModel(jsonArray.getJSONObject(i));
+                marketPlaceProductModelArrayList.add(marketPlaceProductModel);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return marketPlaceProductModelArrayList;
+    }
+
     private static MarketPlaceProductModel parseMarketPlaceProductModel(JSONObject object) {
         MarketPlaceProductModel marketPlaceProductModel = new MarketPlaceProductModel();
         try {
@@ -572,6 +586,22 @@ public class JSONParsingUtils {
             marketPlaceProductModel.setDescription(object.optString("Description"));
             marketPlaceProductModel.setBrand(object.optString("Band"));
             marketPlaceProductModel.setImageUrl(object.optString("ProductList"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return marketPlaceProductModel;
+    }
+
+    private static MarketPlaceProductModel parseMarketPlaceSearchProductModel(JSONObject object) {
+        MarketPlaceProductModel marketPlaceProductModel = new MarketPlaceProductModel();
+        try {
+            marketPlaceProductModel.setProductName(object.optString("ProductName"));
+            marketPlaceProductModel.setProductId(object.optString("ProductId"));
+            marketPlaceProductModel.setCategory(object.optString("ProductCategory"));
+            marketPlaceProductModel.setPrice(object.optString("Price"));
+            marketPlaceProductModel.setDescription(object.optString("Description"));
+            marketPlaceProductModel.setBrand(object.optString("Brand"));
+            marketPlaceProductModel.setImageUrl(object.optString("ProductUrl"));
         } catch (Exception e) {
             e.printStackTrace();
         }

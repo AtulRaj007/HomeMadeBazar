@@ -15,6 +15,7 @@ import com.homemadebazar.R;
 import com.homemadebazar.adapter.MessengerInviteParticipatesRecyclerAdapter;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.MessegeInviteParticipateModel;
+import com.homemadebazar.model.UserLocation;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
@@ -38,6 +39,7 @@ public class FoodieMessengerInvitesFragment extends BaseFragment {
 
     private TextView toolbarTitle;
     private MessengerInviteParticipatesRecyclerAdapter adapter;
+    private UserLocation userLocation;
 
     @Nullable
     @Override
@@ -47,6 +49,7 @@ public class FoodieMessengerInvitesFragment extends BaseFragment {
 
     @Override
     protected void initUI() {
+        userLocation = SharedPreference.getUserLocation(getActivity());
         toolbar = getView().findViewById(R.id.toolbar);
         recyclerView = getView().findViewById(R.id.participates_recycler_view);
     }
@@ -77,7 +80,7 @@ public class FoodieMessengerInvitesFragment extends BaseFragment {
 //            final Dialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
 //            progressDialog.show();
 
-            final MessengerInviteParticipateApiCall apiCall = new MessengerInviteParticipateApiCall(userModel.getUserId(), "28.5244", "77.1855");
+            final MessengerInviteParticipateApiCall apiCall = new MessengerInviteParticipateApiCall(userModel.getUserId(), userLocation.getLatitude(), userLocation.getLongitude());
             HttpRequestHandler.getInstance(getActivity()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override

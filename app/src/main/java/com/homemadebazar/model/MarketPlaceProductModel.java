@@ -1,10 +1,12 @@
 package com.homemadebazar.model;
 
+import java.io.Serializable;
+
 /**
  * Created by atulraj on 23/12/17.
  */
 
-public class MarketPlaceProductModel {
+public class MarketPlaceProductModel implements Serializable {
 
     private String productId;
     private String productName;
@@ -13,6 +15,8 @@ public class MarketPlaceProductModel {
     private String price;
     private String description;
     private String imageUrl;
+    private String quantity = "1";
+    private int status = 0;   // 0 -> Not Added   1-> Added To Cart
 
     public String getProductId() {
         return productId;
@@ -46,6 +50,22 @@ public class MarketPlaceProductModel {
         this.brand = brand;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public String getPrice() {
         return price;
     }
@@ -68,5 +88,10 @@ public class MarketPlaceProductModel {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public String toString() {
+        return productId;
     }
 }

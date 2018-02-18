@@ -19,12 +19,12 @@ public class MessengerInviteParticipateApiCall extends BaseApiCall {
     ArrayList<MessegeInviteParticipateModel> inviteParticipateList = new ArrayList<>();
     private String userId;
     private BaseModel baseModel;
-    private String lat, lang;
+    private double latitude, longitude;
 
-    public MessengerInviteParticipateApiCall(String userId, String lat, String lang) {
+    public MessengerInviteParticipateApiCall(String userId, double latitude, double longitude) {
         this.userId = userId;
-        this.lat = lat;
-        this.lang = lang;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     @Override
@@ -39,8 +39,8 @@ public class MessengerInviteParticipateApiCall extends BaseApiCall {
         JSONObject object = new JSONObject();
         try {
             object.put("UserId", userId);
-            object.put("Lattitude", lat);
-            object.put("Longtitude", lang);
+            object.put("Lattitude", latitude);
+            object.put("Longtitude", longitude);
         } catch (Exception e) {
             e.printStackTrace();
         }
