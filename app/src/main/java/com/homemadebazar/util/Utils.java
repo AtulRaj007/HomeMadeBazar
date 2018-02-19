@@ -2,6 +2,7 @@ package com.homemadebazar.util;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -39,6 +40,7 @@ import com.homemadebazar.activity.ProfileViewActivity;
 import com.homemadebazar.activity.TransactionHistoryActivity;
 import com.homemadebazar.activity.WalletActivity;
 import com.homemadebazar.activity.WebViewActivity;
+import com.homemadebazar.fragment.AppWalkthroughFragment;
 import com.homemadebazar.fragment.UserProfileFragment;
 import com.homemadebazar.model.FoodDateTimeBookModel;
 
@@ -205,6 +207,12 @@ public class Utils {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             context.startActivity(intent);
         }
+    }
+
+    public static void runAppWalkthrough(FragmentManager fragmentManager) {
+        AppWalkthroughFragment appWalkthroughFragment = new AppWalkthroughFragment();
+        appWalkthroughFragment.setStyle(R.style.CustomDialog, android.R.style.Theme);
+        appWalkthroughFragment.show(fragmentManager, "WalkThrough");
     }
 
     public static String getPath(final Context context, final Uri uri) {

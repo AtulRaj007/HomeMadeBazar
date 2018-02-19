@@ -54,6 +54,7 @@ public class HomeActivity extends BaseActivity {
         setUpToolbar();
         String deviceToken = FirebaseInstanceId.getInstance().getToken();
         ServiceUtils.deviceLoginLogoutApiCall(HomeActivity.this, userModel.getUserId(), deviceToken, Constants.LoginHistory.LOGIN);
+        Utils.runAppWalkthrough(getFragmentManager());
     }
 
     @Override

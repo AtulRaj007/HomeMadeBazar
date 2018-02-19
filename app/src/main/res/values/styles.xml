@@ -30,4 +30,9 @@
         <item name="android:textSize">@dimen/text_16</item>
         <item name="android:layout_marginBottom">@dimen/margin_5</item>
     </style>
+
+    <style name="CustomDialog" parent="@android:style/Theme.Holo.Light">
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
 </resources>
