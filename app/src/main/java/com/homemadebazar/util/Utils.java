@@ -283,7 +283,6 @@ public class Utils {
                     ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Constants.Keys.LOCATION_REQUEST);
                 } else {
                     ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Constants.Keys.LOCATION_REQUEST);
-
                 }
                 return false;
             } else {

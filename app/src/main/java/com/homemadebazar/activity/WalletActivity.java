@@ -50,6 +50,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         findViewById(R.id.ll_add_money).setOnClickListener(this);
         findViewById(R.id.ll_pay_money).setOnClickListener(this);
         findViewById(R.id.ll_accept_money).setOnClickListener(this);
+        findViewById(R.id.tv_sent_to_bank).setOnClickListener(this);
     }
 
     @Override
@@ -129,6 +130,9 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.ll_accept_money:
                 startActivity(new Intent(WalletActivity.this, AcceptMoneyActivity.class));
+                break;
+            case R.id.tv_sent_to_bank:
+                startActivity(new Intent(WalletActivity.this, SendMoneyToBankActivity.class));
                 break;
         }
     }

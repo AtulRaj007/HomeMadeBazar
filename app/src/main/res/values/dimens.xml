@@ -61,4 +61,5 @@
     <dimen name="text_22">22sp</dimen>
     <dimen name="nav_icon_height">40dp</dimen>
     <dimen name="nav_icon_width">40dp</dimen>
+    <dimen name="min_photo_height">150dp</dimen>
 </resources>

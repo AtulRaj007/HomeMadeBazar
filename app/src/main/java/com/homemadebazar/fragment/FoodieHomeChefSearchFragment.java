@@ -71,6 +71,7 @@ public class FoodieHomeChefSearchFragment extends BaseFragment implements View.O
             @Override
             public void onApiCompleteListener(String response) {
                 System.out.println("====== Categories ======" + response);
+                swipeRefreshLayout.setRefreshing(false);
                 ArrayList<FoodCategoryModel> tempFoodCategoryModelArrayList = JSONParsingUtils.parseFoodCategoryModel(response);
                 foodCategoryModelArrayList.clear();
                 foodCategoryModelArrayList.addAll(tempFoodCategoryModelArrayList);

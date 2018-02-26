@@ -223,6 +223,12 @@
     <string name="str_company_name">Company Name</string>
     <string name="str_university_name">University Name</string>
     <string name="str_shopping_list">Shopping List</string>
+    <string name="hint_account_number">Account Number</string>
+    <string name="hint_account_holder_name">Account Holder\'s Name</string>
+    <string name="hint_ifsc_code">IFSC Code</string>
+    <string name="hint_amount_to_transfer">Amount to Transfer</string>
+    <string name="text_transfer">Transfer</string>
+    <string name="str_transfer_text">It will take 2-3 days to process and transfer the money.</string>
 
 
     <string-array name="price">

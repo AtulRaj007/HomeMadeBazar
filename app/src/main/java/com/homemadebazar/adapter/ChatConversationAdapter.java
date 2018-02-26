@@ -1,6 +1,8 @@
 package com.homemadebazar.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
+import com.homemadebazar.activity.ImageViewActivity;
 import com.homemadebazar.model.ChatMessageModel;
 import com.homemadebazar.util.Constants;
 
@@ -130,8 +133,7 @@ public class ChatConversationAdapter extends RecyclerView.Adapter<RecyclerView.V
         return chatMessageModelArrayList.size();
     }
 
-    public String makeUrl(String latitude, String longitude) {
-//        String url = "https://maps.googleapis.com/maps/api/staticmap?zoom=15&size=300x150&maptype=roadmap&markers=color:red%7Clabel:⬤%7C" + latitude + "," + longitude + "&key=" + context.getResources().getString(R.string.google_api_key);
+    private String makeUrl(String latitude, String longitude) {
         String url = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=12&size=200x200";
         Log.e("Map Image Url:-", url);
         return url;
@@ -147,25 +149,58 @@ public class ChatConversationAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-    class ImageViewHolder extends RecyclerView.ViewHolder {
+    class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView ivChatImage;
         private TextView tvTime;
 
-        public ImageViewHolder(View itemView) {
+        ImageViewHolder(View itemView) {
             super(itemView);
             ivChatImage = itemView.findViewById(R.id.iv_image);
             tvTime = itemView.findViewById(R.id.tv_time);
+            itemView.findViewById(R.id.ll_image).setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.ll_image:
+                    context.startActivity(ImageViewActivity.getImageIntent(context, chatMessageModelArrayList.get(getAdapterPosition()).getShareFile()));
+                    break;
+            }
         }
     }
 
-    class LocationViewHolder extends RecyclerView.ViewHolder {
+    class LocationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView ivLocationImage;
         private TextView tvTime;
 
-        public LocationViewHolder(View itemView) {
+        LocationViewHolder(View itemView) {
             super(itemView);
             ivLocationImage = itemView.findViewById(R.id.iv_location_image);
             tvTime = itemView.findViewById(R.id.tv_time);
+            itemView.findViewById(R.id.ll_location).setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            try {
+                switch (view.getId()) {
+                    case R.id.ll_location:
+                        openShareLocationMap(chatMessageModelArrayList.get(getAdapterPosition()).getLatitude(), chatMessageModelArrayList.get(getAdapterPosition()).getLongitude());
+                        break;
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void openShareLocationMap(String latitude, String longitude) {
+        String uri = "geo:" + latitude + ","
+                + longitude + "?q=" + latitude
+                + "," + longitude;
+        context.startActivity(new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse(uri)));
     }
 }

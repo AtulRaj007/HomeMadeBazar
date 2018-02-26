@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/margin_5"
-    android:layout_marginLeft="@dimen/margin_10"
-    android:layout_marginRight="@dimen/margin_10"
+    android:layout_marginLeft="@dimen/margin_5"
+    android:layout_marginRight="@dimen/margin_5"
     android:layout_marginTop="@dimen/margin_5"
     android:background="@drawable/back_shadow"
     android:elevation="@dimen/custom_card_elevation"
@@ -19,8 +19,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_5"
             android:layout_marginBottom="@dimen/margin_10"
+            android:layout_marginLeft="@dimen/margin_5"
+            android:layout_marginRight="@dimen/margin_5"
+            android:layout_marginTop="@dimen/margin_5"
             android:orientation="vertical">
 
             <ImageView
@@ -97,13 +99,12 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_14" />
 
-            <ImageView
+            <com.homemadebazar.util.AdjustableImageView
                 android:id="@+id/iv_post_image"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/shop_cover_photo_height"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/tv_message"
-                android:background="@color/grey"
-                android:scaleType="centerCrop" />
+                android:background="@color/grey" />
         </RelativeLayout>
 
         <LinearLayout

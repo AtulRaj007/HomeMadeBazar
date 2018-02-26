@@ -89,7 +89,12 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                DialogUtils.showAlert(ChangePasswordActivity.this, baseModel.getStatusMessage());
+                                DialogUtils.showAlert(ChangePasswordActivity.this, baseModel.getStatusMessage(), new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        finish();
+                                    }
+                                });
                             } else {
                                 DialogUtils.showAlert(ChangePasswordActivity.this, baseModel.getStatusMessage());
                             }

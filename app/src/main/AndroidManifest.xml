@@ -236,6 +236,10 @@
         <activity
             android:name=".activity.ShoppingListActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ImageViewActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.SendMoneyToBankActivity"></activity>
     </application>
 
 </manifest>

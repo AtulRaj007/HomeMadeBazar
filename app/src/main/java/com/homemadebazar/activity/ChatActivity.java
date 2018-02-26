@@ -102,13 +102,24 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.ll_camera_attachment).setOnClickListener(this);
         findViewById(R.id.ll_gallery_attachment).setOnClickListener(this);
         findViewById(R.id.ll_location_attachment).setOnClickListener(this);
+
+        /* For Hiding Attachement Layout*/
         rlTopLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public boolean onTouch(View view, MotionEvent motionEvent) {
                 llAttachmentLayout.setVisibility(View.GONE);
-                return true;
+                return false;
             }
         });
+
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                llAttachmentLayout.setVisibility(View.GONE);
+                return false;
+            }
+        });
+        /**/
     }
 
     @Override
@@ -139,6 +150,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                     sendChatMessage(userModel.getUserId(), targetUserModel.getUserId(), etChatMessage.getText().toString().trim(), "", Constants.FileType.NONE,
                             Constants.MessageType.TEXT, "", "");
                     etChatMessage.setText("");
+                    llAttachmentLayout.setVisibility(View.GONE);
                 }
                 break;
             case R.id.iv_attachment:
@@ -151,13 +163,16 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.ll_camera_attachment:
                 Utils.cameraIntent(ChatActivity.this);
+                llAttachmentLayout.setVisibility(View.GONE);
                 break;
             case R.id.ll_gallery_attachment:
                 Utils.gallaryIntent(ChatActivity.this);
+                llAttachmentLayout.setVisibility(View.GONE);
                 break;
             case R.id.ll_location_attachment:
                 sendChatMessage(userModel.getUserId(), targetUserModel.getUserId(), "", "", Constants.FileType.NONE,
                         Constants.MessageType.LOCATION, String.valueOf(userLocation.getLatitude()), String.valueOf(userLocation.getLongitude()));
+                llAttachmentLayout.setVisibility(View.GONE);
                 break;
             case R.id.iv_back:
                 finish();
