@@ -229,6 +229,7 @@
     <string name="hint_amount_to_transfer">Amount to Transfer</string>
     <string name="text_transfer">Transfer</string>
     <string name="str_transfer_text">It will take 2-3 days to process and transfer the money.</string>
+    <string name="str_profession">Profession</string>
 
 
     <string-array name="price">
@@ -283,6 +284,12 @@
         <item>960</item>
         <item>980</item>
         <item>1000</item>
+    </string-array>
+
+    <string-array name="profession">
+        <item>Student</item>
+        <item>Professional</item>
+        <item>Self-employed</item>
     </string-array>
 
 </resources>

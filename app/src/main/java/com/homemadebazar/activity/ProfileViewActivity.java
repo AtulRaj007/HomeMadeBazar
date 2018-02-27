@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -27,6 +28,7 @@ public class ProfileViewActivity extends BaseActivity {
     private ImageView ivProfilePic;
     private UserModel userModel;
     private String profileUserId;
+    private Spinner sprProfession;
 
     public static Intent getProfileIntent(Context context, String userId) {
         Intent intent = new Intent(context, ProfileViewActivity.class);
@@ -53,9 +55,10 @@ public class ProfileViewActivity extends BaseActivity {
         tvEmailId = findViewById(R.id.tv_emailId);
         tvMobileNumber = findViewById(R.id.tv_mobile_number);
         tvCountry = findViewById(R.id.tv_country);
-        tvCompanyName = findViewById(R.id.tv_company_name);
-        tvUniversityName = findViewById(R.id.tv_university_name);
+//        tvCompanyName = findViewById(R.id.tv_company_name);
+//        tvUniversityName = findViewById(R.id.tv_university_name);
         tvAbout = findViewById(R.id.tv_about);
+        sprProfession = findViewById(R.id.spr_profession);
     }
 
     @Override
@@ -66,6 +69,7 @@ public class ProfileViewActivity extends BaseActivity {
                 finish();
             }
         });
+//        sprProfession.setOnItemSelectedListener();
     }
 
     @Override
@@ -111,8 +115,8 @@ public class ProfileViewActivity extends BaseActivity {
         tvEmailId.setText(userModel.getEmailId());
         tvMobileNumber.setText(userModel.getMobile());
         tvCountry.setText(userModel.getCountryName());
-        tvCompanyName.setText(userModel.getDpStatus());
-        tvUniversityName.setText(userModel.getUniversityName());
+//        tvCompanyName.setText(userModel.getDpStatus());
+//        tvUniversityName.setText(userModel.getUniversityName());
         tvAbout.setText(userModel.getDpStatus());
     }
 }
