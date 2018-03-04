@@ -137,6 +137,7 @@ public class FoodieFlashPostAdapter extends RecyclerView.Adapter<FoodieFlashPost
             llLike.setOnClickListener(this);
             llShare.setOnClickListener(this);
             llComment.setOnClickListener(this);
+            ivProfileImage.setOnClickListener(this);
         }
 
         @Override
@@ -161,6 +162,9 @@ public class FoodieFlashPostAdapter extends RecyclerView.Adapter<FoodieFlashPost
                     intent.setType("image/*");
                     context.startActivity(Intent.createChooser(intent, "Share image via..."));
 
+                    break;
+                case R.id.iv_profile_pic:
+                    Utils.showProfile(context, foodieFlashPostModelArrayList.get(getAdapterPosition()).getUserId());
                     break;
             }
         }

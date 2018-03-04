@@ -61,12 +61,11 @@ public class FoodieMessengerFriendsFragment extends BaseFragment implements Swip
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(foodieMessengerFriendsAdapter);
         getMessengerFriendListApiCall();
-
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     private void getMessengerFriendListApiCall() {
         try {
-            swipeRefreshLayout.setRefreshing(true);
             final MessengerFriendApiCall apiCall = new MessengerFriendApiCall(userModel.getUserId());
             HttpRequestHandler.getInstance(getActivity()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 

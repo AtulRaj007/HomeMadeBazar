@@ -23,7 +23,7 @@
             android:background="@drawable/background_border_widet"
             android:gravity="center"
             android:text="@string/str_cusine"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_14" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:background="@drawable/background_border_widet"
             android:gravity="center"
             android:text="@string/str_timings_from"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_14" />
 
         <TextView
@@ -43,7 +43,7 @@
             android:background="@drawable/background_border_widet"
             android:gravity="center"
             android:text="@string/str_timings_to"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_14" />
 
 
@@ -61,7 +61,7 @@
             android:background="@drawable/background_border_widet"
             android:gravity="center"
             android:text="@string/str_breakfast"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_14" />
 
         <TextView
@@ -71,7 +71,7 @@
             android:background="@drawable/background_border_widet"
             android:gravity="center"
             android:text="9:30 AM"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_14" />
 
         <TextView
@@ -81,7 +81,7 @@
             android:background="@drawable/background_border_widet"
             android:gravity="center"
             android:text="11:00 AM"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_14" />
 
 
@@ -99,7 +99,7 @@
             android:background="@drawable/background_border_widet"
             android:gravity="center"
             android:text="@string/str_lunch"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_14" />
 
         <TextView
@@ -109,7 +109,7 @@
             android:background="@drawable/background_border_widet"
             android:gravity="center"
             android:text="1:00 PM"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_14" />
 
         <TextView
@@ -119,7 +119,7 @@
             android:background="@drawable/background_border_widet"
             android:gravity="center"
             android:text="3:00 PM"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_14" />
 
 
@@ -137,7 +137,7 @@
             android:background="@drawable/background_border_widet"
             android:gravity="center"
             android:text="@string/str_dinner"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_14" />
 
         <TextView
@@ -147,7 +147,7 @@
             android:background="@drawable/background_border_widet"
             android:gravity="center"
             android:text="7:30 PM"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_14" />
 
         <TextView
@@ -157,7 +157,7 @@
             android:background="@drawable/background_border_widet"
             android:gravity="center"
             android:text="11:30 PM"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_14" />
 
     </LinearLayout>

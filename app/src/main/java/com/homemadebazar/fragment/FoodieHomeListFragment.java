@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.facebook.share.Share;
 import com.homemadebazar.R;
 import com.homemadebazar.adapter.FoodieHomeListAdapter;
 import com.homemadebazar.model.BaseModel;
@@ -65,12 +64,12 @@ public class FoodieHomeListFragment extends BaseFragment implements SwipeRefresh
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(foodieHomeListAdapter);
         getChiefDetailListApiCall();
+        swipeRefreshLayout.setRefreshing(true);
     }
 
 
     public void getChiefDetailListApiCall() {
         try {
-
             final FoodieHomeChiefNearByListApiCall apiCall = new FoodieHomeChiefNearByListApiCall(userModel.getUserId(), userLocation.getLatitude(), userLocation.getLongitude());
             HttpRequestHandler.getInstance(getActivity()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
@@ -78,9 +77,9 @@ public class FoodieHomeListFragment extends BaseFragment implements SwipeRefresh
                 public void onComplete(Exception e) {
                     if (e == null) { // Success
                         try {
+                            swipeRefreshLayout.setRefreshing(false);
                             BaseModel baseModel = apiCall.getBaseModel();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                // DialogUtils.showAlert(getActivity(), "HomeChiefDetailList size:-" + apiCall.getHomeChiefDetailList().size());
                                 homeChiefNearByModelArrayList.clear();
                                 homeChiefNearByModelArrayList.addAll(apiCall.getResult());
                                 foodieHomeListAdapter.notifyDataSetChanged();

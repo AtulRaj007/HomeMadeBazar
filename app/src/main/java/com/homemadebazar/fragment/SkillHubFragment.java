@@ -15,11 +15,13 @@ import android.widget.ImageView;
 
 import com.homemadebazar.R;
 import com.homemadebazar.adapter.SkillHubAdapter;
+import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.HomeChefSkillHubVideoModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
 import com.homemadebazar.network.apicall.HomeChefSkillVideoApiCall;
+import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.SharedPreference;
 import com.homemadebazar.util.Utils;
 
@@ -91,6 +93,7 @@ public class SkillHubFragment extends BaseFragment implements SwipeRefreshLayout
                 skillHubAdapter.notifyDataSetChanged();
             }
         });
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     private void filterSearchItem(String searchString) {
@@ -121,15 +124,20 @@ public class SkillHubFragment extends BaseFragment implements SwipeRefreshLayout
 
                 @Override
                 public void onComplete(Exception e) {
+                    swipeRefreshLayout.setRefreshing(false);
                     if (e == null) { // Success
                         try {
-                            swipeRefreshLayout.setRefreshing(false);
-                            ArrayList<HomeChefSkillHubVideoModel> tempHomeChefSkillHubVideoArrayList = apiCall.getResult();
-                            homeChefSkillHubVideoModelArrayList.clear();
-                            videoModelsArrayList.clear();
-                            homeChefSkillHubVideoModelArrayList.addAll(tempHomeChefSkillHubVideoArrayList);
-                            videoModelsArrayList.addAll(tempHomeChefSkillHubVideoArrayList);
-                            skillHubAdapter.notifyDataSetChanged();
+                            BaseModel baseModel = apiCall.getBaseModel();
+                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                ArrayList<HomeChefSkillHubVideoModel> tempHomeChefSkillHubVideoArrayList = apiCall.getResult();
+                                homeChefSkillHubVideoModelArrayList.clear();
+                                videoModelsArrayList.clear();
+                                homeChefSkillHubVideoModelArrayList.addAll(tempHomeChefSkillHubVideoArrayList);
+                                videoModelsArrayList.addAll(tempHomeChefSkillHubVideoArrayList);
+                                skillHubAdapter.notifyDataSetChanged();
+                            } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.NO_RECORD_FOUND) {
+
+                            }
 
                         } catch (Exception ex) {
                             ex.printStackTrace();

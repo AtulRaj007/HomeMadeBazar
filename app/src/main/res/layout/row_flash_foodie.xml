@@ -19,7 +19,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_10"
+            android:layout_marginBottom="@dimen/margin_5"
             android:layout_marginLeft="@dimen/margin_5"
             android:layout_marginRight="@dimen/margin_5"
             android:layout_marginTop="@dimen/margin_5"
@@ -104,6 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_message"
+                android:adjustViewBounds="true"
                 android:background="@color/grey" />
         </RelativeLayout>
 

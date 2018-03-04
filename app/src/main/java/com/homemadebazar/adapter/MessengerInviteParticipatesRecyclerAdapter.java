@@ -95,26 +95,33 @@ public class MessengerInviteParticipatesRecyclerAdapter extends RecyclerView.Ada
         }
     }
 
-    class InviteParticipateViewHolder extends RecyclerView.ViewHolder {
+    class InviteParticipateViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView name, address;
         private ImageView ivProfilePic;
         private Button btnRequestType;
 
-        public InviteParticipateViewHolder(View itemView) {
+        InviteParticipateViewHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
             address = itemView.findViewById(R.id.tv_address);
             btnRequestType = itemView.findViewById(R.id.btn_request_type);
             ivProfilePic = itemView.findViewById(R.id.iv_profile_pic);
+            ivProfilePic.setOnClickListener(this);
+            btnRequestType.setOnClickListener(this);
+        }
 
-            btnRequestType.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.iv_profile_pic:
+                    Utils.showProfile(context, dataList.get(getAdapterPosition()).getUserId());
+                    break;
+                case R.id.btn_request_type:
                     int numericStatus = dataList.get(getAdapterPosition()).getNumericStatus();
                     if (numericStatus == Constants.RequestType.REQUEST_NOT_SENT)
                         joinParticipateApiCall(userId, dataList.get(getAdapterPosition()).getUserId());
-                }
-            });
+                    break;
+            }
         }
     }
 }

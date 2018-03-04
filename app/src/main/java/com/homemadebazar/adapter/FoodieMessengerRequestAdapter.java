@@ -97,7 +97,7 @@ public class FoodieMessengerRequestAdapter extends RecyclerView.Adapter<FoodieMe
         String IGNORE_REQ = "4";
     }
 
-    class RequestViewHolder extends RecyclerView.ViewHolder {
+    class RequestViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CircleImageView profileImage;
         TextView tvName, tvLastMessage;
         Button acceptReq, ignoreReq;
@@ -109,18 +109,23 @@ public class FoodieMessengerRequestAdapter extends RecyclerView.Adapter<FoodieMe
             tvLastMessage = itemView.findViewById(R.id.tv_last_message);
             acceptReq = itemView.findViewById(R.id.btn_accept);
             ignoreReq = itemView.findViewById(R.id.btn_ignore);
-            acceptReq.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            acceptReq.setOnClickListener(this);
+            ignoreReq.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.btn_accept:
                     callAcceptRejectCallApi(userId, reqDataList.get(getAdapterPosition()).getUserId(), RequestType.ACCEPT_REQ);
-                }
-            });
-            ignoreReq.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                    break;
+                case R.id.btn_ignore:
                     callAcceptRejectCallApi(userId, reqDataList.get(getAdapterPosition()).getUserId(), RequestType.IGNORE_REQ);
-                }
-            });
+                    break;
+                case R.id.iv_profile_pic:
+                    Utils.showProfile(context, reqDataList.get(getAdapterPosition()).getUserId());
+                    break;
+            }
         }
     }
 }

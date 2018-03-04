@@ -88,19 +88,16 @@ public class FoodieFlashFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     protected void setData() {
-        setRecyclerAdapter();
-        getFoodieFlashPosts();
-    }
-
-    private void setRecyclerAdapter() {
         adapter = new FoodieFlashPostAdapter(getActivity(), userModel.getUserId(), foodieFlashPostModelArrayList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
+        getFoodieFlashPosts();
+        swipeRefreshLayout.setRefreshing(true);
     }
+
 
     public void getFoodieFlashPosts() {
         try {
-            swipeRefreshLayout.setRefreshing(true);
             final FoodieGetPostsApiCall apiCall = new FoodieGetPostsApiCall(userModel.getUserId());
             HttpRequestHandler.getInstance(getActivity().getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 

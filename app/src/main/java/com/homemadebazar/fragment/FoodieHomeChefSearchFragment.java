@@ -64,6 +64,7 @@ public class FoodieHomeChefSearchFragment extends BaseFragment implements View.O
         rvCategories.setLayoutManager(gridLayoutManager);
         rvCategories.setAdapter(foodiesCategoryAdapter);
         getFoodCategories();
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     private void getFoodCategories() {

@@ -13,6 +13,7 @@ import com.homemadebazar.R;
 import com.homemadebazar.activity.ChatActivity;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.util.CircleImageView;
+import com.homemadebazar.util.Utils;
 
 import java.util.ArrayList;
 
@@ -62,11 +63,18 @@ public class FoodieMessengerFriendsAdapter extends RecyclerView.Adapter<FoodieMe
             tvLastMessage = itemView.findViewById(R.id.tv_last_message);
             tvTime = itemView.findViewById(R.id.tv_time);
             itemView.setOnClickListener(this);
+            imageView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            context.startActivity(ChatActivity.getChatIntent(context, friendList.get(getAdapterPosition())));
+            switch (v.getId()) {
+                case R.id.iv_profile_pic:
+                    context.startActivity(ChatActivity.getChatIntent(context, friendList.get(getAdapterPosition())));
+                    break;
+                default:
+                    Utils.showProfile(context, friendList.get(getAdapterPosition()).getUserId());
+            }
         }
     }
 }

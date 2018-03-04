@@ -42,7 +42,10 @@ public class HomeChefSkillVideoApiCall extends BaseApiCall {
         if (response != null && !response.isEmpty()) {
             try {
                 JSONObject object = new JSONObject(response);
-                homeChefSkillHubVideoModelArrayList = JSONParsingUtils.parseSkillHubVideoList(object);
+                baseModel = JSONParsingUtils.parseBaseModel(object);
+                if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                    homeChefSkillHubVideoModelArrayList = JSONParsingUtils.parseSkillHubVideoList(object);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -52,6 +55,10 @@ public class HomeChefSkillVideoApiCall extends BaseApiCall {
     @Override
     public ArrayList<HomeChefSkillHubVideoModel> getResult() {
         return homeChefSkillHubVideoModelArrayList;
+    }
+
+    public BaseModel getBaseModel() {
+        return baseModel;
     }
 
     @Override

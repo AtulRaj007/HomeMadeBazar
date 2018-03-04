@@ -69,7 +69,7 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
         return homeChefOrderModelArrayList.size();
     }
 
-    public void bookOrder(String homeChefUserId, String orderId, String bookedDate, String orderBookedFor) {
+    private void bookOrder(String homeChefUserId, String orderId, String bookedDate, String orderBookedFor) {
         try {
             final Dialog progressDialog = DialogUtils.getProgressDialog(context, null);
             progressDialog.show();
@@ -120,6 +120,7 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
             tvDiscount = itemView.findViewById(R.id.tv_discount);
 
             btnBookOrder = itemView.findViewById(R.id.btn_book_order);
+            btnBookOrder.setOnClickListener(this);
         }
 
         @Override

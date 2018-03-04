@@ -43,4 +43,8 @@ public class MarketPlaceIncomingOrdersFragment extends BaseFragment {
         recyclerView.setAdapter(marketPlaceOrdersAdapter);
     }
 
+    //    http://18.218.139.27/api/MarketPlace/ShowIncomingOrders
+    public void showIncomingOrders() {
+
+    }
 }

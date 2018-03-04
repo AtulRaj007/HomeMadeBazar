@@ -1,5 +1,6 @@
 package com.homemadebazar.util;
 
+import com.homemadebazar.R;
 import com.homemadebazar.model.UserModel;
 
 /**
@@ -15,6 +16,23 @@ public class Constants {
     public static String decode = "1"; // 1=true,  2=false
     public static boolean encode = (decode.equalsIgnoreCase("1"));
     public static boolean zip = (zipJson.equalsIgnoreCase("1"));
+    public static String[][] profileInterests = {
+            {String.valueOf(R.drawable.profile_art_museum), "Art & Museum"},
+            {String.valueOf(R.drawable.profile_camping), "Camping"},
+            {String.valueOf(R.drawable.profile_cooking), "Cooking"},
+            {String.valueOf(R.drawable.profile_dining_out), "Dining Out"},
+            {String.valueOf(R.drawable.profile_handicrafts), "Handicrafts"},
+            {String.valueOf(R.drawable.profile_movies), "Movies"},
+            {String.valueOf(R.drawable.profile_music_concerts), "Music & Concerts"},
+            {String.valueOf(R.drawable.profile_party), "Party"},
+            {String.valueOf(R.drawable.profile_politics), "Politics"},
+            {String.valueOf(R.drawable.profile_religious), "Religious"},
+            {String.valueOf(R.drawable.profile_shopping), "Shopping"},
+            {String.valueOf(R.drawable.profile_startup), "Startup"},
+            {String.valueOf(R.drawable.profile_video_games), "Video Games"},
+            {String.valueOf(R.drawable.profile_watching_sports), "Watching Sports"},
+            {String.valueOf(R.drawable.profile_wine_tasting), "Wine Tasting"}
+    };
 
     public enum Role {
         HOME_CHEF(1), FOODIE(2), MARKET_PLACE(3);
@@ -64,16 +82,18 @@ public class Constants {
         }
     }
 
+
     public interface FoodTiming {
         int Selected = 1;
         int Unselected = 0;
     }
 
-
     public interface ServerURL {
         //        String BASE_URL = "http://103.54.24.25:200/api/";
         //        String BASE_URL = "http://35.183.8.236/api/";
-        String BASE_URL = "http://18.218.139.27/api/";
+//        18.219.188.20
+//        String BASE_URL = "http://18.218.139.27/api/";
+        String BASE_URL = "http://18.219.188.20/api/";
         String IS_EMAIL_EXIST = BASE_URL + "RegistrationProcess/IsAccountExist";
         String SEND_OTP = BASE_URL + "RegistrationProcess/SendOtp";
         String VERIFY_OTP = BASE_URL + "RegistrationProcess/VerifyOtp";
@@ -130,38 +150,6 @@ public class Constants {
         String MARKET_PLACE_PRODUCT_SEARCH = BASE_URL + "MarketPlace/MarketplaceSearch";
         String HOMECHEF_BOOK_PRODUCT = BASE_URL + "MarketPlace/BuyProduct";
 
-//        http://18.218.139.27/api/MarketPlace/MarketplaceSearch
-//        http://localhost:14013/api/Foodies/GetLstOfFavouritesHomeChif
-//[1:34 PM, 2/3/2018] Pankaj Idea: http://localhost:14013/api/Miscellaneous/SaveFavourite
-//        http://localhost:14013/api/Foodies/GetListOfHotDeals
-//        http://localhost:14013/api/Miscellaneous/ApplyPramotBussiness
-//        http://localhost:14013/api/Foodies/GetFoodSearchByCatDishVendors
-//        http://35.183.8.236/api/CreateOrder/DoFoodOrderResponse
-//        http://localhost:14013/api/Miscellaneous/GetResetPassowrd
-//        http://localhost:14013/api/Miscellaneous/PasswordUpdate
-//        http://103.54.24.25:200/api/Reports/WalletTransactionReports
-
-//        http://103.54.24.25:200/api/Miscellaneous/GetNotificationBell
-//        http://103.54.24.25:200/api/Miscellaneous/GetContactSync
-//        http://localhost:14013/api/Miscellaneous/ProfileUpdate
-
-//                http://localhost:14013/api/Flash/ShowCommentsList
-
-//        http://localhost:14013/api/LoginHistory/DeviceLogin
-//        http://localhost:14013/api/Chat/GetChatSend?SndrId&RcrId&text&FileType&MsgType&Lati&Longi
-
-
-        //    http://localhost:14013/api/Checkouts/CreatePayment?AMOUNT=5&PAYMENT_METHOD_NONCE=ba5effa2-9240-0af1-2157-7b9bf85b7576&ACCOUNT_ID=HMBWA00000008&TXN_NO=Trans00000020
-
-//                http://localhost:14013/api/Flash/DoLikesComments
-//        http://35.183.8.236/api/MarketPlace/ShowProduct?UserId=1712265
-//        http://localhost:14013/api/MarketPlace/AddProductBrand
-        //    http://localhost:14013/api/MarketPlace/GetProdBrandList?UserId=
-
-//        http://localhost:14013/api/Foodies/GetLstOfOrdersByCheif
-//        http://localhost:14013/api/Foodies/GetFoodSearchByCatDishVendors
-//        http://35.183.8.236/api/CreateOrder/ShowOrderedList
-//        http://localhost:14013/api/MarketPlace/GetProdCategoryList?UserId=
     }
 
     public interface uploadImageURL {
@@ -185,6 +173,9 @@ public class Constants {
         String FACEBOOK = "2";
     }
 
+//    file_type(response) : 1 - image, 2 - video, 3 - audio
+//    message_type(response) : 1 - text, 2 - file, 3 - location
+
     public interface Keys {
         int REQUEST_PERMISSION_CAMERA = 100;
         int REQUEST_PERMISSION_GALLERY = 101;
@@ -201,9 +192,6 @@ public class Constants {
         int REQUEST_ADD_MONEY = 112;
         int READ_CONTACTS_REQUEST = 113;
     }
-
-//    file_type(response) : 1 - image, 2 - video, 3 - audio
-//    message_type(response) : 1 - text, 2 - file, 3 - location
 
     public interface AccountType {
         String HOME_CHEF = "1";

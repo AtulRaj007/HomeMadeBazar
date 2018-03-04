@@ -3,6 +3,8 @@ package com.homemadebazar.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,8 +13,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
+import com.homemadebazar.adapter.ProfileRecyclerAdapter;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.OtherUserProfileDetailsModel;
+import com.homemadebazar.model.ProfileInterestsModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
@@ -22,6 +26,8 @@ import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
 import com.homemadebazar.util.Utils;
 
+import java.util.ArrayList;
+
 public class ProfileViewActivity extends BaseActivity {
     private static String KEY_USER_ID = "KEY_USER_ID";
     private TextView tvName, tvEmailId, tvMobileNumber, tvCountry, tvCompanyName, tvUniversityName, tvAbout;
@@ -29,6 +35,10 @@ public class ProfileViewActivity extends BaseActivity {
     private UserModel userModel;
     private String profileUserId;
     private Spinner sprProfession;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
+    private ProfileRecyclerAdapter profileRecyclerAdapter;
+    private ArrayList<ProfileInterestsModel> profileInterestsModelArrayList = new ArrayList<>();
 
     public static Intent getProfileIntent(Context context, String userId) {
         Intent intent = new Intent(context, ProfileViewActivity.class);
@@ -59,6 +69,8 @@ public class ProfileViewActivity extends BaseActivity {
 //        tvUniversityName = findViewById(R.id.tv_university_name);
         tvAbout = findViewById(R.id.tv_about);
         sprProfession = findViewById(R.id.spr_profession);
+        recyclerView = findViewById(R.id.recycler_view);
+        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
     }
 
     @Override
@@ -74,7 +86,26 @@ public class ProfileViewActivity extends BaseActivity {
 
     @Override
     protected void setData() {
+        initialiseProfileInterests();
+        recyclerView.setLayoutManager(linearLayoutManager);
+        profileRecyclerAdapter = new ProfileRecyclerAdapter(this, profileInterestsModelArrayList, false);
+        recyclerView.setAdapter(profileRecyclerAdapter);
         getUserProfileDetails();
+    }
+
+    private void initialiseProfileInterests() {
+        profileInterestsModelArrayList.clear();
+        for (int i = 0; i < Constants.profileInterests.length; i++) {
+            ProfileInterestsModel profileInterestsModel = new ProfileInterestsModel();
+            try {
+                profileInterestsModel.setIconId(Integer.parseInt(Constants.profileInterests[i][0]));
+                profileInterestsModel.setInterestName(Constants.profileInterests[i][1]);
+                profileInterestsModel.setSelected(false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            profileInterestsModelArrayList.add(profileInterestsModel);
+        }
     }
 
     public void getUserProfileDetails() {

@@ -43,6 +43,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class CreateOrderActivity extends BaseActivity implements View.OnClickListener {
+    private static String breakFastTime = "";
+    private static String lunchTime = "";
+    private static String dinnerTime = "";
     private UserModel userModel;
     private EditText etDishName, etFirstRule, etSecondRule, etThirdRule, etFourthRule, etFifthRule, etDescription;
     private Spinner sprDishCategory, sprDishPrice, sprVeg, sprDrinks, sprMinNoOfGuest, sprMaxNoOfGuest, sprDiscount;
@@ -93,10 +96,6 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
             };
     private int dateIndex = 0;
     private String drinks[] = {"Alcoholic", "Non-Alcoholic"};
-
-//    sprDishCategory,sprDishPrice,sprVeg,sprDrinks,sprMinNoOfGuest,sprMaxNoOfGuest,sprDiscount;
-
-//    etDishName,etFirstRule,etSecondRule,etThirdRule,etFourthRule,etFifthRule,etDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

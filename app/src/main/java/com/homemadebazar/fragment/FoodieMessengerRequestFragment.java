@@ -33,7 +33,6 @@ public class FoodieMessengerRequestFragment extends BaseFragment implements Swip
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private FoodieMessengerRequestAdapter foodieMessengerRequestAdapter;
-    //    private CardView inviteNewParticipate;
     private UserModel userModel;
 
     @Nullable
@@ -64,11 +63,11 @@ public class FoodieMessengerRequestFragment extends BaseFragment implements Swip
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(foodieMessengerRequestAdapter);
         getFriendRequestListApiCall(userModel.getUserId());
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     private void getFriendRequestListApiCall(String userId) {
         try {
-            swipeRefreshLayout.setRefreshing(true);
             final MessengerRequestTabApiCall apiCall = new MessengerRequestTabApiCall(userId);
             HttpRequestHandler.getInstance(getActivity()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 

@@ -18,7 +18,6 @@ import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
 import com.homemadebazar.network.apicall.FoodieHomeChiefFavouriteListApiCall;
-import com.homemadebazar.network.apicall.FoodieHomeChiefNearByListApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
@@ -64,6 +63,7 @@ public class FoodieHomeChefBookmarkFragment extends BaseFragment implements Swip
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(foodieHomeListAdapter);
         getChiefDetailListApiCall();
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     public void getChiefDetailListApiCall() {
@@ -76,6 +76,7 @@ public class FoodieHomeChefBookmarkFragment extends BaseFragment implements Swip
                 public void onComplete(Exception e) {
                     if (e == null) { // Success
                         try {
+                            swipeRefreshLayout.setRefreshing(false);
                             BaseModel baseModel = apiCall.getBaseModel();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
                                 homeChiefNearByModelArrayList.clear();
