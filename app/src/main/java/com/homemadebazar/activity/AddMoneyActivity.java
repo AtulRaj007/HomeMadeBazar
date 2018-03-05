@@ -16,7 +16,6 @@ import com.homemadebazar.network.GetRequest;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
 import com.homemadebazar.network.apicall.AddMoneyApiCall;
-import com.homemadebazar.network.apicall.SendAddMoneyStatusToServerApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
@@ -121,6 +120,7 @@ public class AddMoneyActivity extends BaseActivity implements View.OnClickListen
                 .amount(amount)
                 .requestThreeDSecureVerification(false)
                 .collectDeviceData(true)
+                .disablePayPal()
                 .androidPayPhoneNumberRequired(true)
                 .androidPayShippingAddressRequired(true);
 
@@ -144,40 +144,6 @@ public class AddMoneyActivity extends BaseActivity implements View.OnClickListen
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-//    private void sendAddMoneyStatusToServer(String transactionId, String status, String accountId) {
-//        try {
-//            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(this, null);
-//            progressDialog.show();
-//
-//            final SendAddMoneyStatusToServerApiCall apiCall = new SendAddMoneyStatusToServerApiCall(transactionId, status, accountId);
-//            HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
-//
-//                @Override
-//                public void onComplete(Exception e) {
-//                    DialogUtils.hideProgressDialog(progressDialog);
-//                    if (e == null) { // Success
-//                        try {
-//                            BaseModel baseModel = apiCall.getBaseModel();
-//                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-//                                Double walletBalance = apiCall.getWalletBalance();
-//
-//                            } else {
-//                                DialogUtils.showAlert(AddMoneyActivity.this, baseModel.getStatusMessage());
-//                            }
-//
-//                        } catch (Exception ex) {
-//                            ex.printStackTrace();
-//                        }
-//                    } else { // Failure
-//                        Utils.handleError(e.getMessage(), AddMoneyActivity.this, null);
-//                    }
-//                }
-//            });
-//        } catch (Exception e) {
-//            Utils.handleError(e.getMessage(), AddMoneyActivity.this, null);
-//        }
-//    }
 
     //    http://localhost:14013/api/Checkouts/CreatePayment?AMOUNT=5&PAYMENT_METHOD_NONCE=ba5effa2-9240-0af1-2157-7b9bf85b7576&ACCOUNT_ID=HMBWA00000008&TXN_NO=Trans00000020
     private String getServiceUrl(String accountId, String paymentMethodNonce, String amount, String transactionId) {

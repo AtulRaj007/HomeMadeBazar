@@ -3,15 +3,21 @@ package com.homemadebazar.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
+import com.homemadebazar.adapter.ProfileRecyclerAdapter;
+import com.homemadebazar.model.ProfileInterestsModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.UploadFileTask;
 import com.homemadebazar.util.Constants;
@@ -23,15 +29,23 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import id.zelory.compressor.Compressor;
 
 public class MyProfileActivity extends BaseActivity implements View.OnClickListener {
     private UserModel userModel;
-    private EditText etFirstName, etLastName, etEmailId, etPhoneNumber, etCountry, etAboutYourSelf, etCompanyName, etUniversityName;
+    private EditText etFirstName, etLastName, etEmailId, etPhoneNumber, etCountry, etAboutYourSelf, etProfession;
+    private Spinner sprProfession;
+    private TextView tvInterestsSelected;
+    private String selectedInterests;
     private ImageView ivProfilePic;
+    private RecyclerView recyclerView;
     private Uri profilePicUri = null;
+    private LinearLayoutManager linearLayoutManager;
+    private ProfileRecyclerAdapter profileRecyclerAdapter;
+    private ArrayList<ProfileInterestsModel> profileInterestsModelArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +62,11 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
             }
         });
         ((TextView) findViewById(R.id.tv_title)).setText("My Profile");
-
     }
 
     @Override
     protected void initUI() {
+        linearLayoutManager = new LinearLayoutManager(MyProfileActivity.this, LinearLayoutManager.HORIZONTAL, false);
         userModel = SharedPreference.getUserModel(MyProfileActivity.this);
         etFirstName = findViewById(R.id.et_first_name);
         etLastName = findViewById(R.id.et_last_name);
@@ -60,9 +74,13 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
         etPhoneNumber = findViewById(R.id.et_phone_number);
         etCountry = findViewById(R.id.et_country);
         etAboutYourSelf = findViewById(R.id.et_about_your_self);
-        etCompanyName = findViewById(R.id.et_company_name);
-        etUniversityName = findViewById(R.id.et_university_name);
+        sprProfession = findViewById(R.id.spr_profession);
+        etProfession = findViewById(R.id.et_profession);
+//        etCompanyName = findViewById(R.id.et_company_name);
+//        etUniversityName = findViewById(R.id.et_university_name);
         ivProfilePic = findViewById(R.id.iv_profile_pic);
+        recyclerView = findViewById(R.id.recycler_view);
+        tvInterestsSelected = findViewById(R.id.tv_interest_selected);
 
         if (userModel != null) {
             etFirstName.setText(userModel.getFirstName());
@@ -76,19 +94,72 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
+    private String getSelectedInterests() {
+        selectedInterests = "";
+        for (int i = 0; i < profileInterestsModelArrayList.size(); i++) {
+            if (profileInterestsModelArrayList.get(i).isSelected()) {
+                selectedInterests = selectedInterests + "1;";
+            } else {
+                selectedInterests = selectedInterests + "0;";
+            }
+        }
+        System.out.println("Interests Selected " + "\n" + selectedInterests);
+        return selectedInterests;
+    }
+
     @Override
     protected void initialiseListener() {
         findViewById(R.id.btn_update_profile).setOnClickListener(this);
         ivProfilePic.setOnClickListener(this);
+        sprProfession.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    findViewById(R.id.til_profession).setVisibility(View.GONE);
+                } else {
+                    findViewById(R.id.til_profession).setVisibility(View.VISIBLE);
+                    if (position == 1) {//STUDENT
+                        etProfession.setHint(getResources().getString(R.string.hint_student));
+                    } else if (position == 2) {//PROFESSIONAL
+                        etProfession.setHint(getResources().getString(R.string.hint_professional));
+                    } else if (position == 3) {//SELF-EMPLOYED
+                        etProfession.setHint(getResources().getString(R.string.hint_self_employed));
+                    }
+                }
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @Override
     protected void setData() {
+        initialiseProfileInterests();
+        recyclerView.setLayoutManager(linearLayoutManager);
+        profileRecyclerAdapter = new ProfileRecyclerAdapter(this, profileInterestsModelArrayList, true);
+        recyclerView.setAdapter(profileRecyclerAdapter);
+    }
 
+    private void initialiseProfileInterests() {
+        profileInterestsModelArrayList.clear();
+        for (int i = 0; i < Constants.profileInterests.length; i++) {
+            ProfileInterestsModel profileInterestsModel = new ProfileInterestsModel();
+            try {
+                profileInterestsModel.setIconId(Integer.parseInt(Constants.profileInterests[i][0]));
+                profileInterestsModel.setInterestName(Constants.profileInterests[i][1]);
+                profileInterestsModel.setSelected(false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            profileInterestsModelArrayList.add(profileInterestsModel);
+        }
     }
 
     private boolean isValid() {
+        getSelectedInterests();
         if (TextUtils.isEmpty(etFirstName.getText().toString().trim())) {
             DialogUtils.showAlert(this, "Please enter first name.");
             return false;
@@ -195,7 +266,7 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
     private String getProfileUpdateUrl() {
         try {
             String url = Constants.ServerURL.PROFILE_UPDATE + "?UserId=" + userModel.getUserId() + "&FName=" + etFirstName.getText().toString() + "&LName=" + etLastName.getText().toString() + "&Email=" + etEmailId.getText().toString() + "&Country=" + etCountry.getText().toString() +
-                    "&DPStatus=" + etAboutYourSelf.getText().toString() + "&Mobile=" + etPhoneNumber.getText().toString() + "&CompanyName=" + etCompanyName.getText().toString() + "&UniversityName=" + etUniversityName.getText().toString();
+                    "&DPStatus=" + etAboutYourSelf.getText().toString() + "&Mobile=" + etPhoneNumber.getText().toString() + "&CompanyName=" + "" + "&UniversityName=" + "";
             System.out.println(Constants.ServiceTAG.URL + url);
             return url;
         } catch (Exception e) {

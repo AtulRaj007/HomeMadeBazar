@@ -26,6 +26,7 @@ import com.homemadebazar.fragment.HomeChefBreakFastFragment;
 import com.homemadebazar.fragment.HomeChefDinnerFragment;
 import com.homemadebazar.fragment.HomeChefLunchFragment;
 import com.homemadebazar.model.BaseModel;
+import com.homemadebazar.model.CustomAddress;
 import com.homemadebazar.model.HomeChiefNearByModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
@@ -116,7 +117,7 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
             }
             tvShopName.setText(homeChefNearByModel.getFirstName() + " " + homeChefNearByModel.getLastName());
             tvPriceRange.setText(homeChefNearByModel.getPriceRange());
-            tvAddress.setText(homeChefNearByModel.getAddress());
+            tvAddress.setText(CustomAddress.getCompleteAddress(homeChefNearByModel.getAddress()));
             tvSpeciality.setText(homeChefNearByModel.getSpeciality());
 
             if (homeChefNearByModel.getCoverPhotoArrayList() != null && homeChefNearByModel.getCoverPhotoArrayList().size() > 0) {

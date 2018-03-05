@@ -1,11 +1,13 @@
 package com.homemadebazar.adapter;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.homemadebazar.R;
 import com.homemadebazar.model.ProfileInterestsModel;
@@ -35,7 +37,11 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
 
     @Override
     public void onBindViewHolder(ProfileViewHolder holder, int position) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            holder.ivInterestIcon.setClipToOutline(true);
+        }
         holder.ivInterestIcon.setImageResource(profileInterestsModels.get(position).getIconId());
+        holder.tvTitle.setText(profileInterestsModels.get(position).getInterestName());
         if (profileInterestsModels.get(position).isSelected()) {
             holder.ivProfileSelected.setVisibility(View.VISIBLE);
         } else {
@@ -50,12 +56,14 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
 
     class ProfileViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView ivInterestIcon;
+        private TextView tvTitle;
         private ImageView ivProfileSelected;
 
         ProfileViewHolder(View itemView) {
             super(itemView);
             ivInterestIcon = itemView.findViewById(R.id.iv_interest_icon);
             ivProfileSelected = itemView.findViewById(R.id.iv_profile_selected);
+            tvTitle = itemView.findViewById(R.id.tv_title);
             itemView.setOnClickListener(this);
         }
 
@@ -63,6 +71,7 @@ public class ProfileRecyclerAdapter extends RecyclerView.Adapter<ProfileRecycler
         public void onClick(View v) {
             if (isEditable) {
                 profileInterestsModels.get(getAdapterPosition()).setSelected(!profileInterestsModels.get(getAdapterPosition()).isSelected());
+                notifyDataSetChanged();
             }
         }
     }

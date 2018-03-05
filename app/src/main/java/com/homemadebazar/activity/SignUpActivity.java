@@ -5,9 +5,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -23,6 +26,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.homemadebazar.R;
+import com.homemadebazar.model.CustomAddress;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
@@ -32,18 +36,9 @@ import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
 import com.homemadebazar.util.Utils;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.List;
+import java.util.Locale;
 
 public class SignUpActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = ">>>>>Signup";
@@ -56,13 +51,15 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
     private int[] selectedRole = {R.drawable.home_chef_selected, R.drawable.foodie_selected, R.drawable.market_place_selected};
     private int[] unSelectedRole = {R.drawable.home_chef_unselected, R.drawable.foodie_unselected, R.drawable.market_place_unselected};
     private ImageView ivHomeChef, ivFoodie, ivMarketPlace;
-    private String firstName, lastName, emailId, password, confirmPassword, originalAddress;
+    private String firstName, lastName, emailId, password, confirmPassword, appartmentNumber, streetNumber, area, city, state;
     private String userId;
     private String deviceToken = "", pinCode = "";
     private double latitude, longitude;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private Location mLastLocation;
     private boolean isSocialLogin = false;
+    private EditText etApartmentNo, etStreetNo, etArea, etCity, etState, etPincode;
+    private Handler handler = new Handler();
 
     public static Intent getIntent(Context context, String userId, boolean isSocialLogin) {
         Intent intent = new Intent(context, SignUpActivity.class);
@@ -71,62 +68,71 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
         return intent;
     }
 
-    protected static JSONObject getLocationFormGoogle(String placesName) {
-
-        String apiRequest = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + placesName;
-        HttpGet httpGet = new HttpGet(apiRequest);
-        HttpClient client = new DefaultHttpClient();
-        HttpResponse response;
-        StringBuilder stringBuilder = new StringBuilder();
-
-        try {
-            response = client.execute(httpGet);
-            HttpEntity entity = response.getEntity();
-            InputStream stream = entity.getContent();
-            int b;
-            while ((b = stream.read()) != -1) {
-                stringBuilder.append((char) b);
-            }
-        } catch (ClientProtocolException e) {
-        } catch (IOException e) {
-        }
-
-        JSONObject jsonObject = new JSONObject();
-
-        try {
-            jsonObject = new JSONObject(stringBuilder.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return jsonObject;
-    }
-
-    protected static String getCityAddress(JSONObject result) {
-        if (result.has("results")) {
-            try {
-                JSONArray array = result.getJSONArray("results");
-                address = array.getJSONObject(0).optString("formatted_address");
-                System.out.println("Address:-" + address);
-                if (array.length() > 0) {
-                    JSONObject place = array.getJSONObject(0);
-                    JSONArray components = place.getJSONArray("address_components");
-                    for (int i = 0; i < components.length(); i++) {
-                        JSONObject component = components.getJSONObject(i);
-                        JSONArray types = component.getJSONArray("types");
-                        for (int j = 0; j < types.length(); j++) {
-                            if (types.getString(j).equals("postal_code")) {
-                                return component.getString("long_name");
-                            }
+    public void getAddressFromLocation(final double latitude, final double longitude,
+                                       final Context context, final Handler handler) {
+        final Thread thread = new Thread() {
+            @Override
+            public void run() {
+                Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+                String result = null;
+                try {
+                    List<Address> addressList = geocoder.getFromLocation(
+                            latitude, longitude, 1);
+                    if (addressList != null && addressList.size() > 0) {
+                        Address address = addressList.get(0);
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+                            sb.append(address.getAddressLine(i)).append("\n");
                         }
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+                        sb.append(address.getLocality()).append("\n");
+                        sb.append(address.getPostalCode()).append("\n");
+                        sb.append(address.getCountryName());
+                        result = sb.toString();
+                        final String locality = address.getLocality();
+                        final String subLocality = address.getSubLocality();
+                        final String postalCode = address.getPostalCode();
+                        final String state = address.getSubThoroughfare();
+                        System.out.println("Locality:-" + locality);//City
+                        System.out.println("SubLocality:-" + subLocality);//Area
+                        System.out.println("Postal Code:-" + postalCode);//PinCode
+                        System.out.println("SubThrough Fair" + state);
+                        System.out.println("Result:-" + result);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ((EditText) findViewById(R.id.et_city)).setText(locality);
+                                ((EditText) findViewById(R.id.et_area)).setText(subLocality);
+                                ((EditText) findViewById(R.id.et_pincode)).setText(postalCode);
+                                ((EditText) findViewById(R.id.et_state)).setText(state);
+                            }
+                        });
 
-        return null;
+                    }
+                } catch (IOException e) {
+                    Log.e(TAG, "Unable connect to Geocoder", e);
+                } finally {
+                    Message message = Message.obtain();
+                    message.setTarget(handler);
+                    if (result != null) {
+                        message.what = 1;
+                        Bundle bundle = new Bundle();
+                        result = "Latitude: " + latitude + " Longitude: " + longitude +
+                                "\n\nAddress:\n" + result;
+                        bundle.putString("address", result);
+                        message.setData(bundle);
+                    } else {
+                        message.what = 1;
+                        Bundle bundle = new Bundle();
+                        result = "Latitude: " + latitude + " Longitude: " + longitude +
+                                "\n Unable to get address for this lat-long.";
+                        bundle.putString("address", result);
+                        message.setData(bundle);
+                    }
+                    message.sendToTarget();
+                }
+            }
+        };
+        thread.start();
     }
 
     @Override
@@ -149,10 +155,9 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void initUI() {
         getDatafromBundle();
-        ivHomeChef = (ImageView) findViewById(R.id.iv_home_chef);
-        ivFoodie = (ImageView) findViewById(R.id.iv_foodie);
-        ivMarketPlace = (ImageView) findViewById(R.id.iv_market_place);
-
+        ivHomeChef = findViewById(R.id.iv_home_chef);
+        ivFoodie = findViewById(R.id.iv_foodie);
+        ivMarketPlace = findViewById(R.id.iv_market_place);
     }
 
     @Override
@@ -185,7 +190,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
                             longitude = mLastLocation.getLongitude();
                             Log.e("Latitude", mLastLocation.getLatitude() + "");
                             Log.e("Longitude", mLastLocation.getLongitude() + "");
-                            new Address().execute();
+                            getAddressFromLocation(latitude, longitude, SignUpActivity.this, handler);
 
                         } else {
                             Log.w(TAG, "getLastLocation:exception", task.getException());
@@ -229,8 +234,13 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
         emailId = ((EditText) findViewById(R.id.et_email_id)).getText().toString().trim();
         password = ((EditText) findViewById(R.id.et_password)).getText().toString().trim();
         confirmPassword = ((EditText) findViewById(R.id.et_confirm_password)).getText().toString().trim();
-        originalAddress = ((EditText) findViewById(R.id.et_address)).getText().toString().trim();
+        appartmentNumber = ((EditText) findViewById(R.id.et_apartment_no)).getText().toString().trim();
+        streetNumber = ((EditText) findViewById(R.id.et_street_no)).getText().toString().trim();
+        area = ((EditText) findViewById(R.id.et_area)).getText().toString().trim();
+        city = ((EditText) findViewById(R.id.et_city)).getText().toString().trim();
+        state = ((EditText) findViewById(R.id.et_state)).getText().toString().trim();
         pinCode = ((EditText) findViewById(R.id.et_pincode)).getText().toString().trim();
+
 
         if (TextUtils.isEmpty(firstName)) {
             DialogUtils.showAlert(SignUpActivity.this, "Please enter first name");
@@ -249,6 +259,24 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
             return false;
         } else if (!password.equals(confirmPassword)) {
             DialogUtils.showAlert(SignUpActivity.this, "Password and confirm password doesnot match");
+            return false;
+        } else if (TextUtils.isEmpty(appartmentNumber)) {
+            DialogUtils.showAlert(SignUpActivity.this, "Please enter apartment number");
+            return false;
+        } else if (TextUtils.isEmpty(streetNumber)) {
+            DialogUtils.showAlert(SignUpActivity.this, "Please enter street number");
+            return false;
+        } else if (TextUtils.isEmpty(area)) {
+            DialogUtils.showAlert(SignUpActivity.this, "Please enter area");
+            return false;
+        } else if (TextUtils.isEmpty(city)) {
+            DialogUtils.showAlert(SignUpActivity.this, "Please enter city");
+            return false;
+        } else if (TextUtils.isEmpty(state)) {
+            DialogUtils.showAlert(SignUpActivity.this, "Please enter state");
+            return false;
+        } else if (TextUtils.isEmpty(pinCode)) {
+            DialogUtils.showAlert(SignUpActivity.this, "Please enter pincode");
             return false;
         }
         return true;
@@ -305,8 +333,9 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
             final ProgressDialog progressDialog = DialogUtils.getProgressDialog(this, null);
             progressDialog.show();
 
+            String completeAddress = CustomAddress.getCompleteAddress(appartmentNumber, streetNumber, area, city, state);
             final SignupApiCall apiCall = new SignupApiCall(userId, firstName, lastName, emailId, password,
-                    String.valueOf(userRole.getRole()), deviceToken, latitude + "", longitude + "", originalAddress, pinCode);
+                    String.valueOf(userRole.getRole()), deviceToken, latitude + "", longitude + "", completeAddress, pinCode);
             HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
@@ -337,6 +366,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CODE_IMPORT_SOCIAL_DATA && resultCode == RESULT_OK) {
@@ -348,23 +378,5 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
         }
 
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    class Address extends AsyncTask<Void, Void, String> {
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            JSONObject result = getLocationFormGoogle(latitude + "," + longitude);
-            return getCityAddress(result);
-        }
-
-        @Override
-        protected void onPostExecute(String postalAddress) {
-            System.out.println("Address:-" + address);
-            System.out.println("Postal Code:-" + postalAddress);
-            ((EditText) findViewById(R.id.et_address)).setText(address);
-            ((EditText) findViewById(R.id.et_pincode)).setText(postalAddress);
-
-        }
     }
 }

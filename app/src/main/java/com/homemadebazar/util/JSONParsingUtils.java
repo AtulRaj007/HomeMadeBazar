@@ -4,6 +4,7 @@ import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.ChatMessageModel;
 import com.homemadebazar.model.DishIngredientsModel;
 import com.homemadebazar.model.FoodCategoryModel;
+import com.homemadebazar.model.FoodieCheckInModel;
 import com.homemadebazar.model.FoodieFlashPostModel;
 import com.homemadebazar.model.FoodiePostCommentModel;
 import com.homemadebazar.model.HomeChefIncomingOrderModel;
@@ -29,18 +30,6 @@ import java.util.ArrayList;
  */
 
 public class JSONParsingUtils {
-
-    {
-//        "Band": "kashmiri mirch",
-//            "Description": "Test",
-//            "Price": "30",
-//            "ProductCategory": "Milk",
-//            "ProductId": "POID00000001",
-//            "ProductName": "Curd",
-//        "ProductList":
-//        "http://35.183.8.236/api/Profile/GetImage?Source=ImageGallary%5C%5C20170217%5CProduct%5CDSC_1386.JPG"
-    }
-
 
     public static IsAccountExistModel getAccountExistsModel(JSONObject object) {
         IsAccountExistModel isAccountExistModel = new IsAccountExistModel();
@@ -157,14 +146,9 @@ public class JSONParsingUtils {
 
             homeChefOrderModel.setOrderId(object.optString("OrderId"));
             homeChefOrderModel.setDishName(object.optString("Dish"));
-//            homeChefOrderModel.setCategory(object.optString(""));
             homeChefOrderModel.setPrice(object.optString("Price"));
             homeChefOrderModel.setMinGuest(object.optString("MinGuestNo"));
             homeChefOrderModel.setMaxGuest(object.optString("MaxGuestNo"));
-//            homeChefOrderModel.setDiscount(object.optString(""));
-//            homeChefOrderModel.setPetsAllowed(object.optBoolean());
-//            homeChefOrderModel.setDrinks(object.optString());
-//            homeChefOrderModel.setVegNonVeg(object.optString());
             homeChefOrderModel.setRules(object.optString("RuleDescription"));
             homeChefOrderModel.setDescription(object.optString("Description"));
             homeChefOrderModel.setOrderFromDate(object.optString("OrderFromDT"));
@@ -205,29 +189,6 @@ public class JSONParsingUtils {
         return homeChefOrderModelArrayList;
     }
 
-    /*
-        {
-    //        "DishName": "ffg",
-    //            "Price": 55,
-    //            "MinGuest": 22,
-    //            "MaxGuest": 258,
-    //            "DishDescription": "xx",
-    //            "RuleDescription": "dcn",
-    //            "DishAvailable": "13-01-2018,0,0,0;14-01-2018,0,0,0;15-01-2018,0,0,0;16-01-2018,0,0,0;17-01-2018,0,0,0;18-01-2018,0,0,0;19-01-2018,0,0,0;20-01-2018,0,0,0",
-                "DinnerTime": "54021",
-                "LunchTime": "4521",
-                "BreakFastTime": "1720",
-    //            "OrderId": "E4C01AAE",
-                "Drink": "water",
-                "IsPetAllow": "False",
-                "VegNonType": "True",
-                "CoverImage": [
-            "http://18.218.139.27/api/Profile/GetImage?Source=ImageGallary%5C%5C1801132%5CAddCoverPhoto%5CIMG-20180113-WA0000.jpg",
-                    "http://18.218.139.27/api/Profile/GetImage?Source=ImageGallary%5C%5C1801132%5CAddCoverPhoto%5CIMG-20180112-WA0009.jpg",
-                    "http://18.218.139.27/api/Profile/GetImage?Source=ImageGallary%5C%5C1801132%5CAddCoverPhoto%5CIMG-20180113-WA0000.jpg",
-                    "http://18.218.139.27/api/Profile/GetImage?Source=ImageGallary%5C%5C1801132%5CAddCoverPhoto%5CIMG-20180112-WA0009.jpg"
-                        ]
-        }*/
     private static HomeChefOrderModel parseHomeChefOrder(JSONObject object) {
         HomeChefOrderModel homeChefOrderModel = new HomeChefOrderModel();
         try {
@@ -296,7 +257,6 @@ public class JSONParsingUtils {
 
         return homeChefOrderModelArrayList;
     }
-
 
     private static HomeChefOrderModel parseHotDealModel(JSONObject object) {
         HomeChefOrderModel homeChefOrderModel = new HomeChefOrderModel();
@@ -453,6 +413,8 @@ public class JSONParsingUtils {
         return marketPlaceProductModels;
     }
 
+//    "ImageUrl":[
+
     public static ArrayList<HomeChefIncomingOrderModel> parseHomeChefIncomingOrder(JSONArray jsonArray, int tab) {
         ArrayList<HomeChefIncomingOrderModel> homeChefIncomingOrderModelArrayList = new ArrayList<>();
 
@@ -506,8 +468,6 @@ public class JSONParsingUtils {
         return homeChefIncomingOrderModelArrayList;
 
     }
-
-//    "ImageUrl":[
 
     //    {"ProductCategoryList":[{"ProCatId":"PCID00000006","Name":"Category1","Description":"Categorhh"}]}
     public static ArrayList<MarketPlaceProductCategoryModel> parseProductCategoryModel(JSONObject object) {
@@ -758,7 +718,6 @@ public class JSONParsingUtils {
         return transactionModel;
     }
 
-
     public static OtherUserProfileDetailsModel parseOtherUserModel(JSONObject object) {
         OtherUserProfileDetailsModel userModel = new OtherUserProfileDetailsModel();
         userModel.setUserId(object.optString("UserId"));
@@ -782,5 +741,34 @@ public class JSONParsingUtils {
         return userModel;
     }
 
+    public static ArrayList<FoodieCheckInModel> parseFoodieCheckInList(JSONObject object) {
+        ArrayList<FoodieCheckInModel> foodieCheckInModelArrayList = new ArrayList<>();
+        try {
+            JSONArray checkInArray = object.optJSONArray("CheckIn");
+            for (int i = 0; i < checkInArray.length(); i++) {
+                FoodieCheckInModel checkInModel = parseFoodieCheckInModel(checkInArray.getJSONObject(i));
+                foodieCheckInModelArrayList.add(checkInModel);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return foodieCheckInModelArrayList;
+    }
+
+    private static FoodieCheckInModel parseFoodieCheckInModel(JSONObject object) {
+        FoodieCheckInModel foodieCheckInModel = new FoodieCheckInModel();
+        try {
+            foodieCheckInModel.setUserId(object.optString("UserId", ""));
+            foodieCheckInModel.setFirstName(object.optString("FName", ""));
+            foodieCheckInModel.setLastName(object.optString("LName", ""));
+            foodieCheckInModel.setShopName(object.optString("ShopName", ""));
+            foodieCheckInModel.setAddress(object.optString("Address", ""));
+            foodieCheckInModel.setImageUrl(object.optString("ImageUrl", ""));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return foodieCheckInModel;
+    }
 
 }

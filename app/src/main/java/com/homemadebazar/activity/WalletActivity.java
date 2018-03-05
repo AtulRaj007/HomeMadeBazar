@@ -55,18 +55,29 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void onResume() {
-        userModel = SharedPreference.getUserModel(WalletActivity.this);
         super.onResume();
+        userModel = SharedPreference.getUserModel(WalletActivity.this);
         try {
             tvWalletMoney.setText(userModel.getWalletBalance() + "");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        if (Constants.isBalanceRefresh) {
+            Constants.isBalanceRefresh = false;
+            getWalletBalance();
+        } else {
+            updateWalletUI();
         }
     }
 
     @Override
     protected void setData() {
         getWalletBalance();
+    }
+
+
+    private void updateWalletUI() {
         try {
             if (userModel.getWalletBalance() > 0) {
                 findViewById(R.id.ll_total_balance).setBackgroundColor(getResources().getColor(R.color.green));
@@ -101,6 +112,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                                 userModel.setWalletBalance(walletBalance);
                                 tvWalletMoney.setText(walletBalance + "");
                                 SharedPreference.saveUserModel(WalletActivity.this, userModel);
+                                updateWalletUI();
 
                             } else {
                                 DialogUtils.showAlert(WalletActivity.this, baseModel.getStatusMessage());

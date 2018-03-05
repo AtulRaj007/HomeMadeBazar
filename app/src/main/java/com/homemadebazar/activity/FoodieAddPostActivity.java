@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
+import com.homemadebazar.model.FoodieCheckInModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.UploadFileTask;
 import com.homemadebazar.util.Constants;
@@ -37,6 +38,7 @@ import id.zelory.compressor.Compressor;
  */
 
 public class FoodieAddPostActivity extends BaseActivity implements View.OnClickListener {
+    public static final int REQUEST_CHECK_IN = 500;
     private Toolbar toolbar;
     private TextView toolbarTitle, postText, nameText;
     private LinearLayout addPhotoLayout;
@@ -89,6 +91,7 @@ public class FoodieAddPostActivity extends BaseActivity implements View.OnClickL
 
             }
         });
+        findViewById(R.id.ll_check_in).setOnClickListener(this);
     }
 
     @Override
@@ -114,7 +117,6 @@ public class FoodieAddPostActivity extends BaseActivity implements View.OnClickL
                 finish();
             }
         });
-
     }
 
     @Override
@@ -142,6 +144,9 @@ public class FoodieAddPostActivity extends BaseActivity implements View.OnClickL
                     ImageUpload(resultUri.getPath(), userModel.getUserId(), etMesssage.getText().toString().trim());
                 }
                 break;
+            case R.id.ll_check_in:
+                startActivityForResult(new Intent(FoodieAddPostActivity.this, CheckInActivity.class), REQUEST_CHECK_IN);
+                break;
         }
     }
 
@@ -167,7 +172,6 @@ public class FoodieAddPostActivity extends BaseActivity implements View.OnClickL
                     Uri uri = Utils.getCameraUri();
                     System.out.println("Camera URI:-" + uri);
                     if (uri != null) {
-//                        photoImage.setImageURI(uri);
                         CropImage.activity(uri)
                                 .start(this);
                     }
@@ -182,7 +186,6 @@ public class FoodieAddPostActivity extends BaseActivity implements View.OnClickL
                     Uri uri = data.getData();
                     System.out.println("Gallery URI:-" + uri);
                     if (uri != null) {
-//                        photoImage.setImageURI(uri);
                         CropImage.activity(uri)
                                 .start(this);
                     }
@@ -200,13 +203,20 @@ public class FoodieAddPostActivity extends BaseActivity implements View.OnClickL
                 }
 
                 break;
+            case REQUEST_CHECK_IN:
+                if (resultCode == RESULT_OK) {
+                    FoodieCheckInModel foodieCheckInModel = (FoodieCheckInModel) data.getSerializableExtra(Constants.BundleKeys.CHECK_IN_MODEL);
+                    System.out.println(foodieCheckInModel.getFirstName() + " " + foodieCheckInModel.getShopName() + " " + foodieCheckInModel.getAddress());
+                    etMesssage.setText("Eating at " + foodieCheckInModel.getShopName() + " SHOP");
+                    etMesssage.setSelection(etMesssage.getText().length());
+                }
+                break;
         }
     }
 
     public void ImageUpload(String imagePath, String userId, String message) {
         System.out.println("Image Upload userId:-" + userId);
         try {
-            // http://35.183.8.236/api/Flash/PostMessage?Option=1&Title&Tag&Message&UserId
 
             String postUrl = Constants.uploadImageURL.FOOD_POST_UPLOAD_URL + postType + "&Title=&Tag=&Message=" + message + "&UserId=" + userId;
             File compressImageFile = new Compressor(this).compressToFile(new File(imagePath));
@@ -218,15 +228,11 @@ public class FoodieAddPostActivity extends BaseActivity implements View.OnClickL
                 public void onComplete(String response) {
                     System.out.println("image url response " + response);
                     try {
-//                        {"StatusCode":"100","StatusMessage":"Successful","UserId":"17090120",
-//                          "Url":"http://103.54.24.25:1101/api/Profile/GetImage?Source=ImageGallary%5C%5C17090120%5CDP%5Ccropped885355116.jpg"}
-//                        {"StatusCode":"114","StatusMessage":"Please Upload a file upto 5 mb.","ImagePath":"","UserId":""}
                         JSONObject object = new JSONObject(response);
                         if (object.optString("StatusCode").equals("100")) {
                             Toast.makeText(FoodieAddPostActivity.this, "Profile Image Updated Successfully", Toast.LENGTH_LONG).show();
                             setResult(RESULT_OK);
                             finish();
-                            //  DialogUtils.showAlert(FoodieAddPostActivity.this, "Profile Image Updated Successfully");
                         } else if (object.optString("StatusCode").equals("100")) {
                             DialogUtils.showAlert(FoodieAddPostActivity.this, object.optString("StatusMessage"));
                         }

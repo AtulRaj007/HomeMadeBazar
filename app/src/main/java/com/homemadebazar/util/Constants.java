@@ -10,6 +10,7 @@ import com.homemadebazar.model.UserModel;
 public class Constants {
 
     public static final String YOUTUBE_KEY = "AIzaSyD1S-0ZTNEFdcDfPstALlq0wVxiNYI1dHk";
+    public static boolean isBalanceRefresh = false;
     public static String deviceType = "1";
     public static UserModel socialUserModel = null;
     public static String zipJson = "2"; // 1=true,  2=false
@@ -149,7 +150,8 @@ public class Constants {
         String GET_LIST_OF_FAVOURITE_HOME_CHEF = BASE_URL + "Foodies/GetLstOfFavouritesHomeChif";
         String MARKET_PLACE_PRODUCT_SEARCH = BASE_URL + "MarketPlace/MarketplaceSearch";
         String HOMECHEF_BOOK_PRODUCT = BASE_URL + "MarketPlace/BuyProduct";
-
+        String SEND_MONEY_TO_BANK = BASE_URL + "Miscellaneous/BnkTransfer";
+        String FOODIE_CHECK_IN = BASE_URL + "Miscellaneous/FoodieCheckIn";
     }
 
     public interface uploadImageURL {
@@ -293,6 +295,7 @@ public class Constants {
         String FIRST_NAME = "FIRST_NAME";
         String LAST_NAME = "LAST_NAME";
         String PROFILE_PIC = "PROFILE_PIC";
+        String CHECK_IN_MODEL = "CHECK_IN_MODEL";
     }
 
     public interface HomeChefOrder {

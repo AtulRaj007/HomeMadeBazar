@@ -64,7 +64,6 @@
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_view"
                         android:layout_width="match_parent"
-                        android:background="@color/colorPrimary"
                         android:layout_height="wrap_content" />
 
                     <LinearLayout
@@ -156,40 +155,6 @@
                             android:layout_marginBottom="@dimen/margin_5"
                             android:background="@color/nav_line_background" />
 
-                        <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginBottom="@dimen/margin_5"-->
-                        <!--android:text="@string/str_company_name"-->
-                        <!--android:textSize="@dimen/text_16" />-->
-
-                        <!--<TextView-->
-                        <!--android:id="@+id/tv_company_name"-->
-                        <!--style="@style/ProfileTextViewStyle"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="" />-->
-
-                        <!--<View-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="1dp"-->
-                        <!--android:layout_marginBottom="@dimen/margin_5"-->
-                        <!--android:background="@color/nav_line_background" />-->
-
-                        <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginBottom="@dimen/margin_5"-->
-                        <!--android:text="@string/str_university_name"-->
-                        <!--android:textSize="@dimen/text_16" />-->
-
-                        <!--<TextView-->
-                        <!--android:id="@+id/tv_university_name"-->
-                        <!--style="@style/ProfileTextViewStyle"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="" />-->
-
                         <Spinner
                             android:id="@+id/spr_profession"
                             android:layout_width="match_parent"
@@ -226,8 +191,22 @@
                             android:layout_marginBottom="@dimen/margin_5"
                             android:background="@color/nav_line_background" />
 
+                        <Button
+                            android:id="@+id/btn_friend_request"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/margin_10"
+                            android:background="@drawable/button_round_primary"
+                            android:paddingLeft="@dimen/padding_20"
+                            android:paddingRight="@dimen/padding_20"
+                            android:text="Send Friend Request"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_14" />
+
                     </LinearLayout>
                 </LinearLayout>
+
             </ScrollView>
         </FrameLayout>
     </android.support.design.widget.AppBarLayout>

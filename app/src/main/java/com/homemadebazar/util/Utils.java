@@ -25,6 +25,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -101,6 +102,11 @@ public class Utils {
         } finally {
             return valid;
         }
+    }
+
+    public static void noRecordFound(TextView textView, boolean status) {
+        if (status)
+            textView.setVisibility(View.VISIBLE);
     }
 
     public static void cameraIntent(Activity activity) {

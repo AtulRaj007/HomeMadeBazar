@@ -22,7 +22,8 @@
                 android:id="@+id/et_account_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_account_number" />
+                android:hint="@string/hint_account_number"
+                android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -34,7 +35,8 @@
                 android:id="@+id/et_account_holder_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_account_holder_name" />
+                android:hint="@string/hint_account_holder_name"
+                android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -46,7 +48,8 @@
                 android:id="@+id/et_ifsc_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_ifsc_code" />
+                android:hint="@string/hint_ifsc_code"
+                android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -59,7 +62,8 @@
                 android:id="@+id/et_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_amount_to_transfer" />
+                android:hint="@string/hint_amount_to_transfer"
+                android:inputType="number" />
 
         </android.support.design.widget.TextInputLayout>
 

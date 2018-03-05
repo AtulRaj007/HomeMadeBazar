@@ -27,6 +27,7 @@ import com.homemadebazar.activity.UpdateShopDetailsActivity;
 import com.homemadebazar.adapter.ImagePagerAdapter;
 import com.homemadebazar.adapter.MyShopAdapter;
 import com.homemadebazar.model.BaseModel;
+import com.homemadebazar.model.CustomAddress;
 import com.homemadebazar.model.HomeChefOrderModel;
 import com.homemadebazar.model.HomeChefProfileModel;
 import com.homemadebazar.model.UserModel;
@@ -283,7 +284,7 @@ public class MyShopFragment extends BaseFragment implements View.OnClickListener
                                     SharedPreference.saveProfileModel(getActivity(), homeChefProfileModel);
                                     tvShopName.setText(homeChefProfileModel.getShopName() + "");
                                     tvPriceRange.setText(homeChefProfileModel.getPriceRange() + "");
-                                    tvAddress.setText(homeChefProfileModel.getAddress() + "");
+                                    tvAddress.setText(CustomAddress.getCompleteAddress(homeChefProfileModel.getAddress() + ""));
                                     tvSpeciality.setText(homeChefProfileModel.getSpeciality() + "");
                                     if (!TextUtils.isEmpty(homeChefProfileModel.getProfilePicture()))
                                         Glide.with(getActivity()).load(homeChefProfileModel.getProfilePicture()).into(ivProfileImage);

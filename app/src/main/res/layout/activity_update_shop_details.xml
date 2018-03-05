@@ -135,22 +135,6 @@
                     android:layout_height="wrap_content"
                     android:text="@string/str_price_range" />
 
-                <!--<android.support.design.widget.TextInputLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content">-->
-
-                <!--<EditText-->
-                <!--android:id="@+id/et_price_range"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:hint="@string/hint_enter_price_range"-->
-                <!--android:singleLine="true"-->
-                <!--android:textSize="@dimen/text_16"-->
-
-                <!--/>-->
-
-                <!--</android.support.design.widget.TextInputLayout>-->
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -179,11 +163,70 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/et_shop_address"
+                        android:id="@+id/et_apartment_no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/hint_enter_address"
-                        android:lines="2"
+                        android:hint="@string/str_apartment_no"
+                        android:textSize="@dimen/text_16"
+
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/et_street_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/str_street_no"
+                        android:textSize="@dimen/text_16"
+
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/et_area"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/str_area"
+                        android:textSize="@dimen/text_16"
+
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/et_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/str_city"
+                        android:textSize="@dimen/text_16"
+
+                        />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/et_state"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/str_state"
                         android:textSize="@dimen/text_16"
 
                         />

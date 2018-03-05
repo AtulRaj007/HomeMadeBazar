@@ -70,10 +70,11 @@ public class FoodieMessengerFriendsAdapter extends RecyclerView.Adapter<FoodieMe
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.iv_profile_pic:
-                    context.startActivity(ChatActivity.getChatIntent(context, friendList.get(getAdapterPosition())));
+                    Utils.showProfile(context, friendList.get(getAdapterPosition()).getUserId());
                     break;
                 default:
-                    Utils.showProfile(context, friendList.get(getAdapterPosition()).getUserId());
+                    context.startActivity(ChatActivity.getChatIntent(context, friendList.get(getAdapterPosition())));
+
             }
         }
     }

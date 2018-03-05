@@ -1,5 +1,6 @@
 package com.homemadebazar.activity;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,11 +9,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.homemadebazar.R;
+import com.homemadebazar.model.BaseModel;
+import com.homemadebazar.model.UserModel;
+import com.homemadebazar.network.HttpRequestHandler;
+import com.homemadebazar.network.api.ApiCall;
+import com.homemadebazar.network.apicall.SendMoneyToBankApiCall;
+import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
+import com.homemadebazar.util.SharedPreference;
+import com.homemadebazar.util.Utils;
 
 public class SendMoneyToBankActivity extends BaseActivity implements View.OnClickListener {
     private EditText etAccountNumber, etAccountHolderName, etIfscCode, etAmount;
     private Button btnTransfer;
+    private UserModel userModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +33,7 @@ public class SendMoneyToBankActivity extends BaseActivity implements View.OnClic
 
     @Override
     protected void initUI() {
+        userModel = SharedPreference.getUserModel(SendMoneyToBankActivity.this);
         etAccountNumber = findViewById(R.id.et_account_number);
         etAccountHolderName = findViewById(R.id.et_account_holder_name);
         etIfscCode = findViewById(R.id.et_ifsc_code);
@@ -79,39 +90,41 @@ public class SendMoneyToBankActivity extends BaseActivity implements View.OnClic
     }
 
     private void sendMoneyToBank() {
-//        try {
-//            final Dialog progressDialog = DialogUtils.getProgressDialog(SendMoneyToBankActivity.this, null);
-//            progressDialog.show();
-//            final ChangePasswordApiCall apiCall = new ChangePasswordApiCall(userModel.getUserId(), etCurrentPassword.getText().toString().trim(), etNewPassword.getText().toString().trim());
-//            HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
-//
-//                @Override
-//                public void onComplete(Exception e) {
-//                    if (e == null) { // Success
-//                        DialogUtils.hideProgressDialog(progressDialog);
-//                        try {
-//                            BaseModel baseModel = apiCall.getBaseModel();
-//                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-//                                DialogUtils.showAlert(ChangePasswordActivity.this, baseModel.getStatusMessage(), new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        finish();
-//                                    }
-//                                });
-//                            } else {
-//                                DialogUtils.showAlert(ChangePasswordActivity.this, baseModel.getStatusMessage());
-//                            }
-//
-//                        } catch (Exception ex) {
-//                            ex.printStackTrace();
-//                        }
-//                    } else { // Failure
-//                        Utils.handleError(e.getMessage(), ChangePasswordActivity.this, null);
-//                    }
-//                }
-//            });
-//        } catch (Exception e) {
-//            Utils.handleError(e.getMessage(), ChangePasswordActivity.this, null);
-//        }
+        try {
+            final Dialog progressDialog = DialogUtils.getProgressDialog(SendMoneyToBankActivity.this, null);
+            progressDialog.show();
+            final SendMoneyToBankApiCall apiCall = new SendMoneyToBankApiCall(userModel.getUserId(), etAccountNumber.getText().toString().trim(), etAccountHolderName.getText().toString().trim(),
+                    etIfscCode.getText().toString().trim(), etAmount.getText().toString().trim());
+            HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
+
+                @Override
+                public void onComplete(Exception e) {
+                    if (e == null) { // Success
+                        DialogUtils.hideProgressDialog(progressDialog);
+                        try {
+                            BaseModel baseModel = apiCall.getBaseModel();
+                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                DialogUtils.showAlert(SendMoneyToBankActivity.this, baseModel.getStatusMessage(), new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Constants.isBalanceRefresh = true;
+                                        finish();
+                                    }
+                                });
+                            } else {
+                                DialogUtils.showAlert(SendMoneyToBankActivity.this, baseModel.getStatusMessage());
+                            }
+
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    } else { // Failure
+                        Utils.handleError(e.getMessage(), SendMoneyToBankActivity.this, null);
+                    }
+                }
+            }, false);
+        } catch (Exception e) {
+            Utils.handleError(e.getMessage(), SendMoneyToBankActivity.this, null);
+        }
     }
 }

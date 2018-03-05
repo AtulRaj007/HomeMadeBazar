@@ -78,10 +78,14 @@ public class FoodieMessengerInvitesFragment extends BaseFragment {
                             swipeRefreshLayout.setRefreshing(false);
                             BaseModel baseModel = apiCall.getResult();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                getView().findViewById(R.id.tv_no_record_found).setVisibility(View.GONE);
                                 dataList.clear();
                                 dataList.addAll(apiCall.getData());
                                 adapter.notifyDataSetChanged();
 
+                            } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.NO_RECORD_FOUND) {
+                                getView().findViewById(R.id.tv_no_record_found).setVisibility(View.VISIBLE);
+                                return;
                             } else {
                                 DialogUtils.showAlert(getActivity(), baseModel.getStatusMessage());
                             }

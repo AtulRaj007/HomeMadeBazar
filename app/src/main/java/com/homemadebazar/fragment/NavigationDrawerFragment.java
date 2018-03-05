@@ -44,6 +44,12 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
 //        }
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        System.out.println(">>>>> onActivityCreated.........");
+    }
+
     public void initialiseListener() {
         if (getView() != null) {
             getView().findViewById(R.id.rl_header).setOnClickListener(this);

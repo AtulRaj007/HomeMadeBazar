@@ -1,6 +1,7 @@
 package com.homemadebazar.adapter;
 
 import android.content.Context;
+import android.location.Address;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.HomeShopViewActivity;
+import com.homemadebazar.model.CustomAddress;
 import com.homemadebazar.model.HomeChiefNearByModel;
 import com.homemadebazar.util.CircleImageView;
 import com.homemadebazar.util.Utils;
@@ -48,7 +50,7 @@ public class FoodieHomeListAdapter extends RecyclerView.Adapter<FoodieHomeListAd
         if (TextUtils.isEmpty(homeChiefNearByModelArrayList.get(position).getAddress())) {
             holder.tvAddress.setVisibility(View.GONE);
         } else {
-            holder.tvAddress.setText(homeChiefNearByModelArrayList.get(position).getAddress() + "");
+            holder.tvAddress.setText(CustomAddress.getCompleteAddress(homeChiefNearByModelArrayList.get(position).getAddress()));
         }
         if (!TextUtils.isEmpty(homeChiefNearByModelArrayList.get(position).getProfileImage())) {
             try {

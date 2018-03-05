@@ -29,6 +29,7 @@ import com.android.volley.toolbox.Volley;
 import com.homemadebazar.R;
 import com.homemadebazar.Template.Template;
 import com.homemadebazar.model.BaseModel;
+import com.homemadebazar.model.CustomAddress;
 import com.homemadebazar.model.HomeChefProfileModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
@@ -47,7 +48,7 @@ public class UpdateShopDetailsActivity extends BaseActivity implements View.OnCl
 
     private static final String TAG = ">>>>>UpdateShopDetails";
     private ImageView ivFirstCoverPhoto, ivSecondCoverPhoto, ivThirdCoverPhoto, ivFourthCoverPhoto, ivFifthCoverPhoto;
-    private EditText etShopName, etPriceRange, etShopAddress, etFoodSpeciality;
+    private EditText etShopName, etPriceRange, etApartmentNumber, etStreetNumber, etArea, etCity, etState, etFoodSpeciality;
     private Button btnSave;
     private int imageSelectedIndex = 0;
     private String coverPhotoArray[] = new String[5];
@@ -128,7 +129,11 @@ public class UpdateShopDetailsActivity extends BaseActivity implements View.OnCl
         ivFifthCoverPhoto = findViewById(R.id.iv_fifth_cover_photo);
 
         etShopName = findViewById(R.id.et_shop_name);
-        etShopAddress = findViewById(R.id.et_shop_address);
+        etApartmentNumber = findViewById(R.id.et_apartment_no);
+        etStreetNumber = findViewById(R.id.et_street_no);
+        etArea = findViewById(R.id.et_area);
+        etCity = findViewById(R.id.et_city);
+        etState = findViewById(R.id.et_state);
         etFoodSpeciality = findViewById(R.id.et_food_speciality);
 
         sprMinPrice = findViewById(R.id.spr_min_price);
@@ -164,7 +169,13 @@ public class UpdateShopDetailsActivity extends BaseActivity implements View.OnCl
         if (profileModel != null) {
             try {
                 etShopName.setText(profileModel.getShopName());
-                etShopAddress.setText(profileModel.getAddress());
+                String completeAddress = profileModel.getAddress();
+                CustomAddress customAddress = new CustomAddress(completeAddress);
+                etApartmentNumber.setText(customAddress.getApartmentNumber());
+                etStreetNumber.setText(customAddress.getStreetNumber());
+                etArea.setText(customAddress.getArea());
+                etCity.setText(customAddress.getCity());
+                etState.setText(customAddress.getState());
                 etFoodSpeciality.setText(profileModel.getSpeciality());
                 String priceRange = profileModel.getPriceRange();
                 if (!TextUtils.isEmpty(priceRange)) {
@@ -178,7 +189,6 @@ public class UpdateShopDetailsActivity extends BaseActivity implements View.OnCl
                 e.printStackTrace();
             }
         }
-
 
 
     }
@@ -296,24 +306,33 @@ public class UpdateShopDetailsActivity extends BaseActivity implements View.OnCl
 
     private boolean isValid() {
         if (TextUtils.isEmpty(etShopName.getText().toString().trim())) {
-            DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Please enter shop name.");
+            DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Please enter shop name");
             return false;
-        }
-        /*else if (TextUtils.isEmpty(etPriceRange.getText().toString().trim())) {
-            DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Please enter price range.");
+        } else if (sprMinPrice.getSelectedItemPosition() == 0) {
+            DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Please select min price");
             return false;
-        }*/
-        else if (TextUtils.isEmpty(etShopAddress.getText().toString().trim())) {
-            DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Please enter address.");
+        } else if (sprMaxPrice.getSelectedItemPosition() == 0) {
+            DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Please select max price");
+            return false;
+        } else if (TextUtils.isEmpty(etApartmentNumber.getText().toString().trim())) {
+            DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Please enter apartment number");
+            return false;
+        } else if (TextUtils.isEmpty(etStreetNumber.getText().toString().trim())) {
+            DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Please enter street number");
+            return false;
+        } else if (TextUtils.isEmpty(etArea.getText().toString().trim())) {
+            DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Please enter Area");
+            return false;
+        } else if (TextUtils.isEmpty(etCity.getText().toString().trim())) {
+            DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Please enter City");
+            return false;
+        } else if (TextUtils.isEmpty(etState.getText().toString().trim())) {
+            DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Please enter State");
             return false;
         } else if (TextUtils.isEmpty(etFoodSpeciality.getText().toString().trim())) {
             DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Please enter food speciality.");
             return false;
         }
-    /*    else if (mFile.size() == 0) {
-            DialogUtils.showAlert(UpdateShopDetailsActivity.this, "Please select cover photo.");
-            return false;
-        }*/
         return true;
     }
 
@@ -434,8 +453,11 @@ public class UpdateShopDetailsActivity extends BaseActivity implements View.OnCl
             final Dialog progressDialog = DialogUtils.getProgressDialog(this, null);
             progressDialog.show();
 
+            String priceRange = sprMinPrice.getSelectedItem().toString() + "-" + sprMaxPrice.getSelectedItem().toString();
+            String completeAddress = CustomAddress.getCompleteAddress(etApartmentNumber.getText().toString().trim(), etStreetNumber.getText().toString().trim(), etArea.getText().toString().trim(),
+                    etCity.getText().toString().trim(), etState.getText().toString().trim());
             final MyShopAddDetailsApiCall apiCall = new MyShopAddDetailsApiCall(userModel.getUserId(), etShopName.getText().toString().trim(),
-                    "", etShopAddress.getText().toString().trim(), etFoodSpeciality.getText().toString().trim());
+                    priceRange, completeAddress, etFoodSpeciality.getText().toString().trim());
             HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override

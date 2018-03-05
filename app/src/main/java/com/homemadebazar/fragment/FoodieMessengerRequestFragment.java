@@ -78,12 +78,14 @@ public class FoodieMessengerRequestFragment extends BaseFragment implements Swip
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                getView().findViewById(R.id.tv_no_record_found).setVisibility(View.GONE);
                                 reqDataList.clear();
                                 reqDataList.addAll(apiCall.getResult());
                                 foodieMessengerRequestAdapter.notifyDataSetChanged();
                             } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.NO_RECORD_FOUND) {
                                 reqDataList.clear();
                                 foodieMessengerRequestAdapter.notifyDataSetChanged();
+                                getView().findViewById(R.id.tv_no_record_found).setVisibility(View.VISIBLE);
                             } else {
                                 DialogUtils.showAlert(getActivity(), baseModel.getStatusMessage());
                             }

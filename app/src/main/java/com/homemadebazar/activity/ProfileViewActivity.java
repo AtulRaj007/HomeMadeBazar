@@ -1,5 +1,6 @@
 package com.homemadebazar.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
 import com.homemadebazar.network.apicall.GetUserProfileDetailsApiCall;
+import com.homemadebazar.network.apicall.MessengerJoinSendRequestApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
@@ -28,9 +31,10 @@ import com.homemadebazar.util.Utils;
 
 import java.util.ArrayList;
 
-public class ProfileViewActivity extends BaseActivity {
+public class ProfileViewActivity extends BaseActivity implements View.OnClickListener {
     private static String KEY_USER_ID = "KEY_USER_ID";
-    private TextView tvName, tvEmailId, tvMobileNumber, tvCountry, tvCompanyName, tvUniversityName, tvAbout;
+    private TextView tvName, tvEmailId, tvMobileNumber, tvCountry, tvAbout;
+    private Button btnSendFriendRequest;
     private ImageView ivProfilePic;
     private UserModel userModel;
     private String profileUserId;
@@ -39,6 +43,7 @@ public class ProfileViewActivity extends BaseActivity {
     private LinearLayoutManager linearLayoutManager;
     private ProfileRecyclerAdapter profileRecyclerAdapter;
     private ArrayList<ProfileInterestsModel> profileInterestsModelArrayList = new ArrayList<>();
+    private OtherUserProfileDetailsModel otherUserProfileDetailsModel;
 
     public static Intent getProfileIntent(Context context, String userId) {
         Intent intent = new Intent(context, ProfileViewActivity.class);
@@ -65,11 +70,10 @@ public class ProfileViewActivity extends BaseActivity {
         tvEmailId = findViewById(R.id.tv_emailId);
         tvMobileNumber = findViewById(R.id.tv_mobile_number);
         tvCountry = findViewById(R.id.tv_country);
-//        tvCompanyName = findViewById(R.id.tv_company_name);
-//        tvUniversityName = findViewById(R.id.tv_university_name);
         tvAbout = findViewById(R.id.tv_about);
         sprProfession = findViewById(R.id.spr_profession);
         recyclerView = findViewById(R.id.recycler_view);
+        btnSendFriendRequest = findViewById(R.id.btn_friend_request);
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
     }
 
@@ -81,7 +85,7 @@ public class ProfileViewActivity extends BaseActivity {
                 finish();
             }
         });
-//        sprProfession.setOnItemSelectedListener();
+        btnSendFriendRequest.setOnClickListener(this);
     }
 
     @Override
@@ -119,8 +123,8 @@ public class ProfileViewActivity extends BaseActivity {
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                OtherUserProfileDetailsModel userModel = apiCall.getResult();
-                                updateDetails(userModel);
+                                otherUserProfileDetailsModel = apiCall.getResult();
+                                updateDetails(otherUserProfileDetailsModel);
                             } else {
                                 DialogUtils.showAlert(ProfileViewActivity.this, baseModel.getStatusMessage());
                             }
@@ -146,8 +150,54 @@ public class ProfileViewActivity extends BaseActivity {
         tvEmailId.setText(userModel.getEmailId());
         tvMobileNumber.setText(userModel.getMobile());
         tvCountry.setText(userModel.getCountryName());
-//        tvCompanyName.setText(userModel.getDpStatus());
-//        tvUniversityName.setText(userModel.getUniversityName());
         tvAbout.setText(userModel.getDpStatus());
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_friend_request:
+                try {
+                    if (otherUserProfileDetailsModel != null)
+                        joinParticipateApiCall(userModel.getUserId(), profileUserId);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+    }
+
+    private void joinParticipateApiCall(String fromUserId, String toReqUserId) {
+        try {
+            final Dialog progressDialog = DialogUtils.getProgressDialog(ProfileViewActivity.this, null);
+            progressDialog.show();
+
+            final MessengerJoinSendRequestApiCall apiCall = new MessengerJoinSendRequestApiCall(fromUserId, toReqUserId);
+            HttpRequestHandler.getInstance(ProfileViewActivity.this).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
+
+                @Override
+                public void onComplete(Exception e) {
+                    progressDialog.hide();
+                    if (e == null) { // Success
+                        try {
+                            BaseModel baseModel = apiCall.getResult();
+                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                DialogUtils.showAlert(ProfileViewActivity.this, "Friend Request has been sent.");
+
+                            } else {
+                                DialogUtils.showAlert(ProfileViewActivity.this, baseModel.getStatusMessage());
+                            }
+
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    } else { // Failure
+                        Utils.handleError(e.getMessage(), ProfileViewActivity.this, null);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            Utils.handleError(e.getMessage(), ProfileViewActivity.this, null);
+        }
     }
 }

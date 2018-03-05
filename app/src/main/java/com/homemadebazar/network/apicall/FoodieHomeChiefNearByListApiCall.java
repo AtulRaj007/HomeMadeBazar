@@ -53,34 +53,33 @@ public class FoodieHomeChiefNearByListApiCall extends BaseApiCall {
         System.out.println(Constants.ServiceTAG.RESPONSE + object.toString());
 
         baseModel = JSONParsingUtils.parseBaseModel(object);
-        JSONArray homeChiefDetailsArray = object.optJSONArray("Details");
-        chiefDetailList = new ArrayList<>();
-
-        for (int i = 0; i < homeChiefDetailsArray.length(); i++) {
-            JSONObject detailObj = homeChiefDetailsArray.optJSONObject(i);
-            HomeChiefNearByModel homeChiefNearByModel = new HomeChiefNearByModel();
-            homeChiefNearByModel.setUserId(detailObj.optString("UserId"));
-            homeChiefNearByModel.setCountryCode(detailObj.optString("CountryCode"));
-            homeChiefNearByModel.setCountryName(detailObj.optString("CountryName"));
-            homeChiefNearByModel.setEmail(detailObj.optString("Email"));
-            homeChiefNearByModel.setMobile(detailObj.optString("Mobile"));
-            homeChiefNearByModel.setFirstName(detailObj.optString("FirstName"));
-            homeChiefNearByModel.setLastName(detailObj.optString("LastName"));
-            homeChiefNearByModel.setPinCode(detailObj.optString("PinCode"));
-            homeChiefNearByModel.setAddress(detailObj.optString("Address"));
-            homeChiefNearByModel.setProfileImage(detailObj.optString("DP"));
-            homeChiefNearByModel.setRating(detailObj.optString("Rating"));
-            homeChiefNearByModel.setDistance(detailObj.optString("Distance"));
-            homeChiefNearByModel.setLatitude(detailObj.optString("Lattitude"));
-            homeChiefNearByModel.setLongitude(detailObj.optString("Longitude"));
-            homeChiefNearByModel.setPriceRange(detailObj.optString("PriceRange"));
-            homeChiefNearByModel.setShopName(detailObj.optString("ShopName"));
-            homeChiefNearByModel.setSpeciality(detailObj.optString("Speciality"));
-            homeChiefNearByModel.setFavourite(detailObj.optInt("IsFavourite") == 1 ? true : false);
-            homeChiefNearByModel.setCoverPhotoArrayList(getCoverPhotoArray(detailObj.optString("CoverPhotoShow")));
-
-            chiefDetailList.add(homeChiefNearByModel);
-
+        if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+            JSONArray homeChiefDetailsArray = object.optJSONArray("Details");
+            chiefDetailList = new ArrayList<>();
+            for (int i = 0; i < homeChiefDetailsArray.length(); i++) {
+                JSONObject detailObj = homeChiefDetailsArray.optJSONObject(i);
+                HomeChiefNearByModel homeChiefNearByModel = new HomeChiefNearByModel();
+                homeChiefNearByModel.setUserId(detailObj.optString("UserId"));
+                homeChiefNearByModel.setCountryCode(detailObj.optString("CountryCode"));
+                homeChiefNearByModel.setCountryName(detailObj.optString("CountryName"));
+                homeChiefNearByModel.setEmail(detailObj.optString("Email"));
+                homeChiefNearByModel.setMobile(detailObj.optString("Mobile"));
+                homeChiefNearByModel.setFirstName(detailObj.optString("FirstName"));
+                homeChiefNearByModel.setLastName(detailObj.optString("LastName"));
+                homeChiefNearByModel.setPinCode(detailObj.optString("PinCode"));
+                homeChiefNearByModel.setAddress(detailObj.optString("Address"));
+                homeChiefNearByModel.setProfileImage(detailObj.optString("DP"));
+                homeChiefNearByModel.setRating(detailObj.optString("Rating"));
+                homeChiefNearByModel.setDistance(detailObj.optString("Distance"));
+                homeChiefNearByModel.setLatitude(detailObj.optString("Lattitude"));
+                homeChiefNearByModel.setLongitude(detailObj.optString("Longitude"));
+                homeChiefNearByModel.setPriceRange(detailObj.optString("PriceRange"));
+                homeChiefNearByModel.setShopName(detailObj.optString("ShopName"));
+                homeChiefNearByModel.setSpeciality(detailObj.optString("Speciality"));
+                homeChiefNearByModel.setFavourite(detailObj.optInt("IsFavourite") == 1 ? true : false);
+                homeChiefNearByModel.setCoverPhotoArrayList(getCoverPhotoArray(detailObj.optString("CoverPhotoShow")));
+                chiefDetailList.add(homeChiefNearByModel);
+            }
         }
 
     }

@@ -222,7 +222,7 @@
     <string name="str_country">Country</string>
     <string name="str_company_name">Company Name</string>
     <string name="str_university_name">University Name</string>
-    <string name="str_shopping_list">Shopping List</string>
+    <string name="str_shopping_list">Go To CART</string>
     <string name="hint_account_number">Account Number</string>
     <string name="hint_account_holder_name">Account Holder\'s Name</string>
     <string name="hint_ifsc_code">IFSC Code</string>
@@ -230,6 +230,14 @@
     <string name="text_transfer">Transfer</string>
     <string name="str_transfer_text">It will take 2-3 days to process and transfer the money.</string>
     <string name="str_profession">Profession</string>
+    <string name="str_apartment_no">APARTMENT NO.</string>
+    <string name="str_street_no">STREET NO.</string>
+    <string name="str_area">AREA</string>
+    <string name="str_city">CITY</string>
+    <string name="str_state">STATE</string>
+    <string name="hint_student">Enter University Name</string>
+    <string name="hint_professional">Enter Company Name</string>
+    <string name="hint_self_employed">Enter work details.</string>
 
 
     <string-array name="price">
@@ -287,6 +295,7 @@
     </string-array>
 
     <string-array name="profession">
+        <item>Select Profession</item>
         <item>Student</item>
         <item>Professional</item>
         <item>Self-employed</item>
