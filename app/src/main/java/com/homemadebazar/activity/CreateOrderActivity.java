@@ -394,22 +394,6 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 }
         }
     }
-/*
-    private void getFoodCategories() {
-        new GetRequest(CreateOrderActivity.this, new GetRequest.ApiCompleteListener() {
-            @Override
-            public void onApiCompleteListener(String response) {
-                System.out.println("====== Categories ======" + response);
-                ArrayList<FoodCategoryModel> foodCategoryModelArrayList = JSONParsingUtils.parseFoodCetGuestRules.getText().toString().trim()
-                ategoryModel(response);
-                ArrayAdapter<FoodCategoryModel> spinnerAdapter = new ArrayAdapter<FoodCategoryModel>(CreateOrderActivity.this, android.R.layout.simple_list_item_1, foodCategoryModelArrayList);
-                spinnerAdapter.setDropDownViewResource(R.layout
-                        .simple_list_item);
-                sprDishCategory.setAdapter(spinnerAdapter);
-            }
-        }).execute(Constants.ServerURL.GET_FOOD_CATEGORIES);
-    }
-    */
 
     private void getFoodCategories() {
         new GetRequest(CreateOrderActivity.this, new GetRequest.ApiCompleteListener() {
@@ -431,7 +415,6 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
             case Constants.Keys.REQUEST_CAMERA:
                 if (resultCode == RESULT_OK) {
                     setImage(Utils.getCameraUri());
-//                    etGuestRules.getText().toString().trim()
                 } else {
                     DialogUtils.showAlert(CreateOrderActivity.this, "Camera Cancelled");
                 }
@@ -500,7 +483,20 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
     }
 
     private String getRulesForOrder() {
-        return "";
+        String rules = "";
+        String SYMBOL = "@@";
+        if (!TextUtils.isEmpty(etFirstRule.getText().toString().trim()))
+            rules = rules + etFirstRule.getText().toString().trim() + SYMBOL;
+        if (!TextUtils.isEmpty(etSecondRule.getText().toString().trim()))
+            rules = rules + etSecondRule.getText().toString().trim() + SYMBOL;
+        if (!TextUtils.isEmpty(etThirdRule.getText().toString().trim()))
+            rules = rules + etThirdRule.getText().toString().trim() + SYMBOL;
+        if (!TextUtils.isEmpty(etFourthRule.getText().toString().trim()))
+            rules = rules + etFourthRule.getText().toString().trim() + SYMBOL;
+        if (!TextUtils.isEmpty(etFifthRule.getText().toString().trim()))
+            rules = rules + etFifthRule.getText().toString().trim();
+
+        return rules;
     }
 
     public void createOrder() {

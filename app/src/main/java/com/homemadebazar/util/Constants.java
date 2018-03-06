@@ -152,6 +152,7 @@ public class Constants {
         String HOMECHEF_BOOK_PRODUCT = BASE_URL + "MarketPlace/BuyProduct";
         String SEND_MONEY_TO_BANK = BASE_URL + "Miscellaneous/BnkTransfer";
         String FOODIE_CHECK_IN = BASE_URL + "Miscellaneous/FoodieCheckIn";
+        String HOMECHEF_ORDER_DELETE = BASE_URL + "Miscellaneous/OrdersDelete";
     }
 
     public interface uploadImageURL {

@@ -313,15 +313,11 @@ public class MyShopFragment extends BaseFragment implements View.OnClickListener
 
     public void getOrderDetails() {
         try {
-//            final Dialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
-//            progressDialog.show();
-
             final GetHomeChefOrderListApiCall apiCall = new GetHomeChefOrderListApiCall(userModel.getUserId());
             HttpRequestHandler.getInstance(getActivity().getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
                 public void onComplete(Exception e) {
-//                    DialogUtils.hideProgressDialog(progressDialog);
                     if (e == null) { // Success
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();

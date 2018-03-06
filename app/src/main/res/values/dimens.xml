@@ -63,4 +63,8 @@
     <dimen name="nav_icon_height">40dp</dimen>
     <dimen name="nav_icon_width">40dp</dimen>
     <dimen name="min_photo_height">150dp</dimen>
+    <dimen name="food_image_height">180dp</dimen>
+    <dimen name="order_text_size">14sp</dimen>
+    <dimen name="order_icon_size">25dp</dimen>
+    <dimen name="order_margin_left">10dp</dimen>
 </resources>

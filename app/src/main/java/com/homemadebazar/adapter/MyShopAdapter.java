@@ -18,6 +18,7 @@ import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
 import com.homemadebazar.network.apicall.AddPromoteBusinessApiCall;
+import com.homemadebazar.network.apicall.HomeChefOrderDeleteApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
@@ -47,6 +48,7 @@ public class MyShopAdapter extends RecyclerView.Adapter<MyShopAdapter.MyShopView
         return new MyShopViewHolder(LayoutInflater.from(context).inflate(R.layout.row_my_shop, parent, false));
     }
 
+    //    Dish Name,  Description, Category, Price, Timing, Servers, Discount applied marker,
     @Override
     public void onBindViewHolder(MyShopViewHolder holder, int position) {
         try {
@@ -102,7 +104,7 @@ public class MyShopAdapter extends RecyclerView.Adapter<MyShopAdapter.MyShopView
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.iv_delete_order:
-                    Toast.makeText(context, "Under Development", Toast.LENGTH_SHORT).show();
+                    deleteOrder(userModel.getUserId(), homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId());
                     break;
                 case R.id.iv_edit_order:
                     Toast.makeText(context, "Under Development", Toast.LENGTH_SHORT).show();
@@ -113,7 +115,7 @@ public class MyShopAdapter extends RecyclerView.Adapter<MyShopAdapter.MyShopView
             }
         }
 
-        void applyForHotDeals(String orderId) {
+        private void applyForHotDeals(String orderId) {
             try {
                 final Dialog progressDialog = DialogUtils.getProgressDialog(context, null);
                 progressDialog.show();
@@ -130,6 +132,46 @@ public class MyShopAdapter extends RecyclerView.Adapter<MyShopAdapter.MyShopView
 
                                 if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
                                     DialogUtils.showAlert(context, baseModel.getStatusMessage());
+                                } else {
+                                    DialogUtils.showAlert(context, baseModel.getStatusMessage());
+                                }
+
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        } else { // Failure
+                            Utils.handleError(e.getMessage(), context, null);
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                Utils.handleError(e.getMessage(), context, null);
+            }
+        }
+
+        private void deleteOrder(String userId, String orderId) {
+            try {
+                final Dialog progressDialog = DialogUtils.getProgressDialog(context, null);
+                progressDialog.show();
+
+                final HomeChefOrderDeleteApiCall apiCall = new HomeChefOrderDeleteApiCall(userId, orderId);
+                HttpRequestHandler.getInstance(context.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
+
+                    @Override
+                    public void onComplete(Exception e) {
+                        DialogUtils.hideProgressDialog(progressDialog);
+                        if (e == null) { // Success
+                            try {
+                                BaseModel baseModel = apiCall.getResult();
+
+                                if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                    DialogUtils.showAlert(context, "Order deleted successfully.", new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            homeChefOrderModelArrayList.remove(getAdapterPosition());
+                                            notifyDataSetChanged();
+                                        }
+                                    });
                                 } else {
                                     DialogUtils.showAlert(context, baseModel.getStatusMessage());
                                 }

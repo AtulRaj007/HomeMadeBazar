@@ -168,7 +168,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/str_apartment_no"
                         android:textSize="@dimen/text_16"
-
+                        android:singleLine="true"
                         />
 
                 </android.support.design.widget.TextInputLayout>
@@ -182,6 +182,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/str_street_no"
+                        android:singleLine="true"
                         android:textSize="@dimen/text_16"
 
                         />
@@ -197,6 +198,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/str_area"
+                        android:singleLine="true"
                         android:textSize="@dimen/text_16"
 
                         />
@@ -212,6 +214,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/str_city"
+                        android:singleLine="true"
                         android:textSize="@dimen/text_16"
 
                         />
@@ -227,6 +230,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/str_state"
+                        android:singleLine="true"
                         android:textSize="@dimen/text_16"
 
                         />

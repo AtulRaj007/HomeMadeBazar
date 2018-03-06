@@ -14,12 +14,12 @@
         <RelativeLayout
             android:id="@+id/rl_view_pager"
             android:layout_width="match_parent"
-            android:layout_height="150dp">
+            android:layout_height="190dp">
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="@dimen/food_image_height"
                 android:background="@color/grey" />
 
             <me.relex.circleindicator.CircleIndicator
@@ -87,7 +87,8 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/order_tab_select" />
+                    android:tint="@color/colorPrimary"
+                    android:src="@drawable/number_people" />
 
                 <TextView
                     android:id="@+id/tv_no_of_people"
@@ -116,6 +117,31 @@
                     android:text=""
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_14" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/discount"
+                    android:tint="@color/colorPrimary" />
+
+
+                <TextView
+                    android:id="@+id/tv_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/order_margin_left"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/order_text_size"
+
+                    />
 
             </LinearLayout>
 
