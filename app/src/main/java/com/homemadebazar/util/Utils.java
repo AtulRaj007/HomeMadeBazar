@@ -44,6 +44,7 @@ import com.homemadebazar.activity.WebViewActivity;
 import com.homemadebazar.fragment.AppWalkthroughFragment;
 import com.homemadebazar.fragment.UserProfileFragment;
 import com.homemadebazar.model.FoodDateTimeBookModel;
+import com.homemadebazar.model.UserLocation;
 
 import java.io.File;
 import java.security.MessageDigest;
@@ -376,8 +377,10 @@ public class Utils {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
                                 String deviceToken = FirebaseInstanceId.getInstance().getToken();
+                                UserLocation userLocation = SharedPreference.getUserLocation(context);
                                 ServiceUtils.deviceLoginLogoutApiCall(context, userId, deviceToken, Constants.LoginHistory.LOGOUT);
                                 SharedPreference.clearSharedPreference(context);
+                                SharedPreference.saveUserLocation(context, userLocation);
                                 context.startActivity(new Intent(context, LoginActivity.class));
                                 ((Activity) context).finish();
                             }

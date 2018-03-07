@@ -68,6 +68,7 @@ public class FoodieHomeChefSearchFragment extends BaseFragment implements View.O
     }
 
     private void getFoodCategories() {
+        System.out.println();
         new GetRequest(getActivity(), new GetRequest.ApiCompleteListener() {
             @Override
             public void onApiCompleteListener(String response) {

@@ -112,6 +112,11 @@ public class FoodieFlashFragment extends BaseFragment implements SwipeRefreshLay
                                 foodieFlashPostModelArrayList.clear();
                                 foodieFlashPostModelArrayList.addAll(tempFoodieFlashPostArrayList);
                                 adapter.notifyDataSetChanged();
+                                getView().findViewById(R.id.tv_no_record_found).setVisibility(View.GONE);
+                            } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.NO_RECORD_FOUND) {
+                                getView().findViewById(R.id.tv_no_record_found).setVisibility(View.VISIBLE);
+                                foodieFlashPostModelArrayList.clear();
+                                adapter.notifyDataSetChanged();
                             } else {
                                 DialogUtils.showAlert(getActivity(), baseModel.getStatusMessage());
                             }

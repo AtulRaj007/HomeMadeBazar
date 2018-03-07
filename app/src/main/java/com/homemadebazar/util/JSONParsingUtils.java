@@ -88,7 +88,11 @@ public class JSONParsingUtils {
         userModel.setLastName(object.optString("LastName"));
         userModel.setEmailId(object.optString("EmailId"));
         userModel.setAccountType(object.optString("AccountType"));
-        userModel.setProfilePic(object.optString("ProfilePic"));
+//        userModel.setProfilePic(object.optString("ProfilePic"));
+        userModel.setInterest(object.optString("Interests"));
+        userModel.setProfilePic(object.optString("Url"));
+        userModel.setProfessionName(object.optString("ProfessionName"));
+        userModel.setProfessionType(object.optString("ProfessionType"));
         return userModel;
     }
 
@@ -730,14 +734,15 @@ public class JSONParsingUtils {
         userModel.setAccountType(object.optString("AccountType"));
         userModel.setProfilePic(object.optString("Url"));
         userModel.setAddress(object.optString("Address"));
-        userModel.setCompanyName(object.optString("CompanyName"));
         userModel.setDpStatus(object.optString("DPStatus"));
         userModel.setIsMobileVerified(object.optString("IsMobileVarified"));
         userModel.setLatitude(object.optString("Latitude"));
         userModel.setLongitude(object.optString("Longitude"));
         userModel.setPinCode(object.optString("Pincode"));
-        userModel.setUniversityName(object.optString("UniversityName"));
         userModel.setFriendRequestStatus(object.optString("FrndRequestStatus"));
+        userModel.setInterest(object.optString("Interest"));
+        userModel.setProfessionType(object.optString("ProfessionType"));
+        userModel.setProfessionName(object.optString("ProfessionName"));
         return userModel;
     }
 

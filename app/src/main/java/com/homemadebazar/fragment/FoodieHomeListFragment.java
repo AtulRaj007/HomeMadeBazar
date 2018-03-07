@@ -59,7 +59,7 @@ public class FoodieHomeListFragment extends BaseFragment implements SwipeRefresh
 
     @Override
     protected void setData() {
-        foodieHomeListAdapter = new FoodieHomeListAdapter(getActivity(), homeChiefNearByModelArrayList);
+        foodieHomeListAdapter = new FoodieHomeListAdapter(getActivity(), homeChiefNearByModelArrayList, false);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(foodieHomeListAdapter);

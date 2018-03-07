@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.model.BaseModel;
+import com.homemadebazar.model.CustomAddress;
 import com.homemadebazar.model.MessegeInviteParticipateModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
@@ -49,7 +50,7 @@ public class MessengerInviteParticipatesRecyclerAdapter extends RecyclerView.Ada
     public void onBindViewHolder(InviteParticipateViewHolder holder, int position) {
         MessegeInviteParticipateModel messegeInviteParticipateModel = dataList.get(position);
         holder.name.setText(messegeInviteParticipateModel.getfName() + " " + messegeInviteParticipateModel.getlName());
-        holder.address.setText(messegeInviteParticipateModel.getAddress());
+        holder.address.setText(CustomAddress.getCompleteAddress(messegeInviteParticipateModel.getAddress()));
         if (!TextUtils.isEmpty(messegeInviteParticipateModel.getProfileImage())) {
             Glide.with(context).load(messegeInviteParticipateModel.getProfileImage()).into(holder.ivProfilePic);
         }

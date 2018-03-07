@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * Created by sonu on 12/9/2017.
  */
 
-public class FoodieMessengerInvitesFragment extends BaseFragment {
+public class FoodieMessengerInvitesFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView recyclerView;
     private UserModel userModel;
     private ArrayList<MessegeInviteParticipateModel> dataList = new ArrayList<>();
@@ -54,6 +54,7 @@ public class FoodieMessengerInvitesFragment extends BaseFragment {
     @Override
     protected void initialiseListener() {
         userModel = SharedPreference.getUserModel(getActivity());
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -101,5 +102,10 @@ public class FoodieMessengerInvitesFragment extends BaseFragment {
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), getActivity(), null);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        getInviteParticipateListApiCall();
     }
 }

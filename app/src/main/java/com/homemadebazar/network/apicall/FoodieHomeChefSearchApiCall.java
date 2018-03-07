@@ -87,6 +87,7 @@ public class FoodieHomeChefSearchApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.FOODIE_HOMECHEF_SEARCH);
         return Constants.ServerURL.FOODIE_HOMECHEF_SEARCH;
     }
 

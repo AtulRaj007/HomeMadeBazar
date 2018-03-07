@@ -6,7 +6,6 @@ import java.io.Serializable;
  * Created by Sumit on 28/08/17.
  */
 
-
 public class UserModel extends BaseModel implements Serializable {
     String userId;
     String countryCode;
@@ -20,6 +19,10 @@ public class UserModel extends BaseModel implements Serializable {
     double walletBalance;
     String accountId;
     String aadharNumber;
+    String dpStatus;
+    String professionType;
+    String professionName;
+    String interest;
 
     public double getWalletBalance() {
         return walletBalance;
@@ -107,6 +110,38 @@ public class UserModel extends BaseModel implements Serializable {
 
     public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
+    }
+
+    public String getDpStatus() {
+        return dpStatus;
+    }
+
+    public void setDpStatus(String dpStatus) {
+        this.dpStatus = dpStatus;
+    }
+
+    public String getProfessionType() {
+        return professionType;
+    }
+
+    public void setProfessionType(String professionType) {
+        this.professionType = professionType;
+    }
+
+    public String getProfessionName() {
+        return professionName;
+    }
+
+    public void setProfessionName(String professionName) {
+        this.professionName = professionName;
+    }
+
+    public String getInterest() {
+        return interest;
+    }
+
+    public void setInterest(String interest) {
+        this.interest = interest;
     }
 
     public String getAadharNumber() {

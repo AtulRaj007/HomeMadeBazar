@@ -45,6 +45,7 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
     private Uri profilePicUri = null;
     private LinearLayoutManager linearLayoutManager;
     private ProfileRecyclerAdapter profileRecyclerAdapter;
+    private boolean isProfessionChangeManually = false;
     private ArrayList<ProfileInterestsModel> profileInterestsModelArrayList = new ArrayList<>();
 
     @Override
@@ -76,21 +77,30 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
         etAboutYourSelf = findViewById(R.id.et_about_your_self);
         sprProfession = findViewById(R.id.spr_profession);
         etProfession = findViewById(R.id.et_profession);
-//        etCompanyName = findViewById(R.id.et_company_name);
-//        etUniversityName = findViewById(R.id.et_university_name);
         ivProfilePic = findViewById(R.id.iv_profile_pic);
         recyclerView = findViewById(R.id.recycler_view);
         tvInterestsSelected = findViewById(R.id.tv_interest_selected);
 
         if (userModel != null) {
-            etFirstName.setText(userModel.getFirstName());
-            etLastName.setText(userModel.getLastName());
-            etEmailId.setText(userModel.getEmailId());
-            etPhoneNumber.setText(userModel.getMobile());
-            etCountry.setText(userModel.getCountryName());
-            if (!TextUtils.isEmpty(userModel.getProfilePic())) {
-                Glide.with(MyProfileActivity.this).load(userModel.getProfilePic()).into(ivProfilePic);
+            try {
+                etFirstName.setText(userModel.getFirstName());
+                etLastName.setText(userModel.getLastName());
+                etEmailId.setText(userModel.getEmailId());
+                etPhoneNumber.setText(userModel.getMobile());
+                etCountry.setText(userModel.getCountryName());
+                if (!TextUtils.isEmpty(userModel.getProfessionType()))
+                    sprProfession.setSelection(Integer.parseInt(userModel.getProfessionType()));
+                etProfession.setText(userModel.getProfessionName());
+                etAboutYourSelf.setText(userModel.getDpStatus());
+                if (!TextUtils.isEmpty(userModel.getProfilePic())) {
+                    Glide.with(MyProfileActivity.this).load(userModel.getProfilePic()).into(ivProfilePic);
+                }
+                initialiseProfileInterests(userModel.getInterest());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        } else {
+            initialiseProfileInterests("");
         }
     }
 
@@ -119,13 +129,20 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
                 } else {
                     findViewById(R.id.til_profession).setVisibility(View.VISIBLE);
                     if (position == 1) {//STUDENT
+                        if (isProfessionChangeManually)
+                            etProfession.setText("");
                         etProfession.setHint(getResources().getString(R.string.hint_student));
                     } else if (position == 2) {//PROFESSIONAL
+                        if (isProfessionChangeManually)
+                            etProfession.setText("");
                         etProfession.setHint(getResources().getString(R.string.hint_professional));
                     } else if (position == 3) {//SELF-EMPLOYED
+                        if (isProfessionChangeManually)
+                            etProfession.setText("");
                         etProfession.setHint(getResources().getString(R.string.hint_self_employed));
                     }
                 }
+                isProfessionChangeManually = true;
             }
 
             @Override
@@ -137,20 +154,30 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void setData() {
-        initialiseProfileInterests();
         recyclerView.setLayoutManager(linearLayoutManager);
         profileRecyclerAdapter = new ProfileRecyclerAdapter(this, profileInterestsModelArrayList, true);
         recyclerView.setAdapter(profileRecyclerAdapter);
     }
 
-    private void initialiseProfileInterests() {
+    private void initialiseProfileInterests(String selectedInterests) {
         profileInterestsModelArrayList.clear();
+        String[] interestsArray = {};
+        if (!TextUtils.isEmpty(selectedInterests))
+            interestsArray = selectedInterests.split(";");
         for (int i = 0; i < Constants.profileInterests.length; i++) {
             ProfileInterestsModel profileInterestsModel = new ProfileInterestsModel();
             try {
                 profileInterestsModel.setIconId(Integer.parseInt(Constants.profileInterests[i][0]));
                 profileInterestsModel.setInterestName(Constants.profileInterests[i][1]);
-                profileInterestsModel.setSelected(false);
+                try {
+                    if (interestsArray != null && interestsArray[i].equals("1"))
+                        profileInterestsModel.setSelected(true);
+                    else
+                        profileInterestsModel.setSelected(false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    profileInterestsModel.setSelected(false);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -161,28 +188,27 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
     private boolean isValid() {
         getSelectedInterests();
         if (TextUtils.isEmpty(etFirstName.getText().toString().trim())) {
-            DialogUtils.showAlert(this, "Please enter first name.");
+            DialogUtils.showAlert(this, "Please enter first name");
             return false;
         } else if (TextUtils.isEmpty(etLastName.getText().toString().trim())) {
-            DialogUtils.showAlert(this, "Please enter last name.");
+            DialogUtils.showAlert(this, "Please enter last name");
             return false;
         } else if (TextUtils.isEmpty(etEmailId.getText().toString().trim())) {
-            DialogUtils.showAlert(this, "Please enter emailId.");
-            return false;
-        } else if (TextUtils.isEmpty(etPhoneNumber.getText().toString().trim())) {
-            DialogUtils.showAlert(this, "Please enter Mobile number");
+            DialogUtils.showAlert(this, "Please enter emailId");
             return false;
         } else if (TextUtils.isEmpty(etCountry.getText().toString().trim())) {
             DialogUtils.showAlert(this, "Please enter country name");
+            return false;
+        } else if (sprProfession.getSelectedItemPosition() == 0) {
+            DialogUtils.showAlert(this, "Please select profession type");
+            return false;
+        } else if (TextUtils.isEmpty(etProfession.getText().toString().trim())) {
+            DialogUtils.showAlert(this, "Please enter profession");
             return false;
         } else if (TextUtils.isEmpty(etAboutYourSelf.getText().toString().trim())) {
             DialogUtils.showAlert(this, "Please enter about your self.");
             return false;
         }
-        /*else if (TextUtils.isEmpty(etAadharNumber.getText().toString().trim())) {
-            DialogUtils.showAlert(this, "Please enter aadhar number");
-            return false;
-        }*/
         return true;
     }
 
@@ -191,7 +217,10 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.btn_update_profile:
                 if (isValid()) {
-                    updateUserProfile(profilePicUri.getPath());
+                    if (profilePicUri != null)
+                        updateUserProfile(profilePicUri.getPath());
+                    else
+                        updateUserProfile("");
                 }
                 break;
             case R.id.iv_profile_pic:
@@ -262,11 +291,11 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    //    http://localhost:14013/api/Miscellaneous/ProfileUpdate?FName=ABC&LName=Shah&Email=edu.panks@gmail.com&Country=india&DPStatus=failure is the key of success&Mobile=2222222222&UserId=1712265"
+
     private String getProfileUpdateUrl() {
         try {
             String url = Constants.ServerURL.PROFILE_UPDATE + "?UserId=" + userModel.getUserId() + "&FName=" + etFirstName.getText().toString() + "&LName=" + etLastName.getText().toString() + "&Email=" + etEmailId.getText().toString() + "&Country=" + etCountry.getText().toString() +
-                    "&DPStatus=" + etAboutYourSelf.getText().toString() + "&Mobile=" + etPhoneNumber.getText().toString() + "&CompanyName=" + "" + "&UniversityName=" + "";
+                    "&DPStatus=" + etAboutYourSelf.getText().toString() + "&Mobile=" + etPhoneNumber.getText().toString() + "&ProfessionType=" + sprProfession.getSelectedItemPosition() + "&ProfessionName=" + etProfession.getText().toString().trim() + "&Interest=" + getSelectedInterests();
             System.out.println(Constants.ServiceTAG.URL + url);
             return url;
         } catch (Exception e) {
@@ -274,7 +303,6 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
         }
         return "";
     }
-
 
     public void updateUserProfile(String imagePath) {
         String url = getProfileUpdateUrl();
@@ -293,19 +321,29 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
 
                         JSONObject object = new JSONObject(response);
                         if (object.optInt("StatusCode") == Constants.ServerResponseCode.SUCCESS) {
+                            String userId = object.optString("UserId");
                             String firstName = object.optString("FName");
-                            String lastName = object.optString("FName");
+                            String lastName = object.optString("LName");
                             String emailId = object.optString("Email");
                             String country = object.optString("Country");
                             String mobileNumber = object.optString("Mobile");
                             String dpStatus = object.optString("DPStatus");
                             String profileUrl = object.optString("Url");
-                            String companyName = object.optString("CompanyName");
-                            String universityName = object.optString("UniversityName");
+                            String professionType = object.optString("ProfessionType");
+                            String professionName = object.optString("ProfessionName");
+                            String interest = object.optString("Interest");
 
+                            userModel.setFirstName(firstName);
+                            userModel.setLastName(lastName);
+                            userModel.setEmailId(emailId);
+                            userModel.setCountryName(country);
+                            userModel.setMobile(mobileNumber);
+                            userModel.setDpStatus(dpStatus);
                             userModel.setProfilePic(profileUrl);
+                            userModel.setProfessionType(professionType);
+                            userModel.setProfessionName(professionName);
+                            userModel.setInterest(interest);
                             SharedPreference.saveUserModel(MyProfileActivity.this, userModel);
-
                             DialogUtils.showAlert(MyProfileActivity.this, "Profile updated successfully.", new Runnable() {
                                 @Override
                                 public void run() {

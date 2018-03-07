@@ -24,10 +24,12 @@
             android:src="@drawable/profile" />
 
         <RelativeLayout
+            android:id="@+id/rl_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/margin_10"
+            android:layout_toLeftOf="@+id/iv_delete_fav"
             android:layout_toRightOf="@id/iv_profile_pic"
             android:gravity="center_vertical">
 
@@ -46,8 +48,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_name"
                 android:text=""
-                android:textColor="@color/sub_heading_color"
                 android:textAllCaps="true"
+                android:textColor="@color/sub_heading_color"
                 android:textSize="@dimen/text_16" />
 
             <TextView
@@ -67,6 +69,18 @@
                 android:textSize="@dimen/text_16" />
 
         </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/iv_delete_fav"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_5"
+            android:layout_marginRight="@dimen/margin_5"
+            android:src="@drawable/delete"
+            android:tint="@color/colorPrimary"
+            android:visibility="gone" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

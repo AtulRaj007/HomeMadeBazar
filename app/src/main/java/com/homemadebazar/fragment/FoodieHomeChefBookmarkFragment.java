@@ -58,12 +58,12 @@ public class FoodieHomeChefBookmarkFragment extends BaseFragment implements Swip
 
     @Override
     protected void setData() {
-        foodieHomeListAdapter = new FoodieHomeListAdapter(getActivity(), homeChiefNearByModelArrayList);
+        foodieHomeListAdapter = new FoodieHomeListAdapter(getActivity(), homeChiefNearByModelArrayList, true);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(foodieHomeListAdapter);
-        getChiefDetailListApiCall();
         swipeRefreshLayout.setRefreshing(true);
+        getChiefDetailListApiCall();
     }
 
     public void getChiefDetailListApiCall() {
@@ -74,14 +74,19 @@ public class FoodieHomeChefBookmarkFragment extends BaseFragment implements Swip
 
                 @Override
                 public void onComplete(Exception e) {
+                    swipeRefreshLayout.setRefreshing(false);
                     if (e == null) { // Success
                         try {
-                            swipeRefreshLayout.setRefreshing(false);
                             BaseModel baseModel = apiCall.getBaseModel();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                getView().findViewById(R.id.tv_no_record_found).setVisibility(View.GONE);
                                 homeChiefNearByModelArrayList.clear();
                                 homeChiefNearByModelArrayList.addAll(apiCall.getResult());
                                 foodieHomeListAdapter.notifyDataSetChanged();
+                            } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.NO_RECORD_FOUND) {
+                                homeChiefNearByModelArrayList.clear();
+                                foodieHomeListAdapter.notifyDataSetChanged();
+                                getView().findViewById(R.id.tv_no_record_found).setVisibility(View.VISIBLE);
                             } else {
                                 DialogUtils.showAlert(getActivity(), baseModel.getStatusMessage());
                             }

@@ -61,6 +61,7 @@ public class GetListOfOrdersChefApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.FOODIE_GET_HOME_CHEF_ORDERS);
         return Constants.ServerURL.FOODIE_GET_HOME_CHEF_ORDERS;
     }
 

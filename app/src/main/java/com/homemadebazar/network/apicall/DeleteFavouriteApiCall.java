@@ -11,18 +11,14 @@ import org.json.JSONObject;
  * Created by Sumit on 27/08/17.
  */
 
-public class SendMoneyToBankApiCall extends BaseApiCall {
+public class DeleteFavouriteApiCall extends BaseApiCall {
 
-    private String userId, accountNumber, accountHolderName, ifscCode, amount;
+    private String userId, homeChefUserId;
     private BaseModel baseModel;
 
-
-    public SendMoneyToBankApiCall(String userId, String accountNumber, String accountHolderName, String ifscCode, String amount) {
+    public DeleteFavouriteApiCall(String userId, String homeChefUserId) {
         this.userId = userId;
-        this.accountNumber = accountNumber;
-        this.accountHolderName = accountHolderName;
-        this.ifscCode = ifscCode;
-        this.amount = amount;
+        this.homeChefUserId = homeChefUserId;
     }
 
     private void parseData(String response) {
@@ -45,19 +41,15 @@ public class SendMoneyToBankApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
-        System.out.println(Constants.ServiceTAG.REQUEST + Constants.ServerURL.SEND_MONEY_TO_BANK);
-        return Constants.ServerURL.SEND_MONEY_TO_BANK;
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.DELETE_FAVOURITE);
+        return Constants.ServerURL.DELETE_FAVOURITE;
     }
-
 
     public Object getRequest() {
         JSONObject obj = new JSONObject();
         try {
-            obj.put("UserId", userId);
-            obj.put("Account", accountNumber);
-            obj.put("HolderName", accountHolderName);
-            obj.put("IFSC", ifscCode);
-            obj.put("Amount", amount);
+            obj.put("FoodieUserId", userId);
+            obj.put("HCUserId", homeChefUserId);
 
         } catch (JSONException e) {
             e.printStackTrace();

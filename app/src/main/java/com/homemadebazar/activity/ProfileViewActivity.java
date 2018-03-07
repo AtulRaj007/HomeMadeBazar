@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -33,12 +32,11 @@ import java.util.ArrayList;
 
 public class ProfileViewActivity extends BaseActivity implements View.OnClickListener {
     private static String KEY_USER_ID = "KEY_USER_ID";
-    private TextView tvName, tvEmailId, tvMobileNumber, tvCountry, tvAbout;
+    private TextView tvName, tvEmailId, tvMobileNumber, tvCountry, tvProfessionType, tvProfessionName, tvAbout;
     private Button btnSendFriendRequest;
     private ImageView ivProfilePic;
     private UserModel userModel;
     private String profileUserId;
-    private Spinner sprProfession;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private ProfileRecyclerAdapter profileRecyclerAdapter;
@@ -70,8 +68,9 @@ public class ProfileViewActivity extends BaseActivity implements View.OnClickLis
         tvEmailId = findViewById(R.id.tv_emailId);
         tvMobileNumber = findViewById(R.id.tv_mobile_number);
         tvCountry = findViewById(R.id.tv_country);
+        tvProfessionType = findViewById(R.id.tv_profession_type);
+        tvProfessionName = findViewById(R.id.tv_profession_name);
         tvAbout = findViewById(R.id.tv_about);
-        sprProfession = findViewById(R.id.spr_profession);
         recyclerView = findViewById(R.id.recycler_view);
         btnSendFriendRequest = findViewById(R.id.btn_friend_request);
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -109,6 +108,37 @@ public class ProfileViewActivity extends BaseActivity implements View.OnClickLis
                 e.printStackTrace();
             }
             profileInterestsModelArrayList.add(profileInterestsModel);
+        }
+    }
+
+    private void initialiseProfileInterests(String selectedInterests) {
+        try {
+            profileInterestsModelArrayList.clear();
+            String[] interestsArray = {};
+            if (!TextUtils.isEmpty(selectedInterests))
+                interestsArray = selectedInterests.split(";");
+            for (int i = 0; i < Constants.profileInterests.length; i++) {
+                ProfileInterestsModel profileInterestsModel = new ProfileInterestsModel();
+                try {
+                    profileInterestsModel.setIconId(Integer.parseInt(Constants.profileInterests[i][0]));
+                    profileInterestsModel.setInterestName(Constants.profileInterests[i][1]);
+                    try {
+                        if (interestsArray != null && interestsArray[i].equals("1"))
+                            profileInterestsModel.setSelected(true);
+                        else
+                            profileInterestsModel.setSelected(false);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        profileInterestsModel.setSelected(false);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                profileInterestsModelArrayList.add(profileInterestsModel);
+            }
+            profileRecyclerAdapter.notifyDataSetChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -150,7 +180,17 @@ public class ProfileViewActivity extends BaseActivity implements View.OnClickLis
         tvEmailId.setText(userModel.getEmailId());
         tvMobileNumber.setText(userModel.getMobile());
         tvCountry.setText(userModel.getCountryName());
+        try {
+            tvProfessionType.setText(getResources().getStringArray(R.array.profession)[Integer.parseInt(userModel.getProfessionType())]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        tvProfessionName.setText(userModel.getProfessionName());
         tvAbout.setText(userModel.getDpStatus());
+        initialiseProfileInterests(userModel.getInterest());
+        if (userModel.getAccountType().equals(String.valueOf(Constants.Role.FOODIE.getRole())) && userModel.getUserId() != profileUserId) {
+            btnSendFriendRequest.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

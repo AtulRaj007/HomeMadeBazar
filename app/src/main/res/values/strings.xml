@@ -238,6 +238,8 @@
     <string name="hint_student">Enter University Name</string>
     <string name="hint_professional">Enter Company Name</string>
     <string name="hint_self_employed">Enter work details.</string>
+    <string name="str_profession_type">Profession Type</string>
+    <string name="str_profession_name">Profession Name</string>
 
 
     <string-array name="price">

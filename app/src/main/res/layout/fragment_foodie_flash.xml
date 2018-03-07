@@ -61,6 +61,8 @@
         android:src="@drawable/add"
         app:backgroundTint="@color/green" />
 
+    <include layout="@layout/layout_no_record" />
+
     <!--android:backgroundTint="@color/green"-->
 
 </RelativeLayout>

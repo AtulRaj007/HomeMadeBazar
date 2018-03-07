@@ -6,7 +6,10 @@ import java.io.Serializable;
  * Created by Atul on 1/29/18.
  */
 
-public class OtherUserProfileDetailsModel implements Serializable{
+public class OtherUserProfileDetailsModel implements Serializable {
+    private String professionType;
+    private String professionName;
+    private String interest;
     private String userId;
     private String firstName;
     private String lastName;
@@ -20,8 +23,6 @@ public class OtherUserProfileDetailsModel implements Serializable{
     private String longitude;
     private String mobile;
     private String pinCode;
-    private String companyName;
-    private String universityName;
     private String friendRequestStatus;
     private String profilePic;
     private String accountType;
@@ -90,6 +91,30 @@ public class OtherUserProfileDetailsModel implements Serializable{
         this.dpStatus = dpStatus;
     }
 
+    public String getProfessionType() {
+        return professionType;
+    }
+
+    public void setProfessionType(String professionType) {
+        this.professionType = professionType;
+    }
+
+    public String getProfessionName() {
+        return professionName;
+    }
+
+    public void setProfessionName(String professionName) {
+        this.professionName = professionName;
+    }
+
+    public String getInterest() {
+        return interest;
+    }
+
+    public void setInterest(String interest) {
+        this.interest = interest;
+    }
+
     public String getIsMobileVerified() {
         return isMobileVerified;
     }
@@ -128,22 +153,6 @@ public class OtherUserProfileDetailsModel implements Serializable{
 
     public void setPinCode(String pinCode) {
         this.pinCode = pinCode;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getUniversityName() {
-        return universityName;
-    }
-
-    public void setUniversityName(String universityName) {
-        this.universityName = universityName;
     }
 
     public String getFriendRequestStatus() {

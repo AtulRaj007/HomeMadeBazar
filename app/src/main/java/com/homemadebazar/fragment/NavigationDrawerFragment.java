@@ -2,18 +2,20 @@ package com.homemadebazar.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.FoodieHomeActivity;
 import com.homemadebazar.activity.HomeActivity;
 import com.homemadebazar.activity.MarketPlaceHomeActivity;
 import com.homemadebazar.model.UserModel;
-import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.SharedPreference;
 
 /**
@@ -23,6 +25,7 @@ import com.homemadebazar.util.SharedPreference;
 public class NavigationDrawerFragment extends BaseFragment implements View.OnClickListener {
     private static String TAG = ">>>>>NavigationFragment";
     private TextView tvName, tvMobileNumber;
+    private ImageView ivProfilePic;
     private UserModel userModel;
 
     @Nullable
@@ -35,6 +38,7 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
     public void initUI() {
         Log.e(TAG, "===== initUI() =====");
         userModel = SharedPreference.getUserModel(getActivity());
+        ivProfilePic = getView().findViewById(R.id.iv_profile);
         tvName = getView().findViewById(R.id.tv_name);
         tvMobileNumber = getView().findViewById(R.id.tv_mobile_number);
 
@@ -72,6 +76,9 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
     }
 
     public void setData() {
+        if (!TextUtils.isEmpty(userModel.getProfilePic())) {
+            Glide.with(getActivity()).load(userModel.getProfilePic()).into(ivProfilePic);
+        }
         tvName.setText(userModel.getFirstName() + " " + userModel.getLastName());
         tvMobileNumber.setText(userModel.getCountryCode() + userModel.getMobile());
     }

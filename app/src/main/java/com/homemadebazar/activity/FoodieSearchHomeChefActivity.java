@@ -78,7 +78,7 @@ public class FoodieSearchHomeChefActivity extends BaseActivity {
 
     @Override
     protected void setData() {
-        foodieHomeListAdapter = new FoodieHomeListAdapter(FoodieSearchHomeChefActivity.this, homeChiefNearByModelArrayList);
+        foodieHomeListAdapter = new FoodieHomeListAdapter(FoodieSearchHomeChefActivity.this, homeChiefNearByModelArrayList, false);
         linearLayoutManager = new LinearLayoutManager(FoodieSearchHomeChefActivity.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(foodieHomeListAdapter);

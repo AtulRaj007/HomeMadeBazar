@@ -50,7 +50,6 @@
             android:layout_height="wrap_content"
             android:background="@color/background_screen">
 
-
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -155,16 +154,39 @@
                             android:layout_marginBottom="@dimen/margin_5"
                             android:background="@color/nav_line_background" />
 
-                        <Spinner
-                            android:id="@+id/spr_profession"
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/margin_10"
-                            android:entries="@array/profession"
-                            android:paddingBottom="@dimen/padding_5"
-                            android:paddingTop="@dimen/padding_5"
-                            android:prompt="@string/str_profession"
-                            android:spinnerMode="dropdown" />
+                            android:layout_marginBottom="@dimen/margin_5"
+                            android:text="@string/str_profession_type"
+                            android:textSize="@dimen/text_16" />
+
+                        <TextView
+                            android:id="@+id/tv_profession_type"
+                            style="@style/ProfileTextViewStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginBottom="@dimen/margin_5"
+                            android:background="@color/nav_line_background" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_5"
+                            android:text="@string/str_profession_name"
+                            android:textSize="@dimen/text_16" />
+
+                        <TextView
+                            android:id="@+id/tv_profession_name"
+                            style="@style/ProfileTextViewStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="" />
 
                         <View
                             android:layout_width="match_parent"
@@ -180,6 +202,7 @@
                             android:textSize="@dimen/text_16" />
 
                         <TextView
+                            android:id="@+id/tv_about"
                             style="@style/ProfileTextViewStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -196,13 +219,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="@dimen/margin_30"
                             android:layout_marginTop="@dimen/margin_10"
                             android:background="@drawable/button_round_primary"
                             android:paddingLeft="@dimen/padding_20"
                             android:paddingRight="@dimen/padding_20"
-                            android:text="Send Friend Request"
+                            android:text="Add Friend"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/text_14" />
+                            android:textSize="@dimen/text_14"
+                            android:visibility="gone" />
 
                     </LinearLayout>
                 </LinearLayout>

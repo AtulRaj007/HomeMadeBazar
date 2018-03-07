@@ -34,6 +34,13 @@ public class Constants {
             {String.valueOf(R.drawable.profile_watching_sports), "Watching Sports"},
             {String.valueOf(R.drawable.profile_wine_tasting), "Wine Tasting"}
     };
+    public String[] FriendStatusString = {
+            "Add Friend",
+            "Request Sent",
+            "Request Received",
+            "Friends",
+            "Add Friend"
+    };
 
     public enum Role {
         HOME_CHEF(1), FOODIE(2), MARKET_PLACE(3);
@@ -61,6 +68,7 @@ public class Constants {
         }
     }
 
+
     public enum WebViewTitleUrl {
         TERMS_OF_USE("Terms Of Use", "https://www.google.co.in"),
         PRIVACY_POLICY("Privacy Policy", "https://www.google.co.in/"),
@@ -82,7 +90,6 @@ public class Constants {
             return url;
         }
     }
-
 
     public interface FoodTiming {
         int Selected = 1;
@@ -147,6 +154,7 @@ public class Constants {
         String LIST_OF_HOT_DEALS = BASE_URL + "Foodies/GetListOfHotDeals";
         String GET_USER_PROFILE_DETAILS = BASE_URL + "Miscellaneous/GetUserProfileDetails";
         String SAVE_FAVOURITE = BASE_URL + "Miscellaneous/SaveFavourite";
+        String DELETE_FAVOURITE = BASE_URL + "Foodies/DeleteFavouritesHomeChif";
         String GET_LIST_OF_FAVOURITE_HOME_CHEF = BASE_URL + "Foodies/GetLstOfFavouritesHomeChif";
         String MARKET_PLACE_PRODUCT_SEARCH = BASE_URL + "MarketPlace/MarketplaceSearch";
         String HOMECHEF_BOOK_PRODUCT = BASE_URL + "MarketPlace/BuyProduct";
@@ -171,13 +179,13 @@ public class Constants {
         int NO_RECORD_FOUND = 151;
     }
 
+//    file_type(response) : 1 - image, 2 - video, 3 - audio
+//    message_type(response) : 1 - text, 2 - file, 3 - location
+
     public interface SignInType {
         String GOOGLE = "1";
         String FACEBOOK = "2";
     }
-
-//    file_type(response) : 1 - image, 2 - video, 3 - audio
-//    message_type(response) : 1 - text, 2 - file, 3 - location
 
     public interface Keys {
         int REQUEST_PERMISSION_CAMERA = 100;
@@ -251,11 +259,11 @@ public class Constants {
 
     //    --0 Req Not Sent,1 Req Sent ,2 Req Received,3 Frnd ,4 Reject,5 All Ready Req.
     public interface RequestType {
-        int REQUEST_NOT_SENT = 0;
-        int REQUEST_SENT = 1;
-        int REQUEST_RECEIVED = 2;
-        int FRIEND = 3;
-        int REJECT = 4;
+        int REQUEST_NOT_SENT = 0;  // Add Friend
+        int REQUEST_SENT = 1;      //  Request Sent
+        int REQUEST_RECEIVED = 2;  //  Request Received
+        int FRIEND = 3;             // Friends
+        int REJECT = 4;             // Add Friends
     }
 
     public interface DinnerTime {
