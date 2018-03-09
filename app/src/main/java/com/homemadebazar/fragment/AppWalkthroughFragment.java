@@ -28,6 +28,7 @@ public class AppWalkthroughFragment extends DialogFragment {
     private ViewPager viewPager;
     private int homeChefImageArrayList[] = {R.drawable.homechef_order, R.drawable.homechef_myshop, R.drawable.homechef_marketplace, R.drawable.homechef_skillhub};
     private int foodieImageArrayList[] = {R.drawable.foodie_home, R.drawable.foodie_discover, R.drawable.foodie_flash, R.drawable.foodie_messenger};
+    private int marketplaceImageArrayList[] = {R.drawable.marketplace_orders, R.drawable.marketplace_myshop, R.drawable.marketplace_myproducts};
     private CircleIndicator circleIndicator;
     private UserModel userModel;
 
@@ -63,6 +64,8 @@ public class AppWalkthroughFragment extends DialogFragment {
                 imagePagerAdapter = new ImageLocalPagerAdapter(getActivity(), homeChefImageArrayList);
             else if (userModel.getAccountType().equals(Constants.AccountType.FOODIE))
                 imagePagerAdapter = new ImageLocalPagerAdapter(getActivity(), foodieImageArrayList);
+            else if (userModel.getAccountType().equals(Constants.AccountType.MARKET_PLACE))
+                imagePagerAdapter = new ImageLocalPagerAdapter(getActivity(), marketplaceImageArrayList);
             viewPager.setAdapter(imagePagerAdapter);
             circleIndicator.setViewPager(viewPager);
         } catch (Exception e) {

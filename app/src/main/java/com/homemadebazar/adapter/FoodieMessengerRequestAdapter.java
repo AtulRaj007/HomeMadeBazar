@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
@@ -51,6 +51,7 @@ public class FoodieMessengerRequestAdapter extends RecyclerView.Adapter<FoodieMe
         holder.tvName.setText(reqDataList.get(position).getFirstName() + " " + reqDataList.get(position).getLastName());
         if (!TextUtils.isEmpty(reqDataList.get(position).getProfilePic()))
             Glide.with(context).load(reqDataList.get(position).getProfilePic()).into(holder.profileImage);
+        holder.tvEmail.setText(reqDataList.get(position).getEmailId());
 
     }
 
@@ -59,7 +60,7 @@ public class FoodieMessengerRequestAdapter extends RecyclerView.Adapter<FoodieMe
         return reqDataList.size();
     }
 
-    private void callAcceptRejectCallApi(String userId, String requestUserId, String actionType) {
+    private void callAcceptRejectCallApi(String userId, String requestUserId, String actionType, final int position) {
         try {
             final Dialog progressDialog = DialogUtils.getProgressDialog(context, "Please wait..");
             progressDialog.show();
@@ -74,7 +75,14 @@ public class FoodieMessengerRequestAdapter extends RecyclerView.Adapter<FoodieMe
                         try {
                             BaseModel baseModel = apiCall.getResult();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                Toast.makeText(context, "" + baseModel.getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                DialogUtils.showAlert(context, "Friend request accepted", new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        reqDataList.remove(position);
+                                        notifyDataSetChanged();
+                                    }
+                                });
+
                             } else {
                                 DialogUtils.showAlert(context, baseModel.getStatusMessage());
                             }
@@ -98,29 +106,30 @@ public class FoodieMessengerRequestAdapter extends RecyclerView.Adapter<FoodieMe
     }
 
     class RequestViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        CircleImageView profileImage;
-        TextView tvName, tvLastMessage;
-        Button acceptReq, ignoreReq;
+        private ImageView profileImage;
+        private TextView tvName, tvEmail;
+        private Button btnAccept, btnReject;
 
         RequestViewHolder(View itemView) {
             super(itemView);
             profileImage = itemView.findViewById(R.id.iv_profile_pic);
             tvName = itemView.findViewById(R.id.tv_name);
-            tvLastMessage = itemView.findViewById(R.id.tv_last_message);
-            acceptReq = itemView.findViewById(R.id.btn_accept);
-            ignoreReq = itemView.findViewById(R.id.btn_ignore);
-            acceptReq.setOnClickListener(this);
-            ignoreReq.setOnClickListener(this);
+            tvEmail = itemView.findViewById(R.id.tv_emailId);
+            btnAccept = itemView.findViewById(R.id.btn_accept);
+            btnReject = itemView.findViewById(R.id.btn_ignore);
+            btnAccept.setOnClickListener(this);
+            btnReject.setOnClickListener(this);
+            profileImage.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_accept:
-                    callAcceptRejectCallApi(userId, reqDataList.get(getAdapterPosition()).getUserId(), RequestType.ACCEPT_REQ);
+                    callAcceptRejectCallApi(userId, reqDataList.get(getAdapterPosition()).getUserId(), RequestType.ACCEPT_REQ, getAdapterPosition());
                     break;
                 case R.id.btn_ignore:
-                    callAcceptRejectCallApi(userId, reqDataList.get(getAdapterPosition()).getUserId(), RequestType.IGNORE_REQ);
+                    callAcceptRejectCallApi(userId, reqDataList.get(getAdapterPosition()).getUserId(), RequestType.IGNORE_REQ, getAdapterPosition());
                     break;
                 case R.id.iv_profile_pic:
                     Utils.showProfile(context, reqDataList.get(getAdapterPosition()).getUserId());

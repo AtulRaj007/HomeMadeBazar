@@ -33,7 +33,7 @@ public class FoodieBookOrderApiCall extends BaseApiCall {
             obj.put("CheifUserId", homeChefUserId);
             obj.put("OderId", orderId);
             obj.put("BookedDate", bookedDate);
-            obj.put("OrderBookedFor", orderBookedFor);
+            obj.put("OrderBookedFor", orderBookedFor);  // orderBookedFor ::::: 1 -> Breakfast 2 -> Lunch 3 -> Dinner
 
         } catch (JSONException e) {
             e.printStackTrace();

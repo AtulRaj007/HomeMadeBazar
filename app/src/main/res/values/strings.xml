@@ -132,7 +132,7 @@
     <string name="str_save">Save</string>
     <string name="str_add_shop_details">ADD SHOP DETAILS</string>
     <string name="text_accept">Confirm</string>
-    <string name="text_ignore">Ignore</string>
+    <string name="text_reject">Reject</string>
     <string name="str_send_invites_participants">Send invite to new participants</string>
     <string name="str_request">Request</string>
     <string name="hint_dish_category">Dish Category</string>
@@ -240,6 +240,8 @@
     <string name="hint_self_employed">Enter work details.</string>
     <string name="str_profession_type">Profession Type</string>
     <string name="str_profession_name">Profession Name</string>
+    <string name="str_unfriend">Unfriend</string>
+    <string name="str_location_permission_alert">In order to use this app, you must first grant Location permission.</string>
 
 
     <string-array name="price">

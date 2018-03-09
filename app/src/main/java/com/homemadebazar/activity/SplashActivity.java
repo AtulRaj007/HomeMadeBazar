@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -20,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.homemadebazar.R;
 import com.homemadebazar.model.UserLocation;
+import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
 
 public class SplashActivity extends BaseActivity {
@@ -41,7 +41,7 @@ public class SplashActivity extends BaseActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
         } else {
             getLocation();
-            tvMessage.setText("Getting Location ... Please Wait");
+            tvMessage.setText("Getting User Location ... Please Wait");
         }
     }
 
@@ -57,7 +57,7 @@ public class SplashActivity extends BaseActivity {
                             longitude = mLastLocation.getLongitude();
                             Log.e("Latitude", mLastLocation.getLatitude() + "");
                             Log.e("Longitude", mLastLocation.getLongitude() + "");
-                            progressBar.setVisibility(View.INVISIBLE);
+//                            progressBar.setVisibility(View.INVISIBLE);
                             tvMessage.setText(latitude + "," + longitude);
                             UserLocation userLocation = new UserLocation();
                             userLocation.setLatitude(latitude);
@@ -82,7 +82,7 @@ public class SplashActivity extends BaseActivity {
                 startActivity(intent);
                 finish();
             }
-        }, 1000);
+        }, 100);
 
     }
 
@@ -105,8 +105,20 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_LOCATION_PERMISSION && grantResults.length > 0) {
+        if (requestCode == REQUEST_LOCATION_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED || grantResults[1] == PackageManager.PERMISSION_GRANTED) {
             getLocation();
+        } else {
+            DialogUtils.showAlert(SplashActivity.this, getResources().getString(R.string.str_location_permission_alert), new Runnable() {
+                @Override
+                public void run() {
+                    ActivityCompat.requestPermissions(SplashActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
+                }
+            }, new Runnable() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            });
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }

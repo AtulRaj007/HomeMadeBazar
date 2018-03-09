@@ -161,6 +161,7 @@ public class Constants {
         String SEND_MONEY_TO_BANK = BASE_URL + "Miscellaneous/BnkTransfer";
         String FOODIE_CHECK_IN = BASE_URL + "Miscellaneous/FoodieCheckIn";
         String HOMECHEF_ORDER_DELETE = BASE_URL + "Miscellaneous/OrdersDelete";
+        String HOMECHEF_UNFRIEND_USER = BASE_URL + "Messenger/Unfriends";
     }
 
     public interface uploadImageURL {

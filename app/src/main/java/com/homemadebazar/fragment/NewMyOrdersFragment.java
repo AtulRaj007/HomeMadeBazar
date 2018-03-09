@@ -59,20 +59,20 @@ public class NewMyOrdersFragment extends BaseFragment implements SwipeRefreshLay
     public void setData() {
         myOrdersAdapter = new MyOrdersAdapter(getActivity(), false, homeChefIncomingOrderModelArrayList);
         recyclerView.setAdapter(myOrdersAdapter);
+        swipeRefreshLayout.setRefreshing(true);
         getBookOrderedList();
     }
 
     private void getBookOrderedList() {
         try {
-            swipeRefreshLayout.setRefreshing(true);
             final HomeChefIncomingOrderApiCall apiCall = new HomeChefIncomingOrderApiCall(userModel.getUserId(), Constants.HomeChefOrder.NowOrder);
             HttpRequestHandler.getInstance(getActivity().getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
                 public void onComplete(Exception e) {
+                    swipeRefreshLayout.setRefreshing(false);
                     if (e == null) { // Success
                         try {
-                            swipeRefreshLayout.setRefreshing(false);
                             BaseModel baseModel = apiCall.getBaseModel();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
                                 ArrayList<HomeChefIncomingOrderModel> tempHomeChefIncomingOrderArrayList = apiCall.getResult();
