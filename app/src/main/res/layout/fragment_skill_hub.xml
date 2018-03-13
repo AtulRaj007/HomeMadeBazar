@@ -9,45 +9,25 @@
         android:id="@+id/ll_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black_heading_color">
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_10"
-            android:layout_marginRight="@dimen/margin_10"
-            android:layout_marginTop="@dimen/margin_10"
-            android:layout_weight="1">
-
-            <EditText
-                android:id="@+id/et_search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/hint_search_for_recipe"
-                android:imeOptions="actionSearch"
-                android:singleLine="true"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white" />
-
-            <ImageView
-                android:id="@+id/iv_clear_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/youtube_cross"
-                android:visibility="gone" />
-
-        </RelativeLayout>
+        android:layout_below="@id/toolbar"
+        android:background="@color/black_heading_color"
+        android:paddingBottom="@dimen/padding_5"
+        android:paddingTop="@dimen/padding_5">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_homechef_search" />
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/margin_10"
-            android:layout_marginRight="@dimen/margin_20"
-            android:src="@drawable/back"
-            android:visibility="gone" />
+            android:focusable="false"
+            android:hint="@string/hint_search_for_recipe"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/text_16" />
 
     </LinearLayout>
 
@@ -55,7 +35,8 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_search">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"

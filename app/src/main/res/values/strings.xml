@@ -144,7 +144,7 @@
     <string name="str_edit_timings">Edit Timings</string>
     <string name="hint_enter_price_range">Enter Price Range</string>
     <string name="uploading_photo">Uploading photo ... please Wait</string>
-    <string name="hint_search_for_recipe">Search for recipes</string>
+    <string name="hint_search_for_recipe">Search Video for recipes</string>
     <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
     <string name="str_about_dish">About Dish</string>
     <string name="permote_business">PROMOTE BUSINESS</string>

@@ -1,12 +1,11 @@
 package com.homemadebazar.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.homemadebazar.R;
+import com.homemadebazar.activity.HomeChefVideoRecipeSearchActivity;
 import com.homemadebazar.adapter.SkillHubAdapter;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.HomeChefSkillHubVideoModel;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
  * Created by HP on 7/29/2017.
  */
 
-public class SkillHubFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class SkillHubFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
     private RecyclerView recyclerView;
     private SkillHubAdapter skillHubAdapter;
     private LinearLayoutManager linearLayoutManager;
@@ -54,45 +54,12 @@ public class SkillHubFragment extends BaseFragment implements SwipeRefreshLayout
         recyclerView = getView().findViewById(R.id.recycler_view);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         etSearch = getView().findViewById(R.id.et_search);
-        ivClearSearch = getView().findViewById(R.id.iv_clear_search);
+//        ivClearSearch = getView().findViewById(R.id.iv_clear_search);
         swipeRefreshLayout = getView().findViewById(R.id.swipe_refresh_layout);
     }
 
     public void initialiseListener() {
-        etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() > 0) {
-                    filterSearchItem(s.toString());
-                    ivClearSearch.setVisibility(View.VISIBLE);
-                } else {
-                    ivClearSearch.setVisibility(View.GONE);
-                    homeChefSkillHubVideoModelArrayList.clear();
-                    homeChefSkillHubVideoModelArrayList.addAll(videoModelsArrayList);
-                    skillHubAdapter.notifyDataSetChanged();
-                }
-            }
-        });
-
-        getView().findViewById(R.id.iv_clear_search).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                etSearch.setText("");
-                homeChefSkillHubVideoModelArrayList.clear();
-                homeChefSkillHubVideoModelArrayList.addAll(videoModelsArrayList);
-                skillHubAdapter.notifyDataSetChanged();
-            }
-        });
+        etSearch.setOnClickListener(this);
         swipeRefreshLayout.setOnRefreshListener(this);
     }
 
@@ -155,6 +122,15 @@ public class SkillHubFragment extends BaseFragment implements SwipeRefreshLayout
     @Override
     public void onRefresh() {
         getSkillHubVideos();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.et_search:
+                startActivity(new Intent(getActivity(), HomeChefVideoRecipeSearchActivity.class));
+                break;
+        }
     }
 }
 
