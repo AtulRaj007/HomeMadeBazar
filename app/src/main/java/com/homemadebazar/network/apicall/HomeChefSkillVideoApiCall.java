@@ -17,17 +17,20 @@ import java.util.ArrayList;
 public class HomeChefSkillVideoApiCall extends BaseApiCall {
 
     private String userId;
+    private String searchString;
     private ArrayList<HomeChefSkillHubVideoModel> homeChefSkillHubVideoModelArrayList;
     private BaseModel baseModel;
 
-    public HomeChefSkillVideoApiCall(String userId) {
+    public HomeChefSkillVideoApiCall(String userId,String searchString) {
         this.userId = userId;
+        this.searchString=searchString;
     }
 
     public Object getRequest() {
         JSONObject object = new JSONObject();
         try {
             object.put("UserId", userId);
+            object.put("SearchKey", searchString);
 
         } catch (JSONException e) {
             e.printStackTrace();

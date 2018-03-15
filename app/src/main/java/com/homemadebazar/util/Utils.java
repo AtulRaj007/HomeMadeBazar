@@ -28,6 +28,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.ChangePasswordActivity;
@@ -45,6 +46,7 @@ import com.homemadebazar.fragment.AppWalkthroughFragment;
 import com.homemadebazar.fragment.UserProfileFragment;
 import com.homemadebazar.model.FoodDateTimeBookModel;
 import com.homemadebazar.model.UserLocation;
+import com.homemadebazar.model.UserModel;
 
 import java.io.File;
 import java.security.MessageDigest;
@@ -273,6 +275,27 @@ public class Utils {
                 cursor.close();
         }
         return null;
+    }
+
+    public static void setupUserToCrashAnalytics(UserModel userModel) {
+        try {
+            String userIdentifier = userModel.getFirstName() + " " + userModel.getLastName() + " " + userModel.getUserId();
+            Crashlytics.setUserIdentifier(userIdentifier);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String getAppStoreUrl(Context context) {
+
+        try {
+            String url = "https://play.google.com/store/apps/details?id=" + context.getApplicationContext().getPackageName();
+            System.out.println("Store Url:-" + url);
+            return url;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     public static void hideSoftKeyboard(Activity context) {

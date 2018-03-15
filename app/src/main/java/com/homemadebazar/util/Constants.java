@@ -42,6 +42,10 @@ public class Constants {
             "Add Friend"
     };
 
+    public interface AppDebug{
+        boolean isPaymentDebug=true; // Should be false in production
+    }
+
     public enum Role {
         HOME_CHEF(1), FOODIE(2), MARKET_PLACE(3);
         int position = -1;

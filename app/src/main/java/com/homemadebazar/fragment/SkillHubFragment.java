@@ -80,13 +80,13 @@ public class SkillHubFragment extends BaseFragment implements SwipeRefreshLayout
         recyclerView.setLayoutManager(linearLayoutManager);
         skillHubAdapter = new SkillHubAdapter(getActivity(), homeChefSkillHubVideoModelArrayList);
         recyclerView.setAdapter(skillHubAdapter);
-        getSkillHubVideos();
+        getSkillHubVideos("");
         swipeRefreshLayout.setRefreshing(true);
     }
 
-    public void getSkillHubVideos() {
+    public void getSkillHubVideos(String searchKeyWrod) {
         try {
-            final HomeChefSkillVideoApiCall apiCall = new HomeChefSkillVideoApiCall(userModel.getUserId());
+            final HomeChefSkillVideoApiCall apiCall = new HomeChefSkillVideoApiCall(userModel.getUserId(), searchKeyWrod);
             HttpRequestHandler.getInstance(getActivity().getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
@@ -121,7 +121,7 @@ public class SkillHubFragment extends BaseFragment implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
-        getSkillHubVideos();
+        getSkillHubVideos("");
     }
 
     @Override

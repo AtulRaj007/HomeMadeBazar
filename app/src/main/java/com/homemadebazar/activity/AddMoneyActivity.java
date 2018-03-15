@@ -153,6 +153,11 @@ public class AddMoneyActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void sendPaymentDetailsToServer(String accountId, String paymentMethodNonce, String amount, String transactionId) {
+        if (Constants.AppDebug.isPaymentDebug) {
+            System.out.println(Constants.ServiceTAG.URL + getServiceUrl(accountId, paymentMethodNonce, amount, transactionId));
+            return;
+        }
+
         final ProgressDialog progressDialog = DialogUtils.getProgressDialog(this, null);
         progressDialog.show();
         new GetRequest(AddMoneyActivity.this, new GetRequest.ApiCompleteListener() {

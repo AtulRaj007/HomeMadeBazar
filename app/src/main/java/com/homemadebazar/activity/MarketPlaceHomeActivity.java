@@ -47,6 +47,7 @@ public class MarketPlaceHomeActivity extends BaseActivity {
         String deviceToken = FirebaseInstanceId.getInstance().getToken();
         ServiceUtils.deviceLoginLogoutApiCall(MarketPlaceHomeActivity.this, userModel.getUserId(), deviceToken, Constants.LoginHistory.LOGIN);
         Utils.runAppWalkthrough(getFragmentManager());
+        Utils.setupUserToCrashAnalytics(userModel);
     }
 
     @Override

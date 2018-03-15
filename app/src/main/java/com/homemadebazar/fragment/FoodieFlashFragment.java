@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
@@ -56,6 +57,7 @@ public class FoodieFlashFragment extends BaseFragment implements SwipeRefreshLay
     private Cursor cursor;
     private Switch switchSyncContact;
     private boolean isApiRunning = false;
+    private Button btnInviteFriends;
 
     @Nullable
     @Override
@@ -71,6 +73,7 @@ public class FoodieFlashFragment extends BaseFragment implements SwipeRefreshLay
         switchBtn = getView().findViewById(R.id.switch_pets_allowed);
         swipeRefreshLayout = getView().findViewById(R.id.swipe_refresh_layout);
         switchSyncContact = getView().findViewById(R.id.switch_sync_contact);
+        btnInviteFriends = getView().findViewById(R.id.btn_invite_friends);
     }
 
     @Override
@@ -84,6 +87,15 @@ public class FoodieFlashFragment extends BaseFragment implements SwipeRefreshLay
         });
         swipeRefreshLayout.setOnRefreshListener(this);
         switchSyncContact.setOnCheckedChangeListener(this);
+        btnInviteFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, Utils.getAppStoreUrl(getActivity()));
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

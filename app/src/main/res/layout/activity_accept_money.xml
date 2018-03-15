@@ -9,11 +9,11 @@
         android:id="@+id/iv_share"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/toolbar"
         android:layout_marginRight="@dimen/margin_10"
         android:layout_marginTop="@dimen/margin_10"
         android:padding="@dimen/padding_5"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/toolbar"
         android:src="@drawable/ic_share" />
 
     <LinearLayout
@@ -78,5 +78,6 @@
 
 
     </LinearLayout>
+
 
 </RelativeLayout>

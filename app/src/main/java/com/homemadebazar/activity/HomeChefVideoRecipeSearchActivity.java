@@ -1,11 +1,17 @@
 package com.homemadebazar.activity;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.homemadebazar.R;
 import com.homemadebazar.adapter.SkillHubAdapter;
@@ -16,6 +22,7 @@ import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
 import com.homemadebazar.network.apicall.HomeChefSkillVideoApiCall;
 import com.homemadebazar.util.Constants;
+import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
 import com.homemadebazar.util.Utils;
 
@@ -37,6 +44,7 @@ public class HomeChefVideoRecipeSearchActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_chef_video_recipe_search);
+        setupToolbar();
     }
 
     @Override
@@ -49,7 +57,20 @@ public class HomeChefVideoRecipeSearchActivity extends BaseActivity {
 
     @Override
     protected void initialiseListener() {
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if (!TextUtils.isEmpty(etSearch.getText().toString().trim()))
+                        getSkillHubVideos(etSearch.getText().toString().trim());
+                    else
+                        DialogUtils.showAlert(HomeChefVideoRecipeSearchActivity.this, "Please enter text to search");
+                    return true;
+                }
 
+                return false;
+            }
+        });
     }
 
     @Override
@@ -57,18 +78,19 @@ public class HomeChefVideoRecipeSearchActivity extends BaseActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         skillHubAdapter = new SkillHubAdapter(this, homeChefSkillHubVideoModelArrayList);
         recyclerView.setAdapter(skillHubAdapter);
-        getSkillHubVideos();
-//        swipeRefreshLayout.setRefreshing(true);
     }
 
-    public void getSkillHubVideos() {
+    public void getSkillHubVideos(String searchKeyWord) {
         try {
-            final HomeChefSkillVideoApiCall apiCall = new HomeChefSkillVideoApiCall(userModel.getUserId());
+            final Dialog progressDialog = DialogUtils.getProgressDialog(this, null);
+            progressDialog.show();
+
+            final HomeChefSkillVideoApiCall apiCall = new HomeChefSkillVideoApiCall(userModel.getUserId(), searchKeyWord);
             HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
                 public void onComplete(Exception e) {
-//                    swipeRefreshLayout.setRefreshing(false);
+                    DialogUtils.hideProgressDialog(progressDialog);
                     if (e == null) { // Success
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();
@@ -79,8 +101,12 @@ public class HomeChefVideoRecipeSearchActivity extends BaseActivity {
                                 homeChefSkillHubVideoModelArrayList.addAll(tempHomeChefSkillHubVideoArrayList);
                                 videoModelsArrayList.addAll(tempHomeChefSkillHubVideoArrayList);
                                 skillHubAdapter.notifyDataSetChanged();
+                                findViewById(R.id.tv_no_record_found).setVisibility(View.GONE);
                             } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.NO_RECORD_FOUND) {
-
+                                homeChefSkillHubVideoModelArrayList.clear();
+                                videoModelsArrayList.clear();
+                                skillHubAdapter.notifyDataSetChanged();
+                                findViewById(R.id.tv_no_record_found).setVisibility(View.VISIBLE);
                             }
 
                         } catch (Exception ex) {
@@ -94,5 +120,15 @@ public class HomeChefVideoRecipeSearchActivity extends BaseActivity {
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), HomeChefVideoRecipeSearchActivity.this, null);
         }
+    }
+
+    private void setupToolbar() {
+        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        ((TextView) findViewById(R.id.tv_title)).setText("Search Video Recipe");
     }
 }
