@@ -16,14 +16,15 @@ public class FoodieBookOrderApiCall extends BaseApiCall {
     private String userId, homeChefUserId, orderId, bookedDate, orderBookedFor;
     private BaseModel baseModel;
     private String bookingId;
+    private int noOfPerson;
 
-    //    {"StatusCode":"100","StatusMessage":"Successful","ReqeustRefNo":"HMB00000005"}
-    public FoodieBookOrderApiCall(String userId, String homeChefUserId, String orderId, String bookedDate, String orderBookedFor) {
+    public FoodieBookOrderApiCall(String userId, String homeChefUserId, String orderId, String bookedDate, String orderBookedFor, int noOfPerson) {
         this.userId = userId;
         this.homeChefUserId = homeChefUserId;
         this.orderId = orderId;
         this.bookedDate = bookedDate;
         this.orderBookedFor = orderBookedFor;
+        this.noOfPerson = noOfPerson;
     }
 
     public Object getRequest() {
@@ -34,11 +35,12 @@ public class FoodieBookOrderApiCall extends BaseApiCall {
             obj.put("OderId", orderId);
             obj.put("BookedDate", bookedDate);
             obj.put("OrderBookedFor", orderBookedFor);  // orderBookedFor ::::: 1 -> Breakfast 2 -> Lunch 3 -> Dinner
+            obj.put("NosOfPerson", noOfPerson);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        System.out.println(Constants.ServiceTAG.URL + obj.toString());
+        System.out.println(Constants.ServiceTAG.REQUEST + obj.toString());
         return obj;
     }
 

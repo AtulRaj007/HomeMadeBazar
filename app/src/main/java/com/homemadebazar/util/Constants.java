@@ -42,10 +42,6 @@ public class Constants {
             "Add Friend"
     };
 
-    public interface AppDebug{
-        boolean isPaymentDebug=true; // Should be false in production
-    }
-
     public enum Role {
         HOME_CHEF(1), FOODIE(2), MARKET_PLACE(3);
         int position = -1;
@@ -56,6 +52,10 @@ public class Constants {
 
         public int getRole() {
             return position;
+        }
+
+        public String getStringRole() {
+            return String.valueOf(position);
         }
     }
 
@@ -71,7 +71,6 @@ public class Constants {
             return value;
         }
     }
-
 
     public enum WebViewTitleUrl {
         TERMS_OF_USE("Terms Of Use", "https://www.google.co.in"),
@@ -93,6 +92,11 @@ public class Constants {
         public String getUrl() {
             return url;
         }
+    }
+
+
+    public interface AppDebug {
+        boolean isPaymentDebug = false; // Should be false in production
     }
 
     public interface FoodTiming {
@@ -316,6 +320,7 @@ public class Constants {
         String NowOrder = "NOW";
         String SCHEDULED = "SCHEDULED";
         String COMPLETED = "COMPLETED";
+        String FOODIE_BOOKED_ORDER = "FOODIE_ORDER";
     }
 
     public interface DiscoverTab {
@@ -329,25 +334,13 @@ public class Constants {
         int VIDEO = 1;
     }
 
-//    {"PostId":"PM00000002","ActionType":"Comments/Likes/All/Unlike","Comments":"Superb","UserById":"17110910"}
-
-//    {Message=Foodie foodie has booked an order., Bookingid=HMB00000022, Title=HomeMadeBazar, NotificationType=1}
-
-//    1. grey shadow in tab
-//2. height small tab
-//3. corners round and shadow
-//4. Favourites -> Functionality
-//5. cards size height come
-//6. Profile
-//7. Home chef cover photo height
-//8. Users share for incoming orders.
-//            9. Messenger -> Invites -> Network
-//10. Market Place Order -> Need Discuss
-//11. Categories -> Provide categoreis for videos
-//
-//12. Open in google maps
-//
-//---- **** ------
-//        80%   ->
-//        20 %  ->
+    //    1 For Request from foodies,2 Accepted from HC ,3 Rejected from HC,4 Rejected from Foodies,5 Completed by HC and Foodies,6 Pending after due date passed
+    public interface OrderActionType {
+        String FOODIE_BOOKED_ORDER = "1";
+        String HC_ACCEPTED_ORDER = "2";
+        String HC_REJECTED_ORDER = "3";
+        String FOODIE_CANCELLED_ORDER = "4";
+        String HC_COMPLETED_ORDER = "5";
+        String PENDING_ORDER = "6";
+    }
 }

@@ -63,13 +63,19 @@ public class SplashActivity extends BaseActivity {
                             userLocation.setLatitude(latitude);
                             userLocation.setLongitude(longitude);
                             SharedPreference.saveUserLocation(SplashActivity.this, userLocation);
+                            moveToLoginScreen();
 
                         } else {
                             Log.w("getLocation", "getLastLocation:exception", task.getException());
                             tvMessage.setText("Not able to fetch location.");
+                            DialogUtils.showAlert(SplashActivity.this, "Not able to fetch location", new Runnable() {
+                                @Override
+                                public void run() {
+                                    finish();
+                                }
+                            });
 
                         }
-                        moveToLoginScreen();
                     }
                 });
     }
@@ -82,7 +88,7 @@ public class SplashActivity extends BaseActivity {
                 startActivity(intent);
                 finish();
             }
-        }, 100);
+        }, 1000);
 
     }
 

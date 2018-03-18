@@ -123,6 +123,7 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
             if (homeChefNearByModel.getCoverPhotoArrayList() != null && homeChefNearByModel.getCoverPhotoArrayList().size() > 0) {
                 ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(HomeShopViewActivity.this, homeChefNearByModel.getCoverPhotoArrayList());
                 viewPagerCoverImages.setAdapter(imagePagerAdapter);
+                circleIndicator.setViewPager(viewPagerCoverImages);
             }
 
         } catch (Exception e) {
@@ -154,12 +155,12 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
         circleIndicator.setViewPager(viewPager);
     }
 
-    public void bookOrder(String homeChefUserId, String orderId, String bookedDate, String orderBookedFor) {
+    public void bookOrder(String homeChefUserId, String orderId, String bookedDate, String orderBookedFor, int noOfPerson) {
         try {
             final Dialog progressDialog = DialogUtils.getProgressDialog(HomeShopViewActivity.this, null);
             progressDialog.show();
 
-            final FoodieBookOrderApiCall apiCall = new FoodieBookOrderApiCall(userModel.getUserId(), homeChefUserId, orderId, bookedDate, orderBookedFor);
+            final FoodieBookOrderApiCall apiCall = new FoodieBookOrderApiCall(userModel.getUserId(), homeChefUserId, orderId, bookedDate, orderBookedFor, noOfPerson);
             HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override

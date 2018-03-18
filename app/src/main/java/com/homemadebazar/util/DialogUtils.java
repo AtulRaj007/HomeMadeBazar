@@ -265,7 +265,7 @@ public class DialogUtils {
         dialog.show();
     }
 
-    public static void bookFoodOnSelectedDatesDialog(Context context, String bookingAvailability, final HomeChefFoodTimingAdapter.BookOrderInterface bookOrderInterface) {
+    public static void bookFoodOnSelectedDatesDialog(Context context, String bookingAvailability, final HomeChefFoodTimingAdapter.BookOrderInterface bookOrderInterface, final String foodTimeType) {
 
         final ArrayList<FoodDateTimeBookModel> foodDateTimeBookModels = Utils.parseFoodBookDateTime(bookingAvailability);
 
@@ -277,7 +277,7 @@ public class DialogUtils {
         final Dialog dialog = dialogBuilder.create();
         final RadioGroup rgDinnerDate = view.findViewById(R.id.rg_dinner_date);
         final RadioGroup rgDinnerTime = view.findViewById(R.id.rg_dinner_time);
-
+        final TextView tvNoOfPeople = view.findViewById(R.id.tv_no_of_people);
 
         ((RadioButton) view.findViewById(R.id.radiobutton_one)).setText(foodDateTimeBookModels.get(0).getDate());
         ((RadioButton) view.findViewById(R.id.radiobutton_two)).setText(foodDateTimeBookModels.get(1).getDate());
@@ -286,6 +286,33 @@ public class DialogUtils {
         ((RadioButton) view.findViewById(R.id.radiobutton_five)).setText(foodDateTimeBookModels.get(4).getDate());
         ((RadioButton) view.findViewById(R.id.radiobutton_six)).setText(foodDateTimeBookModels.get(5).getDate());
         ((RadioButton) view.findViewById(R.id.radiobutton_seven)).setText(foodDateTimeBookModels.get(6).getDate());
+
+        view.findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    int noOfPeople = Integer.parseInt(tvNoOfPeople.getText().toString().trim());
+                    noOfPeople++;
+                    tvNoOfPeople.setText(String.valueOf(noOfPeople));
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        view.findViewById(R.id.iv_substract).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int noOfPeople = Integer.parseInt(tvNoOfPeople.getText().toString().trim());
+                if (noOfPeople <= 1)
+                    return;
+                noOfPeople--;
+                tvNoOfPeople.setText(String.valueOf(noOfPeople));
+
+            }
+        });
 
         view.findViewById(R.id.btn_book_order).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -298,7 +325,15 @@ public class DialogUtils {
                 int dinnerTime = getDinnerTimeFromId(dinnerTimeId, foodDateTimeBookModels);
                 System.out.println(">>>>>Dinner Date:-" + dinnerDate);
                 System.out.println(">>>>>Time Id:-" + dinnerTime);
-                bookOrderInterface.onOrderSelected(dinnerDate, dinnerTime);
+
+                if (dinnerTime == -1) {
+                    // BreakFast Lunch Dinner
+                    bookOrderInterface.onOrderSelected(dinnerDate, Integer.parseInt(foodTimeType));
+                } else {
+                    // Discover Hot Deals
+                    bookOrderInterface.onOrderSelected(dinnerDate, dinnerTime);
+                }
+
                 dialog.dismiss();
             }
         });
@@ -346,6 +381,6 @@ public class DialogUtils {
             case R.id.rg_dinner:
                 return Constants.DinnerTime.DINNER;
         }
-        return 0;
+        return -1;
     }
 }

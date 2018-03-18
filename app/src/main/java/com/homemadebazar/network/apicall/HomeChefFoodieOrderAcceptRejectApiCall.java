@@ -1,14 +1,11 @@
 package com.homemadebazar.network.apicall;
 
 import com.homemadebazar.model.BaseModel;
-import com.homemadebazar.model.ChatMessageModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.JSONParsingUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 /**
  * Created by atulraj on 5/1/18.
@@ -17,10 +14,14 @@ import java.util.ArrayList;
 public class HomeChefFoodieOrderAcceptRejectApiCall extends BaseApiCall {
     private String orderReferenceId, responseType;
     private BaseModel baseModel;
+    private String userId;
+    private String otp;
 
-    public HomeChefFoodieOrderAcceptRejectApiCall(String orderReferenceId, String responseType) {
+    public HomeChefFoodieOrderAcceptRejectApiCall(String userId, String orderReferenceId, String responseType, String otp) {
         this.orderReferenceId = orderReferenceId;
         this.responseType = responseType;
+        this.otp = otp;
+        this.userId = userId;
     }
 
     //    {"OrderRefId":"HMB00000001","ReponseType":"2"}
@@ -28,8 +29,10 @@ public class HomeChefFoodieOrderAcceptRejectApiCall extends BaseApiCall {
     public Object getRequest() {
         JSONObject object = new JSONObject();
         try {
+            object.put("UserId", userId);
             object.put("OrderRefId", orderReferenceId);
             object.put("ReponseType", responseType);
+            object.put("Otp", otp);
 
         } catch (JSONException e) {
             e.printStackTrace();

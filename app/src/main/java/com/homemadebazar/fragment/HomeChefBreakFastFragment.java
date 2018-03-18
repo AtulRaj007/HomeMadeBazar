@@ -41,7 +41,7 @@ public class HomeChefBreakFastFragment extends BaseFragment {
         recyclerView = getView().findViewById(R.id.recycler_view);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
-        homeChefLunchAdapter = new HomeChefFoodTimingAdapter(getActivity(),userId, homeChefOrderModelArrayList);
+        homeChefLunchAdapter = new HomeChefFoodTimingAdapter(getActivity(), userId, homeChefOrderModelArrayList, Constants.FoodType.BREAKFAST);
         recyclerView.setAdapter(homeChefLunchAdapter);
     }
 

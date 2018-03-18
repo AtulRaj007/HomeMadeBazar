@@ -126,9 +126,16 @@ public class HomeChefVideoRecipeSearchActivity extends BaseActivity {
         findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Utils.hideSoftKeyboard(HomeChefVideoRecipeSearchActivity.this);
                 finish();
             }
         });
         ((TextView) findViewById(R.id.tv_title)).setText("Search Video Recipe");
+    }
+
+    @Override
+    public void onBackPressed() {
+        Utils.hideSoftKeyboard(this);
+        super.onBackPressed();
     }
 }

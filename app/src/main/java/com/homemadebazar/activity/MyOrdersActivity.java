@@ -1,6 +1,5 @@
 package com.homemadebazar.activity;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,7 +22,7 @@ import com.homemadebazar.util.Utils;
 
 import java.util.ArrayList;
 
-public class MyOrdersActivity extends BaseActivity {
+public class MyOrdersActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView recyclerView;
     private MyOrdersAdapter myOrdersAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -42,6 +41,7 @@ public class MyOrdersActivity extends BaseActivity {
     protected void initUI() {
         userModel = SharedPreference.getUserModel(MyOrdersActivity.this);
         recyclerView = findViewById(R.id.recycler_view);
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
     }
 
     @Override
@@ -55,6 +55,8 @@ public class MyOrdersActivity extends BaseActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         myOrdersAdapter = new MyOrdersAdapter(MyOrdersActivity.this, false, homeChefIncomingOrderModelArrayList);
         recyclerView.setAdapter(myOrdersAdapter);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setRefreshing(true);
         getBookOrderedList();
     }
 
@@ -71,12 +73,17 @@ public class MyOrdersActivity extends BaseActivity {
 
     private void getBookOrderedList() {
         try {
+            String roleType = Constants.HomeChefOrder.COMPLETED;
+            if (userModel.getAccountType().equals(Constants.Role.FOODIE.getStringRole())) {
+                roleType = Constants.HomeChefOrder.FOODIE_BOOKED_ORDER;
+            }
 
-            final HomeChefIncomingOrderApiCall apiCall = new HomeChefIncomingOrderApiCall(userModel.getUserId(), Constants.HomeChefOrder.COMPLETED);
+            final HomeChefIncomingOrderApiCall apiCall = new HomeChefIncomingOrderApiCall(userModel.getUserId(), roleType);
             HttpRequestHandler.getInstance(getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
                 public void onComplete(Exception e) {
+                    swipeRefreshLayout.setRefreshing(false);
                     if (e == null) { // Success
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();
@@ -103,5 +110,10 @@ public class MyOrdersActivity extends BaseActivity {
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), MyOrdersActivity.this, null);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        getBookOrderedList();
     }
 }

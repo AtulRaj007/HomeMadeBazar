@@ -169,16 +169,25 @@ public class AddMoneyActivity extends BaseActivity implements View.OnClickListen
                     JSONObject object = new JSONObject(response);
                     int statusCode = object.optInt("StatusCode");
                     String statusMessage = object.optString("StatusMessage");
-                    Double walletBalance = object.optDouble("NewWalletAmount");
-                    userModel.setWalletBalance(walletBalance);
-                    SharedPreference.saveUserModel(AddMoneyActivity.this, userModel);
+                    if (statusCode == Constants.ServerResponseCode.SUCCESS) {
+                        Double walletBalance = object.optDouble("NewWalletAmount");
+                        userModel.setWalletBalance(walletBalance);
+                        SharedPreference.saveUserModel(AddMoneyActivity.this, userModel);
 
-                    DialogUtils.showAlert(AddMoneyActivity.this, "Money Added Successfully", new Runnable() {
-                        @Override
-                        public void run() {
-                            finish();
-                        }
-                    });
+                        DialogUtils.showAlert(AddMoneyActivity.this, "Money Added Successfully", new Runnable() {
+                            @Override
+                            public void run() {
+                                finish();
+                            }
+                        });
+                    } else {
+                        DialogUtils.showAlert(AddMoneyActivity.this, statusMessage, new Runnable() {
+                            @Override
+                            public void run() {
+                                finish();
+                            }
+                        });
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();

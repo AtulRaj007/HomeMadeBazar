@@ -420,7 +420,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 }
                 break;
             case Constants.Keys.REQUEST_GALLERY:
-                if (resultCode == RESULT_OK) {
+                if (resultCode == RESULT_OK && data != null) {
                     System.out.println();
                     Uri uri = data.getData();
                     setImage(uri);

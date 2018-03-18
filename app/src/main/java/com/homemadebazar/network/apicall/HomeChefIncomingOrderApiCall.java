@@ -20,7 +20,6 @@ public class HomeChefIncomingOrderApiCall extends BaseApiCall {
     private BaseModel baseModel;
     private ArrayList<HomeChefIncomingOrderModel> homeChefIncomingOrderModelArrayList = new ArrayList<>();
 
-    //    {"UserId":"17112218","TabSection":"NOW"}
     public HomeChefIncomingOrderApiCall(String userId, String tabSection) {
         this.userId = userId;
         this.tabSection = tabSection;

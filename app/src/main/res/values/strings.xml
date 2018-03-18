@@ -242,6 +242,12 @@
     <string name="str_profession_name">Profession Name</string>
     <string name="str_unfriend">Unfriend</string>
     <string name="str_location_permission_alert">In order to use this app, you must first grant Location permission.</string>
+    <string name="str_no_of_guest">No of Guest</string>
+    <string name="str_initial_count">1</string>
+    <string name="str_price">Price</string>
+    <string name="str_discount">Discount</string>
+    <string name="str_total">Total</string>
+    <string name="str_select_date">Select Date</string>
 
 
     <string-array name="price">

@@ -69,12 +69,12 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
         return homeChefOrderModelArrayList.size();
     }
 
-    private void bookOrder(String homeChefUserId, String orderId, String bookedDate, String orderBookedFor) {
+    private void bookOrder(String homeChefUserId, String orderId, String bookedDate, String orderBookedFor, int noOfPeople) {
         try {
             final Dialog progressDialog = DialogUtils.getProgressDialog(context, null);
             progressDialog.show();
 
-            final FoodieBookOrderApiCall apiCall = new FoodieBookOrderApiCall(userModel.getUserId(), homeChefUserId, orderId, bookedDate, orderBookedFor);
+            final FoodieBookOrderApiCall apiCall = new FoodieBookOrderApiCall(userModel.getUserId(), homeChefUserId, orderId, bookedDate, orderBookedFor, noOfPeople);
             HttpRequestHandler.getInstance(context.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
@@ -127,7 +127,7 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_book_order:
-                    bookOrder(homeChefOrderModelArrayList.get(getAdapterPosition()).getUserId(), homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId(), "2017-01-01", "1");
+                    bookOrder(homeChefOrderModelArrayList.get(getAdapterPosition()).getUserId(), homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId(), "2017-01-01", "1", 1);
                     break;
             }
         }

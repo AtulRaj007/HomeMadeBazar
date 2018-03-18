@@ -26,11 +26,13 @@ public class HomeChefFoodTimingAdapter extends RecyclerView.Adapter<HomeChefFood
     private Context context;
     private ArrayList<HomeChefOrderModel> homeChefOrderModelArrayList;
     private String homeChefUserId;
+    private String foodTimeType;
 
-    public HomeChefFoodTimingAdapter(Context context, String homeChefUserId, ArrayList<HomeChefOrderModel> homeChefOrderModelArrayList) {
+    public HomeChefFoodTimingAdapter(Context context, String homeChefUserId, ArrayList<HomeChefOrderModel> homeChefOrderModelArrayList, String foodTimeType) {
         this.context = context;
         this.homeChefOrderModelArrayList = homeChefOrderModelArrayList;
         this.homeChefUserId = homeChefUserId;
+        this.foodTimeType = foodTimeType;
     }
 
     @Override
@@ -100,10 +102,10 @@ public class HomeChefFoodTimingAdapter extends RecyclerView.Adapter<HomeChefFood
                         public void onOrderSelected(String foodDate, int foodTime) {
                             System.out.println(">>>>> onOrderSelected" + foodDate);
                             System.out.println(">>>>> onOrderSelected" + foodTime);
-                            ((HomeShopViewActivity) context).bookOrder(homeChefUserId, homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId(), foodDate, String.valueOf(foodTime));
+                            ((HomeShopViewActivity) context).bookOrder(homeChefUserId, homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId(), foodDate, String.valueOf(foodTime), 2);
 
                         }
-                    });
+                    }, foodTimeType);
                     break;
             }
         }

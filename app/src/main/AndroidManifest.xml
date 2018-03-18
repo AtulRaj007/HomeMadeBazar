@@ -245,7 +245,9 @@
         <activity
             android:name=".activity.CheckInActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.HomeChefVideoRecipeSearchActivity"></activity>
+        <activity
+            android:name=".activity.HomeChefVideoRecipeSearchActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

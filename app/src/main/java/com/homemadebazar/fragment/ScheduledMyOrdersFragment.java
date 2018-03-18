@@ -53,6 +53,7 @@ public class ScheduledMyOrdersFragment extends BaseFragment implements SwipeRefr
     public void initialiseListener() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     public void setData() {
