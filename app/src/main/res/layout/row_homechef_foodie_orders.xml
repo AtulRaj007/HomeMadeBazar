@@ -27,6 +27,7 @@
                     android:layout_height="120dp">
 
                     <ImageView
+                        android:id="@+id/iv_profile_pic"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_gravity="center_vertical"
@@ -44,7 +45,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_foodie_name"
+                        android:id="@+id/tv_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Atul Raj" />
@@ -85,14 +86,16 @@
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_toRightOf="@id/iv_call"
-                            android:src="@drawable/maps" />
+                            android:src="@drawable/maps"
+                            android:visibility="gone" />
 
 
                         <ImageView
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_toRightOf="@id/iv_call"
-                            android:src="@drawable/review" />
+                            android:src="@drawable/review"
+                            android:visibility="gone" />
 
 
                     </RelativeLayout>
@@ -139,6 +142,7 @@
                         android:textSize="@dimen/text_14" />
 
                     <TextView
+                        android:id="@+id/tv_order_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="44545" />
@@ -150,6 +154,7 @@
                         android:textSize="@dimen/text_14" />
 
                     <TextView
+                        android:id="@+id/tv_request_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="44545" />
@@ -157,10 +162,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/str_request_id"
+                        android:text="@string/str_booking_date"
                         android:textSize="@dimen/text_14" />
 
                     <TextView
+                        android:id="@+id/tv_booking_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="44545" />
@@ -168,10 +174,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/str_request_id"
+                        android:text="@string/str_booked_for"
                         android:textSize="@dimen/text_14" />
 
                     <TextView
+                        android:id="@+id/tv_booked_for"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="44545" />
@@ -208,7 +215,7 @@
                             android:tint="@color/colorPrimary" />
 
                         <TextView
-                            android:id="@+id/tv_dinner"
+                            android:id="@+id/tv_order_type"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -234,7 +241,7 @@
                             android:tint="@color/colorPrimary" />
 
                         <TextView
-                            android:id="@+id/tv_serve"
+                            android:id="@+id/tv_no_of_guest"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -286,7 +293,7 @@
 
 
                         <TextView
-                            android:id="@+id/tv_timing"
+                            android:id="@+id/tv_order_timing"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/order_margin_left"
@@ -362,7 +369,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ll_order_details"
                 android:layout_marginTop="@dimen/margin_10"
-                android:text="<<Status>>" />
+                android:text="Status" />
 
         </RelativeLayout>
 

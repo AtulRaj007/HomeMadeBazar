@@ -5,37 +5,85 @@ package com.homemadebazar.model;
  */
 
 public class HomeChefIncomingOrderModel {
-//    {
-//        "FoodiesDP": "http://35.183.8.236/api/CreateOrder/GetImage?Source=ImageGallary%5C%5C17120827%5CDP%5Ccropped1936886421.jpg",
-//            "CoverPhoto": "http://35.183.8.236/api/CreateOrder/GetImage?Source=ImageGallary%5C%5C17112218%5C62A54065%5CDishImages%5CScreenshot_20171215-022632.png",
-//            "FoodiesFirstName": "Foodie",
-//            "FoodiesLastName": "foodie",
-//            "FoodiesUserId": "17120827",
-//            "OrderFor": "Breakfast",
-//            "OrderId": "62A54065",
-//            "OrderReqDT": "Dec 24 2017  7:00:30:660AM",
-//            "BookedDate": "2017-12-25",
-//            "OrderReqId": "HMB00000023",
-//            "ReqStatus": "Request",
-//            "DishName": "CHICKEN BIRYANI",
-//            "EattingTime": "1720",
-//            "OrderType": "SCHEDULE"
-//    },
 
     private String foodiesDp;
     private String coverPhoto;
     private String foodiesFirstName;
     private String foodiesLastName;
     private String foodiesUserId;
-    private String orderFor;
-    private String orderId;
-    private String orderReqDate;
-    private String bookedDate;
+    private String orderFor; // Breakfast Lunch Time
+    private String orderId;     // Order Id
     private String orderRequestId;
+    private String orderRequestDate;
     private String requestStatus;
+    private String bookedDate;
     private String dishName;
     private String eatingTime;
     private String orderType;
+    private String foodieEmailId;
+    private String foodieMobileNumber;
+    private String noOfGuest;
+    private String price;
+    private String discAmount;
+    private String otp;
+    private String dateTitle;
+    private int type; // Now, Scheduled, Completed
+
+    public String getOrderRequestDate() {
+        return orderRequestDate;
+    }
+
+    public void setOrderRequestDate(String orderRequestDate) {
+        this.orderRequestDate = orderRequestDate;
+    }
+
+    public String getFoodieEmailId() {
+        return foodieEmailId;
+    }
+
+    public void setFoodieEmailId(String foodieEmailId) {
+        this.foodieEmailId = foodieEmailId;
+    }
+
+    public String getFoodieMobileNumber() {
+        return foodieMobileNumber;
+    }
+
+    public void setFoodieMobileNumber(String foodieMobileNumber) {
+        this.foodieMobileNumber = foodieMobileNumber;
+    }
+
+    public String getNoOfGuest() {
+        return noOfGuest;
+    }
+
+    public void setNoOfGuest(String noOfGuest) {
+        this.noOfGuest = noOfGuest;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getDiscAmount() {
+        return discAmount;
+    }
+
+    public void setDiscAmount(String discAmount) {
+        this.discAmount = discAmount;
+    }
+
+    public String getOtp() {
+        return otp;
+    }
+
+    public void setOtp(String otp) {
+        this.otp = otp;
+    }
 
     public String getDateTitle() {
         return dateTitle;
@@ -52,9 +100,6 @@ public class HomeChefIncomingOrderModel {
     public void setType(int type) {
         this.type = type;
     }
-
-    private String dateTitle;
-    private int type=0; //0-> Now, 1-> Scheduled
 
     public String getFoodiesDp() {
         return foodiesDp;
@@ -113,11 +158,11 @@ public class HomeChefIncomingOrderModel {
     }
 
     public String getOrderReqDate() {
-        return orderReqDate;
+        return orderRequestDate;
     }
 
-    public void setOrderReqDate(String orderReqDate) {
-        this.orderReqDate = orderReqDate;
+    public void setOrderReqDate(String orderRequestDate) {
+        this.orderRequestDate = orderRequestId;
     }
 
     public String getBookedDate() {

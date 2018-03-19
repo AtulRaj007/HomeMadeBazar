@@ -417,7 +417,6 @@ public class JSONParsingUtils {
         return marketPlaceProductModels;
     }
 
-//    "ImageUrl":[
 
     public static ArrayList<HomeChefIncomingOrderModel> parseHomeChefIncomingOrder(JSONArray jsonArray, int tab) {
         ArrayList<HomeChefIncomingOrderModel> homeChefIncomingOrderModelArrayList = new ArrayList<>();
@@ -461,6 +460,12 @@ public class JSONParsingUtils {
                 homeChefIncomingOrderModel.setDishName(object.optString("DishName"));
                 homeChefIncomingOrderModel.setEatingTime(object.optString("EattingTime"));
                 homeChefIncomingOrderModel.setOrderType(object.optString("OrderType"));
+                homeChefIncomingOrderModel.setFoodieEmailId(object.optString("EmailId"));
+                homeChefIncomingOrderModel.setFoodieMobileNumber(object.optString("Mobile"));
+                homeChefIncomingOrderModel.setNoOfGuest(object.optString("NosOfPerson"));
+                homeChefIncomingOrderModel.setPrice(object.optString("Price"));
+                homeChefIncomingOrderModel.setDiscAmount(object.optString("DiscAmount"));
+                homeChefIncomingOrderModel.setOtp(object.optString("Otp"));
                 homeChefIncomingOrderModelArrayList.add(homeChefIncomingOrderModel);
             }
 
@@ -472,6 +477,9 @@ public class JSONParsingUtils {
         return homeChefIncomingOrderModelArrayList;
 
     }
+
+//    {
+//            "EmailId":"developer.atulraj@gmail.com","Mobile":"8709646364","NosOfPerson":2,"Price":"40","DiscAmount":5,"Otp":""}
 
     //    {"ProductCategoryList":[{"ProCatId":"PCID00000006","Name":"Category1","Description":"Categorhh"}]}
     public static ArrayList<MarketPlaceProductCategoryModel> parseProductCategoryModel(JSONObject object) {

@@ -46,7 +46,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_scheduled_separator_view, parent, false);
             return new TitleSeparatorViewHolder(view);
         } else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_now_myorders, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_homechef_foodie_orders, parent, false);
             return new MyOrdersViewHolder(view);
         }
 
@@ -57,15 +57,27 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         HomeChefIncomingOrderModel homeChefIncomingOrderModel = homeChefIncomingOrderModelArrayList.get(position);
         if (holder instanceof MyOrdersViewHolder) {
             if (!TextUtils.isEmpty(homeChefIncomingOrderModel.getFoodiesDp())) {
-                Glide.with(context).load(homeChefIncomingOrderModel.getFoodiesDp()).into(((MyOrdersViewHolder) holder).ivProfile);
+                Glide.with(context).load(homeChefIncomingOrderModel.getFoodiesDp()).into(((MyOrdersViewHolder) holder).ivProfilePic);
             }
 
-            ((MyOrdersViewHolder) holder).tvName.setText(homeChefIncomingOrderModel.getFoodiesFirstName() + " " + homeChefIncomingOrderModel.getFoodiesLastName());
-            ((MyOrdersViewHolder) holder).tvDesignation.setText("");
-            ((MyOrdersViewHolder) holder).tvDishName.setText(homeChefIncomingOrderModel.getDishName());
+            if (userModel.getAccountType().equals(Constants.Role.HOME_CHEF.getStringRole())) {
+                ((MyOrdersViewHolder) holder).tvName.setText(homeChefIncomingOrderModel.getFoodiesFirstName() + " " + homeChefIncomingOrderModel.getFoodiesLastName());
+                ((MyOrdersViewHolder) holder).tvMobileNumber.setText(homeChefIncomingOrderModel.getFoodieMobileNumber());
+                ((MyOrdersViewHolder) holder).tvEmailId.setText(homeChefIncomingOrderModel.getFoodieEmailId());
+            } else {
+                ((MyOrdersViewHolder) holder).tvName.setText("");
+                ((MyOrdersViewHolder) holder).tvMobileNumber.setText("");
+                ((MyOrdersViewHolder) holder).tvEmailId.setText("");
+            }
+            ((MyOrdersViewHolder) holder).tvOrderType.setText(homeChefIncomingOrderModel.getOrderFor());
+            ((MyOrdersViewHolder) holder).tvNoOfGuest.setText("No Of Guest:-" + homeChefIncomingOrderModel.getNoOfGuest());
+            ((MyOrdersViewHolder) holder).tvPrice.setText(homeChefIncomingOrderModel.getPrice());
+            ((MyOrdersViewHolder) holder).tvOrderTiming.setText(homeChefIncomingOrderModel.getEatingTime());
+            ((MyOrdersViewHolder) holder).tvDiscount.setText(homeChefIncomingOrderModel.getDiscAmount() + "(%)");
             ((MyOrdersViewHolder) holder).tvOrderId.setText(homeChefIncomingOrderModel.getOrderId());
-            ((MyOrdersViewHolder) holder).tvDateTime.setText(homeChefIncomingOrderModel.getOrderReqDate());
-            ((MyOrdersViewHolder) holder).tvDishTime.setText(homeChefIncomingOrderModel.getOrderFor());
+            ((MyOrdersViewHolder) holder).tvRequestId.setText(homeChefIncomingOrderModel.getOrderReqDate());
+            ((MyOrdersViewHolder) holder).tvBookingDate.setText(homeChefIncomingOrderModel.getOrderRequestDate());
+            ((MyOrdersViewHolder) holder).tvBookedFor.setText(homeChefIncomingOrderModel.getBookedDate());
 
 
         } else if (holder instanceof TitleSeparatorViewHolder) {
@@ -89,28 +101,37 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     class MyOrdersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView ivProfile;
-        private TextView tvName, tvDesignation, tvDishName, tvOrderId, tvDateTime, tvDishTime;
+        private ImageView ivProfilePic, ivCall, ivMessage;
+        private TextView tvName, tvMobileNumber, tvEmailId, tvOrderType, tvNoOfGuest, tvPrice, tvOrderTiming, tvDiscount, tvOrderId, tvRequestId, tvBookingDate, tvBookedFor;
         private Button btnAccept, btnReject;
 
         MyOrdersViewHolder(View itemView) {
             super(itemView);
-            ivProfile = itemView.findViewById(R.id.iv_profile);
             tvName = itemView.findViewById(R.id.tv_name);
-            tvDesignation = itemView.findViewById(R.id.tv_designation);
-            tvDishName = itemView.findViewById(R.id.tv_dish_name);
-
+            tvMobileNumber = itemView.findViewById(R.id.tv_mobile_number);
+            tvEmailId = itemView.findViewById(R.id.tv_emailId);
+            tvOrderType = itemView.findViewById(R.id.tv_order_type);
+            tvNoOfGuest = itemView.findViewById(R.id.tv_no_of_guest);
+            tvPrice = itemView.findViewById(R.id.tv_price);
+            tvOrderTiming = itemView.findViewById(R.id.tv_order_timing);
+            tvDiscount = itemView.findViewById(R.id.tv_discount);
             tvOrderId = itemView.findViewById(R.id.tv_order_id);
-            tvDateTime = itemView.findViewById(R.id.tv_date_time);
+            tvRequestId = itemView.findViewById(R.id.tv_request_id);
+            tvBookingDate = itemView.findViewById(R.id.tv_booking_date);
+            tvBookedFor = itemView.findViewById(R.id.tv_booked_for);
 
-            tvDishTime = itemView.findViewById(R.id.tv_dish_time);
-            tvDishTime = itemView.findViewById(R.id.tv_dish_time);
+            ivProfilePic = itemView.findViewById(R.id.iv_profile_pic);
+            ivCall = itemView.findViewById(R.id.iv_call);
+            ivMessage = itemView.findViewById(R.id.iv_message);
 
             btnAccept = itemView.findViewById(R.id.btn_accept);
             btnReject = itemView.findViewById(R.id.btn_reject);
 
+            ivProfilePic.setOnClickListener(this);
             btnAccept.setOnClickListener(this);
             btnReject.setOnClickListener(this);
+            ivCall.setOnClickListener(this);
+            ivMessage.setOnClickListener(this);
         }
 
         @Override
@@ -154,6 +175,15 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                                 }
                             });
+                    break;
+                case R.id.iv_call:
+
+                    break;
+                case R.id.iv_message:
+
+                    break;
+                case R.id.iv_profile_pic:
+
                     break;
             }
         }
