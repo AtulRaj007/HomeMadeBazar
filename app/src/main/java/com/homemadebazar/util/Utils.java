@@ -13,10 +13,12 @@ import android.content.pm.Signature;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -448,5 +450,46 @@ public class Utils {
 
     public static void showProfile(Context context, String userId) {
         context.startActivity(ProfileViewActivity.getProfileIntent(context, userId));
+    }
+
+    public static boolean checkLocationProvider(final Context context) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            boolean gps_enabled = false;
+            boolean network_enabled = false;
+
+            try {
+                gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            } catch (Exception ex) {
+            }
+
+            try {
+                network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            } catch (Exception ex) {
+            }
+
+            if (!gps_enabled && !network_enabled) {
+                // notify user
+                DialogUtils.showAlert(context, "Location settings is disabled.Please turn on location settings.", new Runnable() {
+                    @Override
+                    public void run() {
+                        // OK
+                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        context.startActivity(myIntent);
+                    }
+                }, new Runnable() {
+                    @Override
+                    public void run() {
+                        // Cancel
+                        ((Activity) context).finish();
+                    }
+                });
+            } else {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -2,6 +2,7 @@ package com.homemadebazar.util;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -10,12 +11,18 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.homemadebazar.R;
+import com.homemadebazar.activity.CreateOrderActivity;
 import com.homemadebazar.adapter.HomeChefFoodTimingAdapter;
 import com.homemadebazar.model.FoodDateTimeBookModel;
+import com.homemadebazar.model.FoodTimingModel;
 
+import java.sql.Time;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -26,6 +33,7 @@ public class DialogUtils {
 
     public static AlertDialog.Builder dialog = null;
     public static String bookDate;
+    private static TextView timeSelectedTextView = null;
 
     public static void showFoodDialog(Context context) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -42,15 +50,113 @@ public class DialogUtils {
         });
     }
 
-    public static void showFoodTimingsDialog(Context context) {
+    private static String getTime(int hr, int min) {
+        Time tme = new Time(hr, min, 0);//seconds by default set to zero
+        Format formatter;
+        formatter = new SimpleDateFormat("h:mm a");
+        return formatter.format(tme);
+    }
+
+    public static void showFoodTimingsDialog(final Context context, final FoodTimingModel foodTimingModel, final CreateOrderActivity.FoodTimingEditInterface foodTimingEditInterface) {
+
+
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(true);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_save_edit_timings, null);
+        final TextView tvBreakfastStartTime = view.findViewById(R.id.tv_breakfast_start_time);
+        final TextView tvBreakfastEndTime = view.findViewById(R.id.tv_breakfast_end_time);
+        final TextView tvLunchStartTime = view.findViewById(R.id.tv_lunch_start_time);
+        final TextView tvLunchEndTime = view.findViewById(R.id.tv_lunch_end_time);
+        final TextView tvDinnerStartTime = view.findViewById(R.id.tv_dinner_start_time);
+        final TextView tvDinnerEndTime = view.findViewById(R.id.tv_dinner_end_time);
+
+        tvBreakfastStartTime.setText(foodTimingModel.getBreakFastStartTime());
+        tvBreakfastEndTime.setText(foodTimingModel.getBreakFastEndTime());
+        tvLunchStartTime.setText(foodTimingModel.getLunchStartTime());
+        tvLunchEndTime.setText(foodTimingModel.getLunchEndTime());
+        tvDinnerStartTime.setText(foodTimingModel.getDinnerStartTime());
+        tvDinnerEndTime.setText(foodTimingModel.getDinnerEndTime());
+
+        final TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                System.out.println("Hour of Day:-" + hourOfDay);
+                System.out.println("Minute:-" + minute);
+                System.out.println(timePicker.is24HourView());
+                try {
+                    if (timeSelectedTextView != null)
+                        timeSelectedTextView.setText(getTime(hourOfDay, minute));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+
+
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.tv_breakfast_start_time:
+                        timeSelectedTextView = tvBreakfastStartTime;
+                        TimePickerDialog timerPicker = new TimePickerDialog(context, onTimeSetListener, 9, 30, false);
+                        timerPicker.show();
+                        break;
+                    case R.id.tv_breakfast_end_time:
+                        timeSelectedTextView = tvBreakfastEndTime;
+                        new TimePickerDialog(context, onTimeSetListener, 11, 00, false).show();
+                        break;
+                    case R.id.tv_lunch_start_time:
+                        timeSelectedTextView = tvLunchStartTime;
+                        new TimePickerDialog(context, onTimeSetListener, 1, 00, false).show();
+                        break;
+                    case R.id.tv_lunch_end_time:
+                        timeSelectedTextView = tvLunchEndTime;
+                        new TimePickerDialog(context, onTimeSetListener, 2, 30, false).show();
+                        break;
+                    case R.id.tv_dinner_start_time:
+                        timeSelectedTextView = tvDinnerStartTime;
+                        new TimePickerDialog(context, onTimeSetListener, 7, 00, false).show();
+                        break;
+                    case R.id.tv_dinner_end_time:
+                        timeSelectedTextView = tvDinnerEndTime;
+                        new TimePickerDialog(context, onTimeSetListener, 9, 00, false).show();
+                        break;
+                }
+            }
+        };
+
+        tvBreakfastStartTime.setOnClickListener(onClickListener);
+        tvBreakfastEndTime.setOnClickListener(onClickListener);
+        tvLunchStartTime.setOnClickListener(onClickListener);
+        tvLunchEndTime.setOnClickListener(onClickListener);
+        tvDinnerStartTime.setOnClickListener(onClickListener);
+        tvDinnerEndTime.setOnClickListener(onClickListener);
+
         builder.setView(view);
+
         final AlertDialog dialog = builder.create();
 
+        view.findViewById(R.id.btn_save_timings).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FoodTimingModel foodTimingModel = new FoodTimingModel();
+                foodTimingModel.setBreakFastStartTime(tvBreakfastStartTime.getText().toString().trim());
+                foodTimingModel.setBreakFastEndTime(tvBreakfastEndTime.getText().toString().trim());
+                foodTimingModel.setLunchStartTime(tvLunchStartTime.getText().toString().trim());
+                foodTimingModel.setLunchEndTime(tvLunchEndTime.getText().toString().trim());
+                foodTimingModel.setDinnerStartTime(tvDinnerStartTime.getText().toString().trim());
+                foodTimingModel.setDinnerEndTime(tvDinnerEndTime.getText().toString().trim());
+                timeSelectedTextView = null;
+                foodTimingEditInterface.onFoodTimingSelected(foodTimingModel);
+                dialog.dismiss();
+            }
+        });
 
         dialog.show();
+
 
     }
 

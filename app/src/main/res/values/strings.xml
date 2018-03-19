@@ -248,6 +248,7 @@
     <string name="str_discount">Discount</string>
     <string name="str_total">Total</string>
     <string name="str_select_date">Select Date</string>
+    <string name="str_request_id">Request Id</string>
 
 
     <string-array name="price">

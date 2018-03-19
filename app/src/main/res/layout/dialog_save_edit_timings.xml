@@ -65,22 +65,22 @@
             android:textSize="@dimen/text_14" />
 
         <TextView
+            android:id="@+id/tv_breakfast_start_time"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/background_border_widet"
             android:gravity="center"
-            android:text="9:30 AM"
             android:textColor="@color/white"
             android:textSize="@dimen/text_14" />
 
         <TextView
+            android:id="@+id/tv_breakfast_end_time"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/background_border_widet"
             android:gravity="center"
-            android:text="11:00 AM"
             android:textColor="@color/white"
             android:textSize="@dimen/text_14" />
 
@@ -103,22 +103,22 @@
             android:textSize="@dimen/text_14" />
 
         <TextView
+            android:id="@+id/tv_lunch_start_time"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/background_border_widet"
             android:gravity="center"
-            android:text="1:00 PM"
             android:textColor="@color/white"
             android:textSize="@dimen/text_14" />
 
         <TextView
+            android:id="@+id/tv_lunch_end_time"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/background_border_widet"
             android:gravity="center"
-            android:text="3:00 PM"
             android:textColor="@color/white"
             android:textSize="@dimen/text_14" />
 
@@ -141,22 +141,22 @@
             android:textSize="@dimen/text_14" />
 
         <TextView
+            android:id="@+id/tv_dinner_start_time"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/background_border_widet"
             android:gravity="center"
-            android:text="7:30 PM"
             android:textColor="@color/white"
             android:textSize="@dimen/text_14" />
 
         <TextView
+            android:id="@+id/tv_dinner_end_time"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/background_border_widet"
             android:gravity="center"
-            android:text="11:30 PM"
             android:textColor="@color/white"
             android:textSize="@dimen/text_14" />
 
@@ -164,6 +164,7 @@
 
 
     <Button
+        android:id="@+id/btn_save_timings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"

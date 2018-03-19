@@ -24,6 +24,7 @@ import com.homemadebazar.Template.Template;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.CreateOrderModel;
 import com.homemadebazar.model.FoodCategoryModel;
+import com.homemadebazar.model.FoodTimingModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.GetRequest;
 import com.homemadebazar.network.HttpRequestHandler;
@@ -43,9 +44,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class CreateOrderActivity extends BaseActivity implements View.OnClickListener {
-    private static String breakFastTime = "";
-    private static String lunchTime = "";
-    private static String dinnerTime = "";
+
     private UserModel userModel;
     private EditText etDishName, etFirstRule, etSecondRule, etThirdRule, etFourthRule, etFifthRule, etDescription;
     private Spinner sprDishCategory, sprDishPrice, sprVeg, sprDrinks, sprMinNoOfGuest, sprMaxNoOfGuest, sprDiscount;
@@ -58,6 +57,8 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
     private int imageSelectedIndex = 0;
     private String dishAvailability = "";
     private ImageView ivFirstFoodPhoto, ivSecondFoodPhoto, ivThirdFoodPhoto, ivFourthFoodPhoto, ivFifthFoodPhoto;
+    private TextView tvBreakfastDuration, tvLunchDuration, tvDinnerDuration;
+    private static FoodTimingModel foodTimingModel = null;
     private int resourceIds[] =
             {
 
@@ -106,6 +107,8 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void initUI() {
+
+        foodTimingModel = new FoodTimingModel();
         mRequest = Volley.newRequestQueue(CreateOrderActivity.this);
         initialiseFoodAvailability();
         userModel = SharedPreference.getUserModel(CreateOrderActivity.this);
@@ -134,6 +137,10 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
         ivFourthFoodPhoto = findViewById(R.id.iv_fourth_food_photo);
         ivFifthFoodPhoto = findViewById(R.id.iv_fifth_food_photo);
 
+        tvBreakfastDuration = findViewById(R.id.tv_breakfast_duration);
+        tvLunchDuration = findViewById(R.id.tv_lunch_duration);
+        tvDinnerDuration = findViewById(R.id.tv_dinner_duration);
+
     }
 
     @Override
@@ -161,6 +168,13 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void setData() {
+
+        if (foodTimingModel != null) {
+            tvBreakfastDuration.setText(foodTimingModel.getBreakFastStartTime() + " - " + foodTimingModel.getBreakFastEndTime());
+            tvLunchDuration.setText(foodTimingModel.getLunchStartTime() + " - " + foodTimingModel.getLunchEndTime());
+            tvDinnerDuration.setText(foodTimingModel.getDinnerStartTime() + " - " + foodTimingModel.getDinnerEndTime());
+        }
+
         DialogUtils.showFoodDialog(CreateOrderActivity.this);
         getFoodCategories();
 
@@ -196,6 +210,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
 
     private ArrayList<String> getDiscountArrayList(String title) {
         ArrayList<String> discountArrayList = new ArrayList<>();
+        discountArrayList.add(String.valueOf(0));
         discountArrayList.add(title);
         for (int i = 5; i <= 50; i++) {
             discountArrayList.add(String.valueOf(i));
@@ -288,12 +303,16 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 if (isValid()) {
                     createOrder();
                 }
-//                etGuestRules.getText().toString().trim();
 
                 break;
             case R.id.btn_edit_timings:
 
-                DialogUtils.showFoodTimingsDialog(CreateOrderActivity.this);
+                DialogUtils.showFoodTimingsDialog(CreateOrderActivity.this, foodTimingModel, new FoodTimingEditInterface() {
+                    @Override
+                    public void onFoodTimingSelected(FoodTimingModel foodTimingModel) {
+                        CreateOrderActivity.foodTimingModel = foodTimingModel;
+                    }
+                });
                 break;
 
             case R.id.iv_first_food_photo:
@@ -440,7 +459,6 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 coverPhotoArray[0] = uri.getPath();
                 break;
             case 1:
-//                etGuestRules.getText().toString().trim()
                 ivSecondFoodPhoto.setImageURI(uri);
                 coverPhotoArray[1] = uri.getPath();
                 break;
@@ -474,13 +492,13 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
         createOrderModel.setDescription(etDescription.getText().toString().trim());
         createOrderModel.setDishAvailableDay(dishAvailability);//
 
-        createOrderModel.setBreakFastTime("1720");
-        createOrderModel.setLunchTime("4521");
-        createOrderModel.setDinnerTime("54021");
-
+        createOrderModel.setBreakFastTime(foodTimingModel.getBreakFastStartTime() + " - " + foodTimingModel.getBreakFastEndTime());
+        createOrderModel.setLunchTime(foodTimingModel.getLunchStartTime() + " - " + foodTimingModel.getLunchEndTime());
+        createOrderModel.setDinnerTime(foodTimingModel.getDinnerStartTime() + " - " + foodTimingModel.getDinnerEndTime());
 
         return createOrderModel;
     }
+
 
     private String getRulesForOrder() {
         String rules = "";
@@ -497,6 +515,10 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
             rules = rules + etFifthRule.getText().toString().trim();
 
         return rules;
+    }
+
+    public interface FoodTimingEditInterface {
+        void onFoodTimingSelected(FoodTimingModel foodTimingModel);
     }
 
     public void createOrder() {
@@ -580,5 +602,13 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 Template.VolleyRetryPolicy.RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         mRequest.add(mMultiPartRequest);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (isFinishing()) {
+            foodTimingModel = null;
+        }
     }
 }

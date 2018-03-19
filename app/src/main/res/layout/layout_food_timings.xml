@@ -54,26 +54,26 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_breakfast_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/padding_5"
-                android:text="9:30 AM - 11:00 AM"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_14" />
 
             <TextView
+                android:id="@+id/tv_lunch_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/padding_5"
-                android:text="1:30 PM - 3:00 PM"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_14" />
 
             <TextView
+                android:id="@+id/tv_dinner_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/padding_5"
-                android:text="8:00 PM - 9:30 PM"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_14" />
 
@@ -86,7 +86,6 @@
             android:layout_gravity="right"
             android:layout_marginRight="@dimen/margin_10"
             android:layout_marginTop="@dimen/margin_20"
-            android:background="@color/colorPrimary"
             android:src="@drawable/ic_order_time_edit"
             android:textSize="@dimen/text_10" />
 

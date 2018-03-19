@@ -21,6 +21,7 @@ import com.homemadebazar.R;
 import com.homemadebazar.model.UserLocation;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
+import com.homemadebazar.util.Utils;
 
 public class SplashActivity extends BaseActivity {
     private static final int REQUEST_LOCATION_PERMISSION = 100;
@@ -40,8 +41,10 @@ public class SplashActivity extends BaseActivity {
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
         } else {
-            getLocation();
-            tvMessage.setText("Getting User Location ... Please Wait");
+            if (Utils.checkLocationProvider(SplashActivity.this)) {
+                getLocation();
+                tvMessage.setText("Getting User Location ... Please Wait");
+            }
         }
     }
 
@@ -127,5 +130,11 @@ public class SplashActivity extends BaseActivity {
             });
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println(requestCode + "  " + resultCode);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
