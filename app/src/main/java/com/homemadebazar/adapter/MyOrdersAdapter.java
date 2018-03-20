@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -79,6 +80,8 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((MyOrdersViewHolder) holder).tvBookingDate.setText(homeChefIncomingOrderModel.getOrderRequestDate());
             ((MyOrdersViewHolder) holder).tvBookedFor.setText(homeChefIncomingOrderModel.getBookedDate());
 
+            orderStatusHandling(homeChefIncomingOrderModel.getRequestStatus().trim(), holder, homeChefIncomingOrderModel.getOtp().trim());
+
 
         } else if (holder instanceof TitleSeparatorViewHolder) {
             ((TitleSeparatorViewHolder) holder).tvTitle.setText(homeChefIncomingOrderModel.getDateTitle());
@@ -101,9 +104,10 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     class MyOrdersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView ivProfilePic, ivCall, ivMessage;
-        private TextView tvName, tvMobileNumber, tvEmailId, tvOrderType, tvNoOfGuest, tvPrice, tvOrderTiming, tvDiscount, tvOrderId, tvRequestId, tvBookingDate, tvBookedFor;
-        private Button btnAccept, btnReject;
+        private ImageView ivProfilePic, ivCall, ivMessage, ivShowDirections, ivGiveReview;
+        private TextView tvName, tvMobileNumber, tvEmailId, tvOrderType, tvNoOfGuest, tvPrice, tvOrderTiming, tvDiscount, tvOrderId, tvRequestId, tvBookingDate, tvBookedFor, tvOrderStatus;
+        private Button btnAccept, btnReject, btnCompleteOrder, btnFoodieCancelOrder;
+        private RelativeLayout rlHCAcceptReject, rlHcCompleteOrder, rlFoodieCancelOrder;
 
         MyOrdersViewHolder(View itemView) {
             super(itemView);
@@ -119,19 +123,32 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             tvRequestId = itemView.findViewById(R.id.tv_request_id);
             tvBookingDate = itemView.findViewById(R.id.tv_booking_date);
             tvBookedFor = itemView.findViewById(R.id.tv_booked_for);
+            tvOrderStatus = itemView.findViewById(R.id.tv_order_status);
 
             ivProfilePic = itemView.findViewById(R.id.iv_profile_pic);
             ivCall = itemView.findViewById(R.id.iv_call);
             ivMessage = itemView.findViewById(R.id.iv_message);
+            ivShowDirections = itemView.findViewById(R.id.iv_show_directions);
+            ivGiveReview = itemView.findViewById(R.id.iv_give_review);
 
             btnAccept = itemView.findViewById(R.id.btn_accept);
             btnReject = itemView.findViewById(R.id.btn_reject);
+            btnCompleteOrder = itemView.findViewById(R.id.btn_complete_order);
+            btnFoodieCancelOrder = itemView.findViewById(R.id.btn_foodie_cancel_order);
+
+            rlHCAcceptReject = itemView.findViewById(R.id.rl_hc_accept_reject_order);
+            rlHcCompleteOrder = itemView.findViewById(R.id.rl_hc_complete_order);
+            rlFoodieCancelOrder = itemView.findViewById(R.id.rl_foodie_cancel_order);
 
             ivProfilePic.setOnClickListener(this);
             btnAccept.setOnClickListener(this);
             btnReject.setOnClickListener(this);
             ivCall.setOnClickListener(this);
             ivMessage.setOnClickListener(this);
+            ivShowDirections.setOnClickListener(this);
+            ivGiveReview.setOnClickListener(this);
+            btnCompleteOrder.setOnClickListener(this);
+            btnFoodieCancelOrder.setOnClickListener(this);
         }
 
         @Override
@@ -182,7 +199,20 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 case R.id.iv_message:
 
                     break;
+                case R.id.iv_show_directions:
+
+                    break;
+                case R.id.iv_give_review:
+
+
+                    break;
                 case R.id.iv_profile_pic:
+
+                    break;
+                case R.id.btn_complete_order:
+
+                    break;
+                case R.id.btn_foodie_cancel_order:
 
                     break;
             }
@@ -192,9 +222,126 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     class TitleSeparatorViewHolder extends RecyclerView.ViewHolder {
         private TextView tvTitle;
 
-        public TitleSeparatorViewHolder(View itemView) {
+        TitleSeparatorViewHolder(View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tv_title);
         }
     }
+
+    private void orderStatusHandling(String orderStatus, RecyclerView.ViewHolder holder, String otp) {
+        String accountType = userModel.getAccountType();
+        if (accountType.equals(Constants.Role.HOME_CHEF.getStringRole())) {
+            // HomeChef
+            if (orderStatus.equals(Constants.OrderActionType.FOODIE_BOOKED_ORDER)) {
+                ((MyOrdersViewHolder) holder).rlHCAcceptReject.setVisibility(View.VISIBLE);
+                ((MyOrdersViewHolder) holder).rlHcCompleteOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+
+            } else if (orderStatus.equals(Constants.OrderActionType.FOODIE_CANCELLED_ORDER)) {
+                ((MyOrdersViewHolder) holder).rlHCAcceptReject.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlHcCompleteOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setText("Foodie has cancelled the order");
+
+            } else if (orderStatus.equals(Constants.OrderActionType.HC_ACCEPTED_ORDER)) {
+                ((MyOrdersViewHolder) holder).rlHCAcceptReject.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlHcCompleteOrder.setVisibility(View.VISIBLE);
+                ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+
+
+            } else if (orderStatus.equals(Constants.OrderActionType.HC_REJECTED_ORDER)) {
+                ((MyOrdersViewHolder) holder).rlHCAcceptReject.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlHcCompleteOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setText("You have rejected the order");
+
+            } else if (orderStatus.equals(Constants.OrderActionType.HC_COMPLETED_ORDER)) {
+                ((MyOrdersViewHolder) holder).rlHCAcceptReject.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlHcCompleteOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.VISIBLE);
+
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setText("Order Completed");
+
+            } else if (orderStatus.equals(Constants.OrderActionType.PENDING_ORDER)) {
+                ((MyOrdersViewHolder) holder).rlHCAcceptReject.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlHcCompleteOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setText("Order Pending");
+            }
+        } else {
+            // Foodie
+            if (orderStatus.equals(Constants.OrderActionType.FOODIE_BOOKED_ORDER)) {
+                ((MyOrdersViewHolder) holder).rlHCAcceptReject.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlHcCompleteOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.VISIBLE);
+                ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.VISIBLE);
+                ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+
+            } else if (orderStatus.equals(Constants.OrderActionType.FOODIE_CANCELLED_ORDER)) {
+                ((MyOrdersViewHolder) holder).rlHCAcceptReject.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlHcCompleteOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.VISIBLE);
+                ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setText("You have cancelled the order");
+
+            } else if (orderStatus.equals(Constants.OrderActionType.HC_ACCEPTED_ORDER)) {
+                ((MyOrdersViewHolder) holder).rlHCAcceptReject.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlHcCompleteOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.VISIBLE);
+                ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setText("You order is Accepted by HomeChef.\n Show the otp to the homechef\n Otp is " + otp);
+
+            } else if (orderStatus.equals(Constants.OrderActionType.HC_REJECTED_ORDER)) {
+                ((MyOrdersViewHolder) holder).rlHCAcceptReject.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlHcCompleteOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.VISIBLE);
+                ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setText("You order is rejected by the HomeChef");
+
+
+            } else if (orderStatus.equals(Constants.OrderActionType.HC_COMPLETED_ORDER)) {
+                ((MyOrdersViewHolder) holder).rlHCAcceptReject.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlHcCompleteOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.VISIBLE);
+                ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.VISIBLE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setText("Order Completed");
+
+            } else if (orderStatus.equals(Constants.OrderActionType.PENDING_ORDER)) {
+                ((MyOrdersViewHolder) holder).rlHCAcceptReject.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlHcCompleteOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.VISIBLE);
+                ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setText("Pending Order");
+
+            }
+        }
+    }
+
+    private void makeCall() {
+
+    }
+
+    private void message() {
+
+    }
+
 }

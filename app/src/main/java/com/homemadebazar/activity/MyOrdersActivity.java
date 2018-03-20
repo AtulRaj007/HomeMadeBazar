@@ -93,7 +93,6 @@ public class MyOrdersActivity extends BaseActivity implements SwipeRefreshLayout
                                 homeChefIncomingOrderModelArrayList.addAll(tempHomeChefIncomingOrderArrayList);
                                 myOrdersAdapter.notifyDataSetChanged();
 
-
                             } else {
                                 DialogUtils.showAlert(MyOrdersActivity.this, baseModel.getStatusMessage());
                             }
