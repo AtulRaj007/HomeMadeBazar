@@ -253,6 +253,8 @@
     <string name="str_booked_for">Booked For</string>
     <string name="str_complete_order">Complete Order</string>
     <string name="str_cancel_order">Cancel Order</string>
+    <string name="hint_enter_otp">Enter Otp</string>
+    <string name="str_submit">Submit</string>
 
 
     <string-array name="price">

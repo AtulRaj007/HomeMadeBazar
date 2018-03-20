@@ -6,8 +6,10 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.CreateOrderActivity;
 import com.homemadebazar.adapter.HomeChefFoodTimingAdapter;
+import com.homemadebazar.adapter.MyOrdersAdapter;
 import com.homemadebazar.model.FoodDateTimeBookModel;
 import com.homemadebazar.model.FoodTimingModel;
 
@@ -290,6 +293,28 @@ public class DialogUtils {
 
     public static void showToast(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void showOrderOtpDialog(final Context context, final MyOrdersAdapter.OtpSubmitInterface otpSubmitInterface) {
+        final AlertDialog.Builder alertDBuilder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_order_otp, null);
+        alertDBuilder.setView(view);
+        final Dialog dialog = alertDBuilder.create();
+
+        final EditText etOtp = view.findViewById(R.id.et_otp);
+        view.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(etOtp.getText().toString().trim())) {
+                    DialogUtils.showAlert(context, "Otp is empty");
+                } else {
+                    dialog.dismiss();
+                    otpSubmitInterface.onOtpEnter(etOtp.getText().toString().trim());
+                }
+            }
+        });
+
+        dialog.show();
     }
 
     public static void showMediaDialog(Context context, final Runnable camera, final Runnable gallary) {

@@ -20,6 +20,7 @@ import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.ServiceUtils;
 import com.homemadebazar.util.SharedPreference;
+import com.homemadebazar.util.Utils;
 
 import java.util.ArrayList;
 
@@ -57,15 +58,19 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         HomeChefIncomingOrderModel homeChefIncomingOrderModel = homeChefIncomingOrderModelArrayList.get(position);
         if (holder instanceof MyOrdersViewHolder) {
-            if (!TextUtils.isEmpty(homeChefIncomingOrderModel.getFoodiesDp())) {
-                Glide.with(context).load(homeChefIncomingOrderModel.getFoodiesDp()).into(((MyOrdersViewHolder) holder).ivProfilePic);
-            }
+
 
             if (userModel.getAccountType().equals(Constants.Role.HOME_CHEF.getStringRole())) {
+                if (!TextUtils.isEmpty(homeChefIncomingOrderModel.getFoodiesDp())) {
+                    Glide.with(context).load(homeChefIncomingOrderModel.getFoodiesDp()).into(((MyOrdersViewHolder) holder).ivProfilePic);
+                }
                 ((MyOrdersViewHolder) holder).tvName.setText(homeChefIncomingOrderModel.getFoodiesFirstName() + " " + homeChefIncomingOrderModel.getFoodiesLastName());
                 ((MyOrdersViewHolder) holder).tvMobileNumber.setText(homeChefIncomingOrderModel.getFoodieMobileNumber());
                 ((MyOrdersViewHolder) holder).tvEmailId.setText(homeChefIncomingOrderModel.getFoodieEmailId());
             } else {
+                if (!TextUtils.isEmpty(homeChefIncomingOrderModel.getFoodiesDp())) {
+                    Glide.with(context).load(homeChefIncomingOrderModel.getFoodiesDp()).into(((MyOrdersViewHolder) holder).ivProfilePic);
+                }
                 ((MyOrdersViewHolder) holder).tvName.setText("");
                 ((MyOrdersViewHolder) holder).tvMobileNumber.setText("");
                 ((MyOrdersViewHolder) holder).tvEmailId.setText("");
@@ -103,121 +108,6 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return homeChefIncomingOrderModelArrayList.size();
     }
 
-    class MyOrdersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView ivProfilePic, ivCall, ivMessage, ivShowDirections, ivGiveReview;
-        private TextView tvName, tvMobileNumber, tvEmailId, tvOrderType, tvNoOfGuest, tvPrice, tvOrderTiming, tvDiscount, tvOrderId, tvRequestId, tvBookingDate, tvBookedFor, tvOrderStatus;
-        private Button btnAccept, btnReject, btnCompleteOrder, btnFoodieCancelOrder;
-        private RelativeLayout rlHCAcceptReject, rlHcCompleteOrder, rlFoodieCancelOrder;
-
-        MyOrdersViewHolder(View itemView) {
-            super(itemView);
-            tvName = itemView.findViewById(R.id.tv_name);
-            tvMobileNumber = itemView.findViewById(R.id.tv_mobile_number);
-            tvEmailId = itemView.findViewById(R.id.tv_emailId);
-            tvOrderType = itemView.findViewById(R.id.tv_order_type);
-            tvNoOfGuest = itemView.findViewById(R.id.tv_no_of_guest);
-            tvPrice = itemView.findViewById(R.id.tv_price);
-            tvOrderTiming = itemView.findViewById(R.id.tv_order_timing);
-            tvDiscount = itemView.findViewById(R.id.tv_discount);
-            tvOrderId = itemView.findViewById(R.id.tv_order_id);
-            tvRequestId = itemView.findViewById(R.id.tv_request_id);
-            tvBookingDate = itemView.findViewById(R.id.tv_booking_date);
-            tvBookedFor = itemView.findViewById(R.id.tv_booked_for);
-            tvOrderStatus = itemView.findViewById(R.id.tv_order_status);
-
-            ivProfilePic = itemView.findViewById(R.id.iv_profile_pic);
-            ivCall = itemView.findViewById(R.id.iv_call);
-            ivMessage = itemView.findViewById(R.id.iv_message);
-            ivShowDirections = itemView.findViewById(R.id.iv_show_directions);
-            ivGiveReview = itemView.findViewById(R.id.iv_give_review);
-
-            btnAccept = itemView.findViewById(R.id.btn_accept);
-            btnReject = itemView.findViewById(R.id.btn_reject);
-            btnCompleteOrder = itemView.findViewById(R.id.btn_complete_order);
-            btnFoodieCancelOrder = itemView.findViewById(R.id.btn_foodie_cancel_order);
-
-            rlHCAcceptReject = itemView.findViewById(R.id.rl_hc_accept_reject_order);
-            rlHcCompleteOrder = itemView.findViewById(R.id.rl_hc_complete_order);
-            rlFoodieCancelOrder = itemView.findViewById(R.id.rl_foodie_cancel_order);
-
-            ivProfilePic.setOnClickListener(this);
-            btnAccept.setOnClickListener(this);
-            btnReject.setOnClickListener(this);
-            ivCall.setOnClickListener(this);
-            ivMessage.setOnClickListener(this);
-            ivShowDirections.setOnClickListener(this);
-            ivGiveReview.setOnClickListener(this);
-            btnCompleteOrder.setOnClickListener(this);
-            btnFoodieCancelOrder.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.btn_accept:
-                    ServiceUtils.foodieOrderAcceptReject(context, userModel.getUserId(), homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getOrderRequestId(),
-                            Constants.OrderActionType.HC_ACCEPTED_ORDER, "", new ServiceUtils.OrderActionInterface() {
-                                @Override
-                                public void onOrderAction(BaseModel baseModel) {
-                                    if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                        DialogUtils.showAlert(context, "Order Accepted Successfully", new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                homeChefIncomingOrderModelArrayList.remove(getAdapterPosition());
-                                                notifyDataSetChanged();
-                                            }
-                                        });
-                                    } else {
-                                        DialogUtils.showAlert(context, baseModel.getStatusMessage());
-                                    }
-                                }
-                            });
-                    break;
-                case R.id.btn_reject:
-                    ServiceUtils.foodieOrderAcceptReject(context, userModel.getUserId(), homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getOrderRequestId(),
-                            Constants.OrderActionType.HC_REJECTED_ORDER, "", new ServiceUtils.OrderActionInterface() {
-                                @Override
-                                public void onOrderAction(BaseModel baseModel) {
-                                    if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                        DialogUtils.showAlert(context, "Order Rejected Successfully", new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                homeChefIncomingOrderModelArrayList.remove(getAdapterPosition());
-                                                notifyDataSetChanged();
-                                            }
-                                        });
-                                    } else {
-                                        DialogUtils.showAlert(context, baseModel.getStatusMessage());
-                                    }
-
-                                }
-                            });
-                    break;
-                case R.id.iv_call:
-
-                    break;
-                case R.id.iv_message:
-
-                    break;
-                case R.id.iv_show_directions:
-
-                    break;
-                case R.id.iv_give_review:
-
-                    break;
-                case R.id.iv_profile_pic:
-
-                    break;
-                case R.id.btn_complete_order:
-
-                    break;
-                case R.id.btn_foodie_cancel_order:
-                    foodieCancelOrder(getAdapterPosition());
-                    break;
-            }
-        }
-    }
-
     private void foodieCancelOrder(final int position) {
         ServiceUtils.foodieOrderAcceptReject(context, userModel.getUserId(), homeChefIncomingOrderModelArrayList.get(position).getOrderRequestId(),
                 Constants.OrderActionType.HC_ACCEPTED_ORDER, "", new ServiceUtils.OrderActionInterface() {
@@ -227,7 +117,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             DialogUtils.showAlert(context, "Your Order is cancelled Successfully", new Runnable() {
                                 @Override
                                 public void run() {
-                                    homeChefIncomingOrderModelArrayList.get(position).getRequestStatus();
+                                    homeChefIncomingOrderModelArrayList.get(position).setRequestStatus(Constants.OrderActionType.FOODIE_CANCELLED_ORDER);
                                     notifyDataSetChanged();
                                 }
                             });
@@ -236,15 +126,6 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         }
                     }
                 });
-    }
-
-    class TitleSeparatorViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvTitle;
-
-        TitleSeparatorViewHolder(View itemView) {
-            super(itemView);
-            tvTitle = itemView.findViewById(R.id.tv_title);
-        }
     }
 
     private void orderStatusHandling(String orderStatus, RecyclerView.ViewHolder holder, String otp) {
@@ -361,6 +242,157 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private void message() {
 
+    }
+
+    public interface OtpSubmitInterface {
+        void onOtpEnter(String otp);
+    }
+
+    class MyOrdersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private ImageView ivProfilePic, ivCall, ivMessage, ivShowDirections, ivGiveReview;
+        private TextView tvName, tvMobileNumber, tvEmailId, tvOrderType, tvNoOfGuest, tvPrice, tvOrderTiming, tvDiscount, tvOrderId, tvRequestId, tvBookingDate, tvBookedFor, tvOrderStatus;
+        private Button btnAccept, btnReject, btnCompleteOrder, btnFoodieCancelOrder;
+        private RelativeLayout rlHCAcceptReject, rlHcCompleteOrder, rlFoodieCancelOrder;
+
+        MyOrdersViewHolder(View itemView) {
+            super(itemView);
+            tvName = itemView.findViewById(R.id.tv_name);
+            tvMobileNumber = itemView.findViewById(R.id.tv_mobile_number);
+            tvEmailId = itemView.findViewById(R.id.tv_emailId);
+            tvOrderType = itemView.findViewById(R.id.tv_order_type);
+            tvNoOfGuest = itemView.findViewById(R.id.tv_no_of_guest);
+            tvPrice = itemView.findViewById(R.id.tv_price);
+            tvOrderTiming = itemView.findViewById(R.id.tv_order_timing);
+            tvDiscount = itemView.findViewById(R.id.tv_discount);
+            tvOrderId = itemView.findViewById(R.id.tv_order_id);
+            tvRequestId = itemView.findViewById(R.id.tv_request_id);
+            tvBookingDate = itemView.findViewById(R.id.tv_booking_date);
+            tvBookedFor = itemView.findViewById(R.id.tv_booked_for);
+            tvOrderStatus = itemView.findViewById(R.id.tv_order_status);
+
+            ivProfilePic = itemView.findViewById(R.id.iv_profile_pic);
+            ivCall = itemView.findViewById(R.id.iv_call);
+            ivMessage = itemView.findViewById(R.id.iv_message);
+            ivShowDirections = itemView.findViewById(R.id.iv_show_directions);
+            ivGiveReview = itemView.findViewById(R.id.iv_give_review);
+
+            btnAccept = itemView.findViewById(R.id.btn_accept);
+            btnReject = itemView.findViewById(R.id.btn_reject);
+            btnCompleteOrder = itemView.findViewById(R.id.btn_complete_order);
+            btnFoodieCancelOrder = itemView.findViewById(R.id.btn_foodie_cancel_order);
+
+            rlHCAcceptReject = itemView.findViewById(R.id.rl_hc_accept_reject_order);
+            rlHcCompleteOrder = itemView.findViewById(R.id.rl_hc_complete_order);
+            rlFoodieCancelOrder = itemView.findViewById(R.id.rl_foodie_cancel_order);
+
+            ivProfilePic.setOnClickListener(this);
+            btnAccept.setOnClickListener(this);
+            btnReject.setOnClickListener(this);
+            ivCall.setOnClickListener(this);
+            ivMessage.setOnClickListener(this);
+            ivShowDirections.setOnClickListener(this);
+            ivGiveReview.setOnClickListener(this);
+            btnCompleteOrder.setOnClickListener(this);
+            btnFoodieCancelOrder.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.btn_accept:
+                    ServiceUtils.foodieOrderAcceptReject(context, userModel.getUserId(), homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getOrderRequestId(),
+                            Constants.OrderActionType.HC_ACCEPTED_ORDER, "", new ServiceUtils.OrderActionInterface() {
+                                @Override
+                                public void onOrderAction(BaseModel baseModel) {
+                                    if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                        DialogUtils.showAlert(context, "Order Accepted Successfully", new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                homeChefIncomingOrderModelArrayList.remove(getAdapterPosition());
+                                                notifyDataSetChanged();
+                                            }
+                                        });
+                                    } else {
+                                        DialogUtils.showAlert(context, baseModel.getStatusMessage());
+                                    }
+                                }
+                            });
+                    break;
+                case R.id.btn_reject:
+                    ServiceUtils.foodieOrderAcceptReject(context, userModel.getUserId(), homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getOrderRequestId(),
+                            Constants.OrderActionType.HC_REJECTED_ORDER, "", new ServiceUtils.OrderActionInterface() {
+                                @Override
+                                public void onOrderAction(BaseModel baseModel) {
+                                    if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                        DialogUtils.showAlert(context, "Order Rejected Successfully", new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                homeChefIncomingOrderModelArrayList.remove(getAdapterPosition());
+                                                notifyDataSetChanged();
+                                            }
+                                        });
+                                    } else {
+                                        DialogUtils.showAlert(context, baseModel.getStatusMessage());
+                                    }
+
+                                }
+                            });
+                    break;
+                case R.id.iv_call:
+
+                    break;
+                case R.id.iv_message:
+
+                    break;
+                case R.id.iv_show_directions:
+
+                    break;
+                case R.id.iv_give_review:
+
+                    break;
+                case R.id.iv_profile_pic:
+                    if (userModel.getAccountType().equals(Constants.Role.FOODIE.getStringRole()))
+                        Utils.showProfile(context, homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getFoodiesUserId());
+                    break;
+                case R.id.btn_complete_order:
+                    DialogUtils.showOrderOtpDialog(context, new OtpSubmitInterface() {
+                        @Override
+                        public void onOtpEnter(String otp) {
+                            System.out.println("Otp is:-" + otp);
+                            ServiceUtils.foodieOrderAcceptReject(context, userModel.getUserId(), homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getOrderRequestId(),
+                                    Constants.OrderActionType.HC_COMPLETED_ORDER, otp, new ServiceUtils.OrderActionInterface() {
+                                        @Override
+                                        public void onOrderAction(BaseModel baseModel) {
+                                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                                DialogUtils.showAlert(context, "Order Accepted Successfully", new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).setRequestStatus(Constants.OrderActionType.HC_COMPLETED_ORDER);
+                                                        notifyDataSetChanged();
+                                                    }
+                                                });
+                                            } else {
+                                                DialogUtils.showAlert(context, baseModel.getStatusMessage());
+                                            }
+                                        }
+                                    });
+                        }
+                    });
+                    break;
+                case R.id.btn_foodie_cancel_order:
+                    foodieCancelOrder(getAdapterPosition());
+                    break;
+            }
+        }
+    }
+
+    class TitleSeparatorViewHolder extends RecyclerView.ViewHolder {
+        private TextView tvTitle;
+
+        TitleSeparatorViewHolder(View itemView) {
+            super(itemView);
+            tvTitle = itemView.findViewById(R.id.tv_title);
+        }
     }
 
 }
