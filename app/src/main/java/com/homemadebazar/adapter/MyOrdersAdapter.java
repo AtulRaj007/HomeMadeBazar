@@ -204,7 +204,6 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     break;
                 case R.id.iv_give_review:
 
-
                     break;
                 case R.id.iv_profile_pic:
 
@@ -213,10 +212,30 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                     break;
                 case R.id.btn_foodie_cancel_order:
-
+                    foodieCancelOrder(getAdapterPosition());
                     break;
             }
         }
+    }
+
+    private void foodieCancelOrder(final int position) {
+        ServiceUtils.foodieOrderAcceptReject(context, userModel.getUserId(), homeChefIncomingOrderModelArrayList.get(position).getOrderRequestId(),
+                Constants.OrderActionType.HC_ACCEPTED_ORDER, "", new ServiceUtils.OrderActionInterface() {
+                    @Override
+                    public void onOrderAction(BaseModel baseModel) {
+                        if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                            DialogUtils.showAlert(context, "Your Order is cancelled Successfully", new Runnable() {
+                                @Override
+                                public void run() {
+                                    homeChefIncomingOrderModelArrayList.get(position).getRequestStatus();
+                                    notifyDataSetChanged();
+                                }
+                            });
+                        } else {
+                            DialogUtils.showAlert(context, baseModel.getStatusMessage());
+                        }
+                    }
+                });
     }
 
     class TitleSeparatorViewHolder extends RecyclerView.ViewHolder {
