@@ -255,6 +255,9 @@
     <string name="str_cancel_order">Cancel Order</string>
     <string name="hint_enter_otp">Enter Otp</string>
     <string name="str_submit">Submit</string>
+    <string name="str_rating_user">Rate the user</string>
+    <string name="str_write_short_review">Write a short review</string>
+    <string name="str_tell_us_what_you_think">Tell us what you think</string>
 
 
     <string-array name="price">

@@ -64,7 +64,7 @@ public class HomeChefFoodTimingAdapter extends RecyclerView.Adapter<HomeChefFood
     }
 
     public interface BookOrderInterface {
-        void onOrderSelected(String foodDate, int foodTime);
+        void onOrderSelected(String foodDate, int foodTime, int NoOfPerson);
     }
 
     class LunchViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -97,12 +97,13 @@ public class HomeChefFoodTimingAdapter extends RecyclerView.Adapter<HomeChefFood
             switch (v.getId()) {
                 case R.id.btn_book_order:
                     System.out.println("Booking Availability:-" + homeChefOrderModelArrayList.get(getAdapterPosition()).getDishAvailability());
-                    DialogUtils.bookFoodOnSelectedDatesDialog(context, homeChefOrderModelArrayList.get(getAdapterPosition()).getDishAvailability(), new BookOrderInterface() {
+                    DialogUtils.bookFoodOnSelectedDatesDialog(context, homeChefOrderModelArrayList.get(getAdapterPosition()), new BookOrderInterface() {
                         @Override
-                        public void onOrderSelected(String foodDate, int foodTime) {
+                        public void onOrderSelected(String foodDate, int foodTime, int noOfPerson) {
                             System.out.println(">>>>> onOrderSelected" + foodDate);
                             System.out.println(">>>>> onOrderSelected" + foodTime);
-                            ((HomeShopViewActivity) context).bookOrder(homeChefUserId, homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId(), foodDate, String.valueOf(foodTime), 2);
+                            System.out.println(">>>>> onOrderSelected" + noOfPerson);
+                            ((HomeShopViewActivity) context).bookOrder(homeChefUserId, homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId(), foodDate, String.valueOf(foodTime), noOfPerson);
 
                         }
                     }, foodTimeType);

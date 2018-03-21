@@ -105,10 +105,7 @@ public class Constants {
     }
 
     public interface ServerURL {
-        //        String BASE_URL = "http://103.54.24.25:200/api/";
-        //        String BASE_URL = "http://35.183.8.236/api/";
-//        18.219.188.20
-//        String BASE_URL = "http://18.218.139.27/api/";
+
         String BASE_URL = "http://18.219.188.20/api/";
         String IS_EMAIL_EXIST = BASE_URL + "RegistrationProcess/IsAccountExist";
         String SEND_OTP = BASE_URL + "RegistrationProcess/SendOtp";
@@ -170,6 +167,8 @@ public class Constants {
         String FOODIE_CHECK_IN = BASE_URL + "Miscellaneous/FoodieCheckIn";
         String HOMECHEF_ORDER_DELETE = BASE_URL + "Miscellaneous/OrdersDelete";
         String HOMECHEF_UNFRIEND_USER = BASE_URL + "Messenger/Unfriends";
+        String SAVE_RATING_FEEDBACK = BASE_URL + "Miscellaneous/SaveRatingFeedback";
+
     }
 
     public interface uploadImageURL {

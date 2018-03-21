@@ -199,11 +199,12 @@
             android:textSize="@dimen/text_18" />
 
         <TextView
+            android:id="@+id/tv_price"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="0.5"
-            android:text="@string/str_initial_count"
+            android:text=""
             android:textSize="@dimen/text_18" />
 
     </LinearLayout>
@@ -223,11 +224,12 @@
             android:textSize="@dimen/text_18" />
 
         <TextView
+            android:id="@+id/tv_discount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="0.5"
-            android:text="@string/str_initial_count"
+            android:text=""
             android:textSize="@dimen/text_18" />
 
     </LinearLayout>
@@ -247,11 +249,12 @@
             android:textSize="@dimen/text_18" />
 
         <TextView
+            android:id="@+id/tv_total"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="0.5"
-            android:text="@string/str_initial_count"
+            android:text=""
             android:textSize="@dimen/text_18" />
 
     </LinearLayout>

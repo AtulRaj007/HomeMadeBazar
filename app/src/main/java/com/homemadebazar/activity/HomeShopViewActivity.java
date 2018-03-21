@@ -195,7 +195,7 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
                 if (ContextCompat.checkSelfPermission(HomeShopViewActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(HomeShopViewActivity.this, new String[]{Manifest.permission.CALL_PHONE}, Constants.Keys.REQUEST_CALL_PHONE);
                 } else {
-                    startCall();
+                    Utils.startCall(HomeShopViewActivity.this,homeChefNearByModel.getMobile());
                 }
                 break;
             case R.id.ll_message:
@@ -215,23 +215,13 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    private void startCall() {
-        try {
-            if (ContextCompat.checkSelfPermission(HomeShopViewActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                Intent intent = new Intent(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:" + homeChefNearByModel.getMobile()));
-                startActivity(intent);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == Constants.Keys.REQUEST_CALL_PHONE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startCall();
+                Utils.startCall(HomeShopViewActivity.this,homeChefNearByModel.getMobile());
             }
         }
 

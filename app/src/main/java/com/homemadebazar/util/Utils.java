@@ -492,4 +492,27 @@ public class Utils {
         }
         return false;
     }
+
+    public static void startCall(Context context, String mobileNumber) {
+        try {
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:" + mobileNumber));
+                context.startActivity(intent);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void showDirections(Context mContext, double curLatitude, double curLongitude, double destLatitude, double destLongitude) {
+
+        final Intent intent = new
+                Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?" +
+                "saddr=" + curLatitude + "," + curLongitude + "&daddr=" + destLatitude + "," +
+                destLongitude));
+        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+        mContext.startActivity(intent);
+
+    }
 }

@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.homemadebazar.adapter.HomeChefFoodTimingAdapter;
 import com.homemadebazar.adapter.MyOrdersAdapter;
 import com.homemadebazar.model.FoodDateTimeBookModel;
 import com.homemadebazar.model.FoodTimingModel;
+import com.homemadebazar.model.HomeChefOrderModel;
 
 import java.sql.Time;
 import java.text.Format;
@@ -37,6 +39,7 @@ public class DialogUtils {
     public static AlertDialog.Builder dialog = null;
     public static String bookDate;
     private static TextView timeSelectedTextView = null;
+    private static int rating = 0;
 
     public static void showFoodDialog(Context context) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -317,6 +320,69 @@ public class DialogUtils {
         dialog.show();
     }
 
+    public static void showRatingDialog(final Context context, final MyOrdersAdapter.ReviewSubmitInterface reviewSubmitInterface) {
+        final int ratingIds[] = {R.id.iv_first_rating, R.id.iv_second_rating, R.id.iv_third_rating, R.id.iv_fourth_rating, R.id.iv_fifth_rating};
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final View customview = LayoutInflater.from(context).inflate(R.layout.dialog_user_rating, null);
+        builder.setView(customview);
+        final EditText etReviewText = customview.findViewById(R.id.et_review_desc);
+        final Dialog dialog = builder.create();
+
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.iv_first_rating:
+                    case R.id.iv_second_rating:
+                    case R.id.iv_third_rating:
+                    case R.id.iv_fourth_rating:
+                    case R.id.iv_fifth_rating:
+
+                        String strTag = (String) view.getTag();
+                        int tag = Integer.parseInt(strTag);
+                        System.out.println("Tag:-" + tag);
+
+                        for (int i = 0; i < 5; i++) {
+                            if (i <= tag) {
+                                ((ImageView) customview.findViewById(ratingIds[i])).setImageResource(R.drawable.star_fill);
+                            } else {
+                                ((ImageView) customview.findViewById(ratingIds[i])).setImageResource(R.drawable.star);
+                            }
+                        }
+
+                        rating = tag + 1;
+
+                        break;
+                    case R.id.btn_submit:
+                        String reviewText = etReviewText.getText().toString().trim();
+                        if (rating == 0) {
+                            DialogUtils.showAlert(context, "Please select the rating");
+                            return;
+                        } else if (TextUtils.isEmpty(reviewText)) {
+                            DialogUtils.showAlert(context, "Please enter short review.");
+                            return;
+                        }
+
+                        reviewSubmitInterface.onReviewSubmit(rating, reviewText);
+                        rating = 0;
+                        dialog.dismiss();
+
+                        break;
+                }
+            }
+        };
+
+        for (int i = 0; i < ratingIds.length; i++) {
+            customview.findViewById(ratingIds[i]).setOnClickListener(onClickListener);
+        }
+
+        customview.findViewById(R.id.btn_submit).setOnClickListener(onClickListener);
+
+        builder.setCancelable(true);
+
+        dialog.show();
+    }
+
     public static void showMediaDialog(Context context, final Runnable camera, final Runnable gallary) {
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_media, null);
@@ -396,9 +462,23 @@ public class DialogUtils {
         dialog.show();
     }
 
-    public static void bookFoodOnSelectedDatesDialog(Context context, String bookingAvailability, final HomeChefFoodTimingAdapter.BookOrderInterface bookOrderInterface, final String foodTimeType) {
+    private static double calcPrice(String price, String discount, int noOfPeople) {
+        double calcPrice = 0.0;
+        int intDiscount = 0;
+        try {
+            calcPrice = Double.parseDouble(price);
+            intDiscount = Integer.parseInt(discount, 0);
+            calcPrice = (calcPrice * noOfPeople) * (100 - intDiscount);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Total Price=" + calcPrice);
+        return calcPrice;
+    }
 
-        final ArrayList<FoodDateTimeBookModel> foodDateTimeBookModels = Utils.parseFoodBookDateTime(bookingAvailability);
+    public static void bookFoodOnSelectedDatesDialog(Context context, final HomeChefOrderModel homeChefOrderModel, final HomeChefFoodTimingAdapter.BookOrderInterface bookOrderInterface, final String foodTimeType) {
+
+        final ArrayList<FoodDateTimeBookModel> foodDateTimeBookModels = Utils.parseFoodBookDateTime(homeChefOrderModel.getDishAvailability());
 
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_order_food_dates, null);
@@ -409,6 +489,13 @@ public class DialogUtils {
         final RadioGroup rgDinnerDate = view.findViewById(R.id.rg_dinner_date);
         final RadioGroup rgDinnerTime = view.findViewById(R.id.rg_dinner_time);
         final TextView tvNoOfPeople = view.findViewById(R.id.tv_no_of_people);
+        final TextView tvPrice = view.findViewById(R.id.tv_price);
+        final TextView tvDiscount = view.findViewById(R.id.tv_discount);
+        final TextView tvTotal = view.findViewById(R.id.tv_total);
+
+        tvPrice.setText(homeChefOrderModel.getPrice());
+        tvDiscount.setText(homeChefOrderModel.getDiscount());
+        tvTotal.setText(calcPrice(homeChefOrderModel.getPrice(), homeChefOrderModel.getDiscount(), 1) + "");
 
         ((RadioButton) view.findViewById(R.id.radiobutton_one)).setText(foodDateTimeBookModels.get(0).getDate());
         ((RadioButton) view.findViewById(R.id.radiobutton_two)).setText(foodDateTimeBookModels.get(1).getDate());
@@ -425,6 +512,7 @@ public class DialogUtils {
                     int noOfPeople = Integer.parseInt(tvNoOfPeople.getText().toString().trim());
                     noOfPeople++;
                     tvNoOfPeople.setText(String.valueOf(noOfPeople));
+                    tvPrice.setText(calcPrice(homeChefOrderModel.getPrice(), homeChefOrderModel.getDiscount(), noOfPeople) + "");
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -441,6 +529,7 @@ public class DialogUtils {
                     return;
                 noOfPeople--;
                 tvNoOfPeople.setText(String.valueOf(noOfPeople));
+                tvPrice.setText(calcPrice(homeChefOrderModel.getPrice(), homeChefOrderModel.getDiscount(), noOfPeople) + "");
 
             }
         });
@@ -459,10 +548,10 @@ public class DialogUtils {
 
                 if (dinnerTime == -1) {
                     // BreakFast Lunch Dinner
-                    bookOrderInterface.onOrderSelected(dinnerDate, Integer.parseInt(foodTimeType));
+                    bookOrderInterface.onOrderSelected(dinnerDate, Integer.parseInt(foodTimeType), parseStringToInt(tvNoOfPeople.getText().toString().trim()));
                 } else {
                     // Discover Hot Deals
-                    bookOrderInterface.onOrderSelected(dinnerDate, dinnerTime);
+                    bookOrderInterface.onOrderSelected(dinnerDate, dinnerTime, parseStringToInt(tvNoOfPeople.getText().toString().trim()));
                 }
 
                 dialog.dismiss();
@@ -471,6 +560,15 @@ public class DialogUtils {
 
         dialog.show();
 
+    }
+
+    private static int parseStringToInt(String strInteger) {
+        try {
+            return Integer.parseInt(strInteger);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 1;
     }
 
     private static String getDinnerDateFromId(int id, ArrayList<FoodDateTimeBookModel> foodDateTimeBookModels) {

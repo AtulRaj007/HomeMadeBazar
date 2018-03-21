@@ -1,6 +1,13 @@
 package com.homemadebazar.adapter;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -15,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.HomeChefIncomingOrderModel;
+import com.homemadebazar.model.UserLocation;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
@@ -137,7 +145,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((MyOrdersViewHolder) holder).rlHcCompleteOrder.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.GONE);
-                ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.VISIBLE);
 
             } else if (orderStatus.equals(Constants.OrderActionType.FOODIE_CANCELLED_ORDER)) {
                 ((MyOrdersViewHolder) holder).rlHCAcceptReject.setVisibility(View.GONE);
@@ -149,10 +157,10 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             } else if (orderStatus.equals(Constants.OrderActionType.HC_ACCEPTED_ORDER)) {
                 ((MyOrdersViewHolder) holder).rlHCAcceptReject.setVisibility(View.GONE);
-                ((MyOrdersViewHolder) holder).rlHcCompleteOrder.setVisibility(View.VISIBLE);
+                ((MyOrdersViewHolder) holder).rlHcCompleteOrder.setVisibility(View.VISIBLE);//
                 ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
-                ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.GONE);
-                ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.VISIBLE);//GONE
+                ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.VISIBLE);
 
 
             } else if (orderStatus.equals(Constants.OrderActionType.HC_REJECTED_ORDER)) {
@@ -236,16 +244,26 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    private void makeCall() {
-
+    private void makeCall(String mobileNumber) {
+        if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE}, Constants.Keys.REQUEST_CALL_PHONE);
+        } else {
+            Utils.startCall(context, mobileNumber);
+        }
     }
 
     private void message() {
-
+        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+        sendIntent.setData(Uri.parse("sms:"));
+        context.startActivity(sendIntent);
     }
 
     public interface OtpSubmitInterface {
         void onOtpEnter(String otp);
+    }
+
+    public interface ReviewSubmitInterface {
+        void onReviewSubmit(int rating, String reviewDesc);
     }
 
     class MyOrdersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -339,16 +357,26 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             });
                     break;
                 case R.id.iv_call:
-
+                    makeCall(homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getFoodieMobileNumber());
                     break;
                 case R.id.iv_message:
-
+                    message();
                     break;
                 case R.id.iv_show_directions:
-
+                    UserLocation userLocation = SharedPreference.getUserLocation(context);
+                    double destLatitude = 28.644800;
+                    double destLongitude = 77.216721;
+                    Utils.showDirections(context, userLocation.getLatitude(), userLocation.getLongitude(), destLatitude, destLongitude);
                     break;
                 case R.id.iv_give_review:
-
+                    DialogUtils.showRatingDialog(context, new ReviewSubmitInterface() {
+                        @Override
+                        public void onReviewSubmit(int rating, String reviewDesc) {
+                            System.out.println("Rating:-" + rating);
+                            System.out.println("Review Desc:-" + reviewDesc);
+                            ServiceUtils.submitReview(context, userModel.getUserId(), homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getFoodiesUserId(), rating, homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getOrderId(), reviewDesc);
+                        }
+                    });
                     break;
                 case R.id.iv_profile_pic:
                     if (userModel.getAccountType().equals(Constants.Role.FOODIE.getStringRole()))
