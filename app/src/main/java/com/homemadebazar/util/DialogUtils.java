@@ -311,8 +311,9 @@ public class DialogUtils {
                 if (TextUtils.isEmpty(etOtp.getText().toString().trim())) {
                     DialogUtils.showAlert(context, "Otp is empty");
                 } else {
-                    dialog.dismiss();
                     otpSubmitInterface.onOtpEnter(etOtp.getText().toString().trim());
+                    dialog.dismiss();
+
                 }
             }
         });
@@ -465,10 +466,13 @@ public class DialogUtils {
     private static double calcPrice(String price, String discount, int noOfPeople) {
         double calcPrice = 0.0;
         int intDiscount = 0;
+        if (discount == null) {
+            discount = "0";
+        }
         try {
             calcPrice = Double.parseDouble(price);
-            intDiscount = Integer.parseInt(discount, 0);
-            calcPrice = (calcPrice * noOfPeople) * (100 - intDiscount);
+            intDiscount = Integer.parseInt(discount);
+            calcPrice = (calcPrice * noOfPeople) * (100 - intDiscount) / 100;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -493,8 +497,11 @@ public class DialogUtils {
         final TextView tvDiscount = view.findViewById(R.id.tv_discount);
         final TextView tvTotal = view.findViewById(R.id.tv_total);
 
+        if (homeChefOrderModel.getDiscount() == null)
+            homeChefOrderModel.setDiscount("0");
         tvPrice.setText(homeChefOrderModel.getPrice());
         tvDiscount.setText(homeChefOrderModel.getDiscount());
+
         tvTotal.setText(calcPrice(homeChefOrderModel.getPrice(), homeChefOrderModel.getDiscount(), 1) + "");
 
         ((RadioButton) view.findViewById(R.id.radiobutton_one)).setText(foodDateTimeBookModels.get(0).getDate());
@@ -512,7 +519,7 @@ public class DialogUtils {
                     int noOfPeople = Integer.parseInt(tvNoOfPeople.getText().toString().trim());
                     noOfPeople++;
                     tvNoOfPeople.setText(String.valueOf(noOfPeople));
-                    tvPrice.setText(calcPrice(homeChefOrderModel.getPrice(), homeChefOrderModel.getDiscount(), noOfPeople) + "");
+                    tvTotal.setText(calcPrice(homeChefOrderModel.getPrice(), homeChefOrderModel.getDiscount(), noOfPeople) + "");
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -529,7 +536,7 @@ public class DialogUtils {
                     return;
                 noOfPeople--;
                 tvNoOfPeople.setText(String.valueOf(noOfPeople));
-                tvPrice.setText(calcPrice(homeChefOrderModel.getPrice(), homeChefOrderModel.getDiscount(), noOfPeople) + "");
+                tvTotal.setText(calcPrice(homeChefOrderModel.getPrice(), homeChefOrderModel.getDiscount(), noOfPeople) + "");
 
             }
         });

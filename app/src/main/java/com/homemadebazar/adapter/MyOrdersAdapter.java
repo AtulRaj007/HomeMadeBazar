@@ -146,6 +146,9 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.VISIBLE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setText("");
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setVisibility(View.GONE);
+
 
             } else if (orderStatus.equals(Constants.OrderActionType.FOODIE_CANCELLED_ORDER)) {
                 ((MyOrdersViewHolder) holder).rlHCAcceptReject.setVisibility(View.GONE);
@@ -153,6 +156,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).tvOrderStatus.setText("Foodie has cancelled the order");
 
             } else if (orderStatus.equals(Constants.OrderActionType.HC_ACCEPTED_ORDER)) {
@@ -161,6 +165,8 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.VISIBLE);//GONE
                 ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.VISIBLE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setText("");
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setVisibility(View.GONE);
 
 
             } else if (orderStatus.equals(Constants.OrderActionType.HC_REJECTED_ORDER)) {
@@ -169,6 +175,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setVisibility(View.VISIBLE);
 
                 ((MyOrdersViewHolder) holder).tvOrderStatus.setText("You have rejected the order");
 
@@ -178,6 +185,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.VISIBLE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setVisibility(View.VISIBLE);
 
                 ((MyOrdersViewHolder) holder).tvOrderStatus.setText("Order Completed");
 
@@ -187,6 +195,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setVisibility(View.VISIBLE);
 
                 ((MyOrdersViewHolder) holder).tvOrderStatus.setText("Order Pending");
             }
@@ -198,6 +207,9 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.VISIBLE);
                 ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.VISIBLE);
                 ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setText("");
+
 
             } else if (orderStatus.equals(Constants.OrderActionType.FOODIE_CANCELLED_ORDER)) {
                 ((MyOrdersViewHolder) holder).rlHCAcceptReject.setVisibility(View.GONE);
@@ -205,6 +217,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.VISIBLE);
                 ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setVisibility(View.VISIBLE);
                 ((MyOrdersViewHolder) holder).tvOrderStatus.setText("You have cancelled the order");
 
             } else if (orderStatus.equals(Constants.OrderActionType.HC_ACCEPTED_ORDER)) {
@@ -213,6 +226,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.VISIBLE);
                 ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setVisibility(View.VISIBLE);
                 ((MyOrdersViewHolder) holder).tvOrderStatus.setText("You order is Accepted by HomeChef.\n Show the otp to the homechef\n Otp is " + otp);
 
             } else if (orderStatus.equals(Constants.OrderActionType.HC_REJECTED_ORDER)) {
@@ -221,6 +235,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.VISIBLE);
                 ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setVisibility(View.VISIBLE);
                 ((MyOrdersViewHolder) holder).tvOrderStatus.setText("You order is rejected by the HomeChef");
 
 
@@ -230,6 +245,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.VISIBLE);
                 ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.VISIBLE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setVisibility(View.VISIBLE);
                 ((MyOrdersViewHolder) holder).tvOrderStatus.setText("Order Completed");
 
             } else if (orderStatus.equals(Constants.OrderActionType.PENDING_ORDER)) {
@@ -238,6 +254,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((MyOrdersViewHolder) holder).rlFoodieCancelOrder.setVisibility(View.GONE);
                 ((MyOrdersViewHolder) holder).ivShowDirections.setVisibility(View.VISIBLE);
                 ((MyOrdersViewHolder) holder).ivGiveReview.setVisibility(View.GONE);
+                ((MyOrdersViewHolder) holder).tvOrderStatus.setVisibility(View.VISIBLE);
                 ((MyOrdersViewHolder) holder).tvOrderStatus.setText("Pending Order");
 
             }
@@ -392,7 +409,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                                         @Override
                                         public void onOrderAction(BaseModel baseModel) {
                                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                                DialogUtils.showAlert(context, "Order Accepted Successfully", new Runnable() {
+                                                DialogUtils.showAlert(context, "Order Completed Successfully", new Runnable() {
                                                     @Override
                                                     public void run() {
                                                         homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).setRequestStatus(Constants.OrderActionType.HC_COMPLETED_ORDER);
