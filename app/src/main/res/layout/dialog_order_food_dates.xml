@@ -97,7 +97,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <RadioButton
                 android:id="@+id/rg_breakfast"

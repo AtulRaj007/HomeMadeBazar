@@ -100,7 +100,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((MyOrdersViewHolder) holder).tvOrderTiming.setText(homeChefIncomingOrderModel.getEatingTime());
             ((MyOrdersViewHolder) holder).tvDiscount.setText(homeChefIncomingOrderModel.getDiscAmount() + "(%)");
             ((MyOrdersViewHolder) holder).tvOrderId.setText(homeChefIncomingOrderModel.getOrderId());
-            ((MyOrdersViewHolder) holder).tvRequestId.setText(homeChefIncomingOrderModel.getOrderReqDate());
+            ((MyOrdersViewHolder) holder).tvRequestId.setText(homeChefIncomingOrderModel.getOrderRequestId());
             ((MyOrdersViewHolder) holder).tvBookingDate.setText(homeChefIncomingOrderModel.getOrderRequestDate());
             ((MyOrdersViewHolder) holder).tvBookedFor.setText(homeChefIncomingOrderModel.getBookedDate());
 

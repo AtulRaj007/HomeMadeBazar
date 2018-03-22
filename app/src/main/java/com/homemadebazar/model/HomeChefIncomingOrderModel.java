@@ -192,7 +192,7 @@ public class HomeChefIncomingOrderModel {
     }
 
     public void setOrderReqDate(String orderRequestDate) {
-        this.orderRequestDate = orderRequestId;
+        this.orderRequestDate = orderRequestDate;
     }
 
     public String getBookedDate() {

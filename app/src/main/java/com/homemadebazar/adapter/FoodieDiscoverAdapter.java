@@ -54,11 +54,11 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
         try {
             HomeChefOrderModel homeChefOrderModel = homeChefOrderModelArrayList.get(position);
 
-            holder.tvOrderId.setText(homeChefOrderModel.getOrderId());
+            holder.tvOrderId.setText("Order Id:-" + homeChefOrderModel.getOrderId());
             holder.tvName.setText(homeChefOrderModel.getFirstName() + " " + homeChefOrderModel.getLastName());
             holder.tvFoodName.setText(homeChefOrderModel.getDishName());
             holder.tvFoodType.setText(homeChefOrderModel.getOrderType());
-            holder.tvNoOfPeople.setText("");
+            holder.tvNoOfPeople.setText(homeChefOrderModel.getMinGuest() + " to " + homeChefOrderModel.getMaxGuest() + " People");
             holder.tvPrice.setText(homeChefOrderModel.getPrice());
             holder.tvOrderTiming.setText(homeChefOrderModel.getOrderTime());
             holder.tvDiscount.setText(homeChefOrderModel.getDiscount());
@@ -143,13 +143,28 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
 
             btnBookOrder = itemView.findViewById(R.id.btn_book_order);
             btnBookOrder.setOnClickListener(this);
+            ivProfilePic.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_book_order:
-                    bookOrder(homeChefOrderModelArrayList.get(getAdapterPosition()).getUserId(), homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId(), "2017-01-01", "1", 1);
+//                    bookOrder(homeChefOrderModelArrayList.get(getAdapterPosition()).getUserId(), homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId(), "2017-01-01", "1", 1);
+
+                    DialogUtils.bookFoodOnSelectedDatesDialog(context, homeChefOrderModelArrayList.get(getAdapterPosition()), new HomeChefFoodTimingAdapter.BookOrderInterface() {
+                        @Override
+                        public void onOrderSelected(String foodDate, int foodTime, int noOfPerson) {
+                            System.out.println(">>>>> onOrderSelected" + foodDate);
+                            System.out.println(">>>>> onOrderSelected" + foodTime);
+                            System.out.println(">>>>> onOrderSelected" + noOfPerson);
+                            bookOrder(homeChefOrderModelArrayList.get(getAdapterPosition()).getUserId(), homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId(), foodDate, String.valueOf(foodTime), noOfPerson);
+
+                        }
+                    }, "");
+                    break;
+                case R.id.iv_profile_pic:
+                    Utils.showProfile(context, homeChefOrderModelArrayList.get(getAdapterPosition()).getUserId());
                     break;
             }
         }
