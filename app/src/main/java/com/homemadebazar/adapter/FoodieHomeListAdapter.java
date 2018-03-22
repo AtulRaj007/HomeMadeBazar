@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
@@ -148,7 +147,6 @@ public class FoodieHomeListAdapter extends RecyclerView.Adapter<FoodieHomeListAd
                     Utils.showProfile(context, homeChiefNearByModelArrayList.get(getAdapterPosition()).getUserId());
                     break;
                 case R.id.iv_delete_fav:
-                    Toast.makeText(context, "Delete Clicked", Toast.LENGTH_SHORT).show();
                     deleteFavourite(getAdapterPosition());
                     break;
                 default:

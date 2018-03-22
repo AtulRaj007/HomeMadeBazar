@@ -51,17 +51,34 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
 
     @Override
     public void onBindViewHolder(DiscoverViewHolder holder, int position) {
-        ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(context, homeChefOrderModelArrayList.get(position).getFoodImagesArrayList());
-        holder.viewPager.setAdapter(imagePagerAdapter);
+        try {
+            HomeChefOrderModel homeChefOrderModel = homeChefOrderModelArrayList.get(position);
 
-        holder.tvFoodName.setText(homeChefOrderModelArrayList.get(position).getDishName());
-        holder.tvFoodSpeciality.setText(homeChefOrderModelArrayList.get(position).getCategory());
-        holder.tvDiscount.setText(homeChefOrderModelArrayList.get(position).getDiscount());
+            holder.tvOrderId.setText(homeChefOrderModel.getOrderId());
+            holder.tvName.setText(homeChefOrderModel.getFirstName() + " " + homeChefOrderModel.getLastName());
+            holder.tvFoodName.setText(homeChefOrderModel.getDishName());
+            holder.tvFoodType.setText(homeChefOrderModel.getOrderType());
+            holder.tvNoOfPeople.setText("");
+            holder.tvPrice.setText(homeChefOrderModel.getPrice());
+            holder.tvOrderTiming.setText(homeChefOrderModel.getOrderTime());
+            holder.tvDiscount.setText(homeChefOrderModel.getDiscount());
+            holder.tvRules.setText(Utils.getRulesText(homeChefOrderModel.getRules()));
+            holder.tvDescription.setText(homeChefOrderModel.getDescription());
 
-        holder.tvName.setText(homeChefOrderModelArrayList.get(position).getFirstName() + " " + homeChefOrderModelArrayList.get(position).getLastName());
-        holder.tvRating.setText("5.0");
-        if (!TextUtils.isEmpty(homeChefOrderModelArrayList.get(position).getProfilePic()))
-            Glide.with(context).load(homeChefOrderModelArrayList.get(position).getProfilePic()).into(holder.ivProfilePic);
+            holder.tvDiscount.setText(homeChefOrderModel.getDiscount());
+
+            if (homeChefOrderModel.getFoodImagesArrayList() != null) {
+                ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(context, homeChefOrderModelArrayList.get(position).getFoodImagesArrayList());
+                holder.viewPager.setAdapter(imagePagerAdapter);
+            }
+
+            if (!TextUtils.isEmpty(homeChefOrderModelArrayList.get(position).getProfilePic()))
+                Glide.with(context).load(homeChefOrderModelArrayList.get(position).getProfilePic()).into(holder.ivProfilePic);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -105,7 +122,7 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
     class DiscoverViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ViewPager viewPager;
         private ImageView ivProfilePic;
-        private TextView tvName, tvRating, tvFoodName, tvFoodSpeciality, tvDiscount;
+        private TextView tvOrderId, tvName, tvFoodName, tvFoodType, tvNoOfPeople, tvPrice, tvDiscount, tvOrderTiming, tvRules, tvDescription;
         private Button btnBookOrder;
 
         DiscoverViewHolder(View itemView) {
@@ -113,11 +130,16 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
             viewPager = itemView.findViewById(R.id.view_pager);
             ivProfilePic = itemView.findViewById(R.id.iv_profile_pic);
 
+            tvOrderId = itemView.findViewById(R.id.tv_order_id);
             tvName = itemView.findViewById(R.id.tv_name);
-            tvRating = itemView.findViewById(R.id.tv_rating);
             tvFoodName = itemView.findViewById(R.id.tv_food_name);
-            tvFoodSpeciality = itemView.findViewById(R.id.tv_food_speciality);
+            tvFoodType = itemView.findViewById(R.id.tv_food_type);
+            tvNoOfPeople = itemView.findViewById(R.id.tv_no_of_people);
+            tvPrice = itemView.findViewById(R.id.tv_price);
             tvDiscount = itemView.findViewById(R.id.tv_discount);
+            tvOrderTiming = itemView.findViewById(R.id.tv_order_timing);
+            tvRules = itemView.findViewById(R.id.tv_rules);
+            tvDescription = itemView.findViewById(R.id.tv_description);
 
             btnBookOrder = itemView.findViewById(R.id.btn_book_order);
             btnBookOrder.setOnClickListener(this);

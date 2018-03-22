@@ -6,11 +6,18 @@ package com.homemadebazar.model;
 
 public class HomeChefIncomingOrderModel {
 
+    /* Foodie */
+    private String foodiesUserId;
     private String foodiesDp;
     private String coverPhoto;
     private String foodiesFirstName;
     private String foodiesLastName;
-    private String foodiesUserId;
+    private String foodieEmailId;
+    private String foodieMobileNumber;
+    private String foodieProfession;
+    private String foodieLatitude;
+    private String foodieLongitude;
+
     private String orderFor; // Breakfast Lunch Time
     private String orderId;     // Order Id
     private String orderRequestId;
@@ -20,14 +27,37 @@ public class HomeChefIncomingOrderModel {
     private String dishName;
     private String eatingTime;
     private String orderType;
-    private String foodieEmailId;
-    private String foodieMobileNumber;
     private String noOfGuest;
     private String price;
     private String discAmount;
     private String otp;
     private String dateTitle;
-    private int type; // Now, Scheduled, Completed
+    private int type; // Now, Scheduled, Completed Foodies Order
+
+    /* Home Chef */
+    private String hcUserId;
+    private String hcDp;
+    private String hcFirstName;
+    private String hcLastName;
+    private String hcMobileNumber;
+    private String hcEmail;
+    private String hcProfession;
+    private String hcLatitude;
+    private String hcLongitude;
+
+
+
+    /*
+//    "HCDP": "http://18.219.188.20/api/CreateOrder/GetImage?Source=ImageGallary%5C%5C1801132%5CDP%5Ccropped703112258.jpg",
+            "HCFirstName": "Atul",
+            "HCLastName": "Raj",
+            "HCUserId": "1801132",
+            "HCMobile": "9654489093",
+            "FoodiesProfession": "RST",
+            "HCLatitude": "28.4880097",
+            "HCLongtitude": "77.0694491",
+            "FoodiesLatitude": "28.4868546",
+            "FoodiesLongtitude": "77.0667495"*/
 
     public String getOrderRequestDate() {
         return orderRequestDate;
@@ -191,6 +221,102 @@ public class HomeChefIncomingOrderModel {
 
     public String getDishName() {
         return dishName;
+    }
+
+    public String getFoodieProfession() {
+        return foodieProfession;
+    }
+
+    public void setFoodieProfession(String foodieProfession) {
+        this.foodieProfession = foodieProfession;
+    }
+
+    public String getFoodieLatitude() {
+        return foodieLatitude;
+    }
+
+    public void setFoodieLatitude(String foodieLatitude) {
+        this.foodieLatitude = foodieLatitude;
+    }
+
+    public String getFoodieLongitude() {
+        return foodieLongitude;
+    }
+
+    public void setFoodieLongitude(String foodieLongitude) {
+        this.foodieLongitude = foodieLongitude;
+    }
+
+    public String getHcUserId() {
+        return hcUserId;
+    }
+
+    public void setHcUserId(String hcUserId) {
+        this.hcUserId = hcUserId;
+    }
+
+    public String getHcDp() {
+        return hcDp;
+    }
+
+    public void setHcDp(String hcDp) {
+        this.hcDp = hcDp;
+    }
+
+    public String getHcFirstName() {
+        return hcFirstName;
+    }
+
+    public void setHcFirstName(String hcFirstName) {
+        this.hcFirstName = hcFirstName;
+    }
+
+    public String getHcLastName() {
+        return hcLastName;
+    }
+
+    public void setHcLastName(String hcLastName) {
+        this.hcLastName = hcLastName;
+    }
+
+    public String getHcMobileNumber() {
+        return hcMobileNumber;
+    }
+
+    public void setHcMobileNumber(String hcMobileNumber) {
+        this.hcMobileNumber = hcMobileNumber;
+    }
+
+    public String getHcEmail() {
+        return hcEmail;
+    }
+
+    public void setHcEmail(String hcEmail) {
+        this.hcEmail = hcEmail;
+    }
+
+    public String getHcProfession() {
+        return hcProfession;
+    }
+
+    public void setHcProfession(String hcProfession) {
+        this.hcProfession = hcProfession;
+    }
+
+    public String getHcLatitude() {
+        return hcLatitude;
+    }
+
+    public void setHcLatitude(String hcLatitude) {
+        this.hcLatitude = hcLatitude;
+    }
+
+    public String getHcLongitude() {
+        return hcLongitude;
+    }
+
+    public void setHcLongitude(String hcLongitude) {
+        this.hcLongitude = hcLongitude;
     }
 
     public void setDishName(String dishName) {

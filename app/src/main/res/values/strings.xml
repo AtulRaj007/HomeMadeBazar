@@ -258,6 +258,7 @@
     <string name="str_rating_user">Rate the user</string>
     <string name="str_write_short_review">Write a short review</string>
     <string name="str_tell_us_what_you_think">Tell us what you think</string>
+    <string name="str_rules">Rules</string>
 
 
     <string-array name="price">

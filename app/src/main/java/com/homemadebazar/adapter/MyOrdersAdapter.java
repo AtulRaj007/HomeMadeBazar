@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.homemadebazar.R;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.HomeChefIncomingOrderModel;
@@ -69,20 +70,30 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
             if (userModel.getAccountType().equals(Constants.Role.HOME_CHEF.getStringRole())) {
+                // Home Chef
                 if (!TextUtils.isEmpty(homeChefIncomingOrderModel.getFoodiesDp())) {
-                    Glide.with(context).load(homeChefIncomingOrderModel.getFoodiesDp()).into(((MyOrdersViewHolder) holder).ivProfilePic);
+                    Glide.with(context).load(homeChefIncomingOrderModel.getHcDp())
+                            .apply(new RequestOptions().centerCrop().override(150, 150))
+                            .into(((MyOrdersViewHolder) holder).ivProfilePic);
                 }
                 ((MyOrdersViewHolder) holder).tvName.setText(homeChefIncomingOrderModel.getFoodiesFirstName() + " " + homeChefIncomingOrderModel.getFoodiesLastName());
+                ((MyOrdersViewHolder) holder).tvProfession.setText(homeChefIncomingOrderModel.getFoodieProfession());
                 ((MyOrdersViewHolder) holder).tvMobileNumber.setText(homeChefIncomingOrderModel.getFoodieMobileNumber());
                 ((MyOrdersViewHolder) holder).tvEmailId.setText(homeChefIncomingOrderModel.getFoodieEmailId());
             } else {
-                if (!TextUtils.isEmpty(homeChefIncomingOrderModel.getFoodiesDp())) {
-                    Glide.with(context).load(homeChefIncomingOrderModel.getFoodiesDp()).into(((MyOrdersViewHolder) holder).ivProfilePic);
+                // Foodie
+                if (!TextUtils.isEmpty(homeChefIncomingOrderModel.getHcDp())) {
+                    Glide.with(context).load(homeChefIncomingOrderModel.getFoodiesDp())
+                            .apply(new RequestOptions().centerCrop().override(150, 150))
+                            .into(((MyOrdersViewHolder) holder).ivProfilePic);
                 }
-                ((MyOrdersViewHolder) holder).tvName.setText("");
-                ((MyOrdersViewHolder) holder).tvMobileNumber.setText("");
-                ((MyOrdersViewHolder) holder).tvEmailId.setText("");
+                ((MyOrdersViewHolder) holder).tvName.setText(homeChefIncomingOrderModel.getHcFirstName() + " " + homeChefIncomingOrderModel.getHcLastName());
+                ((MyOrdersViewHolder) holder).tvProfession.setText(homeChefIncomingOrderModel.getHcProfession());
+                ((MyOrdersViewHolder) holder).tvMobileNumber.setText(homeChefIncomingOrderModel.getHcMobileNumber());
+                ((MyOrdersViewHolder) holder).tvEmailId.setText(homeChefIncomingOrderModel.getHcEmail());
             }
+
+            ((MyOrdersViewHolder) holder).tvDishName.setText(homeChefIncomingOrderModel.getDishName());
             ((MyOrdersViewHolder) holder).tvOrderType.setText(homeChefIncomingOrderModel.getOrderFor());
             ((MyOrdersViewHolder) holder).tvNoOfGuest.setText("No Of Guest:-" + homeChefIncomingOrderModel.getNoOfGuest());
             ((MyOrdersViewHolder) holder).tvPrice.setText(homeChefIncomingOrderModel.getPrice());
@@ -285,13 +296,15 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     class MyOrdersViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView ivProfilePic, ivCall, ivMessage, ivShowDirections, ivGiveReview;
-        private TextView tvName, tvMobileNumber, tvEmailId, tvOrderType, tvNoOfGuest, tvPrice, tvOrderTiming, tvDiscount, tvOrderId, tvRequestId, tvBookingDate, tvBookedFor, tvOrderStatus;
+        private TextView tvDishName, tvName, tvProfession, tvMobileNumber, tvEmailId, tvOrderType, tvNoOfGuest, tvPrice, tvOrderTiming, tvDiscount, tvOrderId, tvRequestId, tvBookingDate, tvBookedFor, tvOrderStatus;
         private Button btnAccept, btnReject, btnCompleteOrder, btnFoodieCancelOrder;
         private RelativeLayout rlHCAcceptReject, rlHcCompleteOrder, rlFoodieCancelOrder;
 
         MyOrdersViewHolder(View itemView) {
             super(itemView);
+            tvDishName = itemView.findViewById(R.id.tv_dish_name);
             tvName = itemView.findViewById(R.id.tv_name);
+            tvProfession = itemView.findViewById(R.id.tv_profession);
             tvMobileNumber = itemView.findViewById(R.id.tv_mobile_number);
             tvEmailId = itemView.findViewById(R.id.tv_emailId);
             tvOrderType = itemView.findViewById(R.id.tv_order_type);
@@ -374,16 +387,25 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             });
                     break;
                 case R.id.iv_call:
-                    makeCall(homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getFoodieMobileNumber());
+                    if (userModel.getAccountType().equals(Constants.Role.FOODIE.getStringRole()))
+                        makeCall(homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getHcMobileNumber());
+                    else
+                        makeCall(homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getFoodieMobileNumber());
                     break;
                 case R.id.iv_message:
                     message();
                     break;
                 case R.id.iv_show_directions:
-                    UserLocation userLocation = SharedPreference.getUserLocation(context);
-                    double destLatitude = 28.644800;
-                    double destLongitude = 77.216721;
-                    Utils.showDirections(context, userLocation.getLatitude(), userLocation.getLongitude(), destLatitude, destLongitude);
+                    if (userModel.getAccountType().equals(Constants.Role.FOODIE.getStringRole())) {
+                        UserLocation userLocation = SharedPreference.getUserLocation(context);
+                        try {
+                            double destLatitude = Double.parseDouble(homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getFoodieLatitude());
+                            double destLongitude = Double.parseDouble(homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getFoodieLongitude());
+                            Utils.showDirections(context, userLocation.getLatitude(), userLocation.getLongitude(), destLatitude, destLongitude);
+                        } catch (Exception e) {
+                            DialogUtils.showAlert(context, "HomeChef Location not found ");
+                        }
+                    }
                     break;
                 case R.id.iv_give_review:
                     DialogUtils.showRatingDialog(context, new ReviewSubmitInterface() {
@@ -397,6 +419,8 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     break;
                 case R.id.iv_profile_pic:
                     if (userModel.getAccountType().equals(Constants.Role.FOODIE.getStringRole()))
+                        Utils.showProfile(context, homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getHcUserId());
+                    else
                         Utils.showProfile(context, homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getFoodiesUserId());
                     break;
                 case R.id.btn_complete_order:

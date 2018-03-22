@@ -66,10 +66,27 @@ public class FoodieHomeChefSearchApiCall extends BaseApiCall {
             homeChiefNearByModel.setDistance(detailObj.optString("Distance"));
             homeChiefNearByModel.setLatitude(detailObj.optString("Lattitude"));
             homeChiefNearByModel.setLongitude(detailObj.optString("Longitude"));
+            homeChiefNearByModel.setPriceRange(detailObj.optString("PriceRange"));
+            homeChiefNearByModel.setShopName(detailObj.optString("ShopName"));
+            homeChiefNearByModel.setSpeciality(detailObj.optString("Speciality"));
+            homeChiefNearByModel.setCoverPhotoArrayList(getCoverPhotoArray(detailObj.optString("CoverPhotoShow")));
+            homeChiefNearByModel.setFavourite(false);
+
             chiefDetailList.add(homeChiefNearByModel);
 
         }
 
+    }
+
+    private ArrayList<String> getCoverPhotoArray(String path) {
+        ArrayList<String> coverPhotoArrayList = new ArrayList<>();
+        String photos[] = path.split(";");
+        if (photos != null && photos.length > 0) {
+            for (String photo : photos) {
+                coverPhotoArrayList.add(photo);
+            }
+        }
+        return coverPhotoArrayList;
     }
 
     public ArrayList<HomeChiefNearByModel> getHomeChiefDetailList() {

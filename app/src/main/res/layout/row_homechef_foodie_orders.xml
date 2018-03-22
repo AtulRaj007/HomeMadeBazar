@@ -51,6 +51,12 @@
                         android:text="Atul Raj" />
 
                     <TextView
+                        android:id="@+id/tv_profession"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Engineer" />
+
+                    <TextView
                         android:id="@+id/tv_mobile_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -200,6 +206,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_dish_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/str_request_id"
@@ -263,7 +270,7 @@
 
 
                         <ImageView
-                            android:layout_width="@dimen/order_icon_size"
+                            android:layout_width="wrap_content"
                             android:layout_height="@dimen/order_icon_size"
                             android:src="@drawable/ruppes"
                             android:tint="@color/colorPrimary" />

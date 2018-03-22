@@ -13,6 +13,7 @@ import com.homemadebazar.R;
 import com.homemadebazar.activity.HomeShopViewActivity;
 import com.homemadebazar.model.HomeChefOrderModel;
 import com.homemadebazar.util.DialogUtils;
+import com.homemadebazar.util.Utils;
 
 import java.util.ArrayList;
 
@@ -43,13 +44,17 @@ public class HomeChefFoodTimingAdapter extends RecyclerView.Adapter<HomeChefFood
 
     @Override
     public void onBindViewHolder(LunchViewHolder holder, int position) {
+
         HomeChefOrderModel homeChefOrderModel = homeChefOrderModelArrayList.get(position);
+        holder.tvOrderId.setText("Order Id:- " + homeChefOrderModel.getOrderId());
         holder.tvFoodName.setText(homeChefOrderModel.getDishName());
         holder.tvFoodType.setText(homeChefOrderModel.getOrderType());
-        holder.tvNoOfPeople.setText(homeChefOrderModel.getMinGuest() + " to " + homeChefOrderModel.getMaxGuest() + " people ");
+        holder.tvNoOfPeople.setText(homeChefOrderModel.getMinGuest() + " to " + homeChefOrderModel.getMaxGuest() + " People ");
         holder.tvPrice.setText(homeChefOrderModel.getPrice());
+        holder.tvDiscount.setText(homeChefOrderModel.getDiscount() + " (%) ");
+        holder.tvOrderTiming.setText(homeChefOrderModel.getOrderTime());
         holder.tvDescription.setText(homeChefOrderModel.getDescription());
-        holder.tvRules.setText(homeChefOrderModel.getRules());
+        holder.tvRules.setText(Utils.getRulesText(homeChefOrderModel.getRules()));
 
         if (homeChefOrderModel.getFoodImagesArrayList() != null && homeChefOrderModel.getFoodImagesArrayList().size() > 0) {
             ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(context, homeChefOrderModel.getFoodImagesArrayList());
@@ -68,22 +73,28 @@ public class HomeChefFoodTimingAdapter extends RecyclerView.Adapter<HomeChefFood
     }
 
     class LunchViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView tvOrderId;
         private TextView tvFoodName;
         private TextView tvFoodType;
         private TextView tvNoOfPeople;
         private TextView tvPrice;
+        private TextView tvDiscount;
         private TextView tvDescription;
         private TextView tvRules;
         private Button btnBookOrder;
+        private TextView tvOrderTiming;
         private ViewPager viewPager;
         private CircleIndicator circleIndicator;
 
         LunchViewHolder(View itemView) {
             super(itemView);
+            tvOrderId = itemView.findViewById(R.id.tv_order_id);
             tvFoodName = itemView.findViewById(R.id.tv_food_name);
             tvFoodType = itemView.findViewById(R.id.tv_food_type);
             tvNoOfPeople = itemView.findViewById(R.id.tv_no_of_people);
             tvPrice = itemView.findViewById(R.id.tv_price);
+            tvDiscount = itemView.findViewById(R.id.tv_discount);
+            tvOrderTiming = itemView.findViewById(R.id.tv_order_timing);
             tvDescription = itemView.findViewById(R.id.tv_description);
             tvRules = itemView.findViewById(R.id.tv_rules);
             btnBookOrder = itemView.findViewById(R.id.btn_book_order);

@@ -515,4 +515,20 @@ public class Utils {
         mContext.startActivity(intent);
 
     }
+
+    public static String getRulesText(String rules) {
+        String strRules = "";
+        try {
+            String temp[] = rules.split("@@");
+            for (int i = 0; i < temp.length; i++) {
+                strRules = strRules + temp[i];
+                if (i != temp.length - 1)
+                    strRules = strRules + "\n";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return strRules;
+    }
 }

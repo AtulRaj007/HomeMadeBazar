@@ -193,31 +193,31 @@ public class JSONParsingUtils {
         return homeChefOrderModelArrayList;
     }
 
+
     private static HomeChefOrderModel parseHomeChefOrder(JSONObject object) {
         HomeChefOrderModel homeChefOrderModel = new HomeChefOrderModel();
         try {
 
             homeChefOrderModel.setOrderId(object.optString("OrderId"));
             homeChefOrderModel.setDishName(object.optString("DishName"));
-//            homeChefOrderModel.setCategory(object.optString(""));
+            homeChefOrderModel.setCategory(object.optString("FoodCategories"));
             homeChefOrderModel.setPrice(object.optString("Price"));
             homeChefOrderModel.setMinGuest(object.optString("MinGuest"));
             homeChefOrderModel.setMaxGuest(object.optString("MaxGuest"));
-//            homeChefOrderModel.setDiscount(object.optString(""));
-//            homeChefOrderModel.setPetsAllowed(object.optBoolean());
-//            homeChefOrderModel.setDrinks(object.optString());
-//            homeChefOrderModel.setVegNonVeg(object.optString());
+            homeChefOrderModel.setDiscount(object.optString("DiscountAmount"));
+            if (object.optString("IsPetAllow").equalsIgnoreCase("Allow"))
+                homeChefOrderModel.setPetsAllowed(true);
+            else
+                homeChefOrderModel.setPetsAllowed(false);
 
+            homeChefOrderModel.setDrinks(object.optString("Drink"));
+            homeChefOrderModel.setVegNonVeg(object.optString("VegNonType"));
             homeChefOrderModel.setOrderType(object.optString("OrderType"));
             homeChefOrderModel.setRules(object.optString("RuleDescription"));
             homeChefOrderModel.setDescription(object.optString("DishDescription"));
-//            homeChefOrderModel.setOrderFromDate(object.optString("OrderFromDT"));
-//            homeChefOrderModel.setOrderValidTill(object.optString("OrderValid"));
+
 
             homeChefOrderModel.setDishAvailability(object.optString("DishAvailable"));
-//            homeChefOrderModel.setBreakFastTime(object.optString("Bearkfast"));
-//            homeChefOrderModel.setLunchTime(object.optString("Lunch"));
-//            homeChefOrderModel.setDinnerTime(object.optString("DinnerTime"));
 
             homeChefOrderModel.setOrderTime(object.optString("OrderTime"));
 
@@ -460,12 +460,27 @@ public class JSONParsingUtils {
                 homeChefIncomingOrderModel.setDishName(object.optString("DishName"));
                 homeChefIncomingOrderModel.setEatingTime(object.optString("EattingTime"));
                 homeChefIncomingOrderModel.setOrderType(object.optString("OrderType"));
-                homeChefIncomingOrderModel.setFoodieEmailId(object.optString("EmailId"));
-                homeChefIncomingOrderModel.setFoodieMobileNumber(object.optString("Mobile"));
+                homeChefIncomingOrderModel.setFoodieEmailId(object.optString("FoodiesEmail"));
+                homeChefIncomingOrderModel.setFoodieMobileNumber(object.optString("FoodiesMobile"));
                 homeChefIncomingOrderModel.setNoOfGuest(object.optString("NosOfPerson"));
                 homeChefIncomingOrderModel.setPrice(object.optString("Price"));
                 homeChefIncomingOrderModel.setDiscAmount(object.optString("DiscAmount"));
                 homeChefIncomingOrderModel.setOtp(object.optString("Otp"));
+
+                homeChefIncomingOrderModel.setFoodieProfession(object.optString("FoodiesProfession"));
+                homeChefIncomingOrderModel.setFoodieLatitude(object.optString("FoodiesLatitude"));
+                homeChefIncomingOrderModel.setFoodieLongitude(object.optString("FoodiesLongtitude"));
+
+                homeChefIncomingOrderModel.setHcUserId(object.optString("HCUserId"));
+                homeChefIncomingOrderModel.setHcDp(object.optString("HCDP"));
+                homeChefIncomingOrderModel.setHcEmail(object.optString("HCEmail"));
+                homeChefIncomingOrderModel.setHcMobileNumber(object.optString("HCMobile"));
+                homeChefIncomingOrderModel.setHcFirstName(object.optString("HCFirstName"));
+                homeChefIncomingOrderModel.setHcLastName(object.optString("HCLastName"));
+                homeChefIncomingOrderModel.setHcLatitude(object.optString("HCLatitude"));
+                homeChefIncomingOrderModel.setHcLongitude(object.optString("HCLongtitude"));
+                homeChefIncomingOrderModel.setHcProfession(object.optString("HCProfession"));
+
                 homeChefIncomingOrderModelArrayList.add(homeChefIncomingOrderModel);
             }
 
@@ -477,6 +492,7 @@ public class JSONParsingUtils {
         return homeChefIncomingOrderModelArrayList;
 
     }
+
 
 //    {
 //            "EmailId":"developer.atulraj@gmail.com","Mobile":"8709646364","NosOfPerson":2,"Price":"40","DiscAmount":5,"Otp":""}
