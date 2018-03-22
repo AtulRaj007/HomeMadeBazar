@@ -70,15 +70,3 @@ public class TransactionModel {
         this.transactionMode = transactionMode;
     }
 }
-
-//{
-////        "Amount": 10,
-////        "DateTime": "Jan  1 1900 12:00AM",
-////        "Name": "Atul Jio",
-////        "Remarks": "",
-//        "TrnMode":"Credit    "
-//        }
-//
-////        title
-////        notificationId
-//        remarks

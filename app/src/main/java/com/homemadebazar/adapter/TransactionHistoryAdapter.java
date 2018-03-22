@@ -35,7 +35,7 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
     public void onBindViewHolder(TransactionViewHolder holder, int position) {
         TransactionModel transactionModel = transactionModelArrayList.get(position);
         holder.tvTransactionId.setText(transactionModel.getTransactionId());
-        holder.tvTitle.setText(transactionModel.getTitle());
+        holder.tvTransactionMode.setText(transactionModel.getTransactionMode());
         holder.tvTime.setText(transactionModel.getDateTime());
         holder.tvTransactionAmount.setText(transactionModel.getTransactionAmount());
         holder.tvDescription.setText(transactionModel.getDescription());
@@ -47,12 +47,17 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
     }
 
     class TransactionViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvTransactionId, tvTitle, tvTime, tvTransactionAmount, tvDescription;
+        private TextView tvTransactionId;
+        private TextView tvTransactionMode;
+        private TextView tvTime;
+        private TextView tvTransactionAmount;
+        private TextView tvDescription;
+
 
         TransactionViewHolder(View itemView) {
             super(itemView);
             tvTransactionId = itemView.findViewById(R.id.tv_transaction_id);
-            tvTitle = itemView.findViewById(R.id.tv_title);
+            tvTransactionMode = itemView.findViewById(R.id.tv_transaction_mode);
             tvTime = itemView.findViewById(R.id.tv_time);
             tvTransactionAmount = itemView.findViewById(R.id.tv_transaction_amount);
             tvDescription = itemView.findViewById(R.id.tv_description);

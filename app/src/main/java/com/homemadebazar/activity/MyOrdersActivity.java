@@ -73,7 +73,7 @@ public class MyOrdersActivity extends BaseActivity implements SwipeRefreshLayout
 
     private void getBookOrderedList() {
         try {
-            String roleType = Constants.HomeChefOrder.COMPLETED;
+            String roleType = Constants.HomeChefOrder.HOMECHEF_ORDER;
             if (userModel.getAccountType().equals(Constants.Role.FOODIE.getStringRole())) {
                 roleType = Constants.HomeChefOrder.FOODIE_BOOKED_ORDER;
             }

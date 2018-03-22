@@ -318,7 +318,7 @@ public class Constants {
     public interface HomeChefOrder {
         String NowOrder = "NOW";
         String SCHEDULED = "SCHEDULED";
-        String COMPLETED = "COMPLETED";
+        String HOMECHEF_ORDER = "HomeChef_Order";
         String FOODIE_BOOKED_ORDER = "FOODIE_ORDER";
     }
 

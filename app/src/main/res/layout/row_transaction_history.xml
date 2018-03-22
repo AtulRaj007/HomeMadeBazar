@@ -2,110 +2,77 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin_5"
     android:layout_marginLeft="@dimen/margin_10"
     android:layout_marginRight="@dimen/margin_10"
-    android:layout_marginTop="@dimen/margin_10">
+    android:layout_marginTop="@dimen/margin_5">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_5"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_5"
-            android:layout_marginLeft="@dimen/margin_10"
             android:layout_marginTop="@dimen/margin_5">
 
             <TextView
+                android:id="@+id/lbl_transaction_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Transaction Id:"
+                android:text="@string/str_transaction_id"
                 android:textColor="@color/heading_color" />
 
             <TextView
                 android:id="@+id/tv_transaction_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/lb_order_id"
-                android:text=" #20123DER"
-                android:textColor="@color/heading_color" />
+                android:layout_toRightOf="@id/lbl_transaction_id"
+                android:text=""
+                android:textColor="@color/colorPrimary" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/tv_transaction_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text=""
+                android:textColor="@color/colorPrimary" />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_10"
             android:layout_marginTop="@dimen/margin_5"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="70dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
 
                 <ImageView
-                    android:id="@+id/iv_profile"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_below="@+id/lb_order_id"
-                    android:src="@drawable/profile" />
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/transactions" />
 
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_20"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/margin_10"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_title"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/iv_profile"
-                        android:layout_weight="1"
-                        android:text="Red Chilli"
-                        android:textColor="@color/heading_color" />
-
-                    <TextView
-                        android:id="@+id/tv_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/margin_10"
-                        android:text="01:00 PM" />
-
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_transaction_amount"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_2"
-                        android:layout_toRightOf="@+id/iv_profile"
-                        android:layout_weight="1"
-                        android:text="Rs: 500 (Debit)"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_12" />
-
-
-                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_description"
@@ -113,8 +80,37 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_5"
                     android:layout_toRightOf="@+id/iv_profile"
-                    android:text="Description if any place during order"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:text=""
                     android:textColor="@color/black_heading_color" />
+
+
+                <TextView
+                    android:id="@+id/tv_transaction_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_2"
+                    android:layout_toRightOf="@+id/iv_profile"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_12" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_10"
+                    android:text="" />
 
 
             </LinearLayout>

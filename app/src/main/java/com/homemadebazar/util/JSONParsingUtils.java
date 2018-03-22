@@ -732,13 +732,13 @@ public class JSONParsingUtils {
     public static TransactionModel parseTransactionModel(JSONObject object) {
         TransactionModel transactionModel = new TransactionModel();
         try {
-//            transactionModel.setTitle(object.optString(""));
-//            transactionModel.setTransactionId(object.optString(""));
+
             transactionModel.setTransactionAmount(object.optString("Amount"));
             transactionModel.setTransactionMode(object.optString("TrnMode"));
             transactionModel.setDescription(object.optString("Remarks"));
             transactionModel.setName(object.optString("Name"));
             transactionModel.setDateTime(object.optString("DateTime"));
+            transactionModel.setTransactionId(object.optString("TransactionId"));
 
         } catch (Exception e) {
             e.printStackTrace();
