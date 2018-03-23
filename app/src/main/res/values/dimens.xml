@@ -67,4 +67,5 @@
     <dimen name="order_text_size">14sp</dimen>
     <dimen name="order_icon_size">25dp</dimen>
     <dimen name="order_margin_left">10dp</dimen>
+    <dimen name="text_8">8sp</dimen>
 </resources>

@@ -1,6 +1,7 @@
 package com.homemadebazar.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by Atul on 1/29/18.
@@ -26,6 +27,8 @@ public class OtherUserProfileDetailsModel implements Serializable {
     private String friendRequestStatus;
     private String profilePic;
     private String accountType;
+    private String rating;
+    private ArrayList<RatingModel> ratingModelArrayList;
 
     public String getUserId() {
         return userId;
@@ -177,5 +180,21 @@ public class OtherUserProfileDetailsModel implements Serializable {
 
     public void setAccountType(String accountType) {
         this.accountType = accountType;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public ArrayList<RatingModel> getRatingModelArrayList() {
+        return ratingModelArrayList;
+    }
+
+    public void setRatingModelArrayList(ArrayList<RatingModel> ratingModelArrayList) {
+        this.ratingModelArrayList = ratingModelArrayList;
     }
 }

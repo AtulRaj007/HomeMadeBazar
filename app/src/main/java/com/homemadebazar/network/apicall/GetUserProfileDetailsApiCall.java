@@ -44,7 +44,7 @@ public class GetUserProfileDetailsApiCall extends BaseApiCall {
                 JSONObject object = new JSONObject(response);
                 baseModel = JSONParsingUtils.parseBaseModel(object);
                 if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS)
-                userModel = JSONParsingUtils.parseOtherUserModel(object);
+                    userModel = JSONParsingUtils.parseOtherUserModel(object);
             } catch (Exception e) {
                 e.printStackTrace();
             }

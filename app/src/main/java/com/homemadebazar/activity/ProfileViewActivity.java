@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.adapter.ProfileRecyclerAdapter;
+import com.homemadebazar.adapter.ViewPagerAdapter;
+import com.homemadebazar.fragment.UserRatingFragment;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.OtherUserProfileDetailsModel;
 import com.homemadebazar.model.ProfileInterestsModel;
@@ -30,6 +33,8 @@ import com.homemadebazar.util.Utils;
 
 import java.util.ArrayList;
 
+import me.relex.circleindicator.CircleIndicator;
+
 public class ProfileViewActivity extends BaseActivity implements View.OnClickListener {
     private static String KEY_USER_ID = "KEY_USER_ID";
     private TextView tvName, tvEmailId, tvMobileNumber, tvCountry, tvProfessionType, tvProfessionName, tvAbout;
@@ -42,6 +47,9 @@ public class ProfileViewActivity extends BaseActivity implements View.OnClickLis
     private ProfileRecyclerAdapter profileRecyclerAdapter;
     private ArrayList<ProfileInterestsModel> profileInterestsModelArrayList = new ArrayList<>();
     private OtherUserProfileDetailsModel otherUserProfileDetailsModel;
+    private ViewPager viewPager;
+    private ViewPagerAdapter viewPagerAdapter;
+    private CircleIndicator circleIndicator;
 
     public static Intent getProfileIntent(Context context, String userId) {
         Intent intent = new Intent(context, ProfileViewActivity.class);
@@ -74,6 +82,8 @@ public class ProfileViewActivity extends BaseActivity implements View.OnClickLis
         recyclerView = findViewById(R.id.recycler_view);
         btnSendFriendRequest = findViewById(R.id.btn_friend_request);
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        viewPager = findViewById(R.id.view_pager);
+        circleIndicator = findViewById(R.id.indicator);
     }
 
     @Override
@@ -178,7 +188,7 @@ public class ProfileViewActivity extends BaseActivity implements View.OnClickLis
         }
         tvName.setText(userModel.getFirstName() + " " + userModel.getLastName());
         tvEmailId.setText(userModel.getEmailId());
-        tvMobileNumber.setText(userModel.getMobile());
+        tvMobileNumber.setText(userModel.getCountryCode() + userModel.getMobile());
         tvCountry.setText(userModel.getCountryName());
         try {
             tvProfessionType.setText(getResources().getStringArray(R.array.profession)[Integer.parseInt(userModel.getProfessionType())]);
@@ -190,6 +200,16 @@ public class ProfileViewActivity extends BaseActivity implements View.OnClickLis
         initialiseProfileInterests(userModel.getInterest());
         if (userModel.getAccountType().equals(String.valueOf(Constants.Role.FOODIE.getRole())) && userModel.getUserId() != profileUserId) {
             btnSendFriendRequest.setVisibility(View.VISIBLE);
+        }
+
+        if (userModel.getRatingModelArrayList().size() > 0) {
+            findViewById(R.id.tv_top_reviews).setVisibility(View.VISIBLE);
+            viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+            for (int i = 0; i < userModel.getRatingModelArrayList().size(); i++) {
+                viewPagerAdapter.addFragment(UserRatingFragment.instantiateFragment(userModel.getRatingModelArrayList().get(i)), "");
+            }
+            viewPager.setAdapter(viewPagerAdapter);
+            circleIndicator.setViewPager(viewPager);
         }
     }
 

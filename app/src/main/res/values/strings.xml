@@ -260,6 +260,7 @@
     <string name="str_tell_us_what_you_think">Tell us what you think</string>
     <string name="str_rules">Rules</string>
     <string name="str_transaction_id">Transaction Id :</string>
+    <string name="str_top_reviews">Top Reviews</string>
 
 
     <string-array name="price">

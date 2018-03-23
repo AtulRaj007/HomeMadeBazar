@@ -1,5 +1,6 @@
 package com.homemadebazar.util;
 
+
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.ChatMessageModel;
 import com.homemadebazar.model.DishIngredientsModel;
@@ -17,6 +18,7 @@ import com.homemadebazar.model.MarketPlaceProductCategoryModel;
 import com.homemadebazar.model.MarketPlaceProductModel;
 import com.homemadebazar.model.NotificationModel;
 import com.homemadebazar.model.OtherUserProfileDetailsModel;
+import com.homemadebazar.model.RatingModel;
 import com.homemadebazar.model.TransactionModel;
 import com.homemadebazar.model.UserModel;
 
@@ -767,7 +769,32 @@ public class JSONParsingUtils {
         userModel.setInterest(object.optString("Interest"));
         userModel.setProfessionType(object.optString("ProfessionType"));
         userModel.setProfessionName(object.optString("ProfessionName"));
+        userModel.setRating(object.optString("Rating"));
+        userModel.setRatingModelArrayList(parseRatingList(object.optJSONArray("Feedback")));
         return userModel;
+    }
+
+    private static ArrayList<RatingModel> parseRatingList(JSONArray ratingArray) {
+        ArrayList<RatingModel> ratingArrayList = new ArrayList<>();
+        try {
+            if (ratingArray != null) {
+                for (int i = 0; i < ratingArray.length(); i++) {
+                    JSONObject object = ratingArray.optJSONObject(i);
+                    RatingModel ratingModel = new RatingModel();
+                    ratingModel.setFirstName(object.optString("FName"));
+                    ratingModel.setLastName(object.optString("LName"));
+                    ratingModel.setRating(object.optString("Rating"));
+                    ratingModel.setUserId(object.optString("FeedBackFromUserId"));
+                    ratingModel.setDpUrl(object.optString("DPUrl"));
+                    ratingModel.setDescription(object.optString("Feedback"));
+                    ratingArrayList.add(ratingModel);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ratingArrayList;
     }
 
     public static ArrayList<FoodieCheckInModel> parseFoodieCheckInList(JSONObject object) {
