@@ -153,14 +153,18 @@ public class FoodieFlashPostAdapter extends RecyclerView.Adapter<FoodieFlashPost
                     context.startActivity(FoodiePostCommentActivity.getCommentIntent(context, foodieFlashPostModelArrayList.get(getAdapterPosition()).getPostId()));
                     break;
                 case R.id.ll_share:
-                    Bitmap screenShotBitmap = Utils.takeScreenshot(itemView);
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.putExtra(Intent.EXTRA_TEXT, "download this image");
-                    String bitmapPath = MediaStore.Images.Media.insertImage(context.getContentResolver(), screenShotBitmap, "title", null);
-                    Uri bitmapUri = Uri.parse(bitmapPath);
-                    intent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
-                    intent.setType("image/*");
-                    context.startActivity(Intent.createChooser(intent, "Share image via..."));
+                    try {
+                        Bitmap screenShotBitmap = Utils.takeScreenshot(itemView);
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.putExtra(Intent.EXTRA_TEXT, "download this image");
+                        String bitmapPath = MediaStore.Images.Media.insertImage(context.getContentResolver(), screenShotBitmap, "title", null);
+                        Uri bitmapUri = Uri.parse(bitmapPath);
+                        intent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
+                        intent.setType("image/*");
+                        context.startActivity(Intent.createChooser(intent, "Share image via..."));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                     break;
                 case R.id.iv_profile_pic:

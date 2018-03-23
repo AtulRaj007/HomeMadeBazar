@@ -38,7 +38,7 @@
     <string name="str_others">OTHERS</string>
     <string name="str_terms_of_use">Terms of use</string>
     <string name="str_privacy_policy">Privacy Policy</string>
-    <string name="str_about">About</string>
+    <string name="str_about">About Your Self</string>
     <string name="str_logout">Logout</string>
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
@@ -261,6 +261,7 @@
     <string name="str_rules">Rules</string>
     <string name="str_transaction_id">Transaction Id :</string>
     <string name="str_top_reviews">Top Reviews</string>
+    <string name="str_choose_interests">Choose Interests</string>
 
 
     <string-array name="price">

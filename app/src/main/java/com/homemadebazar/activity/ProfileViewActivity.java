@@ -37,7 +37,7 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class ProfileViewActivity extends BaseActivity implements View.OnClickListener {
     private static String KEY_USER_ID = "KEY_USER_ID";
-    private TextView tvName, tvEmailId, tvMobileNumber, tvCountry, tvProfessionType, tvProfessionName, tvAbout;
+    private TextView tvCommonInterest, tvName, tvEmailId, tvMobileNumber, tvCountry, tvProfessionType, tvProfessionName, tvAbout;
     private Button btnSendFriendRequest;
     private ImageView ivProfilePic;
     private UserModel userModel;
@@ -72,6 +72,7 @@ public class ProfileViewActivity extends BaseActivity implements View.OnClickLis
         getDataFromBundle();
         userModel = SharedPreference.getUserModel(ProfileViewActivity.this);
         ivProfilePic = findViewById(R.id.iv_profile_pic);
+        tvCommonInterest = findViewById(R.id.tv_common_interests);
         tvName = findViewById(R.id.tv_name);
         tvEmailId = findViewById(R.id.tv_emailId);
         tvMobileNumber = findViewById(R.id.tv_mobile_number);
@@ -152,6 +153,30 @@ public class ProfileViewActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    private String getSimilarInterests(String otherUserInterests) {
+        String commonInterestText = "";
+        try {
+            String ownInterest = userModel.getInterest();
+            if (!TextUtils.isEmpty(ownInterest)) {
+                String ownInterestArray[] = ownInterest.split(";");
+                String otherInterestArray[] = otherUserInterests.split(";");
+                for (int i = 0; i < ownInterestArray.length; i++) {
+                    if (ownInterestArray[i].equals("1") && otherInterestArray[i].equals("1")) {
+                        if (TextUtils.isEmpty(commonInterestText)) {
+                            commonInterestText = "You both enjoy " + Constants.profileInterests[i][1];
+                        } else {
+                            commonInterestText = commonInterestText + ", " + Constants.profileInterests[i][1];
+                        }
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return commonInterestText;
+    }
+
     public void getUserProfileDetails() {
         try {
             final GetUserProfileDetailsApiCall apiCall = new GetUserProfileDetailsApiCall(userModel.getUserId(), profileUserId);
@@ -186,6 +211,23 @@ public class ProfileViewActivity extends BaseActivity implements View.OnClickLis
         if (!TextUtils.isEmpty(userModel.getProfilePic())) {
             Glide.with(ProfileViewActivity.this).load(userModel.getProfilePic()).into(ivProfilePic);
         }
+        if (!TextUtils.isEmpty(userModel.getInterest()))
+            tvCommonInterest.setText(getSimilarInterests(userModel.getInterest()));
+        else
+            tvCommonInterest.setVisibility(View.GONE);
+
+        try {
+            if (userModel.getFriendRequestStatus().equals(Constants.RequestType.FRIEND)) {
+                findViewById(R.id.ll_mobile_number).setVisibility(View.VISIBLE);
+            } else {
+                findViewById(R.id.ll_mobile_number).setVisibility(View.GONE);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         tvName.setText(userModel.getFirstName() + " " + userModel.getLastName());
         tvEmailId.setText(userModel.getEmailId());
         tvMobileNumber.setText(userModel.getCountryCode() + userModel.getMobile());
