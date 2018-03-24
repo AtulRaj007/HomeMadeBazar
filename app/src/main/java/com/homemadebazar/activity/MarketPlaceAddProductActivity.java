@@ -186,6 +186,7 @@ public class MarketPlaceAddProductActivity extends BaseActivity implements View.
     private String getAddProductUrl(String productName, String categoryId, String brandId, String price, String description) {
         String url = Constants.uploadImageURL.MARKETPLACE_ADD_EDIT_PRODUCT + userModel.getUserId() + "&ProductName=" + productName + "&ProductCatId=" + categoryId +
                 "&ProductBrandId=" + brandId + "&Price=" + price + "&Desc=" + description + "&OPerationMode=" + true + "&ProductId=" + "";
+        url = Utils.parseUrl(url);
         System.out.println(Constants.ServiceTAG.URL + url);
         return url;
     }

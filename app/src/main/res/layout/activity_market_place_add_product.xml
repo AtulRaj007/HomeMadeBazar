@@ -132,6 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/card_product"
+                android:layout_marginBottom="@dimen/margin_20"
                 android:layout_marginLeft="@dimen/margin_30"
                 android:layout_marginRight="@dimen/margin_30">
 

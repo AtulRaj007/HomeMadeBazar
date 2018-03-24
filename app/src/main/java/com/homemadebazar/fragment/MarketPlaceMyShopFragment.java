@@ -22,6 +22,7 @@ import com.homemadebazar.R;
 import com.homemadebazar.activity.MarketPlaceManageActivity;
 import com.homemadebazar.activity.UpdateShopDetailsActivity;
 import com.homemadebazar.adapter.ImagePagerAdapter;
+import com.homemadebazar.model.CustomAddress;
 import com.homemadebazar.model.HomeChefProfileModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
@@ -119,7 +120,7 @@ public class MarketPlaceMyShopFragment extends BaseFragment implements View.OnCl
                                 try {
                                     tvShopName.setText(homeChefProfileModel.getShopName() + "");
                                     tvPriceRange.setText(homeChefProfileModel.getPriceRange() + "");
-                                    tvAddress.setText(homeChefProfileModel.getAddress() + "");
+                                    tvAddress.setText(CustomAddress.getCompleteAddress(homeChefProfileModel.getAddress() + ""));
                                     tvSpeciality.setText(homeChefProfileModel.getSpeciality() + "");
                                     if (!TextUtils.isEmpty(homeChefProfileModel.getProfilePicture()))
                                         Glide.with(getActivity()).load(homeChefProfileModel.getProfilePicture()).into(ivProfileImage);

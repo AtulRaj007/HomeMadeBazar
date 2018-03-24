@@ -168,6 +168,8 @@ public class Constants {
         String HOMECHEF_ORDER_DELETE = BASE_URL + "Miscellaneous/OrdersDelete";
         String HOMECHEF_UNFRIEND_USER = BASE_URL + "Messenger/Unfriends";
         String SAVE_RATING_FEEDBACK = BASE_URL + "Miscellaneous/SaveRatingFeedback";
+        String MARKETPLACE_ORDERS = BASE_URL + "MarketPlace/ShowIncomingOrders";
+        String ACTION_BY_MARKET_PLACE_USERS = BASE_URL + "MarketPlace/ActionByMarketPlaceUsers";
 
     }
 
@@ -341,5 +343,16 @@ public class Constants {
         String FOODIE_CANCELLED_ORDER = "4";
         String HC_COMPLETED_ORDER = "5";
         String PENDING_ORDER = "6";
+    }
+
+    public interface MarketPlaceOrder {
+        String INCOMING_ORDER = "0";
+        String OUTGOING_ORDER = "1";
+    }
+
+    public interface MarketPlaceOrderAtionType {
+        String ACCEPT = "1";
+        String REJECT = "2";
+        String DISPATCH = "3";
     }
 }

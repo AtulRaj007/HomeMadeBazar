@@ -46,6 +46,7 @@ import com.homemadebazar.activity.WalletActivity;
 import com.homemadebazar.activity.WebViewActivity;
 import com.homemadebazar.fragment.AppWalkthroughFragment;
 import com.homemadebazar.fragment.UserProfileFragment;
+import com.homemadebazar.model.AppWalkThroughModel;
 import com.homemadebazar.model.FoodDateTimeBookModel;
 import com.homemadebazar.model.UserLocation;
 import com.homemadebazar.model.UserModel;
@@ -220,10 +221,36 @@ public class Utils {
         }
     }
 
-    public static void runAppWalkthrough(FragmentManager fragmentManager) {
-        AppWalkthroughFragment appWalkthroughFragment = new AppWalkthroughFragment();
-        appWalkthroughFragment.setStyle(R.style.CustomDialog, android.R.style.Theme);
-        appWalkthroughFragment.show(fragmentManager, "WalkThrough");
+    public static void runAppWalkthrough(Context context, FragmentManager fragmentManager, String accountType) {
+        boolean isWalkThroughShow = false;
+        AppWalkThroughModel appWalkThroughModel = SharedPreference.getWalkThroughModel(context);
+        if (accountType.equals(Constants.Role.HOME_CHEF.getStringRole())) {
+            // HomeChef
+            if (!appWalkThroughModel.isShowToHomeChef()) {
+                isWalkThroughShow = true;
+                appWalkThroughModel.setShowToHomeChef(true);
+            }
+        } else if (accountType.equals(Constants.Role.FOODIE.getStringRole())) {
+            // Foodie
+            if (!appWalkThroughModel.isShowToFoodie()) {
+                isWalkThroughShow = true;
+                appWalkThroughModel.setShowToFoodie(true);
+            }
+
+        } else {
+            // MarketPlace
+            if (!appWalkThroughModel.isShowToMarketPlace()) {
+                isWalkThroughShow = true;
+                appWalkThroughModel.setShowToMarketPlace(true);
+            }
+
+        }
+        if (isWalkThroughShow) {
+            AppWalkthroughFragment appWalkthroughFragment = new AppWalkthroughFragment();
+            appWalkthroughFragment.setStyle(R.style.CustomDialog, android.R.style.Theme);
+            appWalkthroughFragment.show(fragmentManager, "WalkThrough");
+            SharedPreference.saveWalkThroughModel(context, appWalkThroughModel);
+        }
     }
 
     public static String getPath(final Context context, final Uri uri) {
@@ -403,9 +430,11 @@ public class Utils {
                             public void onClick(DialogInterface arg0, int arg1) {
                                 String deviceToken = FirebaseInstanceId.getInstance().getToken();
                                 UserLocation userLocation = SharedPreference.getUserLocation(context);
+                                AppWalkThroughModel appWalkThroughModel = SharedPreference.getWalkThroughModel(context);
                                 ServiceUtils.deviceLoginLogoutApiCall(context, userId, deviceToken, Constants.LoginHistory.LOGOUT);
                                 SharedPreference.clearSharedPreference(context);
                                 SharedPreference.saveUserLocation(context, userLocation);
+                                SharedPreference.saveWalkThroughModel(context, appWalkThroughModel);
                                 context.startActivity(new Intent(context, LoginActivity.class));
                                 ((Activity) context).finish();
                             }
@@ -429,6 +458,10 @@ public class Utils {
         boolean isMinEightDigit = password.length() >= 8 ? true : false;
         return hasLetter.find() && hasDigit.find() && hasSpecial.find()
                 && isMinEightDigit;
+    }
+
+    public static String parseUrl(String url) {
+        return url.replaceAll(" ", "%20");
     }
 
     public static void showUserProfile(Activity context) {
@@ -503,6 +536,12 @@ public class Utils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void message(Context context, String mobileNumber) {
+        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+        sendIntent.setData(Uri.parse("sms:"));
+        context.startActivity(sendIntent);
     }
 
     public static void showDirections(Context mContext, double curLatitude, double curLongitude, double destLatitude, double destLongitude) {

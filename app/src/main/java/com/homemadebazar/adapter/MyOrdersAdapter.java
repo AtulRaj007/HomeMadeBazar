@@ -3,9 +3,7 @@ package com.homemadebazar.adapter;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -72,9 +70,11 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             if (userModel.getAccountType().equals(Constants.Role.HOME_CHEF.getStringRole())) {
                 // Home Chef
                 if (!TextUtils.isEmpty(homeChefIncomingOrderModel.getFoodiesDp())) {
-                    Glide.with(context).load(homeChefIncomingOrderModel.getHcDp())
+                    Glide.with(context).load(homeChefIncomingOrderModel.getFoodiesDp())
                             .apply(new RequestOptions().centerCrop().override(150, 150))
                             .into(((MyOrdersViewHolder) holder).ivProfilePic);
+                } else {
+                    ((MyOrdersViewHolder) holder).ivProfilePic.setImageDrawable(null);
                 }
                 ((MyOrdersViewHolder) holder).tvName.setText(homeChefIncomingOrderModel.getFoodiesFirstName() + " " + homeChefIncomingOrderModel.getFoodiesLastName());
                 ((MyOrdersViewHolder) holder).tvProfession.setText(homeChefIncomingOrderModel.getFoodieProfession());
@@ -83,9 +83,11 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             } else {
                 // Foodie
                 if (!TextUtils.isEmpty(homeChefIncomingOrderModel.getHcDp())) {
-                    Glide.with(context).load(homeChefIncomingOrderModel.getFoodiesDp())
+                    Glide.with(context).load(homeChefIncomingOrderModel.getHcDp())
                             .apply(new RequestOptions().centerCrop().override(150, 150))
                             .into(((MyOrdersViewHolder) holder).ivProfilePic);
+                } else {
+                    ((MyOrdersViewHolder) holder).ivProfilePic.setImageDrawable(null);
                 }
                 ((MyOrdersViewHolder) holder).tvName.setText(homeChefIncomingOrderModel.getHcFirstName() + " " + homeChefIncomingOrderModel.getHcLastName());
                 ((MyOrdersViewHolder) holder).tvProfession.setText(homeChefIncomingOrderModel.getHcProfession());
@@ -280,11 +282,6 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    private void message() {
-        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-        sendIntent.setData(Uri.parse("sms:"));
-        context.startActivity(sendIntent);
-    }
 
     public interface OtpSubmitInterface {
         void onOtpEnter(String otp);
@@ -393,7 +390,10 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         makeCall(homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getFoodieMobileNumber());
                     break;
                 case R.id.iv_message:
-                    message();
+                    if (userModel.getAccountType().equals(Constants.Role.FOODIE.getStringRole()))
+                        Utils.message(context, homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getHcMobileNumber());
+                    else
+                        Utils.message(context, homeChefIncomingOrderModelArrayList.get(getAdapterPosition()).getFoodieMobileNumber());
                     break;
                 case R.id.iv_show_directions:
                     if (userModel.getAccountType().equals(Constants.Role.FOODIE.getStringRole())) {

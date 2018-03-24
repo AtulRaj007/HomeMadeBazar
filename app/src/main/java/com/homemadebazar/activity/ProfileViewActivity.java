@@ -207,17 +207,17 @@ public class ProfileViewActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    private void updateDetails(OtherUserProfileDetailsModel userModel) {
-        if (!TextUtils.isEmpty(userModel.getProfilePic())) {
-            Glide.with(ProfileViewActivity.this).load(userModel.getProfilePic()).into(ivProfilePic);
+    private void updateDetails(OtherUserProfileDetailsModel otherUserProfileDetailsModel) {
+        if (!TextUtils.isEmpty(otherUserProfileDetailsModel.getProfilePic())) {
+            Glide.with(ProfileViewActivity.this).load(otherUserProfileDetailsModel.getProfilePic()).into(ivProfilePic);
         }
-        if (!TextUtils.isEmpty(userModel.getInterest()))
-            tvCommonInterest.setText(getSimilarInterests(userModel.getInterest()));
+        if (!TextUtils.isEmpty(otherUserProfileDetailsModel.getInterest()))
+            tvCommonInterest.setText(getSimilarInterests(otherUserProfileDetailsModel.getInterest()));
         else
             tvCommonInterest.setVisibility(View.GONE);
 
         try {
-            if (userModel.getFriendRequestStatus().equals(Constants.RequestType.FRIEND)) {
+            if (otherUserProfileDetailsModel.getFriendRequestStatus().equals(Constants.RequestType.FRIEND)) {
                 findViewById(R.id.ll_mobile_number).setVisibility(View.VISIBLE);
             } else {
                 findViewById(R.id.ll_mobile_number).setVisibility(View.GONE);
@@ -228,30 +228,34 @@ public class ProfileViewActivity extends BaseActivity implements View.OnClickLis
         }
 
 
-        tvName.setText(userModel.getFirstName() + " " + userModel.getLastName());
-        tvEmailId.setText(userModel.getEmailId());
-        tvMobileNumber.setText(userModel.getCountryCode() + userModel.getMobile());
-        tvCountry.setText(userModel.getCountryName());
+        tvName.setText(otherUserProfileDetailsModel.getFirstName() + " " + otherUserProfileDetailsModel.getLastName());
+        tvEmailId.setText(otherUserProfileDetailsModel.getEmailId());
+        tvMobileNumber.setText(otherUserProfileDetailsModel.getCountryCode() + otherUserProfileDetailsModel.getMobile());
+        tvCountry.setText(otherUserProfileDetailsModel.getCountryName());
         try {
-            tvProfessionType.setText(getResources().getStringArray(R.array.profession)[Integer.parseInt(userModel.getProfessionType())]);
+            tvProfessionType.setText(getResources().getStringArray(R.array.profession)[Integer.parseInt(otherUserProfileDetailsModel.getProfessionType())]);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        tvProfessionName.setText(userModel.getProfessionName());
-        tvAbout.setText(userModel.getDpStatus());
-        initialiseProfileInterests(userModel.getInterest());
-        if (userModel.getAccountType().equals(String.valueOf(Constants.Role.FOODIE.getRole())) && userModel.getUserId() != profileUserId) {
+        tvProfessionName.setText(otherUserProfileDetailsModel.getProfessionName());
+        tvAbout.setText(otherUserProfileDetailsModel.getDpStatus());
+        initialiseProfileInterests(otherUserProfileDetailsModel.getInterest());
+        if (otherUserProfileDetailsModel.getAccountType().equals(Constants.Role.FOODIE.getStringRole()) && !userModel.getUserId().trim().equals(profileUserId.trim())) {
             btnSendFriendRequest.setVisibility(View.VISIBLE);
+        } else {
+            btnSendFriendRequest.setVisibility(View.GONE);
         }
 
-        if (userModel.getRatingModelArrayList().size() > 0) {
+        if (otherUserProfileDetailsModel.getRatingModelArrayList().size() > 0) {
             findViewById(R.id.tv_top_reviews).setVisibility(View.VISIBLE);
             viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-            for (int i = 0; i < userModel.getRatingModelArrayList().size(); i++) {
-                viewPagerAdapter.addFragment(UserRatingFragment.instantiateFragment(userModel.getRatingModelArrayList().get(i)), "");
+            for (int i = 0; i < otherUserProfileDetailsModel.getRatingModelArrayList().size(); i++) {
+                viewPagerAdapter.addFragment(UserRatingFragment.instantiateFragment(otherUserProfileDetailsModel.getRatingModelArrayList().get(i)), "");
             }
             viewPager.setAdapter(viewPagerAdapter);
             circleIndicator.setViewPager(viewPager);
+        } else {
+            findViewById(R.id.rl_view_pager).setVisibility(View.GONE);
         }
     }
 

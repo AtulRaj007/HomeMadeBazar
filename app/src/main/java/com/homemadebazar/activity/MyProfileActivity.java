@@ -296,6 +296,7 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
         try {
             String url = Constants.ServerURL.PROFILE_UPDATE + "?UserId=" + userModel.getUserId() + "&FName=" + etFirstName.getText().toString() + "&LName=" + etLastName.getText().toString() + "&Email=" + etEmailId.getText().toString() + "&Country=" + etCountry.getText().toString() +
                     "&DPStatus=" + etAboutYourSelf.getText().toString() + "&Mobile=" + etPhoneNumber.getText().toString() + "&ProfessionType=" + sprProfession.getSelectedItemPosition() + "&ProfessionName=" + etProfession.getText().toString().trim() + "&Interest=" + getSelectedInterests();
+            url = Utils.parseUrl(url);
             System.out.println(Constants.ServiceTAG.URL + url);
             return url;
         } catch (Exception e) {

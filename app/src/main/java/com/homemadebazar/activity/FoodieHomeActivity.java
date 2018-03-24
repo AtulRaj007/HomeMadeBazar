@@ -48,7 +48,7 @@ public class FoodieHomeActivity extends BaseActivity {
         setUpToolbar();
         String deviceToken = FirebaseInstanceId.getInstance().getToken();
         ServiceUtils.deviceLoginLogoutApiCall(FoodieHomeActivity.this, userModel.getUserId(), deviceToken, Constants.LoginHistory.LOGIN);
-        Utils.runAppWalkthrough(getFragmentManager());
+        Utils.runAppWalkthrough(this, getFragmentManager(), userModel.getAccountType());
         Utils.setupUserToCrashAnalytics(userModel);
 //        UserModel userModel = SharedPreference.getUserModel(this);
 //        if (userModel != null)

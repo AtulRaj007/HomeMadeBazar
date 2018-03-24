@@ -60,7 +60,6 @@ public class SplashActivity extends BaseActivity {
                             longitude = mLastLocation.getLongitude();
                             Log.e("Latitude", mLastLocation.getLatitude() + "");
                             Log.e("Longitude", mLastLocation.getLongitude() + "");
-//                            progressBar.setVisibility(View.INVISIBLE);
                             tvMessage.setText(latitude + "," + longitude);
                             UserLocation userLocation = new UserLocation();
                             userLocation.setLatitude(latitude);

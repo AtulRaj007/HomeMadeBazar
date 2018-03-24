@@ -168,6 +168,7 @@ public class MarketPlaceAddCategoryActivity extends BaseActivity implements View
 
     private String getImageUrl(String name, String description) {
         String url = Constants.uploadImageURL.MARKETPLACE_ADD_CATEGORY + userModel.getUserId() + "&Name=" + name + "&Description=" + description;
+        url = Utils.parseUrl(url);
         System.out.println(Constants.ServiceTAG.URL + url);
         return url;
     }

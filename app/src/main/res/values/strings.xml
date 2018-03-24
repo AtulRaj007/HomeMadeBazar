@@ -262,6 +262,7 @@
     <string name="str_transaction_id">Transaction Id :</string>
     <string name="str_top_reviews">Top Reviews</string>
     <string name="str_choose_interests">Choose Interests</string>
+    <string name="str_product_id">Product Id</string>
 
 
     <string-array name="price">

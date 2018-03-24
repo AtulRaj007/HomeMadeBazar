@@ -3,6 +3,7 @@ package com.homemadebazar.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.homemadebazar.model.AppWalkThroughModel;
 import com.homemadebazar.model.HomeChefProfileModel;
 import com.homemadebazar.model.MarketPlaceProductModel;
 import com.homemadebazar.model.UserLocation;
@@ -24,6 +25,7 @@ public class SharedPreference {
     public static String PROFILE_MODEL = "PROFILE_MODEL";
     private static String PRODUCT_MODEL = "PRODUCT_MODEL";
     private static String USER_LOCATION = "USER_LOCATION";
+    private static String WALKTHROUGH_MODEL = "WALKTHROUGH_MODEL";
 
     public static void setStringPreference(Context context, String key, String value) {
         sSharedPreference = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -154,5 +156,33 @@ public class SharedPreference {
             userLocation = new UserLocation();
         }
         return userLocation;
+    }
+
+    public static void saveWalkThroughModel(Context context, AppWalkThroughModel appWalkThroughModel) {
+        try {
+            SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            try {
+                editor.putString(WALKTHROUGH_MODEL, ObjectSerializer.serialize(appWalkThroughModel));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            editor.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static AppWalkThroughModel getWalkThroughModel(Context context) {
+        AppWalkThroughModel appWalkThroughModel;
+        try {
+            SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+            appWalkThroughModel = (AppWalkThroughModel) ObjectSerializer.deserialize(prefs.getString(WALKTHROUGH_MODEL, ObjectSerializer.serialize(new AppWalkThroughModel())));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            appWalkThroughModel = new AppWalkThroughModel();
+        }
+        return appWalkThroughModel;
     }
 }

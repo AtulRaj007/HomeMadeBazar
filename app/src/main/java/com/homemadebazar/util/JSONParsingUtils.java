@@ -13,6 +13,8 @@ import com.homemadebazar.model.HomeChefOrderModel;
 import com.homemadebazar.model.HomeChefProfileModel;
 import com.homemadebazar.model.HomeChefSkillHubVideoModel;
 import com.homemadebazar.model.IsAccountExistModel;
+import com.homemadebazar.model.MarketPlaceOrderModel;
+import com.homemadebazar.model.MarketPlaceOrderProductModel;
 import com.homemadebazar.model.MarketPlaceProductBrandModel;
 import com.homemadebazar.model.MarketPlaceProductCategoryModel;
 import com.homemadebazar.model.MarketPlaceProductModel;
@@ -90,7 +92,7 @@ public class JSONParsingUtils {
         userModel.setLastName(object.optString("LastName"));
         userModel.setEmailId(object.optString("EmailId"));
         userModel.setAccountType(object.optString("AccountType"));
-//        userModel.setProfilePic(object.optString("ProfilePic"));
+        userModel.setCountryName(object.optString("CountryName"));
         userModel.setInterest(object.optString("Interests"));
         userModel.setProfilePic(object.optString("Url"));
         userModel.setProfessionName(object.optString("ProfessionName"));
@@ -827,4 +829,52 @@ public class JSONParsingUtils {
         return foodieCheckInModel;
     }
 
+    public static ArrayList<MarketPlaceOrderModel> parseMarketPlaceOrders(JSONArray jsonArray) {
+        ArrayList<MarketPlaceOrderModel> marketPlaceProductModelArrayList = new ArrayList<>();
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                MarketPlaceOrderModel marketPlaceOrderModel = new MarketPlaceOrderModel();
+                marketPlaceOrderModel.setOrderId(jsonArray.getJSONObject(i).optString("OrderId"));
+                marketPlaceOrderModel.setUserId(jsonArray.getJSONObject(i).optString("UserId"));
+                marketPlaceOrderModel.setName(jsonArray.getJSONObject(i).optString("Name"));
+                marketPlaceOrderModel.setCountryCode(jsonArray.getJSONObject(i).optString("CountryCode"));
+                marketPlaceOrderModel.setCountryName(jsonArray.getJSONObject(i).optString("CountryName"));
+                marketPlaceOrderModel.setMobileNumber(jsonArray.getJSONObject(i).optString("Mobile"));
+                marketPlaceOrderModel.setEmail(jsonArray.getJSONObject(i).optString("Email"));
+                marketPlaceOrderModel.setLatitude(jsonArray.getJSONObject(i).optString("Latitude"));
+                marketPlaceOrderModel.setLongitude(jsonArray.getJSONObject(i).optString("Longitude"));
+                marketPlaceOrderModel.setAddress(jsonArray.getJSONObject(i).optString("Address"));
+                marketPlaceOrderModel.setProfileImage(jsonArray.getJSONObject(i).optString("UserDPUrl"));
+                marketPlaceOrderModel.setPinCode(jsonArray.getJSONObject(i).optString("PinCode"));
+                marketPlaceOrderModel.setMarketPlaceOrderProductModelArrayList(parseOrderProductModel(jsonArray.getJSONObject(i).getJSONArray("ProductDetails")));
+                marketPlaceProductModelArrayList.add(marketPlaceOrderModel);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return marketPlaceProductModelArrayList;
+    }
+
+    private static ArrayList<MarketPlaceOrderProductModel> parseOrderProductModel(JSONArray jsonArray) {
+        ArrayList<MarketPlaceOrderProductModel> marketPlaceOrderProductModels = new ArrayList<>();
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject object = jsonArray.getJSONObject(i);
+                MarketPlaceOrderProductModel marketPlaceOrderProductModel = new MarketPlaceOrderProductModel();
+                marketPlaceOrderProductModel.setProductId(object.optString("ProductId"));
+                marketPlaceOrderProductModel.setProductName(object.optString("ProductName"));
+                marketPlaceOrderProductModel.setProductUrl(object.optString("ProductUrl"));
+                marketPlaceOrderProductModel.setUnit(object.optInt("Unit"));
+                marketPlaceOrderProductModel.setPrice(object.optDouble("Price"));
+                marketPlaceOrderProductModel.setTotalSum(object.optDouble("TotSum"));
+                marketPlaceOrderProductModel.setRowId(object.optString("RowsId"));
+                marketPlaceOrderProductModels.add(marketPlaceOrderProductModel);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return marketPlaceOrderProductModels;
+
+    }
 }

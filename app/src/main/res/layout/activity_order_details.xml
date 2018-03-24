@@ -18,56 +18,62 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_products"
+        android:id="@+id/tv_product_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ll_order"
         android:layout_marginBottom="@dimen/margin_5"
         android:layout_marginTop="@dimen/margin_5"
         android:background="@color/colorPrimary"
-        android:padding="@dimen/margin_10"
+        android:padding="@dimen/margin_5"
         android:text="@string/str_products"
-        android:textColor="@color/heading_color"
+        android:textColor="@color/white"
         android:textSize="@dimen/text_16" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <RelativeLayout
+        android:id="@+id/ll_accept_reject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_products"
-        android:layout_weight="1" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height"
-        android:layout_below="@id/recycler_view"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/margin_10"
         android:layout_marginLeft="@dimen/margin_30"
         android:layout_marginRight="@dimen/margin_30"
         android:layout_marginTop="@dimen/margin_10">
 
         <Button
+            android:id="@+id/btn_accept"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
             android:layout_marginRight="@dimen/margin_10"
             android:background="@drawable/button_round_primary"
             android:paddingLeft="@dimen/margin_25"
             android:paddingRight="@dimen/margin_25"
             android:text="Accept"
+            android:textAllCaps="false"
             android:textColor="@color/white" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
 
         <Button
+            android:id="@+id/btn_reject"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
+            android:layout_alignParentRight="true"
             android:background="@drawable/button_round_primary"
             android:paddingLeft="@dimen/margin_25"
             android:paddingRight="@dimen/margin_25"
             android:text="Reject"
+            android:textAllCaps="false"
             android:textColor="@color/white" />
-    </LinearLayout>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_above="@+id/ll_accept_reject"
+        android:layout_below="@+id/tv_product_label"
+        android:layout_weight="1" />
+
+
 </RelativeLayout>

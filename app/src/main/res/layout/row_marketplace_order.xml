@@ -19,10 +19,11 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/iv_profile_pic"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/video" />
+                android:background="@color/grey"
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -33,10 +34,10 @@
                 android:textSize="@dimen/text_14" />
 
             <TextView
-                android:id="@+id/tv_orderid"
+                android:id="@+id/tv_order_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="12A56A9"
+                android:text=""
                 android:textSize="@dimen/text_14" />
 
         </LinearLayout>
@@ -51,78 +52,65 @@
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Vivek Kumar"
-                android:textColor="@color/black"
+                android:layout_marginBottom="@dimen/margin_5"
+                android:text="Atul Raj"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_16" />
 
-            <LinearLayout
-                android:id="@+id/ll_rating"
+
+            <TextView
+                android:id="@+id/tv_mobile_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_name"
-                android:layout_marginTop="@dimen/margin_5">
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/margin_5"
+                android:text="sdf"
+                android:textColor="@color/black" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/rating_fill" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/rating_fill" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/rating_fill" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/rating_fill" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_chef_shop_name"
+            <TextView
+                android:id="@+id/tv_email_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ll_rating"
-                android:layout_marginTop="@dimen/margin_5">
+                android:layout_below="@id/tv_mobile_number"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/margin_5"
+                android:text="sadf"
+                android:textColor="@color/black" />
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/add_money" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/margin_5"
-                    android:text="Food mania"
-                    android:textColor="@color/black" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ll_chef_shop_name"
-                android:layout_marginTop="@dimen/margin_5">
+                android:layout_below="@+id/tv_email_id"
+                android:layout_marginTop="@dimen/margin_10">
 
                 <ImageView
+                    android:id="@+id/iv_call"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/add_money" />
+                    android:layout_marginRight="@dimen/margin_20"
+                    android:src="@drawable/call" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/margin_5"
-                    android:text="B1,Main tilak road delhi"
-                    android:textColor="@color/black" />
+                <ImageView
+                    android:id="@+id/iv_message"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="@dimen/margin_20"
+                    android:src="@drawable/ic_message_active" />
+
+                <ImageView
+                    android:id="@+id/iv_show_directions"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="@dimen/margin_20"
+                    android:src="@drawable/maps"
+                    android:visibility="visible" />
+
             </LinearLayout>
         </RelativeLayout>
+
+
     </LinearLayout>
 </android.support.v7.widget.CardView>
