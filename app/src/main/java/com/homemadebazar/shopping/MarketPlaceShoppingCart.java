@@ -42,4 +42,12 @@ public class MarketPlaceShoppingCart {
         }
         SharedPreference.saveShoppingCart(context, marketPlaceProductModelArrayList);
     }
+
+    public static void removeAllProductsFromCart(Context context) {
+        try {
+            SharedPreference.clearShoppingCart(context);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

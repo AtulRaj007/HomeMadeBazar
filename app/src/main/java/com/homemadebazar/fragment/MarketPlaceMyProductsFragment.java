@@ -86,15 +86,12 @@ public class MarketPlaceMyProductsFragment extends BaseFragment implements View.
 
     private void getProductListApiCall() {
         try {
-            final Dialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
-            progressDialog.show();
 
             final MarketPlaceProductListApiCall apiCall = new MarketPlaceProductListApiCall(userModel.getUserId());
             HttpRequestHandler.getInstance(getActivity().getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
                 public void onComplete(Exception e) {
-                    progressDialog.hide();
                     if (e == null) { // Success
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();

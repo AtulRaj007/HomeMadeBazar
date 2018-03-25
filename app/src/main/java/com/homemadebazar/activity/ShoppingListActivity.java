@@ -66,7 +66,7 @@ public class ShoppingListActivity extends BaseActivity implements View.OnClickLi
         getTotalPrice();
     }
 
-    private void getTotalPrice() {
+    public void getTotalPrice() {
         for (int i = 0; i < marketPlaceProductModelArrayList.size(); i++) {
             price += Double.parseDouble(marketPlaceProductModelArrayList.get(i).getPrice());
         }
@@ -123,11 +123,12 @@ public class ShoppingListActivity extends BaseActivity implements View.OnClickLi
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                DialogUtils.showAlert(ShoppingListActivity.this, "Reference Id:-" + apiCall.getReferenceId(), new Runnable() {
+                                DialogUtils.showAlert(ShoppingListActivity.this, "Your order is booked successfully.\nReference Id:-" + apiCall.getReferenceId(), new Runnable() {
                                     @Override
                                     public void run() {
+                                        marketPlaceShoppingCart.removeAllProductsFromCart(ShoppingListActivity.this);
+                                        setResult(RESULT_OK);
                                         finish();
-                                        SharedPreference.clearShoppingCart(ShoppingListActivity.this);
                                     }
                                 });
                             } else {
@@ -150,7 +151,10 @@ public class ShoppingListActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_book_order:
-                bookProducts();
+                if (marketPlaceProductModelArrayList.size() > 0)
+                    bookProducts();
+                else
+                    DialogUtils.showAlert(ShoppingListActivity.this, "No products available to book");
                 break;
         }
     }

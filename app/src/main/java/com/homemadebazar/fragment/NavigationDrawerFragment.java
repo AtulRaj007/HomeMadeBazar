@@ -16,6 +16,7 @@ import com.homemadebazar.activity.FoodieHomeActivity;
 import com.homemadebazar.activity.HomeActivity;
 import com.homemadebazar.activity.MarketPlaceHomeActivity;
 import com.homemadebazar.model.UserModel;
+import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.SharedPreference;
 
 /**
@@ -77,6 +78,12 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
     }
 
     public void setData() {
+
+        if (userModel.getAccountType().equals(Constants.Role.FOODIE.getStringRole())) {
+            getView().findViewById(R.id.ll_market_place_ordres).setVisibility(View.GONE);
+            getView().findViewById(R.id.view_marketplace).setVisibility(View.GONE);
+        }
+
         if (!TextUtils.isEmpty(userModel.getProfilePic())) {
             Glide.with(getActivity()).load(userModel.getProfilePic()).into(ivProfilePic);
         }

@@ -54,6 +54,7 @@ public class NotificationActivity extends BaseActivity implements SwipeRefreshLa
         notificationAdapter = new NotificationAdapter(this, notificationModelArrayList);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(notificationAdapter);
+        swipeRefreshLayout.setRefreshing(true);
         getNotificationsApiCall();
     }
 
@@ -70,7 +71,6 @@ public class NotificationActivity extends BaseActivity implements SwipeRefreshLa
 
     private void getNotificationsApiCall() {
         try {
-            swipeRefreshLayout.setRefreshing(true);
             final GetNotificationApiCall apiCall = new GetNotificationApiCall(userModel.getUserId());
             HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
@@ -81,12 +81,14 @@ public class NotificationActivity extends BaseActivity implements SwipeRefreshLa
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                findViewById(R.id.tv_no_record_found).setVisibility(View.GONE);
                                 notificationModelArrayList.clear();
                                 notificationModelArrayList.addAll(apiCall.getResult());
                                 notificationAdapter.notifyDataSetChanged();
                             } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.NO_RECORD_FOUND) {
                                 notificationModelArrayList.clear();
                                 notificationAdapter.notifyDataSetChanged();
+                                findViewById(R.id.tv_no_record_found).setVisibility(View.VISIBLE);
                             } else {
                                 DialogUtils.showAlert(NotificationActivity.this, baseModel.getStatusMessage());
                             }

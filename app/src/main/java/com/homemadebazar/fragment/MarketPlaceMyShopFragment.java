@@ -103,15 +103,11 @@ public class MarketPlaceMyShopFragment extends BaseFragment implements View.OnCl
 
     public void getHomeChefProfileDetails() {
         try {
-//            final Dialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
-//            progressDialog.show();
-
             final ShowHomeChefProfileApiCall apiCall = new ShowHomeChefProfileApiCall(userModel.getUserId());
             HttpRequestHandler.getInstance(getActivity()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
                 public void onComplete(Exception e) {
-//                    DialogUtils.hideProgressDialog(progressDialog);
                     if (e == null) { // Success
                         try {
                             HomeChefProfileModel homeChefProfileModel = apiCall.getResult();
@@ -123,9 +119,11 @@ public class MarketPlaceMyShopFragment extends BaseFragment implements View.OnCl
                                     tvSpeciality.setText(homeChefProfileModel.getSpeciality() + "");
                                     if (!TextUtils.isEmpty(homeChefProfileModel.getProfilePicture()))
                                         Glide.with(getActivity()).load(homeChefProfileModel.getProfilePicture()).into(ivProfileImage);
+
                                     ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(getActivity(), homeChefProfileModel.getCoverPhotoUrl());
                                     viewPager.setAdapter(imagePagerAdapter);
                                     circleIndicator.setViewPager(viewPager);
+
                                 } catch (Exception e1) {
                                     e1.printStackTrace();
                                 }

@@ -88,11 +88,13 @@ public class MyOrdersActivity extends BaseActivity implements SwipeRefreshLayout
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                findViewById(R.id.tv_no_record_found).setVisibility(View.GONE);
                                 ArrayList<HomeChefIncomingOrderModel> tempHomeChefIncomingOrderArrayList = apiCall.getResult();
                                 homeChefIncomingOrderModelArrayList.clear();
                                 homeChefIncomingOrderModelArrayList.addAll(tempHomeChefIncomingOrderArrayList);
                                 myOrdersAdapter.notifyDataSetChanged();
-
+                            } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.NO_RECORD_FOUND) {
+                                findViewById(R.id.tv_no_record_found).setVisibility(View.VISIBLE);
                             } else {
                                 DialogUtils.showAlert(MyOrdersActivity.this, baseModel.getStatusMessage());
                             }

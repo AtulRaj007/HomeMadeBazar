@@ -124,7 +124,7 @@ public class SharedPreference {
     public static void clearShoppingCart(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         try {
-            prefs.edit().remove(PROFILE_MODEL);
+            prefs.edit().remove(PRODUCT_MODEL).commit();
         } catch (Exception e) {
             e.printStackTrace();
         }

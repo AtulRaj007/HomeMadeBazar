@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,6 +41,7 @@ import java.util.ArrayList;
  */
 
 public class MarketPlaceFragment extends BaseFragment implements View.OnClickListener {
+    private static int GO_TO_CART = 105;
     private String TAG = ">>>>>MarketPlace";
     private RecyclerView recyclerView;
     private MarketPlaceAdapter marketPlaceAdapter;
@@ -74,7 +78,6 @@ public class MarketPlaceFragment extends BaseFragment implements View.OnClickLis
         etSearch = getView().findViewById(R.id.et_search);
         btnCheckout = getView().findViewById(R.id.btn_checkout);
         tvNoRecordFound = getView().findViewById(R.id.tv_no_record_found);
-        getShoppingCart();
     }
 
     public void initialiseListener() {
@@ -88,16 +91,27 @@ public class MarketPlaceFragment extends BaseFragment implements View.OnClickLis
                 return false;
             }
         });
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (TextUtils.isEmpty(etSearch.getText().toString().trim())) {
+                    marketPlaceProductModelArrayList.clear();
+                    marketPlaceAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
-    public void addProductToCart(int position) {
-        MarketPlaceProductModel marketPlaceProductModel = marketPlaceProductModelArrayList.get(position);
-        marketPlaceShoppingCart.addProductToCart(getActivity(), marketPlaceProductModel);
-    }
-
-    public void getShoppingCart() {
-        ArrayList<MarketPlaceProductModel> marketPlaceProductModelArrayList = marketPlaceShoppingCart.getProductFromCart();
-    }
 
     private void performSearchApiCall(String searchString) {
         try {
@@ -161,9 +175,22 @@ public class MarketPlaceFragment extends BaseFragment implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_checkout:
-                Intent intent = new Intent(getActivity(), ShoppingListActivity.class);
-                startActivity(intent);
+                ArrayList<MarketPlaceProductModel> marketPlaceProductModelArrayList = marketPlaceShoppingCart.getProductFromCart();
+                if (marketPlaceProductModelArrayList.size() > 0) {
+                    Intent intent = new Intent(getActivity(), ShoppingListActivity.class);
+                    startActivityForResult(intent, GO_TO_CART);
+                } else {
+                    DialogUtils.showAlert(getActivity(), "Cart is empty. Please add items to proceed");
+                }
                 break;
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == GO_TO_CART && requestCode == getActivity().RESULT_OK) {
+            etSearch.setText("");
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

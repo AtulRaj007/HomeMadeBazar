@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
+import com.homemadebazar.activity.ShoppingListActivity;
 import com.homemadebazar.model.MarketPlaceProductModel;
 import com.homemadebazar.shopping.MarketPlaceShoppingCart;
+import com.homemadebazar.util.DialogUtils;
 
 import java.util.ArrayList;
 
@@ -88,10 +90,23 @@ public class MarketPlaceAdapter extends RecyclerView.Adapter<MarketPlaceAdapter.
                         marketPlaceProductModelArrayList.get(getAdapterPosition()).setStatus(1);
                         marketPlaceShoppingCart.addProductToCart(context, marketPlaceProductModelArrayList.get(getAdapterPosition()));
                         notifyDataSetChanged();
+                        if (context instanceof ShoppingListActivity)
+                            ((ShoppingListActivity) context).getTotalPrice();
                     } else {
                         marketPlaceProductModelArrayList.get(getAdapterPosition()).setStatus(0);
                         marketPlaceShoppingCart.removeProductToCart(context, marketPlaceProductModelArrayList.get(getAdapterPosition()));
                         notifyDataSetChanged();
+                        if (context instanceof ShoppingListActivity) {
+                            ((ShoppingListActivity) context).getTotalPrice();
+                            if (marketPlaceProductModelArrayList.size() <= 0) {
+                                DialogUtils.showAlert(context, "Cart is empty", new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ((ShoppingListActivity) context).finish();
+                                    }
+                                });
+                            }
+                        }
                     }
                     break;
             }

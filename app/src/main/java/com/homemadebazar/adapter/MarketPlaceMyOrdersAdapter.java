@@ -12,6 +12,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.model.MarketPlaceMyOrdersModel;
+import com.homemadebazar.model.UserModel;
+import com.homemadebazar.util.Constants;
+import com.homemadebazar.util.SharedPreference;
 
 import java.util.ArrayList;
 
@@ -22,10 +25,12 @@ import java.util.ArrayList;
 public class MarketPlaceMyOrdersAdapter extends RecyclerView.Adapter<MarketPlaceMyOrdersAdapter.OrdersViewHolder> {
     private Context context;
     private ArrayList<MarketPlaceMyOrdersModel> marketPlaceMyOrdersModels;
+    private UserModel userModel;
 
     public MarketPlaceMyOrdersAdapter(Context context, ArrayList<MarketPlaceMyOrdersModel> marketPlaceMyOrdersModels) {
         this.context = context;
         this.marketPlaceMyOrdersModels = marketPlaceMyOrdersModels;
+        userModel = SharedPreference.getUserModel(context);
     }
 
     @Override
@@ -47,6 +52,9 @@ public class MarketPlaceMyOrdersAdapter extends RecyclerView.Adapter<MarketPlace
             holder.tvProductName.setText(marketPlaceMyOrdersModels.get(position).getProductName());
             holder.tvBrandName.setText(marketPlaceMyOrdersModels.get(position).getBrandName());
             holder.tvPrice.setText(marketPlaceMyOrdersModels.get(position).getPrice());
+
+            statusTextHandling(marketPlaceMyOrdersModels.get(position).getActionId(), holder);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -55,6 +63,33 @@ public class MarketPlaceMyOrdersAdapter extends RecyclerView.Adapter<MarketPlace
     @Override
     public int getItemCount() {
         return marketPlaceMyOrdersModels.size();
+    }
+
+    private void statusTextHandling(String actionId, OrdersViewHolder holder) {
+        if (userModel.getAccountType().equals(Constants.Role.HOME_CHEF.getStringRole())) {
+            // Home Chef
+            if (actionId.equals(Constants.MarketPlaceOrderACtionType.PRODUCT_BOOK)) {
+                holder.tvStatus.setText("You have successfully placed order.\n Waiting for MarketPlace Approval.");
+            } else if (actionId.equals(Constants.MarketPlaceOrderACtionType.ACCEPT)) {
+                holder.tvStatus.setText("You Order is successfully Accepted");
+            } else if (actionId.equals(Constants.MarketPlaceOrderACtionType.REJECT)) {
+                holder.tvStatus.setText("You Order is rejected by MarketPlace user");
+            } else if (actionId.equals(Constants.MarketPlaceOrderACtionType.DISPATCH)) {
+                holder.tvStatus.setText("You Order is dispatched by MarketPlace user");
+            }
+        } else {
+            // MarketPlace
+            if (actionId.equals(Constants.MarketPlaceOrderACtionType.PRODUCT_BOOK)) {
+                holder.tvStatus.setText("You have an incoming order.");
+            } else if (actionId.equals(Constants.MarketPlaceOrderACtionType.ACCEPT)) {
+                holder.tvStatus.setText("You have accepted the order.");
+            } else if (actionId.equals(Constants.MarketPlaceOrderACtionType.REJECT)) {
+                holder.tvStatus.setText("You have rejected the order.");
+            } else if (actionId.equals(Constants.MarketPlaceOrderACtionType.DISPATCH)) {
+                holder.tvStatus.setText("Order is successfully dispatched.");
+            }
+
+        }
     }
 
     class OrdersViewHolder extends RecyclerView.ViewHolder {

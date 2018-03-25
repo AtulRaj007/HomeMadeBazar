@@ -20,19 +20,18 @@ public class GetNotificationApiCall extends BaseApiCall {
     private BaseModel baseModel;
     private ArrayList<NotificationModel> notificationModelArrayList;
 
-    //    {"UserId":"1801062"}
     public GetNotificationApiCall(String userId) {
         this.userId = userId;
     }
 
     private void parseData(String response) {
         System.out.println(Constants.ServiceTAG.RESPONSE + response);
-
         if (response != null && !response.isEmpty()) {
             try {
                 JSONObject object = new JSONObject(response);
                 baseModel = JSONParsingUtils.parseBaseModel(object);
-                notificationModelArrayList = JSONParsingUtils.parseNotificationList(object);
+                if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS)
+                    notificationModelArrayList = JSONParsingUtils.parseNotificationList(object);
             } catch (Exception e) {
                 e.printStackTrace();
             }
