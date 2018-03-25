@@ -1,25 +1,29 @@
 package com.homemadebazar.network.apicall;
 
 import com.homemadebazar.model.BaseModel;
+import com.homemadebazar.model.MarketPlaceMyOrdersModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.JSONParsingUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * Created by Sumit on 27/08/17.
  */
 
-public class ActionByMarketPlaceUsersApiCall extends BaseApiCall {
+public class MarketPlaceOrdersApiCall extends BaseApiCall {
 
+    private String userId, viewFor;
     private BaseModel baseModel;
-    private String userId, actionType, rowId;
+    private ArrayList<MarketPlaceMyOrdersModel> marketPlaceMyOrdersModels;
 
-    public ActionByMarketPlaceUsersApiCall(String userId, String actionType, String rowId) {
+
+    public MarketPlaceOrdersApiCall(String userId, String viewFor) {
         this.userId = userId;
-        this.actionType = actionType;
-        this.rowId = rowId;
+        this.viewFor = viewFor;
     }
 
     private void parseData(String response) {
@@ -29,7 +33,9 @@ public class ActionByMarketPlaceUsersApiCall extends BaseApiCall {
             try {
                 JSONObject object = new JSONObject(response);
                 baseModel = JSONParsingUtils.parseBaseModel(object);
-
+                if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                    marketPlaceMyOrdersModels = JSONParsingUtils.parseMarketPlaceMyOrders(object.optJSONArray("ProductList"));
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -37,22 +43,22 @@ public class ActionByMarketPlaceUsersApiCall extends BaseApiCall {
     }
 
     @Override
-    public BaseModel getResult() {
-        return baseModel;
+    public ArrayList<MarketPlaceMyOrdersModel> getResult() {
+        return marketPlaceMyOrdersModels;
     }
+
 
     @Override
     public String getServiceURL() {
-        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.ACTION_BY_MARKET_PLACE_USERS);
-        return Constants.ServerURL.ACTION_BY_MARKET_PLACE_USERS;
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.MARKETPLACE_ORDERS);
+        return Constants.ServerURL.MARKETPLACE_ORDERS;
     }
 
     public Object getRequest() {
         JSONObject obj = new JSONObject();
         try {
             obj.put("UserId", userId);
-            obj.put("ActionId", actionType);
-            obj.put("RowsId", rowId);
+            obj.put("ViewFor", viewFor);
 
         } catch (JSONException e) {
             e.printStackTrace();

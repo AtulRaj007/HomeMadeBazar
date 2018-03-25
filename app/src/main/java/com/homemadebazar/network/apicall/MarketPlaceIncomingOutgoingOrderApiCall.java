@@ -61,8 +61,8 @@ public class MarketPlaceIncomingOutgoingOrderApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
-        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.MARKETPLACE_ORDERS);
-        return Constants.ServerURL.MARKETPLACE_ORDERS;
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.MARKETPLACE_INCOMING_OUTGOING_ORDERS);
+        return Constants.ServerURL.MARKETPLACE_INCOMING_OUTGOING_ORDERS;
     }
 
     public BaseModel getBaseModel() {

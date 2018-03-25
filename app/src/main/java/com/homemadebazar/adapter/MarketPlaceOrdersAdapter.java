@@ -24,10 +24,12 @@ import java.util.ArrayList;
 public class MarketPlaceOrdersAdapter extends RecyclerView.Adapter<MarketPlaceOrdersAdapter.OrderViewHolder> {
     private Context context;
     private ArrayList<MarketPlaceOrderModel> marketPlaceOrderModelArrayList;
+    private String orderType;
 
-    public MarketPlaceOrdersAdapter(Context context, ArrayList<MarketPlaceOrderModel> marketPlaceOrderModelArrayList) {
+    public MarketPlaceOrdersAdapter(Context context, ArrayList<MarketPlaceOrderModel> marketPlaceOrderModelArrayList, String orderType) {
         this.context = context;
         this.marketPlaceOrderModelArrayList = marketPlaceOrderModelArrayList;
+        this.orderType = orderType;
     }
 
     @Override
@@ -100,7 +102,7 @@ public class MarketPlaceOrdersAdapter extends RecyclerView.Adapter<MarketPlaceOr
                     Utils.message(context, marketPlaceOrderModelArrayList.get(getAdapterPosition()).getMobileNumber());
                     break;
                 default:
-                    context.startActivity(MarketPlaceOrderDetailsActivity.getIntent(context, marketPlaceOrderModelArrayList.get(getAdapterPosition())));
+                    context.startActivity(MarketPlaceOrderDetailsActivity.getIntent(context, marketPlaceOrderModelArrayList.get(getAdapterPosition()), orderType));
                     break;
             }
         }

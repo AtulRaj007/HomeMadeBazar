@@ -115,7 +115,7 @@ public class ServiceUtils {
         }
     }
 
-    public static void actionByMarketPlaceUsers(final Context context, String userId, String actionType, String rowId) {
+    public static void actionByMarketPlaceUsers(final Context context, String userId, String actionType, String rowId, final MarketPlaceOrderActionInterface marketPlaceOrderActionInterface) {
         try {
             final ProgressDialog progressDialog = DialogUtils.getProgressDialog(context, null);
             progressDialog.show();
@@ -129,11 +129,7 @@ public class ServiceUtils {
                     if (e == null) { // Success
                         try {
                             BaseModel baseModel = apiCall.getResult();
-                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                DialogUtils.showAlert(context, "Review Submitted Successfully");
-                            } else {
-                                DialogUtils.showAlert(context, baseModel.getStatusMessage());
-                            }
+                            marketPlaceOrderActionInterface.onOrderAtion(baseModel);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -149,5 +145,9 @@ public class ServiceUtils {
 
     public interface OrderActionInterface {
         void onOrderAction(BaseModel baseModel);
+    }
+
+    public interface MarketPlaceOrderActionInterface {
+        void onOrderAtion(BaseModel baseModel);
     }
 }

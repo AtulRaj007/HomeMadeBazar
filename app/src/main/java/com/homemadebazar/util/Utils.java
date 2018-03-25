@@ -38,6 +38,7 @@ import com.homemadebazar.activity.FoodieHomeActivity;
 import com.homemadebazar.activity.HomeActivity;
 import com.homemadebazar.activity.LoginActivity;
 import com.homemadebazar.activity.MarketPlaceHomeActivity;
+import com.homemadebazar.activity.MarketPlaceMyOrdersActivity;
 import com.homemadebazar.activity.MyOrdersActivity;
 import com.homemadebazar.activity.MyProfileActivity;
 import com.homemadebazar.activity.ProfileViewActivity;
@@ -398,6 +399,9 @@ public class Utils {
                 break;
             case R.id.tv_my_orders:
                 context.startActivity(new Intent(context, MyOrdersActivity.class));
+                break;
+            case R.id.tv_marketplace_orders:
+                context.startActivity(new Intent(context, MarketPlaceMyOrdersActivity.class));
                 break;
             case R.id.tv_my_wallet:
                 context.startActivity(new Intent(context, WalletActivity.class));

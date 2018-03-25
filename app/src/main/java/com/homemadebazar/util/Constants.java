@@ -11,6 +11,8 @@ public class Constants {
 
     public static final String YOUTUBE_KEY = "AIzaSyD1S-0ZTNEFdcDfPstALlq0wVxiNYI1dHk";
     public static boolean isBalanceRefresh = false;
+    public static boolean isMarketPlaceOrderRefresh = false;
+
     public static String deviceType = "1";
     public static UserModel socialUserModel = null;
     public static String zipJson = "2"; // 1=true,  2=false
@@ -168,8 +170,9 @@ public class Constants {
         String HOMECHEF_ORDER_DELETE = BASE_URL + "Miscellaneous/OrdersDelete";
         String HOMECHEF_UNFRIEND_USER = BASE_URL + "Messenger/Unfriends";
         String SAVE_RATING_FEEDBACK = BASE_URL + "Miscellaneous/SaveRatingFeedback";
-        String MARKETPLACE_ORDERS = BASE_URL + "MarketPlace/ShowIncomingOrders";
+        String MARKETPLACE_INCOMING_OUTGOING_ORDERS = BASE_URL + "MarketPlace/ShowIncomingOrders";
         String ACTION_BY_MARKET_PLACE_USERS = BASE_URL + "MarketPlace/ActionByMarketPlaceUsers";
+        String MARKETPLACE_ORDERS = BASE_URL + "marketplace/MyOrders";
 
     }
 
@@ -304,6 +307,7 @@ public class Constants {
         int FOODIE_ORDER_ACCEPT_REJECT = 3;
         int FRIEND_REQUEST_RECEIVED = 4;
         int FRIEND_ACCEPTED = 5;
+        int MARKETPLACE_INCOMING_ORDER = 6;
 
     }
 
@@ -350,9 +354,11 @@ public class Constants {
         String OUTGOING_ORDER = "1";
     }
 
-    public interface MarketPlaceOrderAtionType {
+    public interface MarketPlaceOrderACtionType {
+        String PRODUCT_BOOK = "0";
         String ACCEPT = "1";
         String REJECT = "2";
         String DISPATCH = "3";
     }
+
 }

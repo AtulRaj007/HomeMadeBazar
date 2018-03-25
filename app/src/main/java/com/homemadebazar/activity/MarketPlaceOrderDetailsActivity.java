@@ -15,9 +15,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.adapter.MarketPlaceOrderDetailAdapter;
+import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.MarketPlaceOrderModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.util.Constants;
+import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.ServiceUtils;
 import com.homemadebazar.util.SharedPreference;
 import com.homemadebazar.util.Utils;
@@ -28,6 +30,7 @@ import com.homemadebazar.util.Utils;
 
 public class MarketPlaceOrderDetailsActivity extends BaseActivity implements View.OnClickListener {
     private static String KEY_MARKET_PLACE_ORDER_MODEL = "KEY_MARKET_PLACE_ORDER_MODEL";
+    private static String KEY_ORDER_TYPE = "KEY_ORDER_TYPE";
     private RecyclerView recyclerView;
     private MarketPlaceOrderDetailAdapter marketPlaceOrderDetailAdapter;
     private MarketPlaceOrderModel marketPlaceOrderModel;
@@ -39,13 +42,15 @@ public class MarketPlaceOrderDetailsActivity extends BaseActivity implements Vie
     private ImageView ivMessage;
     private ImageView ivShowDirections;
     private ImageView ivProfilePic;
-    private Button btnAccept, btnReject;
+    private Button btnAccept, btnReject, btnDispatch;
     private UserModel userModel;
+    private String orderType;
 
 
-    public static Intent getIntent(Context context, MarketPlaceOrderModel marketPlaceOrderModel) {
+    public static Intent getIntent(Context context, MarketPlaceOrderModel marketPlaceOrderModel, String orderType) {
         Intent intent = new Intent(context, MarketPlaceOrderDetailsActivity.class);
         intent.putExtra(KEY_MARKET_PLACE_ORDER_MODEL, marketPlaceOrderModel);
+        intent.putExtra(KEY_ORDER_TYPE, orderType);
         return intent;
     }
 
@@ -60,6 +65,7 @@ public class MarketPlaceOrderDetailsActivity extends BaseActivity implements Vie
     protected void initUI() {
         userModel = SharedPreference.getUserModel(this);
         marketPlaceOrderModel = (MarketPlaceOrderModel) getIntent().getSerializableExtra(KEY_MARKET_PLACE_ORDER_MODEL);
+        orderType = getIntent().getStringExtra(KEY_ORDER_TYPE);
         recyclerView = findViewById(R.id.recycler_view);
         tvOrderId = findViewById(R.id.tv_order_id);
         tvName = findViewById(R.id.tv_name);
@@ -72,6 +78,7 @@ public class MarketPlaceOrderDetailsActivity extends BaseActivity implements Vie
 
         btnAccept = findViewById(R.id.btn_accept);
         btnReject = findViewById(R.id.btn_reject);
+        btnDispatch = findViewById(R.id.btn_dispatch);
 
     }
 
@@ -83,6 +90,7 @@ public class MarketPlaceOrderDetailsActivity extends BaseActivity implements Vie
 
         btnAccept.setOnClickListener(this);
         btnReject.setOnClickListener(this);
+        btnDispatch.setOnClickListener(this);
     }
 
     @Override
@@ -101,8 +109,20 @@ public class MarketPlaceOrderDetailsActivity extends BaseActivity implements Vie
             marketPlaceOrderDetailAdapter = new MarketPlaceOrderDetailAdapter(this, marketPlaceOrderModel.getMarketPlaceOrderProductModelArrayList());
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(marketPlaceOrderDetailAdapter);
+
+            setUpOrderHandling();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void setUpOrderHandling() {
+        if (orderType.equals(Constants.MarketPlaceOrder.INCOMING_ORDER)) {
+            btnAccept.setVisibility(View.VISIBLE);
+            btnReject.setVisibility(View.VISIBLE);
+
+        } else if (orderType.equals(Constants.MarketPlaceOrder.OUTGOING_ORDER)) {
+            btnDispatch.setVisibility(View.VISIBLE);
         }
     }
 
@@ -130,10 +150,58 @@ public class MarketPlaceOrderDetailsActivity extends BaseActivity implements Vie
                 Utils.message(this, marketPlaceOrderModel.getMobileNumber());
                 break;
             case R.id.btn_accept:
-                ServiceUtils.actionByMarketPlaceUsers(this, userModel.getUserId(), Constants.MarketPlaceOrderAtionType.ACCEPT, getProductRowsId());
+                ServiceUtils.actionByMarketPlaceUsers(this, userModel.getUserId(), Constants.MarketPlaceOrderACtionType.ACCEPT, getProductRowsId(), new ServiceUtils.MarketPlaceOrderActionInterface() {
+                    @Override
+                    public void onOrderAtion(BaseModel baseModel) {
+                        if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                            DialogUtils.showAlert(MarketPlaceOrderDetailsActivity.this, "Order Accepted Successfully", new Runnable() {
+                                @Override
+                                public void run() {
+                                    Constants.isMarketPlaceOrderRefresh = true;
+                                    finish();
+                                }
+                            });
+                        } else {
+                            DialogUtils.showAlert(MarketPlaceOrderDetailsActivity.this, baseModel.getStatusMessage());
+                        }
+                    }
+                });
                 break;
             case R.id.btn_reject:
-                ServiceUtils.actionByMarketPlaceUsers(this, userModel.getUserId(), Constants.MarketPlaceOrderAtionType.REJECT, getProductRowsId());
+                ServiceUtils.actionByMarketPlaceUsers(this, userModel.getUserId(), Constants.MarketPlaceOrderACtionType.REJECT, getProductRowsId(), new ServiceUtils.MarketPlaceOrderActionInterface() {
+                    @Override
+                    public void onOrderAtion(BaseModel baseModel) {
+                        if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                            DialogUtils.showAlert(MarketPlaceOrderDetailsActivity.this, "Order Rejected Successfully", new Runnable() {
+                                @Override
+                                public void run() {
+                                    Constants.isMarketPlaceOrderRefresh = true;
+                                    finish();
+                                }
+                            });
+                        } else {
+                            DialogUtils.showAlert(MarketPlaceOrderDetailsActivity.this, baseModel.getStatusMessage());
+                        }
+                    }
+                });
+                break;
+            case R.id.btn_dispatch:
+                ServiceUtils.actionByMarketPlaceUsers(this, userModel.getUserId(), Constants.MarketPlaceOrderACtionType.DISPATCH, getProductRowsId(), new ServiceUtils.MarketPlaceOrderActionInterface() {
+                    @Override
+                    public void onOrderAtion(BaseModel baseModel) {
+                        if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                            DialogUtils.showAlert(MarketPlaceOrderDetailsActivity.this, "Order Dispatched Successfully", new Runnable() {
+                                @Override
+                                public void run() {
+                                    Constants.isMarketPlaceOrderRefresh = true;
+                                    finish();
+                                }
+                            });
+                        } else {
+                            DialogUtils.showAlert(MarketPlaceOrderDetailsActivity.this, baseModel.getStatusMessage());
+                        }
+                    }
+                });
                 break;
 
         }

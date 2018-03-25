@@ -13,6 +13,7 @@ import com.homemadebazar.model.HomeChefOrderModel;
 import com.homemadebazar.model.HomeChefProfileModel;
 import com.homemadebazar.model.HomeChefSkillHubVideoModel;
 import com.homemadebazar.model.IsAccountExistModel;
+import com.homemadebazar.model.MarketPlaceMyOrdersModel;
 import com.homemadebazar.model.MarketPlaceOrderModel;
 import com.homemadebazar.model.MarketPlaceOrderProductModel;
 import com.homemadebazar.model.MarketPlaceProductBrandModel;
@@ -876,5 +877,32 @@ public class JSONParsingUtils {
         }
         return marketPlaceOrderProductModels;
 
+    }
+
+    public static ArrayList<MarketPlaceMyOrdersModel> parseMarketPlaceMyOrders(JSONArray jsonArray) {
+        ArrayList<MarketPlaceMyOrdersModel> marketPlaceMyOrdersModelArrayList = new ArrayList<>();
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject object = jsonArray.getJSONObject(i);
+                MarketPlaceMyOrdersModel marketPlaceMyOrdersModel = new MarketPlaceMyOrdersModel();
+                marketPlaceMyOrdersModel.setBookedDate(object.optString("BookedDate"));
+                marketPlaceMyOrdersModel.setBrandName(object.optString("BrandName"));
+                marketPlaceMyOrdersModel.setCategoryName(object.optString("CategoryName"));
+                marketPlaceMyOrdersModel.setDescription(object.optString("Description"));
+                marketPlaceMyOrdersModel.setActionDate(object.optString("ActionDate"));
+                marketPlaceMyOrdersModel.setOrderId(object.optString("OrderId"));
+                marketPlaceMyOrdersModel.setPrice(object.optString("Price"));
+                marketPlaceMyOrdersModel.setProductId(object.optString("ProductId"));
+                marketPlaceMyOrdersModel.setProductName(object.optString("ProductName"));
+                marketPlaceMyOrdersModel.setActionId(object.optString("ActionId"));
+                marketPlaceMyOrdersModel.setProductImageUrl(object.optString("ProductImageUrl"));
+
+                marketPlaceMyOrdersModelArrayList.add(marketPlaceMyOrdersModel);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return marketPlaceMyOrdersModelArrayList;
     }
 }

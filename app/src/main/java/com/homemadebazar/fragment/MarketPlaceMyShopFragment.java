@@ -1,6 +1,5 @@
 package com.homemadebazar.fragment;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -104,15 +103,15 @@ public class MarketPlaceMyShopFragment extends BaseFragment implements View.OnCl
 
     public void getHomeChefProfileDetails() {
         try {
-            final Dialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
-            progressDialog.show();
+//            final Dialog progressDialog = DialogUtils.getProgressDialog(getActivity(), null);
+//            progressDialog.show();
 
             final ShowHomeChefProfileApiCall apiCall = new ShowHomeChefProfileApiCall(userModel.getUserId());
             HttpRequestHandler.getInstance(getActivity()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
                 public void onComplete(Exception e) {
-                    DialogUtils.hideProgressDialog(progressDialog);
+//                    DialogUtils.hideProgressDialog(progressDialog);
                     if (e == null) { // Success
                         try {
                             HomeChefProfileModel homeChefProfileModel = apiCall.getResult();

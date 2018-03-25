@@ -263,6 +263,8 @@
     <string name="str_top_reviews">Top Reviews</string>
     <string name="str_choose_interests">Choose Interests</string>
     <string name="str_product_id">Product Id</string>
+    <string name="str_dispatch">Dispatch</string>
+    <string name="str_marketplace_orders">MarketPlace Orders</string>
 
 
     <string-array name="price">

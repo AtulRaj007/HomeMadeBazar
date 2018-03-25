@@ -56,11 +56,19 @@ public class MarketPlaceIncomingOrdersFragment extends BaseFragment implements S
     @Override
     protected void setData() {
         userModel = SharedPreference.getUserModel(getActivity());
-        marketPlaceOrdersAdapter = new MarketPlaceOrdersAdapter(getActivity(), marketPlaceOrderModelArrayList);
+        marketPlaceOrdersAdapter = new MarketPlaceOrdersAdapter(getActivity(), marketPlaceOrderModelArrayList, Constants.MarketPlaceOrder.INCOMING_ORDER);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(marketPlaceOrdersAdapter);
         swipeRefreshLayout.setRefreshing(true);
         showIncomingOrders();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (Constants.isMarketPlaceOrderRefresh) {
+            showIncomingOrders();
+        }
     }
 
     public void showIncomingOrders() {
@@ -71,6 +79,7 @@ public class MarketPlaceIncomingOrdersFragment extends BaseFragment implements S
                 @Override
                 public void onComplete(Exception e) {
                     swipeRefreshLayout.setRefreshing(false);
+                    Constants.isMarketPlaceOrderRefresh = false;
                     if (e == null) { // Success
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();
