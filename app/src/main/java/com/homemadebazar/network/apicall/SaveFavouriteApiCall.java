@@ -41,6 +41,7 @@ public class SaveFavouriteApiCall extends BaseApiCall {
 
     @Override
     public String getServiceURL() {
+        System.out.println(Constants.ServiceTAG.URL + Constants.ServerURL.SAVE_FAVOURITE);
         return Constants.ServerURL.SAVE_FAVOURITE;
     }
 

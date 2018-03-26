@@ -55,6 +55,7 @@ import com.homemadebazar.model.UserModel;
 import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -574,5 +575,16 @@ public class Utils {
             e.printStackTrace();
         }
         return strRules;
+    }
+
+    public static double roundToTwoDigits(String distance) {
+        try {
+            double dist = Double.parseDouble(distance);
+            DecimalFormat twoDForm = new DecimalFormat("#.##");
+            return Double.valueOf(twoDForm.format(dist));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

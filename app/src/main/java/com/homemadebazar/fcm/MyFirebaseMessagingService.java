@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
@@ -101,6 +102,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setContentIntent(pendingIntent);
 
+//        int resID = getResources().getIdentifier(fname, "raw", getPackageName());
+//        MediaPlayer mediaPlayer = MediaPlayer.create(this, resID);
+//        mediaPlayer.start();
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(id/* ID of row_notification*/, notificationBuilder.build());
