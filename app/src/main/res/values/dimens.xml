@@ -49,9 +49,9 @@
     <dimen name="custom_tab_bottom_height">70dp</dimen>
     <dimen name="padding_40">40dp</dimen>
     <dimen name="margin_60">60dp</dimen>
-    <dimen name="nav_left_margin">25dp</dimen>
-    <dimen name="nav_bottom_margin">5dp</dimen>
-    <dimen name="nav_top_margin">5dp</dimen>
+    <dimen name="nav_left_margin">20dp</dimen>
+    <dimen name="nav_bottom_margin">4dp</dimen>
+    <dimen name="nav_top_margin">4dp</dimen>
     <item name="dim_grid_first_row_weight" format="float" type="dimen">1.4</item>
     <dimen name="nav_line_height">0.05dp</dimen>
     <dimen name="cardview_elevation">10dp</dimen>
@@ -60,8 +60,8 @@
     <dimen name="profile_photo_height">280dp</dimen>
     <dimen name="custom_card_elevation">10dp</dimen>
     <dimen name="text_22">22sp</dimen>
-    <dimen name="nav_icon_height">40dp</dimen>
-    <dimen name="nav_icon_width">40dp</dimen>
+    <dimen name="nav_icon_height">35dp</dimen>
+    <dimen name="nav_icon_width">35dp</dimen>
     <dimen name="min_photo_height">150dp</dimen>
     <dimen name="food_image_height">180dp</dimen>
     <dimen name="order_text_size">14sp</dimen>

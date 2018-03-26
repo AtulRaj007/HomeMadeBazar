@@ -87,10 +87,6 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                     R.id.iv_sat_dinner,
 
                     R.id.iv_sun_breakfast,
-                    R.id.iv_sat_lunch,
-                    R.id.iv_sat_dinner,
-
-                    R.id.iv_sun_breakfast,
                     R.id.iv_sun_lunch,
                     R.id.iv_sun_dinner
 

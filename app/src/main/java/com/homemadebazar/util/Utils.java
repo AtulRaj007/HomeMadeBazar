@@ -372,6 +372,7 @@ public class Utils {
 
     public static ArrayList<FoodDateTimeBookModel> parseFoodBookDateTime(String parseFoodDateTime) {
 //        String temp = "12-01-2018,0,0,0;13-01-2018,0,0,0;14-01-2018,0,0,0;15-01-2018,0,0,0;16-01-2018,0,0,0;17-01-2018,0,0,0;18-01-2018,1,0,0;19-01-2018,1,1,1";
+
         ArrayList<FoodDateTimeBookModel> foodDateTimeBookModels = new ArrayList<>();
         try {
             String bookTiming[] = parseFoodDateTime.split(";");
@@ -532,7 +533,7 @@ public class Utils {
 
     public static void startCall(Context context, String mobileNumber) {
         try {
-            if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                 Intent intent = new Intent(Intent.ACTION_CALL);
                 intent.setData(Uri.parse("tel:" + mobileNumber));
                 context.startActivity(intent);
@@ -544,7 +545,7 @@ public class Utils {
 
     public static void message(Context context, String mobileNumber) {
         Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-        sendIntent.setData(Uri.parse("sms:"));
+        sendIntent.setData(Uri.parse("sms:" + mobileNumber));
         context.startActivity(sendIntent);
     }
 

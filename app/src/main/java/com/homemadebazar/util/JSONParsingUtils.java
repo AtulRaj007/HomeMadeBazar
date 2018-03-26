@@ -162,8 +162,11 @@ public class JSONParsingUtils {
             homeChefOrderModel.setDescription(object.optString("Description"));
             homeChefOrderModel.setOrderFromDate(object.optString("OrderFromDT"));
             homeChefOrderModel.setOrderValidTill(object.optString("OrderValid"));
+            homeChefOrderModel.setDiscount(object.optString("Discount"));
 
             homeChefOrderModel.setDishAvailability(object.optString("DishAvailableDay"));
+            homeChefOrderModel.setFoodDateTimeBookModels(Utils.parseFoodBookDateTime(object.optString("DishAvailableDay")));
+
             homeChefOrderModel.setBreakFastTime(object.optString("Bearkfast"));
             homeChefOrderModel.setLunchTime(object.optString("Lunch"));
             homeChefOrderModel.setDinnerTime(object.optString("DinnerTime"));
@@ -277,10 +280,10 @@ public class JSONParsingUtils {
             homeChefOrderModel.setPrice(object.optString("Price"));
             homeChefOrderModel.setMinGuest(object.optString("MinGuest"));
             homeChefOrderModel.setMaxGuest(object.optString("MaxGuest"));
-//            homeChefOrderModel.setDiscount(object.optString(""));
-//            homeChefOrderModel.setPetsAllowed(object.optBoolean());
-//            homeChefOrderModel.setDrinks(object.optString());
-//            homeChefOrderModel.setVegNonVeg(object.optString());
+            homeChefOrderModel.setDiscount(object.optString("Discount"));
+            homeChefOrderModel.setPetsAllowed(object.optBoolean("IsPetAllow", false));
+            homeChefOrderModel.setDrinks(object.optString("Drink"));
+            homeChefOrderModel.setVegNonVeg(object.optString("VegNonType"));
 
             homeChefOrderModel.setOrderType(object.optString("OrderType"));
             homeChefOrderModel.setRules(object.optString("RuleDescription"));
@@ -289,10 +292,11 @@ public class JSONParsingUtils {
 //            homeChefOrderModel.setOrderValidTill(object.optString("OrderValid"));
 
             homeChefOrderModel.setDishAvailability(object.optString("DishAvailable"));
-//            homeChefOrderModel.setBreakFastTime(object.optString("Bearkfast"));
-//            homeChefOrderModel.setLunchTime(object.optString("Lunch"));
-//            homeChefOrderModel.setDinnerTime(object.optString("DinnerTime"));
+            homeChefOrderModel.setBreakFastTime(object.optString("BreakFastTime"));
+            homeChefOrderModel.setLunchTime(object.optString("LunchTime"));
+            homeChefOrderModel.setDinnerTime(object.optString("DinnerTime"));
 
+            homeChefOrderModel.setFoodDateTimeBookModels(Utils.parseFoodBookDateTime(object.optString("DishAvailable")));
 //            homeChefOrderModel.setOrderTime(object.optString("OrderTime"));
 
             JSONArray array = object.getJSONArray("CoverImage");

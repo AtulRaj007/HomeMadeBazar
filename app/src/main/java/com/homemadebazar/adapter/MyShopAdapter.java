@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.homemadebazar.R;
 import com.homemadebazar.model.BaseModel;
+import com.homemadebazar.model.FoodDateTimeBookModel;
 import com.homemadebazar.model.HomeChefOrderModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
@@ -53,11 +54,23 @@ public class MyShopAdapter extends RecyclerView.Adapter<MyShopAdapter.MyShopView
     public void onBindViewHolder(MyShopViewHolder holder, int position) {
         try {
             HomeChefOrderModel homeChefOrderModel = homeChefOrderModelArrayList.get(position);
+
+            holder.tvOrderId.setText("Order Id:-" + homeChefOrderModel.getOrderId());
             holder.tvName.setText(homeChefOrderModel.getDishName());
             holder.tvDescription.setText(homeChefOrderModel.getDescription());
 
             holder.tvPrice.setText("Rs. " + homeChefOrderModel.getPrice());
             holder.tvServe.setText("Serves " + homeChefOrderModel.getMinGuest() + "-" + homeChefOrderModel.getMaxGuest());
+            holder.tvDiscount.setText(homeChefOrderModel.getDiscount() + " (%)");
+
+            String orderTypeTiming[] = getOrderTypeTiming(position).split("@@");
+
+            try {
+                holder.tvDinner.setText(orderTypeTiming[0]);
+                holder.tvTiming.setText(orderTypeTiming[1]);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                e.printStackTrace();
+            }
 
             ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(context, homeChefOrderModel.getFoodImagesArrayList());
             holder.viewPager.setAdapter(imagePagerAdapter);
@@ -73,14 +86,15 @@ public class MyShopAdapter extends RecyclerView.Adapter<MyShopAdapter.MyShopView
     }
 
     class MyShopViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView tvName, tvDescription, tvPermoteBusiness;
+        private TextView tvOrderId, tvName, tvDescription, tvPermoteBusiness;
         private ImageView ivDeleteOrder, ivEditOrder;
-        private TextView tvDinner, tvServe, tvPrice, tvTiming;
+        private TextView tvDinner, tvServe, tvPrice, tvTiming, tvDiscount;
         private ViewPager viewPager;
         private CircleIndicator circleIndicator;
 
         MyShopViewHolder(View itemView) {
             super(itemView);
+            tvOrderId = itemView.findViewById(R.id.tv_order_id);
             tvName = itemView.findViewById(R.id.tv_name);
             tvDescription = itemView.findViewById(R.id.tv_description);
             tvPermoteBusiness = itemView.findViewById(R.id.tv_promote_business);
@@ -91,6 +105,7 @@ public class MyShopAdapter extends RecyclerView.Adapter<MyShopAdapter.MyShopView
             tvServe = itemView.findViewById(R.id.tv_serve);
             tvPrice = itemView.findViewById(R.id.tv_price);
             tvTiming = itemView.findViewById(R.id.tv_timing);
+            tvDiscount = itemView.findViewById(R.id.tv_discount);
 
             viewPager = itemView.findViewById(R.id.view_pager);
             circleIndicator = itemView.findViewById(R.id.indicator);
@@ -104,7 +119,17 @@ public class MyShopAdapter extends RecyclerView.Adapter<MyShopAdapter.MyShopView
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.iv_delete_order:
-                    deleteOrder(userModel.getUserId(), homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId());
+                    DialogUtils.showAlert(context, "Do you want to delete the order", new Runnable() {
+                        @Override
+                        public void run() {
+                            deleteOrder(userModel.getUserId(), homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId());
+                        }
+                    }, new Runnable() {
+                        @Override
+                        public void run() {
+
+                        }
+                    });
                     break;
                 case R.id.iv_edit_order:
                     Toast.makeText(context, "Under Development", Toast.LENGTH_SHORT).show();
@@ -188,5 +213,47 @@ public class MyShopAdapter extends RecyclerView.Adapter<MyShopAdapter.MyShopView
                 Utils.handleError(e.getMessage(), context, null);
             }
         }
+    }
+
+    private String getOrderTypeTiming(int position) {
+        // Lunch, Breakfast, Dinner
+        String orderType = "";
+        String orderTime = "";
+        boolean isBreakfast = false, isLunch = false, isDiner = false;
+        try {
+            ArrayList<FoodDateTimeBookModel> foodDateTimeBookModels = homeChefOrderModelArrayList.get(position).getFoodDateTimeBookModels();
+            for (int i = 0; i < foodDateTimeBookModels.size(); i++) {
+                if (foodDateTimeBookModels.get(i).isBreakFast()) {
+                    isBreakfast = true;
+                }
+
+                if (foodDateTimeBookModels.get(i).isLunch()) {
+                    isLunch = true;
+                }
+
+                if (foodDateTimeBookModels.get(i).isDinner()) {
+                    isDiner = true;
+                }
+            }
+
+            if (isBreakfast) {
+                orderType = orderType + "Breakfast";
+                orderTime = orderTime + homeChefOrderModelArrayList.get(position).getBreakFastTime();
+            }
+
+            if (isLunch) {
+                orderType = orderType + ",Lunch";
+                orderTime = orderTime + "," + homeChefOrderModelArrayList.get(position).getLunchTime();
+            }
+
+            if (isDiner) {
+                orderType = orderType + ",Dinner";
+                orderTime = orderTime + "," + homeChefOrderModelArrayList.get(position).getDinnerTime();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return orderType + "@@" + orderTime;
     }
 }

@@ -217,7 +217,7 @@ public class ProfileViewActivity extends BaseActivity implements View.OnClickLis
             tvCommonInterest.setVisibility(View.GONE);
 
         try {
-            if (otherUserProfileDetailsModel.getFriendRequestStatus().equals(Constants.RequestType.FRIEND)) {
+            if (otherUserProfileDetailsModel.getFriendRequestStatus().equals(String.valueOf(Constants.RequestType.FRIEND))) {
                 findViewById(R.id.ll_mobile_number).setVisibility(View.VISIBLE);
             } else {
                 findViewById(R.id.ll_mobile_number).setVisibility(View.GONE);

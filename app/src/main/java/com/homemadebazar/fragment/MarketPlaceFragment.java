@@ -86,6 +86,7 @@ public class MarketPlaceFragment extends BaseFragment implements View.OnClickLis
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    Utils.hideSoftKeyboard(getActivity());
                     performSearchApiCall(v.getText().toString());
                 }
                 return false;

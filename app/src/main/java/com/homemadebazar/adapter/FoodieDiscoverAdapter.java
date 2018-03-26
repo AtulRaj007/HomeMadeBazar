@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.model.BaseModel;
+import com.homemadebazar.model.FoodDateTimeBookModel;
 import com.homemadebazar.model.HomeChefOrderModel;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
@@ -57,11 +58,9 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
             holder.tvOrderId.setText("Order Id:-" + homeChefOrderModel.getOrderId());
             holder.tvName.setText(homeChefOrderModel.getFirstName() + " " + homeChefOrderModel.getLastName());
             holder.tvFoodName.setText(homeChefOrderModel.getDishName());
-            holder.tvFoodType.setText(homeChefOrderModel.getOrderType());
             holder.tvNoOfPeople.setText(homeChefOrderModel.getMinGuest() + " to " + homeChefOrderModel.getMaxGuest() + " People");
             holder.tvPrice.setText(homeChefOrderModel.getPrice());
-            holder.tvOrderTiming.setText(homeChefOrderModel.getOrderTime());
-            holder.tvDiscount.setText(homeChefOrderModel.getDiscount());
+            holder.tvDiscount.setText(homeChefOrderModel.getDiscount() + " (%)");
             holder.tvRules.setText(Utils.getRulesText(homeChefOrderModel.getRules()));
             holder.tvDescription.setText(homeChefOrderModel.getDescription());
 
@@ -75,11 +74,63 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
             if (!TextUtils.isEmpty(homeChefOrderModelArrayList.get(position).getProfilePic()))
                 Glide.with(context).load(homeChefOrderModelArrayList.get(position).getProfilePic()).into(holder.ivProfilePic);
 
+            String orderTypeTiming[] = getOrderTypeTiming(position).split("@@");
+
+            try {
+                holder.tvFoodType.setText(orderTypeTiming[0]);
+                holder.tvOrderTiming.setText(orderTypeTiming[1]);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                e.printStackTrace();
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
+    private String getOrderTypeTiming(int position) {
+        // Lunch, Breakfast, Dinner
+        String orderType = "";
+        String orderTime = "";
+        boolean isBreakfast = false, isLunch = false, isDiner = false;
+        try {
+            ArrayList<FoodDateTimeBookModel> foodDateTimeBookModels = homeChefOrderModelArrayList.get(position).getFoodDateTimeBookModels();
+            for (int i = 0; i < foodDateTimeBookModels.size(); i++) {
+                if (foodDateTimeBookModels.get(i).isBreakFast()) {
+                    isBreakfast = true;
+                }
+
+                if (foodDateTimeBookModels.get(i).isLunch()) {
+                    isLunch = true;
+                }
+
+                if (foodDateTimeBookModels.get(i).isDinner()) {
+                    isDiner = true;
+                }
+            }
+
+            if (isBreakfast) {
+                orderType = orderType + "Breakfast";
+                orderTime = orderTime + homeChefOrderModelArrayList.get(position).getBreakFastTime();
+            }
+
+            if (isLunch) {
+                orderType = orderType + ",Lunch";
+                orderTime = orderTime + "," + homeChefOrderModelArrayList.get(position).getLunchTime();
+            }
+
+            if (isDiner) {
+                orderType = orderType + ",Dinner";
+                orderTime = orderTime + "," + homeChefOrderModelArrayList.get(position).getDinnerTime();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return orderType + "@@" + orderTime;
+    }
+
 
     @Override
     public int getItemCount() {

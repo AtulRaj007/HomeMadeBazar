@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -195,33 +194,28 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
                 if (ContextCompat.checkSelfPermission(HomeShopViewActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(HomeShopViewActivity.this, new String[]{Manifest.permission.CALL_PHONE}, Constants.Keys.REQUEST_CALL_PHONE);
                 } else {
-                    Utils.startCall(HomeShopViewActivity.this,homeChefNearByModel.getMobile());
+                    Utils.startCall(HomeShopViewActivity.this, homeChefNearByModel.getMobile());
                 }
                 break;
             case R.id.ll_message:
 
-                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-                sendIntent.setData(Uri.parse("sms:"));
-                startActivity(sendIntent);
+                Utils.message(HomeShopViewActivity.this, homeChefNearByModel.getMobile());
 
                 break;
             case R.id.ll_save:
 
-                if (!homeChefNearByModel.isFavourite())
-                    saveHomeChef();
-                else
-                    DialogUtils.showAlert(HomeShopViewActivity.this, "HomeChef is already bookmarked.");
+                saveHomeChef();
+
                 break;
         }
     }
-
 
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == Constants.Keys.REQUEST_CALL_PHONE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Utils.startCall(HomeShopViewActivity.this,homeChefNearByModel.getMobile());
+                Utils.startCall(HomeShopViewActivity.this, homeChefNearByModel.getMobile());
             }
         }
 

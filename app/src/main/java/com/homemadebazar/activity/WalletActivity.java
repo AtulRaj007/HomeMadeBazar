@@ -1,8 +1,8 @@
 package com.homemadebazar.activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,9 +17,10 @@ import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
 import com.homemadebazar.util.Utils;
 
-public class WalletActivity extends BaseActivity implements View.OnClickListener {
+public class WalletActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private UserModel userModel;
     private TextView tvWalletMoney;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     protected void initUI() {
         userModel = SharedPreference.getUserModel(WalletActivity.this);
         tvWalletMoney = findViewById(R.id.tv_wallet_money);
-        tvWalletMoney.setText(userModel.getWalletBalance() + "");
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
     }
 
     @Override
@@ -51,6 +52,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         findViewById(R.id.ll_pay_money).setOnClickListener(this);
         findViewById(R.id.ll_accept_money).setOnClickListener(this);
         findViewById(R.id.tv_sent_to_bank).setOnClickListener(this);
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -65,6 +67,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
 
         if (Constants.isBalanceRefresh) {
             Constants.isBalanceRefresh = false;
+            swipeRefreshLayout.setRefreshing(true);
             getWalletBalance();
         } else {
             updateWalletUI();
@@ -73,6 +76,8 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void setData() {
+        tvWalletMoney.setText(userModel.getWalletBalance() + "");
+        swipeRefreshLayout.setRefreshing(true);
         getWalletBalance();
     }
 
@@ -93,15 +98,16 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
 
     private void getWalletBalance() {
         try {
-            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(this, null);
-            progressDialog.show();
+//            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(this, null);
+//            progressDialog.show();
 
             final GetWalletBalanceApiCall apiCall = new GetWalletBalanceApiCall(userModel.getUserId());
             HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
                 public void onComplete(Exception e) {
-                    DialogUtils.hideProgressDialog(progressDialog);
+//                    DialogUtils.hideProgressDialog(progressDialog);
+                    swipeRefreshLayout.setRefreshing(false);
                     if (e == null) { // Success
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();
@@ -147,5 +153,10 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 startActivity(new Intent(WalletActivity.this, SendMoneyToBankActivity.class));
                 break;
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        getWalletBalance();
     }
 }

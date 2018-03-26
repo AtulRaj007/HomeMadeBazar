@@ -35,6 +35,8 @@ public class HomeChefOrderModel {
     private String lastName;
     private String profilePic;
 
+    private ArrayList<FoodDateTimeBookModel> foodDateTimeBookModels;
+
     public String getUserId() {
         return userId;
     }
@@ -117,6 +119,14 @@ public class HomeChefOrderModel {
 
     public String getPrice() {
         return price;
+    }
+
+    public ArrayList<FoodDateTimeBookModel> getFoodDateTimeBookModels() {
+        return foodDateTimeBookModels;
+    }
+
+    public void setFoodDateTimeBookModels(ArrayList<FoodDateTimeBookModel> foodDateTimeBookModels) {
+        this.foodDateTimeBookModels = foodDateTimeBookModels;
     }
 
     public void setPrice(String price) {

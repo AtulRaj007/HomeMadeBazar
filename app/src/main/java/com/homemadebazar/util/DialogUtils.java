@@ -27,8 +27,10 @@ import com.homemadebazar.model.HomeChefOrderModel;
 
 import java.sql.Time;
 import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by atulraj on 24/8/17.
@@ -480,18 +482,21 @@ public class DialogUtils {
         return calcPrice;
     }
 
-    public static void bookFoodOnSelectedDatesDialog(Context context, final HomeChefOrderModel homeChefOrderModel, final HomeChefFoodTimingAdapter.BookOrderInterface bookOrderInterface, final String foodTimeType) {
+    public static void bookFoodOnSelectedDatesDialog(final Context context, final HomeChefOrderModel homeChefOrderModel, final HomeChefFoodTimingAdapter.BookOrderInterface bookOrderInterface, final String foodTimeType) {
+
+        int radioButtonIds[] = {R.id.radiobutton_one, R.id.radiobutton_two, R.id.radiobutton_three, R.id.radiobutton_four, R.id.radiobutton_five, R.id.radiobutton_six, R.id.radiobutton_seven};
 
         final ArrayList<FoodDateTimeBookModel> foodDateTimeBookModels = Utils.parseFoodBookDateTime(homeChefOrderModel.getDishAvailability());
 
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
-        View view = LayoutInflater.from(context).inflate(R.layout.dialog_order_food_dates, null);
+        final View view = LayoutInflater.from(context).inflate(R.layout.dialog_order_food_dates, null);
         dialogBuilder.setView(view);
         dialogBuilder.setCancelable(true);
 
         final Dialog dialog = dialogBuilder.create();
         final RadioGroup rgDinnerDate = view.findViewById(R.id.rg_dinner_date);
         final RadioGroup rgDinnerTime = view.findViewById(R.id.rg_dinner_time);
+
         final TextView tvNoOfPeople = view.findViewById(R.id.tv_no_of_people);
         final TextView tvPrice = view.findViewById(R.id.tv_price);
         final TextView tvDiscount = view.findViewById(R.id.tv_discount);
@@ -504,13 +509,168 @@ public class DialogUtils {
 
         tvTotal.setText(calcPrice(homeChefOrderModel.getPrice(), homeChefOrderModel.getDiscount(), 1) + "");
 
-        ((RadioButton) view.findViewById(R.id.radiobutton_one)).setText(foodDateTimeBookModels.get(0).getDate());
-        ((RadioButton) view.findViewById(R.id.radiobutton_two)).setText(foodDateTimeBookModels.get(1).getDate());
-        ((RadioButton) view.findViewById(R.id.radiobutton_three)).setText(foodDateTimeBookModels.get(2).getDate());
-        ((RadioButton) view.findViewById(R.id.radiobutton_four)).setText(foodDateTimeBookModels.get(3).getDate());
-        ((RadioButton) view.findViewById(R.id.radiobutton_five)).setText(foodDateTimeBookModels.get(4).getDate());
-        ((RadioButton) view.findViewById(R.id.radiobutton_six)).setText(foodDateTimeBookModels.get(5).getDate());
-        ((RadioButton) view.findViewById(R.id.radiobutton_seven)).setText(foodDateTimeBookModels.get(6).getDate());
+        rgDinnerDate.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch (i) {
+                    case R.id.radiobutton_one:
+
+                        if (!foodDateTimeBookModels.get(0).isBreakFast()) {
+                            view.findViewById(R.id.rg_breakfast).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_breakfast).setEnabled(true);
+                        }
+                        if (!foodDateTimeBookModels.get(0).isLunch()) {
+                            view.findViewById(R.id.rg_lunch).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_lunch).setEnabled(true);
+                        }
+
+                        if (!foodDateTimeBookModels.get(0).isDinner()) {
+                            view.findViewById(R.id.rg_dinner).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_dinner).setEnabled(true);
+                        }
+
+                        break;
+                    case R.id.radiobutton_two:
+
+                        if (!foodDateTimeBookModels.get(1).isBreakFast()) {
+                            view.findViewById(R.id.rg_breakfast).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_breakfast).setEnabled(true);
+                        }
+                        if (!foodDateTimeBookModels.get(1).isLunch()) {
+                            view.findViewById(R.id.rg_lunch).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_lunch).setEnabled(true);
+                        }
+
+                        if (!foodDateTimeBookModels.get(1).isDinner()) {
+                            view.findViewById(R.id.rg_dinner).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_dinner).setEnabled(true);
+                        }
+
+                        break;
+                    case R.id.radiobutton_three:
+
+                        if (!foodDateTimeBookModels.get(2).isBreakFast()) {
+                            view.findViewById(R.id.rg_breakfast).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_breakfast).setEnabled(true);
+                        }
+                        if (!foodDateTimeBookModels.get(2).isLunch()) {
+                            view.findViewById(R.id.rg_lunch).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_lunch).setEnabled(true);
+                        }
+
+                        if (!foodDateTimeBookModels.get(2).isDinner()) {
+                            view.findViewById(R.id.rg_dinner).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_dinner).setEnabled(true);
+                        }
+
+                        break;
+                    case R.id.radiobutton_four:
+
+                        if (!foodDateTimeBookModels.get(3).isBreakFast()) {
+                            view.findViewById(R.id.rg_breakfast).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_breakfast).setEnabled(true);
+                        }
+                        if (!foodDateTimeBookModels.get(3).isLunch()) {
+                            view.findViewById(R.id.rg_lunch).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_lunch).setEnabled(true);
+                        }
+
+                        if (!foodDateTimeBookModels.get(3).isDinner()) {
+                            view.findViewById(R.id.rg_dinner).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_dinner).setEnabled(true);
+                        }
+
+                        break;
+                    case R.id.radiobutton_five:
+
+                        if (!foodDateTimeBookModels.get(4).isBreakFast()) {
+                            view.findViewById(R.id.rg_breakfast).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_breakfast).setEnabled(true);
+                        }
+                        if (!foodDateTimeBookModels.get(4).isLunch()) {
+                            view.findViewById(R.id.rg_lunch).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_lunch).setEnabled(true);
+                        }
+
+                        if (!foodDateTimeBookModels.get(4).isDinner()) {
+                            view.findViewById(R.id.rg_dinner).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_dinner).setEnabled(true);
+                        }
+
+                        break;
+                    case R.id.radiobutton_six:
+
+                        if (!foodDateTimeBookModels.get(5).isBreakFast()) {
+                            view.findViewById(R.id.rg_breakfast).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_breakfast).setEnabled(true);
+                        }
+                        if (!foodDateTimeBookModels.get(5).isLunch()) {
+                            view.findViewById(R.id.rg_lunch).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_lunch).setEnabled(true);
+                        }
+
+                        if (!foodDateTimeBookModels.get(5).isDinner()) {
+                            view.findViewById(R.id.rg_dinner).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_dinner).setEnabled(true);
+                        }
+
+                        break;
+                    case R.id.radiobutton_seven:
+
+                        if (!foodDateTimeBookModels.get(6).isBreakFast()) {
+                            view.findViewById(R.id.rg_breakfast).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_breakfast).setEnabled(true);
+                        }
+                        if (!foodDateTimeBookModels.get(6).isLunch()) {
+                            view.findViewById(R.id.rg_lunch).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_lunch).setEnabled(true);
+                        }
+
+                        if (!foodDateTimeBookModels.get(6).isDinner()) {
+                            view.findViewById(R.id.rg_dinner).setEnabled(false);
+                        } else {
+                            view.findViewById(R.id.rg_dinner).setEnabled(true);
+                        }
+
+                        break;
+                }
+            }
+        });
+
+
+        for (int i = 0; i < radioButtonIds.length; i++) {
+            ((RadioButton) view.findViewById(radioButtonIds[i])).setText(foodDateTimeBookModels.get(i).getDate());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+            try {
+                Date bookingDate = sdf.parse(foodDateTimeBookModels.get(i).getDate());
+                if (new Date().before(bookingDate)) {
+                    view.findViewById(radioButtonIds[i]).setEnabled(false);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
 
         view.findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -546,6 +706,14 @@ public class DialogUtils {
             public void onClick(View view) {
                 int dinnerDateId = rgDinnerDate.getCheckedRadioButtonId();
                 int dinnerTimeId = rgDinnerTime.getCheckedRadioButtonId();
+
+                if (dinnerDateId == -1) {
+                    DialogUtils.showAlert(context, "Please select book date.");
+                    return;
+                } else if (dinnerTimeId == -1) {
+                    DialogUtils.showAlert(context, "Please select food timing.");
+                    return;
+                }
                 System.out.println(">>>>>Date Selected Id:-" + dinnerDateId);
                 System.out.println(">>>>>Time Id:-" + dinnerTimeId);
                 String dinnerDate = getDinnerDateFromId(dinnerDateId, foodDateTimeBookModels);
