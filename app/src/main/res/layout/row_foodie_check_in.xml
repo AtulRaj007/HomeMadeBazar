@@ -7,14 +7,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/padding_5"
+        android:paddingTop="@dimen/padding_5">
 
         <com.homemadebazar.util.CircleImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:paddingTop="@dimen/padding_10"
-            android:paddingBottom="@dimen/padding_10"
+            android:id="@+id/iv_profile_pic"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_gravity="center_vertical"
+            android:paddingBottom="@dimen/padding_10"
+            android:paddingTop="@dimen/padding_10"
             android:src="@drawable/profile" />
 
         <LinearLayout
@@ -29,7 +32,7 @@
                 android:padding="@dimen/padding_2"
                 android:text=""
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_18" />
+                android:textSize="@dimen/text_16" />
 
             <TextView
                 android:id="@+id/tv_shop_name"
@@ -38,7 +41,7 @@
                 android:padding="@dimen/padding_2"
                 android:text=""
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_16" />
+                android:textSize="@dimen/text_14" />
 
             <TextView
                 android:id="@+id/tv_address"
@@ -47,7 +50,7 @@
                 android:padding="@dimen/padding_2"
                 android:text=""
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_16" />
+                android:textSize="@dimen/text_14" />
 
 
         </LinearLayout>

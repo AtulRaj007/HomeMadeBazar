@@ -167,6 +167,9 @@ public class FoodiePostCommentActivity extends BaseActivity implements View.OnCl
                                 foodiePostCommentModelArrayList.addAll(tempMessageModelArrayList);
                                 postCommentAdapter.notifyDataSetChanged();
 
+                            } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.NO_RECORD_FOUND) {
+                                foodiePostCommentModelArrayList.clear();
+                                postCommentAdapter.notifyDataSetChanged();
                             } else {
                                 DialogUtils.showAlert(FoodiePostCommentActivity.this, userModel.getStatusMessage());
                             }

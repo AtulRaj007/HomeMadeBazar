@@ -658,19 +658,21 @@ public class DialogUtils {
         });
 
 
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        System.out.println("Current Date:-" + currentDate);
+
         for (int i = 0; i < radioButtonIds.length; i++) {
             ((RadioButton) view.findViewById(radioButtonIds[i])).setText(foodDateTimeBookModels.get(i).getDate());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 Date bookingDate = sdf.parse(foodDateTimeBookModels.get(i).getDate());
-                if (new Date().before(bookingDate)) {
+                if (bookingDate.before(sdf.parse(currentDate))) {
                     view.findViewById(radioButtonIds[i]).setEnabled(false);
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
-
 
         view.findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
             @Override
