@@ -68,7 +68,7 @@ public class FoodieHomeListAdapter extends RecyclerView.Adapter<FoodieHomeListAd
         if (!TextUtils.isEmpty(homeChiefNearByModelArrayList.get(position).getProfileImage())) {
             try {
                 Glide.with(context).load(homeChiefNearByModelArrayList.get(position).getProfileImage()).into(holder.profilePic);
-                holder.tvDistance.setText(String.format("%.2f", homeChiefNearByModelArrayList.get(position).getDistance()) + " Meter Away");
+//                holder.tvDistance.setText(String.format("%.2f", homeChiefNearByModelArrayList.get(position).getDistance()) + " Meter Away");
             } catch (Exception e) {
                 e.printStackTrace();
             }

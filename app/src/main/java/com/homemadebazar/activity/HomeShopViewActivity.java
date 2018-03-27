@@ -151,7 +151,6 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(viewPager);
-        circleIndicator.setViewPager(viewPager);
     }
 
     public void bookOrder(String homeChefUserId, String orderId, String bookedDate, String orderBookedFor, int noOfPerson) {

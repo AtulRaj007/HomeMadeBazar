@@ -83,12 +83,29 @@ public class NavigationDrawerFragment extends BaseFragment implements View.OnCli
             getView().findViewById(R.id.ll_market_place_ordres).setVisibility(View.GONE);
             getView().findViewById(R.id.view_marketplace).setVisibility(View.GONE);
         }
+        updateProfileData();
+    }
 
-        if (!TextUtils.isEmpty(userModel.getProfilePic())) {
-            Glide.with(getActivity()).load(userModel.getProfilePic()).into(ivProfilePic);
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (Constants.isProfileUpdate) {
+            userModel = SharedPreference.getUserModel(getActivity());
+            updateProfileData();
+            Constants.isProfileUpdate = false;
         }
-        tvName.setText(userModel.getFirstName() + " " + userModel.getLastName());
-        tvMobileNumber.setText(userModel.getCountryCode() + userModel.getMobile());
+    }
+
+    private void updateProfileData() {
+        try {
+            if (!TextUtils.isEmpty(userModel.getProfilePic())) {
+                Glide.with(getActivity()).load(userModel.getProfilePic()).into(ivProfilePic);
+            }
+            tvName.setText(userModel.getFirstName() + " " + userModel.getLastName());
+            tvMobileNumber.setText(userModel.getCountryCode() + userModel.getMobile());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

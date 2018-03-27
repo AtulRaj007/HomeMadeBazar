@@ -12,6 +12,7 @@ public class Constants {
     public static final String YOUTUBE_KEY = "AIzaSyD1S-0ZTNEFdcDfPstALlq0wVxiNYI1dHk";
     public static boolean isBalanceRefresh = false;
     public static boolean isMarketPlaceOrderRefresh = false;
+    public static boolean isProfileUpdate = false;
 
     public static String deviceType = "1";
     public static UserModel socialUserModel = null;

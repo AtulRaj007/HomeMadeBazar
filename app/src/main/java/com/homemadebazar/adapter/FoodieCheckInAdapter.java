@@ -2,15 +2,19 @@ package com.homemadebazar.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.CheckInActivity;
 import com.homemadebazar.model.CustomAddress;
 import com.homemadebazar.model.FoodieCheckInModel;
+import com.homemadebazar.util.CircleImageView;
+import com.homemadebazar.util.Utils;
 
 import java.util.ArrayList;
 
@@ -37,6 +41,9 @@ public class FoodieCheckInAdapter extends RecyclerView.Adapter<FoodieCheckInAdap
         holder.tvName.setText(foodieCheckInModelArrayList.get(position).getFirstName() + " " + foodieCheckInModelArrayList.get(position).getLastName());
         holder.tvAddress.setText(CustomAddress.getCompleteAddress(foodieCheckInModelArrayList.get(position).getAddress()));
         holder.tvShopName.setText(foodieCheckInModelArrayList.get(position).getShopName());
+        if (!TextUtils.isEmpty(foodieCheckInModelArrayList.get(position).getImageUrl())) {
+            Glide.with(context).load(foodieCheckInModelArrayList.get(position).getImageUrl()).into(holder.ivProfilePic);
+        }
     }
 
     @Override
@@ -46,18 +53,28 @@ public class FoodieCheckInAdapter extends RecyclerView.Adapter<FoodieCheckInAdap
 
     class CheckInViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvName, tvShopName, tvAddress;
+        private CircleImageView ivProfilePic;
 
         CheckInViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_name);
             tvAddress = itemView.findViewById(R.id.tv_address);
             tvShopName = itemView.findViewById(R.id.tv_shop_name);
+            ivProfilePic = itemView.findViewById(R.id.iv_profile_pic);
             itemView.setOnClickListener(this);
+            ivProfilePic.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            ((CheckInActivity) context).onCheckInSelected(getAdapterPosition());
+            switch (v.getId()) {
+                case R.id.iv_profile_pic:
+                    Utils.showProfile(context, foodieCheckInModelArrayList.get(getAdapterPosition()).getUserId());
+                    break;
+                default:
+                    ((CheckInActivity) context).onCheckInSelected(getAdapterPosition());
+                    break;
+            }
         }
     }
 }

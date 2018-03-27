@@ -322,6 +322,7 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
 
                         JSONObject object = new JSONObject(response);
                         if (object.optInt("StatusCode") == Constants.ServerResponseCode.SUCCESS) {
+                            Constants.isProfileUpdate = true;
                             String userId = object.optString("UserId");
                             String firstName = object.optString("FName");
                             String lastName = object.optString("LName");

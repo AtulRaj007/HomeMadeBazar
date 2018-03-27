@@ -827,7 +827,7 @@ public class JSONParsingUtils {
             foodieCheckInModel.setLastName(object.optString("LName", ""));
             foodieCheckInModel.setShopName(object.optString("ShopName", ""));
             foodieCheckInModel.setAddress(object.optString("Address", ""));
-            foodieCheckInModel.setImageUrl(object.optString("ImageUrl", ""));
+            foodieCheckInModel.setImageUrl(object.optString("Url", ""));
         } catch (Exception e) {
             e.printStackTrace();
         }

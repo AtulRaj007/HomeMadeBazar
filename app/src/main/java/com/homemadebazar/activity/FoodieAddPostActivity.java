@@ -218,7 +218,7 @@ public class FoodieAddPostActivity extends BaseActivity implements View.OnClickL
         System.out.println("Image Upload userId:-" + userId);
         try {
 
-            String postUrl = Constants.uploadImageURL.FOOD_POST_UPLOAD_URL + postType + "&Title=&Tag=&Message=" + message + "&UserId=" + userId;
+            String postUrl = Utils.parseUrl(Constants.uploadImageURL.FOOD_POST_UPLOAD_URL + postType + "&Title=&Tag=&Message=" + message + "&UserId=" + userId);
             File compressImageFile = new Compressor(this).compressToFile(new File(imagePath));
 
             Hashtable<String, String> multipartParams = new Hashtable<>();

@@ -1,8 +1,8 @@
 package com.homemadebazar.activity;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -24,13 +24,14 @@ import com.homemadebazar.util.Utils;
 
 import java.util.ArrayList;
 
-public class CheckInActivity extends BaseActivity {
+public class CheckInActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private UserModel userModel;
     private UserLocation location;
     private ArrayList<FoodieCheckInModel> foodieCheckInModelArrayList = new ArrayList<>();
     private FoodieCheckInAdapter foodieCheckInAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +46,12 @@ public class CheckInActivity extends BaseActivity {
         recyclerView = findViewById(R.id.recycler_view);
         linearLayoutManager = new LinearLayoutManager(this);
         location = SharedPreference.getUserLocation(CheckInActivity.this);
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
     }
 
     @Override
     protected void initialiseListener() {
-
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -57,14 +59,13 @@ public class CheckInActivity extends BaseActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         foodieCheckInAdapter = new FoodieCheckInAdapter(CheckInActivity.this, foodieCheckInModelArrayList);
         recyclerView.setAdapter(foodieCheckInAdapter);
+        swipeRefreshLayout.setRefreshing(true);
         getCheckInDetails();
     }
 
 
     private void getCheckInDetails() {
         try {
-            final Dialog progressDialog = DialogUtils.getProgressDialog(CheckInActivity.this, null);
-            progressDialog.show();
 
             final FoodieCheckInApiCall apiCall = new FoodieCheckInApiCall(userModel.getUserId(), location.getLatitude(), location.getLongitude());
             HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
@@ -72,7 +73,7 @@ public class CheckInActivity extends BaseActivity {
                 @Override
                 public void onComplete(Exception e) {
                     if (e == null) { // Success
-                        DialogUtils.hideProgressDialog(progressDialog);
+                        swipeRefreshLayout.setRefreshing(false);
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
@@ -115,5 +116,10 @@ public class CheckInActivity extends BaseActivity {
             }
         });
         ((TextView) findViewById(R.id.tv_title)).setText("Check In");
+    }
+
+    @Override
+    public void onRefresh() {
+        getCheckInDetails();
     }
 }
