@@ -72,6 +72,7 @@ public class FoodieHomeListAdapter extends RecyclerView.Adapter<FoodieHomeListAd
         } else {
             holder.profilePic.setImageDrawable(null);
         }
+        /*Added*/
         if (!isFavourite)
             holder.tvDistance.setText(Utils.roundToTwoDigits(homeChiefNearByModelArrayList.get(position).getDistance()) + " Meter Away");
     }
