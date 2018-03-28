@@ -2,7 +2,10 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_10">
+    android:layout_marginBottom="@dimen/margin_5"
+    android:layout_marginLeft="@dimen/margin_10"
+    android:layout_marginRight="@dimen/margin_10"
+    android:layout_marginTop="@dimen/margin_5">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -29,7 +32,7 @@
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:text="asdfasdf"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_16" />
 
@@ -38,15 +41,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_name"
-                android:layout_marginTop="@dimen/margin_5"
                 android:maxLines="2"
-                android:text=""
-                android:textSize="@dimen/text_14" />
+                android:text="sfdasfsadfsfdfsdsf"
+                android:textSize="@dimen/text_12" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_emailId"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="asdfasdfasdf"
+                android:textSize="@dimen/text_12" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_emailId"
+                android:layout_below="@id/tv_address"
                 android:layout_marginBottom="@dimen/margin_5"
                 android:layout_marginTop="@dimen/margin_5">
 

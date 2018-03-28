@@ -54,7 +54,12 @@ public class MessengerInviteParticipatesRecyclerAdapter extends RecyclerView.Ada
         if (!TextUtils.isEmpty(messegeInviteParticipateModel.getProfileImage())) {
             Glide.with(context).load(messegeInviteParticipateModel.getProfileImage()).into(holder.ivProfilePic);
         }
-        holder.btnRequestType.setText(messegeInviteParticipateModel.getStatus());
+        try {
+            holder.btnRequestType.setText(Constants.RequestString[messegeInviteParticipateModel.getNumericStatus()]);
+        } catch (Exception e) {
+            e.printStackTrace();
+            holder.btnRequestType.setText(Constants.RequestString[0]);
+        }
     }
 
     @Override

@@ -632,6 +632,7 @@ public class JSONParsingUtils {
                 userModel.setLastName(obj.optString("LName"));
                 userModel.setUserId(obj.optString("UserId"));
                 userModel.setProfilePic(obj.optString("DP"));
+                userModel.setAddress(obj.optString("Address"));
                 userModelArrayList.add(userModel);
             }
         } catch (Exception e) {

@@ -532,6 +532,16 @@ public class Utils {
         return false;
     }
 
+    public static double getDistance(String miles) {
+        double distance = 0;
+        try {
+            return Utils.roundToTwoDigits(Double.parseDouble(miles) * 1.60934);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return distance;
+    }
+
     public static void startCall(Context context, String mobileNumber) {
         try {
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
@@ -577,11 +587,10 @@ public class Utils {
         return strRules;
     }
 
-    public static double roundToTwoDigits(String distance) {
+    private static double roundToTwoDigits(double distance) {
         try {
-            double dist = Double.parseDouble(distance);
             DecimalFormat twoDForm = new DecimalFormat("#.##");
-            return Double.valueOf(twoDForm.format(dist));
+            return Double.valueOf(twoDForm.format(distance));
         } catch (Exception e) {
             e.printStackTrace();
         }

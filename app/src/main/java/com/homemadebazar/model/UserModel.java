@@ -23,6 +23,7 @@ public class UserModel extends BaseModel implements Serializable {
     String professionType;
     String professionName;
     String interest;
+    String address;
 
     public double getWalletBalance() {
         return walletBalance;
@@ -142,6 +143,14 @@ public class UserModel extends BaseModel implements Serializable {
 
     public void setInterest(String interest) {
         this.interest = interest;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getAadharNumber() {

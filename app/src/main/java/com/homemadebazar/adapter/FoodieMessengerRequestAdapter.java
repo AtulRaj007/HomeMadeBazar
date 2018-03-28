@@ -14,11 +14,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.model.BaseModel;
+import com.homemadebazar.model.CustomAddress;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
 import com.homemadebazar.network.apicall.FoodieMessageRequestAcceptRejectApiCall;
-import com.homemadebazar.util.CircleImageView;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.Utils;
@@ -52,6 +52,7 @@ public class FoodieMessengerRequestAdapter extends RecyclerView.Adapter<FoodieMe
         if (!TextUtils.isEmpty(reqDataList.get(position).getProfilePic()))
             Glide.with(context).load(reqDataList.get(position).getProfilePic()).into(holder.profileImage);
         holder.tvEmail.setText(reqDataList.get(position).getEmailId());
+        holder.tvAddress.setText(CustomAddress.getCompleteAddress(reqDataList.get(position).getAddress()));
 
     }
 
@@ -107,7 +108,7 @@ public class FoodieMessengerRequestAdapter extends RecyclerView.Adapter<FoodieMe
 
     class RequestViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView profileImage;
-        private TextView tvName, tvEmail;
+        private TextView tvName, tvEmail, tvAddress;
         private Button btnAccept, btnReject;
 
         RequestViewHolder(View itemView) {
@@ -115,6 +116,7 @@ public class FoodieMessengerRequestAdapter extends RecyclerView.Adapter<FoodieMe
             profileImage = itemView.findViewById(R.id.iv_profile_pic);
             tvName = itemView.findViewById(R.id.tv_name);
             tvEmail = itemView.findViewById(R.id.tv_emailId);
+            tvAddress = itemView.findViewById(R.id.tv_address);
             btnAccept = itemView.findViewById(R.id.btn_accept);
             btnReject = itemView.findViewById(R.id.btn_ignore);
             btnAccept.setOnClickListener(this);

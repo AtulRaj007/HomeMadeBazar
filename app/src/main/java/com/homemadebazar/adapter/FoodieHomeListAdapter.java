@@ -66,15 +66,13 @@ public class FoodieHomeListAdapter extends RecyclerView.Adapter<FoodieHomeListAd
             holder.tvAddress.setText(CustomAddress.getCompleteAddress(homeChiefNearByModelArrayList.get(position).getAddress()));
         }
         if (!TextUtils.isEmpty(homeChiefNearByModelArrayList.get(position).getProfileImage())) {
-
             Glide.with(context).load(homeChiefNearByModelArrayList.get(position).getProfileImage()).into(holder.profilePic);
-//                holder.tvDistance.setText(String.format("%.2f", homeChiefNearByModelArrayList.get(position).getDistance()) + " Meter Away");
         } else {
             holder.profilePic.setImageDrawable(null);
         }
         /*Added*/
         if (!isFavourite)
-            holder.tvDistance.setText(Utils.roundToTwoDigits(homeChiefNearByModelArrayList.get(position).getDistance()) + " Meter Away");
+            holder.tvDistance.setText(Utils.getDistance(homeChiefNearByModelArrayList.get(position).getDistance()) + " Km Away");
     }
 
     @Override

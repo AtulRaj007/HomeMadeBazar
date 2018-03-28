@@ -277,8 +277,17 @@ public class Constants {
         int REQUEST_SENT = 1;      //  Request Sent
         int REQUEST_RECEIVED = 2;  //  Request Received
         int FRIEND = 3;             // Friends
-        int REJECT = 4;             // Add Friends
+        int REJECT = 4;             // Reject
     }
+
+    public static String[] RequestString =
+            {
+                    "Send Request",
+                    "Request Sent",
+                    "Request Received",
+                    "Friend",
+                    "Reject"
+            };
 
     public interface DinnerTime {
         int BREAKFAST = 1;
