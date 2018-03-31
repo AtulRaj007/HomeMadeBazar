@@ -4,8 +4,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
-import android.media.RingtoneManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -25,10 +25,13 @@ import com.homemadebazar.util.Constants;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
+    private MediaPlayer m = new MediaPlayer();
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.e(">>>>>FCM", remoteMessage.getData().toString());
         System.out.println(Constants.ServiceTAG.NOTIFICATION + remoteMessage.getData().toString());
+        playNotificationSound();
         try {
             int notificationType = Integer.parseInt(remoteMessage.getData().get("NotificationType"));
             if (notificationType == Constants.NotificationType.INCOMING_MESSAGE) {
@@ -39,9 +42,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 LocalBroadcastManager.getInstance(MyFirebaseMessagingService.this).sendBroadcast(messageIntent);
                 UserModel targetUserModel = new UserModel();
                 targetUserModel.setUserId(remoteMessage.getData().get("SenderId"));
-                targetUserModel.setFirstName(remoteMessage.getData().get("FirstName"));
-                targetUserModel.setLastName("LastName");
-                targetUserModel.setProfilePic("ProfilePic");
+                targetUserModel.setFirstName(remoteMessage.getData().get("Name"));
+                targetUserModel.setLastName("");
+                targetUserModel.setProfilePic(remoteMessage.getData().get("DP"));
                 Intent intent = ChatActivity.getChatIntent(MyFirebaseMessagingService.this, targetUserModel);
                 int id = -1;
                 try {
@@ -91,7 +94,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void showNotification(Intent intent, String title, String messageBody, int id) {
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_NO_CREATE);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary))
@@ -99,15 +102,37 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(messageBody))
                 .setContentText(messageBody)
                 .setAutoCancel(true)
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setContentIntent(pendingIntent);
 
-//        int resID = getResources().getIdentifier(fname, "raw", getPackageName());
-//        MediaPlayer mediaPlayer = MediaPlayer.create(this, resID);
-//        mediaPlayer.start();
-
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(id/* ID of row_notification*/, notificationBuilder.build());
+        notificationManager.notify((int) System.currentTimeMillis()/* ID of row_notification*/, notificationBuilder.build());
+        /*Later on System Time can be replaced using UserId*/
+    }
+
+    private void playNotificationSound() {
+        try {
+            try {
+                if (m.isPlaying()) {
+                    m.stop();
+                    m.release();
+                    m = new MediaPlayer();
+                }
+
+                AssetFileDescriptor descriptor = getAssets().openFd("notification.mp3");
+                m.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+                descriptor.close();
+
+                m.prepare();
+                m.setVolume(1f, 1f);
+                m.setLooping(false);
+                m.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
 

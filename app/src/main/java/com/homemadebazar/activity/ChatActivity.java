@@ -193,6 +193,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
     private String getChatSendUrl(String userId, String receiverId, String text, String fileType, String msgType, String latitude, String longitude) {
         String url = Constants.ServerURL.SEND_MESSAGE + "SndrId=" + userId + "&RcrId=" + receiverId + "&text=" + text + "&FileType=" + fileType + "&MsgType=" + msgType
                 + "&Lati=" + latitude + "&Longi=" + longitude;
+        url = Utils.parseUrl(url);
         System.out.println(Constants.ServiceTAG.URL + url);
         return url;
     }

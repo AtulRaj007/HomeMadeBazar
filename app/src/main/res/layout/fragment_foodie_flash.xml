@@ -71,8 +71,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/margin_70"
-        android:layout_marginRight="@dimen/margin_50"
+        android:layout_marginBottom="@dimen/margin_60"
+        android:layout_marginRight="@dimen/margin_10"
         android:src="@drawable/add"
         app:backgroundTint="@color/green" />
 

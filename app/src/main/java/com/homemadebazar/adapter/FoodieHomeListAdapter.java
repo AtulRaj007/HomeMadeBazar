@@ -68,7 +68,8 @@ public class FoodieHomeListAdapter extends RecyclerView.Adapter<FoodieHomeListAd
         if (!TextUtils.isEmpty(homeChiefNearByModelArrayList.get(position).getProfileImage())) {
             Glide.with(context).load(homeChiefNearByModelArrayList.get(position).getProfileImage()).into(holder.profilePic);
         } else {
-            holder.profilePic.setImageDrawable(null);
+//            holder.profilePic.setImageDrawable(null);
+            holder.profilePic.setImageResource(R.drawable.profile);
         }
         /*Added*/
         if (!isFavourite)

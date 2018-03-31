@@ -20,6 +20,7 @@ public class Constants {
     public static String decode = "1"; // 1=true,  2=false
     public static boolean encode = (decode.equalsIgnoreCase("1"));
     public static boolean zip = (zipJson.equalsIgnoreCase("1"));
+
     public static String[][] profileInterests = {
             {String.valueOf(R.drawable.profile_art_museum), "Art & Museum"},
             {String.valueOf(R.drawable.profile_camping), "Camping"},
@@ -37,13 +38,17 @@ public class Constants {
             {String.valueOf(R.drawable.profile_watching_sports), "Watching Sports"},
             {String.valueOf(R.drawable.profile_wine_tasting), "Wine Tasting"}
     };
-    public String[] FriendStatusString = {
-            "Add Friend",
-            "Request Sent",
-            "Request Received",
-            "Friends",
-            "Add Friend"
-    };
+
+    public static String[] RequestString =
+            {
+                    "Add Friend",     // NO Status
+                    "Request Sent",     // Request Sent
+                    "Request Received", // Request Received
+                    "Friend",           // Friend
+                    "Request Rejected", // Reject
+                    "Unknown",
+                    "Add Friend"        // UnFriend
+            };
 
     public enum Role {
         HOME_CHEF(1), FOODIE(2), MARKET_PLACE(3);
@@ -62,18 +67,6 @@ public class Constants {
         }
     }
 
-    public enum MessageFetchType {
-        NEW_MESSAGE("new"), OLD_MESSAGE("old");
-        String value;
-
-        MessageFetchType(String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
-    }
 
     public enum WebViewTitleUrl {
         TERMS_OF_USE("Terms Of Use", "https://www.google.co.in"),
@@ -96,7 +89,6 @@ public class Constants {
             return url;
         }
     }
-
 
     public interface AppDebug {
         boolean isPaymentDebug = false; // Should be false in production
@@ -177,6 +169,7 @@ public class Constants {
 
     }
 
+
     public interface uploadImageURL {
         String PROFILE_IMAGE_UPLOAD = ServerURL.BASE_URL + "Profile/DPProfileImage?UserId=";
         String COVER_PHOTO_IMAGE_UPLOAD = ServerURL.BASE_URL + "MyShop/AddHomeChefCoverPhoto?UserId=";
@@ -185,16 +178,13 @@ public class Constants {
         String MARKETPLACE_ADD_CATEGORY = ServerURL.BASE_URL + "MarketPlace/AddProductCategory?UserId=";
         String MARKETPLACE_ADD_EDIT_PRODUCT = ServerURL.BASE_URL + "MarketPlace/AddEditProduct?UserId=";
 
-//        http://localhost:14013/api/MarketPlace/AddEditProduct?
     }
 
     public interface ServerResponseCode {
         int SUCCESS = 100;
         int NO_RECORD_FOUND = 151;
+        int INSUFFICIENT_MONEY = 123;
     }
-
-//    file_type(response) : 1 - image, 2 - video, 3 - audio
-//    message_type(response) : 1 - text, 2 - file, 3 - location
 
     public interface SignInType {
         String GOOGLE = "1";
@@ -273,21 +263,14 @@ public class Constants {
 
     //    --0 Req Not Sent,1 Req Sent ,2 Req Received,3 Frnd ,4 Reject,5 All Ready Req.
     public interface RequestType {
-        int REQUEST_NOT_SENT = 0;  // Add Friend
-        int REQUEST_SENT = 1;      //  Request Sent
-        int REQUEST_RECEIVED = 2;  //  Request Received
+        int REQUEST_NOT_SENT = 0;   //  Add Friend
+        int REQUEST_SENT = 1;       //  Request Sent
+        int REQUEST_RECEIVED = 2;   //  Request Received
         int FRIEND = 3;             // Friends
         int REJECT = 4;             // Reject
+        int UNKNOWN = 5; // Already Request Sent
+        int UNFRIEND = 6;           // UnFriend
     }
-
-    public static String[] RequestString =
-            {
-                    "Send Request",
-                    "Request Sent",
-                    "Request Received",
-                    "Friend",
-                    "Reject"
-            };
 
     public interface DinnerTime {
         int BREAKFAST = 1;

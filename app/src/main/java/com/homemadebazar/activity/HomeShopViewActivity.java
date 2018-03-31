@@ -169,6 +169,20 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
                             BaseModel baseModel = apiCall.getResult();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
                                 DialogUtils.showAlert(HomeShopViewActivity.this, "Order is successfully booked" + "\n Booking Id is :-" + apiCall.getBookingId());
+                            } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.INSUFFICIENT_MONEY) {
+                                DialogUtils.showAlert(HomeShopViewActivity.this, "You have insufficient money. Do you wish to Add Money", new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        //OK
+                                        startActivity(new Intent(HomeShopViewActivity.this, AddMoneyActivity.class));
+                                    }
+                                }, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // Cancel
+
+                                    }
+                                });
                             } else {
                                 DialogUtils.showAlert(HomeShopViewActivity.this, baseModel.getStatusMessage());
                             }

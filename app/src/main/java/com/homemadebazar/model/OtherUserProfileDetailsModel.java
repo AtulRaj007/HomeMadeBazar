@@ -24,7 +24,7 @@ public class OtherUserProfileDetailsModel implements Serializable {
     private String longitude;
     private String mobile;
     private String pinCode;
-    private String friendRequestStatus;
+    private int friendRequestNumeric;
     private String profilePic;
     private String accountType;
     private String rating;
@@ -158,12 +158,12 @@ public class OtherUserProfileDetailsModel implements Serializable {
         this.pinCode = pinCode;
     }
 
-    public String getFriendRequestStatus() {
-        return friendRequestStatus;
+    public int getFriendRequestNumeric() {
+        return friendRequestNumeric;
     }
 
-    public void setFriendRequestStatus(String friendRequestStatus) {
-        this.friendRequestStatus = friendRequestStatus;
+    public void setFriendRequestNumeric(int friendRequestNumeric) {
+        this.friendRequestNumeric = friendRequestNumeric;
     }
 
     public String getProfilePic() {

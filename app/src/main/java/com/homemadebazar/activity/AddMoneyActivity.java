@@ -118,7 +118,7 @@ public class AddMoneyActivity extends BaseActivity implements View.OnClickListen
         DropInRequest dropInRequest = new DropInRequest()
                 .clientToken(clientToken)
                 .amount(amount)
-                .requestThreeDSecureVerification(false)
+                .requestThreeDSecureVerification(true)
                 .collectDeviceData(true)
                 .disablePayPal()
                 .androidPayPhoneNumberRequired(true)

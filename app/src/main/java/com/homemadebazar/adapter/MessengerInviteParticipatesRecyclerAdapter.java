@@ -124,7 +124,7 @@ public class MessengerInviteParticipatesRecyclerAdapter extends RecyclerView.Ada
                     break;
                 case R.id.btn_request_type:
                     int numericStatus = dataList.get(getAdapterPosition()).getNumericStatus();
-                    if (numericStatus == Constants.RequestType.REQUEST_NOT_SENT)
+                    if (numericStatus == Constants.RequestType.REQUEST_NOT_SENT || numericStatus == Constants.RequestType.UNFRIEND)
                         joinParticipateApiCall(userId, dataList.get(getAdapterPosition()).getUserId());
                     break;
             }

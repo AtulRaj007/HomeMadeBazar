@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.ChatActivity;
 import com.homemadebazar.model.BaseModel;
+import com.homemadebazar.model.CustomAddress;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
@@ -50,12 +51,16 @@ public class FoodieMessengerFriendsAdapter extends RecyclerView.Adapter<FoodieMe
     @Override
     public void onBindViewHolder(FriendsViewHolder holder, int position) {
         holder.tvName.setText(friendList.get(position).getFirstName() + " " + friendList.get(position).getLastName());
+        holder.tvEmailId.setText(friendList.get(position).getEmailId());
+        holder.tvAddress.setText(CustomAddress.getCompleteAddress(friendList.get(position).getAddress()));
+
         try {
             if (!TextUtils.isEmpty(friendList.get(position).getProfilePic()))
                 Glide.with(context).load(friendList.get(position).getProfilePic()).into(holder.imageView);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -78,7 +83,7 @@ public class FoodieMessengerFriendsAdapter extends RecyclerView.Adapter<FoodieMe
                         try {
                             BaseModel baseModel = apiCall.getResult();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                DialogUtils.showAlert(context, "You have successfully unFriend the user", new Runnable() {
+                                DialogUtils.showAlert(context, "You have successfully unfriend the user", new Runnable() {
                                     @Override
                                     public void run() {
                                         friendList.remove(position);
@@ -105,15 +110,15 @@ public class FoodieMessengerFriendsAdapter extends RecyclerView.Adapter<FoodieMe
 
     class FriendsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView imageView;
-        private TextView tvName, tvLastMessage, tvTime;
+        private TextView tvName, tvEmailId, tvAddress;
         private Button btnUnfriend;
 
         FriendsViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.iv_profile_pic);
             tvName = itemView.findViewById(R.id.tv_name);
-            tvLastMessage = itemView.findViewById(R.id.tv_last_message);
-            tvTime = itemView.findViewById(R.id.tv_time);
+            tvEmailId = itemView.findViewById(R.id.tv_email_id);
+            tvAddress = itemView.findViewById(R.id.tv_address);
             btnUnfriend = itemView.findViewById(R.id.btn_unfriend);
             itemView.setOnClickListener(this);
             imageView.setOnClickListener(this);

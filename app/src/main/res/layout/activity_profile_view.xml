@@ -126,26 +126,33 @@
                         android:layout_marginBottom="@dimen/margin_5"
                         android:background="@color/nav_line_background" />
 
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/margin_5"
-                        android:text="@string/str_mobile_number"
-                        android:textSize="@dimen/text_16" />
-
-                    <TextView
-                        android:id="@+id/tv_mobile_number"
-                        style="@style/ProfileTextViewStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="" />
-
-                    <View
+                    <LinearLayout
+                        android:id="@+id/ll_mobile_number"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="@dimen/margin_5"
-                        android:background="@color/nav_line_background" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_5"
+                            android:text="@string/str_mobile_number"
+                            android:textSize="@dimen/text_16" />
+
+                        <TextView
+                            android:id="@+id/tv_mobile_number"
+                            style="@style/ProfileTextViewStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginBottom="@dimen/margin_5"
+                            android:background="@color/nav_line_background" />
+
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"

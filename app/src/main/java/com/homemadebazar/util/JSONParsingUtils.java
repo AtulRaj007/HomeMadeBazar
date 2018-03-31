@@ -773,7 +773,7 @@ public class JSONParsingUtils {
         userModel.setLatitude(object.optString("Latitude"));
         userModel.setLongitude(object.optString("Longitude"));
         userModel.setPinCode(object.optString("Pincode"));
-        userModel.setFriendRequestStatus(object.optString("FrndRequestStatus"));
+        userModel.setFriendRequestNumeric(object.optInt("ReqStatusInNumeric", 0));
         userModel.setInterest(object.optString("Interest"));
         userModel.setProfessionType(object.optString("ProfessionType"));
         userModel.setProfessionName(object.optString("ProfessionName"));

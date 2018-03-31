@@ -17,11 +17,13 @@ import com.homemadebazar.R;
 import com.homemadebazar.adapter.FoodieHomeListAdapter;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.HomeChiefNearByModel;
+import com.homemadebazar.model.UserLocation;
 import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
 import com.homemadebazar.network.apicall.FoodieHomeChefSearchApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
+import com.homemadebazar.util.SharedPreference;
 import com.homemadebazar.util.Utils;
 
 import java.util.ArrayList;
@@ -67,8 +69,13 @@ public class FoodieSearchHomeChefActivity extends BaseActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    searchHomeChefApiCall("", "", "", etSearch.getText().toString().trim());
-                    return true;
+                    if (!TextUtils.isEmpty(etSearch.getText().toString().trim())) {
+                        UserLocation userLocation = SharedPreference.getUserLocation(FoodieSearchHomeChefActivity.this);
+                        searchHomeChefApiCall(/*String.valueOf(userLocation.getLatitude())*/"",/*String.valueOf(userLocation.getLongitude())*/"", "", etSearch.getText().toString().trim());
+                        return true;
+                    } else {
+                        DialogUtils.showAlert(FoodieSearchHomeChefActivity.this, "Please enter text to search");
+                    }
                 }
 
                 return false;
@@ -82,8 +89,11 @@ public class FoodieSearchHomeChefActivity extends BaseActivity {
         linearLayoutManager = new LinearLayoutManager(FoodieSearchHomeChefActivity.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(foodieHomeListAdapter);
-        if (!TextUtils.isEmpty(foodCategoryId))
-            searchHomeChefApiCall("", "", foodCategoryId, "");
+        if (!TextUtils.isEmpty(foodCategoryId)) {
+            UserLocation userLocation = SharedPreference.getUserLocation(FoodieSearchHomeChefActivity.this);
+            searchHomeChefApiCall(/*String.valueOf(userLocation.getLatitude())*/"", /*String.valueOf(userLocation.getLongitude())*/"", foodCategoryId, "");
+
+        }
     }
 
     public void searchHomeChefApiCall(String latitude, String longitude, String foodCategoryId, String searchString) {

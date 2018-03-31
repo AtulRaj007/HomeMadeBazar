@@ -217,7 +217,7 @@ public class ProfileViewActivity extends BaseActivity implements View.OnClickLis
             tvCommonInterest.setVisibility(View.GONE);
 
         try {
-            if (otherUserProfileDetailsModel.getFriendRequestStatus().equals(String.valueOf(Constants.RequestType.FRIEND))) {
+            if (otherUserProfileDetailsModel.getFriendRequestNumeric() == Constants.RequestType.FRIEND) {
                 findViewById(R.id.ll_mobile_number).setVisibility(View.VISIBLE);
             } else {
                 findViewById(R.id.ll_mobile_number).setVisibility(View.GONE);
@@ -257,6 +257,8 @@ public class ProfileViewActivity extends BaseActivity implements View.OnClickLis
         } else {
             findViewById(R.id.rl_view_pager).setVisibility(View.GONE);
         }
+
+        btnSendFriendRequest.setText(Constants.RequestString[otherUserProfileDetailsModel.getFriendRequestNumeric()]);
     }
 
     @Override
@@ -264,8 +266,11 @@ public class ProfileViewActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.btn_friend_request:
                 try {
-                    if (otherUserProfileDetailsModel != null)
-                        joinParticipateApiCall(userModel.getUserId(), profileUserId);
+                    if (otherUserProfileDetailsModel != null) {
+                        int numericStatus = otherUserProfileDetailsModel.getFriendRequestNumeric();
+                        if (numericStatus == Constants.RequestType.REQUEST_NOT_SENT || numericStatus == Constants.RequestType.UNFRIEND)
+                            joinParticipateApiCall(userModel.getUserId(), profileUserId);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
