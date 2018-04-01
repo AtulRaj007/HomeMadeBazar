@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.homemadebazar.R;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.CustomAddress;
@@ -49,10 +50,15 @@ public class FoodieMessengerRequestAdapter extends RecyclerView.Adapter<FoodieMe
     @Override
     public void onBindViewHolder(RequestViewHolder holder, int position) {
         holder.tvName.setText(reqDataList.get(position).getFirstName() + " " + reqDataList.get(position).getLastName());
-        if (!TextUtils.isEmpty(reqDataList.get(position).getProfilePic()))
-            Glide.with(context).load(reqDataList.get(position).getProfilePic()).into(holder.profileImage);
         holder.tvEmail.setText(reqDataList.get(position).getEmailId());
         holder.tvAddress.setText(CustomAddress.getCompleteAddress(reqDataList.get(position).getAddress()));
+
+        if (!TextUtils.isEmpty(reqDataList.get(position).getProfilePic()))
+            Glide.with(context).load(reqDataList.get(position).getProfilePic())
+                    .apply(new RequestOptions().placeholder(R.drawable.profile_square))
+                    .into(holder.profileImage);
+        else
+            holder.profileImage.setImageResource(R.drawable.profile_square);
 
     }
 

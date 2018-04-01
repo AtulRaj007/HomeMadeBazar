@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.ChatActivity;
 import com.homemadebazar.model.BaseModel;
@@ -56,7 +57,11 @@ public class FoodieMessengerFriendsAdapter extends RecyclerView.Adapter<FoodieMe
 
         try {
             if (!TextUtils.isEmpty(friendList.get(position).getProfilePic()))
-                Glide.with(context).load(friendList.get(position).getProfilePic()).into(holder.imageView);
+                Glide.with(context).load(friendList.get(position).getProfilePic())
+                        .apply(new RequestOptions().placeholder(R.drawable.profile_square))
+                        .into(holder.imageView);
+            else
+                holder.imageView.setImageResource(R.drawable.profile_square);
         } catch (Exception e) {
             e.printStackTrace();
         }

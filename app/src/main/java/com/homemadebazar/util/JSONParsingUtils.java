@@ -719,6 +719,8 @@ public class JSONParsingUtils {
             notificationModel.setReceiverUserId(object.optString("ReceiverUserId"));
             notificationModel.setReceiverName(object.optString("ReceiverName"));
             notificationModel.setReceiverDp(object.optString("ReceiverDp"));
+            notificationModel.setNotificationId(object.optString("NotificationID"));
+            notificationModel.setNotificationTime(object.optString("NotificationFireDT"));
         } catch (Exception e) {
             e.printStackTrace();
         }

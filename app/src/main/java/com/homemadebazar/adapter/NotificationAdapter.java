@@ -36,7 +36,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         NotificationModel notificationModel = notificationModelArrayList.get(position);
         holder.tvTitle.setText(notificationModel.getTitle());
         holder.tvMessage.setText(notificationModel.getMessage());
-        holder.tvTime.setText("");
+        holder.tvNotificationId.setText("Id#" + notificationModel.getNotificationId());
+        holder.tvTime.setText(notificationModel.getNotificationTime());
     }
 
     @Override
@@ -45,10 +46,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     class NotificationViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvTitle, tvMessage, tvTime;
+        private TextView tvNotificationId, tvTitle, tvMessage, tvTime;
 
         NotificationViewHolder(View itemView) {
             super(itemView);
+            tvNotificationId = itemView.findViewById(R.id.tv_notification_id);
             tvTitle = itemView.findViewById(R.id.tv_title);
             tvMessage = itemView.findViewById(R.id.tv_message);
             tvTime = itemView.findViewById(R.id.tv_time);

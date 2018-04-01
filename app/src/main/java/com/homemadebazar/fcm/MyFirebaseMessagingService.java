@@ -83,6 +83,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 String message = remoteMessage.getData().get("Message");
                 String title = remoteMessage.getData().get("Title");
                 showNotification(intent, title, message, notificationType);
+            } else if (notificationType == Constants.NotificationType.MARKETPLACE_ACCEPT_REJECT_DISPATCH_ORDER) {
+                Intent intent = new Intent(MyFirebaseMessagingService.this, LoginActivity.class);
+                String message = remoteMessage.getData().get("Message");
+                String title = remoteMessage.getData().get("Title");
+                showNotification(intent, title, message, notificationType);
+            } else if (notificationType == Constants.NotificationType.RECEIVE_MONEY) {
+                Intent intent = new Intent(MyFirebaseMessagingService.this, LoginActivity.class);
+                String message = remoteMessage.getData().get("Message");
+                String title = remoteMessage.getData().get("Title");
+                showNotification(intent, title, message, notificationType);
             }
 //            {ReceiverId=efWeOCoRuHw:APA91bGY38I2wcZmLoaBy8ivTsW9--FmQ1DlSHezmExwbdGz5AKyYhNBOv-fF2QXEPLcp261g_3W6TUo-7BgUWvwhcQ3K9hi7UWHJFj6g0GI8aqU0qs03J4VfXQ9AS49YH8LR_PJRXGo,
 // Message=Your product has been book with ref.Id #MktPlcOrd00000014., Title=Buy Product, NotificationType=6}

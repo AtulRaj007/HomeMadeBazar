@@ -14,6 +14,8 @@ public class NotificationModel {
     private String message;
     private String title;
     private String notificationType;
+    private String notificationTime;
+    private String notificationId;
 
     public String getSenderUserId() {
         return senderUserId;
@@ -29,6 +31,22 @@ public class NotificationModel {
 
     public void setSenderName(String senderName) {
         this.senderName = senderName;
+    }
+
+    public String getNotificationTime() {
+        return notificationTime;
+    }
+
+    public void setNotificationTime(String notificationTime) {
+        this.notificationTime = notificationTime;
+    }
+
+    public String getNotificationId() {
+        return notificationId;
+    }
+
+    public void setNotificationId(String notificationId) {
+        this.notificationId = notificationId;
     }
 
     public String getSenderDp() {

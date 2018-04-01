@@ -1,7 +1,7 @@
 <resources>
     <string name="google_maps_key">AIzaSyCcuBdrhrWte5MtGLxNJjz5uC0Psuw5xaQ</string>
 
-    <string name="app_name">HomeMadeBazar</string>
+    <string name="app_name">Munch Mash</string>
     <string name="str_get_home_food">Get Home Food on the Move</string>
     <string name="str_or">OR</string>
     <string name="str_connect_with_social_account">Connect with Social Account</string>

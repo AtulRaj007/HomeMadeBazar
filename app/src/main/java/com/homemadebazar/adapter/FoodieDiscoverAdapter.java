@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.homemadebazar.R;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.FoodDateTimeBookModel;
@@ -72,7 +73,11 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
             }
 
             if (!TextUtils.isEmpty(homeChefOrderModelArrayList.get(position).getProfilePic()))
-                Glide.with(context).load(homeChefOrderModelArrayList.get(position).getProfilePic()).into(holder.ivProfilePic);
+                Glide.with(context).load(homeChefOrderModelArrayList.get(position).getProfilePic())
+                        .apply(new RequestOptions().placeholder(R.drawable.profile_square))
+                        .into(holder.ivProfilePic);
+            else
+                holder.ivProfilePic.setImageResource(R.drawable.profile_square);
 
             String orderTypeTiming[] = getOrderTypeTiming(position).split("@@");
 
@@ -201,7 +206,6 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_book_order:
-//                    bookOrder(homeChefOrderModelArrayList.get(getAdapterPosition()).getUserId(), homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId(), "2017-01-01", "1", 1);
 
                     DialogUtils.bookFoodOnSelectedDatesDialog(context, homeChefOrderModelArrayList.get(getAdapterPosition()), new HomeChefFoodTimingAdapter.BookOrderInterface() {
                         @Override

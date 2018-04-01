@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.homemadebazar.R;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.CustomAddress;
@@ -50,10 +51,16 @@ public class MessengerInviteParticipatesRecyclerAdapter extends RecyclerView.Ada
     public void onBindViewHolder(InviteParticipateViewHolder holder, int position) {
         MessegeInviteParticipateModel messegeInviteParticipateModel = dataList.get(position);
         holder.name.setText(messegeInviteParticipateModel.getfName() + " " + messegeInviteParticipateModel.getlName());
+        holder.tvEmailId.setText(messegeInviteParticipateModel.getEmailId());
         holder.address.setText(CustomAddress.getCompleteAddress(messegeInviteParticipateModel.getAddress()));
+
         if (!TextUtils.isEmpty(messegeInviteParticipateModel.getProfileImage())) {
-            Glide.with(context).load(messegeInviteParticipateModel.getProfileImage()).into(holder.ivProfilePic);
-        }
+            Glide.with(context).load(messegeInviteParticipateModel.getProfileImage())
+                    .apply(new RequestOptions().placeholder(R.drawable.profile_square))
+                    .into(holder.ivProfilePic);
+        } else
+            holder.ivProfilePic.setImageResource(R.drawable.profile_square);
+
         try {
             holder.btnRequestType.setText(Constants.RequestString[messegeInviteParticipateModel.getNumericStatus()]);
         } catch (Exception e) {
@@ -102,7 +109,7 @@ public class MessengerInviteParticipatesRecyclerAdapter extends RecyclerView.Ada
     }
 
     class InviteParticipateViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView name, address;
+        private TextView name, address, tvEmailId;
         private ImageView ivProfilePic;
         private Button btnRequestType;
 
@@ -110,6 +117,7 @@ public class MessengerInviteParticipatesRecyclerAdapter extends RecyclerView.Ada
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
             address = itemView.findViewById(R.id.tv_address);
+            tvEmailId = itemView.findViewById(R.id.tv_email_id);
             btnRequestType = itemView.findViewById(R.id.btn_request_type);
             ivProfilePic = itemView.findViewById(R.id.iv_profile_pic);
             ivProfilePic.setOnClickListener(this);

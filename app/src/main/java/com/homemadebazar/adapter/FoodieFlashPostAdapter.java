@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.FoodiePostCommentActivity;
 import com.homemadebazar.model.BaseModel;
@@ -55,7 +56,11 @@ public class FoodieFlashPostAdapter extends RecyclerView.Adapter<FoodieFlashPost
     public void onBindViewHolder(FlashRecyclerHolder holder, int position) {
         FoodieFlashPostModel foodieFlashPostModel = foodieFlashPostModelArrayList.get(position);
         if (!TextUtils.isEmpty(foodieFlashPostModel.getUserProfileUrl()))
-            Glide.with(context).load(foodieFlashPostModel.getUserProfileUrl()).into(holder.ivProfileImage);
+            Glide.with(context).load(foodieFlashPostModel.getUserProfileUrl())
+                    .apply(new RequestOptions().placeholder(R.drawable.profile_square))
+                    .into(holder.ivProfileImage);
+        else
+            holder.ivProfileImage.setImageResource(R.drawable.profile_square);
 
         holder.tvName.setText(foodieFlashPostModel.getUserFirstName() + " " + foodieFlashPostModel.getUserLastName());
         holder.tvMessage.setText(foodieFlashPostModel.getPostMessage());
@@ -65,7 +70,11 @@ public class FoodieFlashPostAdapter extends RecyclerView.Adapter<FoodieFlashPost
         holder.tvCommentCount.setText("(" + foodieFlashPostModel.getNoOfComments() + ")");
 
         if (!TextUtils.isEmpty(foodieFlashPostModel.getPostImageUrl()))
-            Glide.with(context).load(foodieFlashPostModel.getPostImageUrl()).into(holder.ivPostImage);
+            Glide.with(context).load(foodieFlashPostModel.getPostImageUrl())
+                    .apply(new RequestOptions().placeholder(R.color.grey))
+                    .into(holder.ivPostImage);
+        else
+            holder.ivPostImage.setImageResource(R.color.grey);
     }
 
     @Override

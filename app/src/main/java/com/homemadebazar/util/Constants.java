@@ -301,7 +301,8 @@ public class Constants {
         int FRIEND_REQUEST_RECEIVED = 4;
         int FRIEND_ACCEPTED = 5;
         int MARKETPLACE_INCOMING_ORDER = 6;
-
+        int MARKETPLACE_ACCEPT_REJECT_DISPATCH_ORDER = 7;
+        int RECEIVE_MONEY = 8;
     }
 
     public interface BundleKeys {

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.HomeShopViewActivity;
 import com.homemadebazar.model.BaseModel;
@@ -66,9 +67,11 @@ public class FoodieHomeListAdapter extends RecyclerView.Adapter<FoodieHomeListAd
             holder.tvAddress.setText(CustomAddress.getCompleteAddress(homeChiefNearByModelArrayList.get(position).getAddress()));
         }
         if (!TextUtils.isEmpty(homeChiefNearByModelArrayList.get(position).getProfileImage())) {
-            Glide.with(context).load(homeChiefNearByModelArrayList.get(position).getProfileImage()).into(holder.profilePic);
+            Glide.with(context).load(homeChiefNearByModelArrayList.
+                    get(position).getProfileImage())
+                    .apply(new RequestOptions().placeholder(R.drawable.profile))
+                    .into(holder.profilePic);
         } else {
-//            holder.profilePic.setImageDrawable(null);
             holder.profilePic.setImageResource(R.drawable.profile);
         }
         /*Added*/

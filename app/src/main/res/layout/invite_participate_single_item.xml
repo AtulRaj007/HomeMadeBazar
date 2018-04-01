@@ -20,7 +20,8 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="@color/grey"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile_square" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -39,10 +40,16 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_email_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="B-41,Gurgaon 122001"
+                android:textSize="@dimen/text_14" />
+
+            <TextView
                 android:id="@+id/tv_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_5"
                 android:text="B-41,Gurgaon 122001"
                 android:textSize="@dimen/text_14" />
         </LinearLayout>
@@ -53,7 +60,7 @@
             android:layout_height="@dimen/button_height"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/margin_5"
-            android:background="@color/button_color"
+            android:background="@drawable/button_oval_primary"
             android:text="@string/str_join"
             android:textAllCaps="false"
             android:textColor="@color/white"
