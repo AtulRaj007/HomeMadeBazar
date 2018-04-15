@@ -679,6 +679,9 @@ public class DialogUtils {
             public void onClick(View v) {
                 try {
                     int noOfPeople = Integer.parseInt(tvNoOfPeople.getText().toString().trim());
+                    if (noOfPeople >= 20) {
+                        return;
+                    }
                     noOfPeople++;
                     tvNoOfPeople.setText(String.valueOf(noOfPeople));
                     tvTotal.setText(calcPrice(homeChefOrderModel.getPrice(), homeChefOrderModel.getDiscount(), noOfPeople) + "");

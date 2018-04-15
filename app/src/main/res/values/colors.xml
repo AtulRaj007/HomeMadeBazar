@@ -51,6 +51,8 @@
     <color name="heading_color">#040303</color>
     <color name="sub_heading_color">#666362</color> <!-- grey -->
     <color name="button_color">#32CD32</color>
-    <color name="green">#00FF00</color>   <!-- grayish black -> <!-dollar green --> <!-- blue -->
+    <color name="green">#00FF00</color>
+    <color name="title_profile_color">#000000
+    </color>   <!-- grayish black -> <!-dollar green --> <!-- blue -->
 
 </resources>

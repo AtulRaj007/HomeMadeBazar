@@ -66,6 +66,16 @@ public class FoodieHomeChefBookmarkFragment extends BaseFragment implements Swip
         getChiefDetailListApiCall();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (Constants.isFavouritesChange) {
+            Constants.isFavouritesChange = false;
+            swipeRefreshLayout.setRefreshing(true);
+            getChiefDetailListApiCall();
+        }
+    }
+
     public void getChiefDetailListApiCall() {
         try {
 

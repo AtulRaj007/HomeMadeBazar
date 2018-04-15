@@ -32,15 +32,14 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/lbl_transaction_id"
                 android:text=""
-                android:textColor="@color/colorPrimary" />
+                android:textColor="@color/grey" />
 
             <TextView
                 android:id="@+id/tv_transaction_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text=""
-                android:textColor="@color/colorPrimary" />
+                android:text="" />
 
         </RelativeLayout>
 
@@ -112,7 +111,7 @@
                     android:layout_marginRight="@dimen/margin_5"
                     android:layout_marginTop="@dimen/margin_5"
                     android:text=""
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/grey"
                     android:textSize="@dimen/text_8" />
 
 

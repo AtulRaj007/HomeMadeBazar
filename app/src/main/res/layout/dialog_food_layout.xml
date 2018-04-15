@@ -16,8 +16,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/margin_10"
-        android:text="@string/str_create_order_one_food"
-        android:textColor="@color/black" />
+        android:text="@string/str_create_order_initial_dialog"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_16" />
 
     <Button
         android:id="@+id/btn_ok"

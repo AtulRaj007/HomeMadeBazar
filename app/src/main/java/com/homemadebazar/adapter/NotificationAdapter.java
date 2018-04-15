@@ -2,6 +2,7 @@ package com.homemadebazar.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         NotificationModel notificationModel = notificationModelArrayList.get(position);
         holder.tvTitle.setText(notificationModel.getTitle());
         holder.tvMessage.setText(notificationModel.getMessage());
-        holder.tvNotificationId.setText("Id#" + notificationModel.getNotificationId());
+        holder.tvNotificationId.setText(Html.fromHtml("<font color='#000000'>Id#</font>" + "<font color='#D3D3D3'>" + notificationModel.getNotificationId() + "</font>"));
         holder.tvTime.setText(notificationModel.getNotificationTime());
     }
 

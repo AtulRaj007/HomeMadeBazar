@@ -207,7 +207,7 @@ public class FoodieAddPostActivity extends BaseActivity implements View.OnClickL
                 if (resultCode == RESULT_OK) {
                     FoodieCheckInModel foodieCheckInModel = (FoodieCheckInModel) data.getSerializableExtra(Constants.BundleKeys.CHECK_IN_MODEL);
                     System.out.println(foodieCheckInModel.getFirstName() + " " + foodieCheckInModel.getShopName() + " " + foodieCheckInModel.getAddress());
-                    etMesssage.setText("Eating at " + foodieCheckInModel.getShopName());
+                    etMesssage.setText(etMesssage.getText().toString() + " Eating at " + foodieCheckInModel.getShopName());
                     etMesssage.setSelection(etMesssage.getText().length());
                 }
                 break;

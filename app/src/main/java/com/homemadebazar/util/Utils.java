@@ -481,7 +481,7 @@ public class Utils {
         if (!TextUtils.isEmpty(title)) {
             priceArray.add(title);
         }
-        for (int i = 20; i <= 1000; i += 20) {
+        for (int i = 5; i <= 1000; i += 5) {
             priceArray.add(String.valueOf(i));
         }
         return priceArray;
@@ -585,6 +585,15 @@ public class Utils {
             e.printStackTrace();
         }
         return strRules;
+    }
+
+    public static String getDateTime(String dateTime) {
+        try {
+            return dateTime;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     private static double roundToTwoDigits(double distance) {

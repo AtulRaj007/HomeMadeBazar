@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -163,11 +164,15 @@ public class ProfileViewActivity extends BaseActivity implements View.OnClickLis
                 for (int i = 0; i < ownInterestArray.length; i++) {
                     if (ownInterestArray[i].equals("1") && otherInterestArray[i].equals("1")) {
                         if (TextUtils.isEmpty(commonInterestText)) {
-                            commonInterestText = "You both enjoy " + Constants.profileInterests[i][1];
+                            commonInterestText = Constants.profileInterests[i][1];
                         } else {
                             commonInterestText = commonInterestText + ", " + Constants.profileInterests[i][1];
                         }
                     }
+                }
+
+                if (!TextUtils.isEmpty(commonInterestText)) {
+                    commonInterestText = "<font color='#D3D3D3'>You both enjoy </font>" + "<font color='#000000'>" + commonInterestText + "." + "</font>";
                 }
             }
 
@@ -211,8 +216,8 @@ public class ProfileViewActivity extends BaseActivity implements View.OnClickLis
         if (!TextUtils.isEmpty(otherUserProfileDetailsModel.getProfilePic())) {
             Glide.with(ProfileViewActivity.this).load(otherUserProfileDetailsModel.getProfilePic()).into(ivProfilePic);
         }
-        if (!TextUtils.isEmpty(otherUserProfileDetailsModel.getInterest()))
-            tvCommonInterest.setText(getSimilarInterests(otherUserProfileDetailsModel.getInterest()));
+        if (!TextUtils.isEmpty(getSimilarInterests(otherUserProfileDetailsModel.getInterest())))
+            tvCommonInterest.setText(Html.fromHtml(getSimilarInterests(otherUserProfileDetailsModel.getInterest())));
         else
             tvCommonInterest.setVisibility(View.GONE);
 

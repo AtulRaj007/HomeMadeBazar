@@ -2,12 +2,13 @@ package com.homemadebazar.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -113,10 +114,23 @@ public class FoodieMessengerFriendsAdapter extends RecyclerView.Adapter<FoodieMe
         }
     }
 
+    private void showPopupMenu(View view, final int position) {
+        PopupMenu popupMenu = new PopupMenu(context, view);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_popup_friend, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                unFriendUser(friendList.get(position).getUserId(), position);
+                return false;
+            }
+        });
+        popupMenu.show();
+    }
+
     class FriendsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView imageView;
         private TextView tvName, tvEmailId, tvAddress;
-        private Button btnUnfriend;
+        private ImageView ivUnfriend;
 
         FriendsViewHolder(View itemView) {
             super(itemView);
@@ -124,10 +138,10 @@ public class FoodieMessengerFriendsAdapter extends RecyclerView.Adapter<FoodieMe
             tvName = itemView.findViewById(R.id.tv_name);
             tvEmailId = itemView.findViewById(R.id.tv_email_id);
             tvAddress = itemView.findViewById(R.id.tv_address);
-            btnUnfriend = itemView.findViewById(R.id.btn_unfriend);
+            ivUnfriend = itemView.findViewById(R.id.iv_unfriend);
             itemView.setOnClickListener(this);
             imageView.setOnClickListener(this);
-            btnUnfriend.setOnClickListener(this);
+            ivUnfriend.setOnClickListener(this);
         }
 
         @Override
@@ -136,8 +150,8 @@ public class FoodieMessengerFriendsAdapter extends RecyclerView.Adapter<FoodieMe
                 case R.id.iv_profile_pic:
                     Utils.showProfile(context, friendList.get(getAdapterPosition()).getUserId());
                     break;
-                case R.id.btn_unfriend:
-                    unFriendUser(friendList.get(getAdapterPosition()).getUserId(), getAdapterPosition());
+                case R.id.iv_unfriend:
+                    showPopupMenu(v, getAdapterPosition());
                     break;
                 default:
                     context.startActivity(ChatActivity.getChatIntent(context, friendList.get(getAdapterPosition())));

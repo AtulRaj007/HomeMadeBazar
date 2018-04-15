@@ -13,6 +13,10 @@ public class Constants {
     public static boolean isBalanceRefresh = false;
     public static boolean isMarketPlaceOrderRefresh = false;
     public static boolean isProfileUpdate = false;
+    public static boolean isFlashDataChanges = false;
+    public static boolean isFavouritesChange = false;
+
+    public static String activeChatUserId = "";
 
     public static String deviceType = "1";
     public static UserModel socialUserModel = null;

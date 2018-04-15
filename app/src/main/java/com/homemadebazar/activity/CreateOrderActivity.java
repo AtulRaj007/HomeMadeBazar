@@ -19,6 +19,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.homemadebazar.R;
 import com.homemadebazar.Template.Template;
 import com.homemadebazar.model.BaseModel;
@@ -45,6 +47,7 @@ import java.util.GregorianCalendar;
 
 public class CreateOrderActivity extends BaseActivity implements View.OnClickListener {
 
+    private static FoodTimingModel foodTimingModel = null;
     private UserModel userModel;
     private EditText etDishName, etFirstRule, etSecondRule, etThirdRule, etFourthRule, etFifthRule, etDescription;
     private Spinner sprDishCategory, sprDishPrice, sprVeg, sprDrinks, sprMinNoOfGuest, sprMaxNoOfGuest, sprDiscount;
@@ -58,7 +61,6 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
     private String dishAvailability = "";
     private ImageView ivFirstFoodPhoto, ivSecondFoodPhoto, ivThirdFoodPhoto, ivFourthFoodPhoto, ivFifthFoodPhoto;
     private TextView tvBreakfastDuration, tvLunchDuration, tvDinnerDuration;
-    private static FoodTimingModel foodTimingModel = null;
     private int resourceIds[] =
             {
 
@@ -206,8 +208,8 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
 
     private ArrayList<String> getDiscountArrayList(String title) {
         ArrayList<String> discountArrayList = new ArrayList<>();
-        discountArrayList.add(String.valueOf(0));
         discountArrayList.add(title);
+        discountArrayList.add(String.valueOf(0));
         for (int i = 5; i <= 50; i++) {
             discountArrayList.add(String.valueOf(i));
         }
@@ -224,7 +226,6 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
     }
 
     private String getDishDate() {
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = new GregorianCalendar();
         calendar.add(Calendar.DATE, dateIndex);
@@ -451,23 +452,43 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
         mFile.add(new File(Utils.getPath(CreateOrderActivity.this, uri)));
         switch (imageSelectedIndex) {
             case 0:
-                ivFirstFoodPhoto.setImageURI(uri);
+//                ivFirstFoodPhoto.setImageURI(uri);
+                Glide.with(CreateOrderActivity.this)
+                        .load(uri)
+                        .apply(new RequestOptions().override(400, 400).centerCrop())
+                        .into(ivFirstFoodPhoto);
                 coverPhotoArray[0] = uri.getPath();
                 break;
             case 1:
-                ivSecondFoodPhoto.setImageURI(uri);
+//                ivSecondFoodPhoto.setImageURI(uri);
+                Glide.with(CreateOrderActivity.this)
+                        .load(uri)
+                        .apply(new RequestOptions().override(400, 400).centerCrop())
+                        .into(ivSecondFoodPhoto);
                 coverPhotoArray[1] = uri.getPath();
                 break;
             case 2:
-                ivThirdFoodPhoto.setImageURI(uri);
+//                ivThirdFoodPhoto.setImageURI(uri);
+                Glide.with(CreateOrderActivity.this)
+                        .load(uri)
+                        .apply(new RequestOptions().override(400, 400).centerCrop())
+                        .into(ivThirdFoodPhoto);
                 coverPhotoArray[2] = uri.getPath();
                 break;
             case 3:
-                ivFourthFoodPhoto.setImageURI(uri);
+//                ivFourthFoodPhoto.setImageURI(uri);
+                Glide.with(CreateOrderActivity.this)
+                        .load(uri)
+                        .apply(new RequestOptions().override(400, 400).centerCrop())
+                        .into(ivFourthFoodPhoto);
                 coverPhotoArray[3] = uri.getPath();
                 break;
             case 4:
-                ivFifthFoodPhoto.setImageURI(uri);
+//                ivFifthFoodPhoto.setImageURI(uri);
+                Glide.with(CreateOrderActivity.this)
+                        .load(uri)
+                        .apply(new RequestOptions().override(400, 400).centerCrop())
+                        .into(ivFifthFoodPhoto);
                 coverPhotoArray[4] = uri.getPath();
                 break;
         }
@@ -511,10 +532,6 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
             rules = rules + etFifthRule.getText().toString().trim();
 
         return rules;
-    }
-
-    public interface FoodTimingEditInterface {
-        void onFoodTimingSelected(FoodTimingModel foodTimingModel);
     }
 
     public void createOrder() {
@@ -606,5 +623,9 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
         if (isFinishing()) {
             foodTimingModel = null;
         }
+    }
+
+    public interface FoodTimingEditInterface {
+        void onFoodTimingSelected(FoodTimingModel foodTimingModel);
     }
 }

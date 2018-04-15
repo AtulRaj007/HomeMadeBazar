@@ -31,13 +31,22 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.e(">>>>>FCM", remoteMessage.getData().toString());
         System.out.println(Constants.ServiceTAG.NOTIFICATION + remoteMessage.getData().toString());
-        playNotificationSound();
         try {
             int notificationType = Integer.parseInt(remoteMessage.getData().get("NotificationType"));
+            if (notificationType != Constants.NotificationType.INCOMING_MESSAGE) {
+                playNotificationSound();
+            } else {
+                String senderId = remoteMessage.getData().get("SenderId");
+                if (!senderId.equals(Constants.activeChatUserId)) {
+                    playNotificationSound();
+                }
+            }
+
             if (notificationType == Constants.NotificationType.INCOMING_MESSAGE) {
                 Intent messageIntent = new Intent(Constants.BroadCastFilter.INCOMING_MESSAGE);
                 messageIntent.putExtra(Constants.BundleKeys.RECEIVER_ID, remoteMessage.getData().get("ReceiverId"));
-                messageIntent.putExtra(Constants.BundleKeys.SENDER_ID, remoteMessage.getData().get("SenderId"));
+                String senderId = remoteMessage.getData().get("SenderId");
+                messageIntent.putExtra(Constants.BundleKeys.SENDER_ID, senderId);
                 messageIntent.putExtra(Constants.BundleKeys.MESSAGE, remoteMessage.getData().get("Message"));
                 LocalBroadcastManager.getInstance(MyFirebaseMessagingService.this).sendBroadcast(messageIntent);
                 UserModel targetUserModel = new UserModel();
@@ -53,7 +62,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     e.printStackTrace();
                     id = (int) System.currentTimeMillis();
                 }
-                showNotification(intent, remoteMessage.getData().get("Title"), remoteMessage.getData().get("Message"), id);
+                if (!senderId.equals(Constants.activeChatUserId)) {
+                    showNotification(intent, remoteMessage.getData().get("Title"), remoteMessage.getData().get("Message"), id);
+                }
             } else if (notificationType == Constants.NotificationType.FOODIE_ORDER_BOOKED) {
                 Intent intent = new Intent(MyFirebaseMessagingService.this, LoginActivity.class);
                 String message = remoteMessage.getData().get("Message");
@@ -65,7 +76,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 Intent intent = new Intent(MyFirebaseMessagingService.this, LoginActivity.class);
                 String message = remoteMessage.getData().get("Message");
                 String title = remoteMessage.getData().get("Title");
-//                String bookingId = remoteMessage.getData().get("Bookingid");
                 showNotification(intent, title, message, notificationType);
 
             } else if (notificationType == Constants.NotificationType.FRIEND_REQUEST_RECEIVED) {

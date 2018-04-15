@@ -168,7 +168,7 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
                         try {
                             BaseModel baseModel = apiCall.getResult();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                DialogUtils.showAlert(HomeShopViewActivity.this, "Order is successfully booked" + "\n Booking Id is :-" + apiCall.getBookingId());
+                                DialogUtils.showAlert(HomeShopViewActivity.this, "Order sent for HomeChef Review\nPlease wait for the order to get accepted." + "\nYour Booking Id is - " + apiCall.getBookingId());
                             } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.INSUFFICIENT_MONEY) {
                                 DialogUtils.showAlert(HomeShopViewActivity.this, "You have insufficient money. Do you wish to Add Money", new Runnable() {
                                     @Override
@@ -250,7 +250,8 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
                         try {
                             BaseModel baseModel = apiCall.getResult();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                DialogUtils.showAlert(HomeShopViewActivity.this, "HomeChef is saved.");
+                                DialogUtils.showAlert(HomeShopViewActivity.this, "HomeChef is saved to Favourites.");
+                                Constants.isFavouritesChange = true;
                                 homeChefNearByModel.setFavourite(true);
                             } else {
                                 DialogUtils.showAlert(HomeShopViewActivity.this, baseModel.getStatusMessage());

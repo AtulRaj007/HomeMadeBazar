@@ -104,7 +104,7 @@
     <string name="str_breakfast_small">BREAKFAST</string>
     <string name="str_lunch_small">LUNCH</string>
     <string name="str_dinner_small">DINNER</string>
-    <string name="str_create_order_one_food">You can only create an order for one food.</string>
+    <string name="str_create_order_initial_dialog">Create Your Menu</string>
     <string name="str_ok">OK</string>
     <string name="str_save_timings">SAVE TIMINGS</string>
     <string name="str_cusine">CUSINE</string>

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.homemadebazar.R;
 import com.homemadebazar.model.TransactionModel;
+import com.homemadebazar.util.Utils;
 
 import java.util.ArrayList;
 
@@ -35,8 +36,14 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
     public void onBindViewHolder(TransactionViewHolder holder, int position) {
         TransactionModel transactionModel = transactionModelArrayList.get(position);
         holder.tvTransactionId.setText(transactionModel.getTransactionId());
+        if (transactionModel.getTransactionMode().trim().equalsIgnoreCase("credit"))
+            holder.tvTransactionMode.setTextColor(context.getResources().getColor(R.color.green));
+        else
+            holder.tvTransactionMode.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+
         holder.tvTransactionMode.setText(transactionModel.getTransactionMode());
-        holder.tvTime.setText(transactionModel.getDateTime());
+
+        holder.tvTime.setText(Utils.getDateTime(transactionModel.getDateTime()));
         holder.tvTransactionAmount.setText("Transaction Amount :-" + " Rs" + transactionModel.getTransactionAmount());
         holder.tvDescription.setText(transactionModel.getDescription());
     }

@@ -147,6 +147,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="0.5"
             android:text="@string/str_no_of_guest"
+            android:textColor="@color/black"
             android:textSize="@dimen/text_18" />
 
 
@@ -196,6 +197,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="0.5"
             android:text="@string/str_price"
+            android:textColor="@color/black"
             android:textSize="@dimen/text_18" />
 
         <TextView
@@ -221,6 +223,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="0.5"
             android:text="@string/str_discount"
+            android:textColor="@color/black"
             android:textSize="@dimen/text_18" />
 
         <TextView
@@ -246,6 +249,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="0.5"
             android:text="@string/str_total"
+            android:textColor="@color/black"
             android:textSize="@dimen/text_18" />
 
         <TextView
@@ -265,7 +269,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/button_height"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/margin_30"
+        android:layout_marginTop="@dimen/margin_20"
         android:background="@drawable/button_round_primary"
         android:text="@string/str_book"
         android:textColor="@color/white" />

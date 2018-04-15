@@ -9,14 +9,13 @@
         android:id="@+id/sync_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/black_heading_color"
         android:orientation="horizontal"
         android:padding="@dimen/margin_10">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_10"
             android:src="@drawable/ic_sync_contact" />
 
         <TextView
@@ -24,8 +23,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/margin_10"
+            android:textColor="@color/white"
             android:text="@string/sync_contact"
-            android:textSize="@dimen/text_12" />
+            android:textSize="@dimen/text_16" />
 
         <Switch
             android:id="@+id/switch_sync_contact"
@@ -34,6 +34,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
+            android:thumbTint="@color/white"
             android:layout_marginRight="@dimen/margin_10"
             android:layout_weight="1" />
     </LinearLayout>

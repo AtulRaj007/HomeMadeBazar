@@ -107,6 +107,15 @@ public class FoodieFlashFragment extends BaseFragment implements SwipeRefreshLay
         swipeRefreshLayout.setRefreshing(true);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (Constants.isFlashDataChanges) {
+            Constants.isFlashDataChanges = false;
+            getFoodieFlashPosts();
+            swipeRefreshLayout.setRefreshing(true);
+        }
+    }
 
     public void getFoodieFlashPosts() {
         try {

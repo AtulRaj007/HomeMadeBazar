@@ -2,6 +2,7 @@ package com.homemadebazar.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.homemadebazar.R;
+import com.homemadebazar.activity.AddMoneyActivity;
+import com.homemadebazar.activity.HomeShopViewActivity;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.FoodDateTimeBookModel;
 import com.homemadebazar.model.HomeChefOrderModel;
@@ -61,11 +64,9 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
             holder.tvFoodName.setText(homeChefOrderModel.getDishName());
             holder.tvNoOfPeople.setText(homeChefOrderModel.getMinGuest() + " to " + homeChefOrderModel.getMaxGuest() + " People");
             holder.tvPrice.setText(homeChefOrderModel.getPrice());
-            holder.tvDiscount.setText(homeChefOrderModel.getDiscount() + " (%)");
+            holder.tvDiscount.setText(homeChefOrderModel.getDiscount() + " (%) ");
             holder.tvRules.setText(Utils.getRulesText(homeChefOrderModel.getRules()));
             holder.tvDescription.setText(homeChefOrderModel.getDescription());
-
-            holder.tvDiscount.setText(homeChefOrderModel.getDiscount());
 
             if (homeChefOrderModel.getFoodImagesArrayList() != null) {
                 ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(context, homeChefOrderModelArrayList.get(position).getFoodImagesArrayList());
@@ -157,7 +158,21 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
                         try {
                             BaseModel baseModel = apiCall.getResult();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                DialogUtils.showAlert(context, "Order is successfully booked" + "\n Booking Id is :-" + apiCall.getBookingId());
+                                DialogUtils.showAlert(context, "Order sent for HomeChef Review.\nPlease wait for the order to get accepted." + "\nYour Booking Id is - " + apiCall.getBookingId());
+                            } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.INSUFFICIENT_MONEY) {
+                                DialogUtils.showAlert(context, "You have insufficient money. Do you wish to Add Money", new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        //OK
+                                        context.startActivity(new Intent(context, AddMoneyActivity.class));
+                                    }
+                                }, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // Cancel
+
+                                    }
+                                });
                             } else {
                                 DialogUtils.showAlert(context, baseModel.getStatusMessage());
                             }

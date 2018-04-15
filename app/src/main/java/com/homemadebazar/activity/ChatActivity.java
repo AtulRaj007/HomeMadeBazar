@@ -135,8 +135,15 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Constants.activeChatUserId = targetUserModel.getUserId();
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
+        Constants.activeChatUserId = "";
         if (isFinishing()) {
             LocalBroadcastManager.getInstance(ChatActivity.this).unregisterReceiver(incomingMessageReceiver);
         }
@@ -206,6 +213,15 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
             if (!TextUtils.isEmpty(imagePath))
                 compressImageFile = new Compressor(this).compressToFile(new File(imagePath));
 
+            String message = "";
+            if (msgType.equals(Constants.MessageType.LOCATION)) {
+                message = "Sharing Location...";
+            } else if (msgType.equals(Constants.MessageType.FILE)) {
+                message = "Sharing Image...";
+            } else {
+                message = "Sending Message...";
+            }
+
             Hashtable<String, String> multipartParams = new Hashtable<>();
 
             final UploadFileTask fileTask = new UploadFileTask(this, url, compressImageFile != null ? compressImageFile.getPath() : "", multipartParams, "image_url", new UploadFileTask.FileUploadListener() {
@@ -228,7 +244,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                     }
 
                 }
-            });
+            }, message);
             fileTask.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -329,8 +345,10 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                                     recyclerView.scrollToPosition(chatMessageModelArrayList.size() - 1);
                                 }
 
+                            } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.NO_RECORD_FOUND) {
+                                System.out.println("No Record Found");
                             } else {
-                                DialogUtils.showAlert(ChatActivity.this, userModel.getStatusMessage());
+                                DialogUtils.showAlert(ChatActivity.this, baseModel.getStatusMessage());
                             }
 
                         } catch (Exception ex) {
@@ -358,5 +376,11 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                 getMessagesApi(userModel.getUserId(), targetUserModel.getUserId(), Constants.MessageSequeceOrder.NEW, getTimeStamp(Constants.MessageSequeceOrder.NEW));
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Utils.hideSoftKeyboard(ChatActivity.this);
     }
 }

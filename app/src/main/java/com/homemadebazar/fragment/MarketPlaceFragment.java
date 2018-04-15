@@ -189,7 +189,7 @@ public class MarketPlaceFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == GO_TO_CART && requestCode == getActivity().RESULT_OK) {
+        if (requestCode == GO_TO_CART && resultCode == getActivity().RESULT_OK) {
             etSearch.setText("");
         }
         super.onActivityResult(requestCode, resultCode, data);

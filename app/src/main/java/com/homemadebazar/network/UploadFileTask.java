@@ -49,6 +49,7 @@ public class UploadFileTask extends AsyncTask<Void, Integer, String> implements 
     private Hashtable<String, String> mMultipartParams = new Hashtable<String, String>();
     private String filePartTagName = "";
     private FileUploadListener mListener;
+    private String message = "Uploading File. Please wait...";
 
     public UploadFileTask(Context context, String url, String filePath, Hashtable<String, String> multipartParams, String filePartTagName, FileUploadListener listener) {
         this.mContext = context;
@@ -57,6 +58,16 @@ public class UploadFileTask extends AsyncTask<Void, Integer, String> implements 
         this.mMultipartParams = multipartParams;
         this.filePartTagName = filePartTagName;
         this.mListener = listener;
+    }
+
+    public UploadFileTask(Context context, String url, String filePath, Hashtable<String, String> multipartParams, String filePartTagName, FileUploadListener listener, String message) {
+        this.mContext = context;
+        this.mUrl = url;
+        this.mFilePath = filePath;
+        this.mMultipartParams = multipartParams;
+        this.filePartTagName = filePartTagName;
+        this.mListener = listener;
+        this.message = message;
     }
 
     /**
@@ -84,14 +95,16 @@ public class UploadFileTask extends AsyncTask<Void, Integer, String> implements 
         mWakeLock.acquire();
 
         mDialog = new ProgressDialog(mContext);
-        mDialog.setMessage("Uploading File. Please wait...");
+        mDialog.setMessage(message);
         mDialog.setIndeterminate(true);
         mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mDialog.setCancelable(false);
         mDialog.setCanceledOnTouchOutside(false);
 //            mDialog.setOnCancelListener(this);
 //            mDialog.setButton(Dialog.BUTTON_NEGATIVE, "Cancel", this);
-        mDialog.show();
+
+        if (!TextUtils.isEmpty(message))
+            mDialog.show();
     }
 
     @Override
@@ -275,7 +288,8 @@ public class UploadFileTask extends AsyncTask<Void, Integer, String> implements 
     @Override
     protected final void onPostExecute(final String result) {
         mWakeLock.release();
-        mDialog.dismiss();
+        if (!TextUtils.isEmpty(message))
+            mDialog.dismiss();
         dispatchResponse((String) result);
     }
 
@@ -287,7 +301,8 @@ public class UploadFileTask extends AsyncTask<Void, Integer, String> implements 
     @Override
     protected void onCancelled(String result) {
         mWakeLock.release();
-        mDialog.dismiss();
+        if (!TextUtils.isEmpty(message))
+            mDialog.dismiss();
         Toast.makeText(mContext, "File upload cancelled.", Toast.LENGTH_LONG).show();
         dispatchResponse(null);
     }

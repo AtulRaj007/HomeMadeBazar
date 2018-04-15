@@ -148,6 +148,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/str_order_id"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/text_14" />
 
                     <TextView
@@ -160,6 +161,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/str_request_id"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/text_14" />
 
                     <TextView
@@ -172,6 +174,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/str_booking_date"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/text_14" />
 
                     <TextView
@@ -185,6 +188,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/str_booked_for"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/text_14" />
 
                     <TextView

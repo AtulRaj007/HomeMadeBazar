@@ -46,6 +46,8 @@ public class MarketPlaceShoppingCart {
     public static void removeAllProductsFromCart(Context context) {
         try {
             SharedPreference.clearShoppingCart(context);
+            marketPlaceProductModelArrayList.clear();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

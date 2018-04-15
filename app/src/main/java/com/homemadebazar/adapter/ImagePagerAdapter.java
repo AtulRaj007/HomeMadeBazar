@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.homemadebazar.R;
 
 import java.util.ArrayList;
@@ -47,7 +48,10 @@ public class ImagePagerAdapter extends PagerAdapter {
         ImageView imageView = view.findViewById(R.id.iv_image);
         if (!TextUtils.isEmpty(imageArrayList.get(position))) {
             try {
-                Glide.with(context).load(imageArrayList.get(position)).into(imageView);
+                Glide.with(context)
+                        .load(imageArrayList.get(position))
+                        .apply(new RequestOptions().override(800, 800).centerCrop())
+                        .into(imageView);
             } catch (Exception e) {
                 e.printStackTrace();
             }

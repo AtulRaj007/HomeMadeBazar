@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_10"
-            android:layout_toLeftOf="@+id/btn_unfriend"
+            android:layout_toLeftOf="@+id/iv_unfriend"
             android:layout_toRightOf="@id/iv_profile_pic"
             android:orientation="vertical">
 
@@ -54,17 +54,16 @@
 
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/btn_unfriend"
+        <ImageView
+            android:id="@+id/iv_unfriend"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_height"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/button_oval_primary"
-            android:text="@string/str_unfriend"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_14" />
+            android:layout_marginRight="@dimen/margin_5"
+            android:padding="@dimen/padding_5"
+            android:src="@drawable/ic_vertical_menu"
+            android:tint="@color/colorPrimary" />
 
 
     </RelativeLayout>

@@ -99,7 +99,7 @@ public class FoodieHomeListAdapter extends RecyclerView.Adapter<FoodieHomeListAd
                         try {
                             BaseModel baseModel = apiCall.getResult();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                DialogUtils.showAlert(context, "Favourite is removed", new Runnable() {
+                                DialogUtils.showAlert(context, "HomeChef is removed from Favourites", new Runnable() {
                                     @Override
                                     public void run() {
                                         homeChiefNearByModelArrayList.remove(position);

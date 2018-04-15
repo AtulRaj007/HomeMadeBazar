@@ -85,6 +85,7 @@ public class FoodiePostCommentActivity extends BaseActivity implements View.OnCl
                 if (isValid()) {
                     performLikeUnlikeComment(postId, Constants.PostActionTAG.COMMENTS, etChatMessage.getText().toString().trim(), userModel.getUserId());
                     etChatMessage.setText("");
+                    Constants.isFlashDataChanges = true;
                 }
                 break;
 

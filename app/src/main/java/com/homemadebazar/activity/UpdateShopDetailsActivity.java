@@ -26,6 +26,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.homemadebazar.R;
 import com.homemadebazar.Template.Template;
 import com.homemadebazar.model.BaseModel;
@@ -360,23 +362,43 @@ public class UpdateShopDetailsActivity extends BaseActivity implements View.OnCl
             mFile.add(new File(getPath(UpdateShopDetailsActivity.this, uri)));
             switch (imageSelectedIndex) {
                 case 0:
-                    ivFirstCoverPhoto.setImageURI(uri);
+//                    ivFirstCoverPhoto.setImageURI(uri);
+                    Glide.with(UpdateShopDetailsActivity.this)
+                            .load(uri)
+                            .apply(new RequestOptions().override(400, 400).centerCrop())
+                            .into(ivFirstCoverPhoto);
                     coverPhotoArray[0] = uri.getPath();
                     break;
                 case 1:
-                    ivSecondCoverPhoto.setImageURI(uri);
+//                    ivSecondCoverPhoto.setImageURI(uri);
+                    Glide.with(UpdateShopDetailsActivity.this)
+                            .load(uri)
+                            .apply(new RequestOptions().override(400, 400).centerCrop())
+                            .into(ivSecondCoverPhoto);
                     coverPhotoArray[1] = uri.getPath();
                     break;
                 case 2:
-                    ivThirdCoverPhoto.setImageURI(uri);
+//                    ivThirdCoverPhoto.setImageURI(uri);
+                    Glide.with(UpdateShopDetailsActivity.this)
+                            .load(uri)
+                            .apply(new RequestOptions().override(400, 400).centerCrop())
+                            .into(ivThirdCoverPhoto);
                     coverPhotoArray[2] = uri.getPath();
                     break;
                 case 3:
-                    ivFourthCoverPhoto.setImageURI(uri);
+//                    ivFourthCoverPhoto.setImageURI(uri);
+                    Glide.with(UpdateShopDetailsActivity.this)
+                            .load(uri)
+                            .apply(new RequestOptions().override(400, 400).centerCrop())
+                            .into(ivFourthCoverPhoto);
                     coverPhotoArray[3] = uri.getPath();
                     break;
                 case 4:
-                    ivFifthCoverPhoto.setImageURI(uri);
+//                    ivFifthCoverPhoto.setImageURI(uri);
+                    Glide.with(UpdateShopDetailsActivity.this)
+                            .load(uri)
+                            .apply(new RequestOptions().override(400, 400).centerCrop())
+                            .into(ivFifthCoverPhoto);
                     coverPhotoArray[4] = uri.getPath();
                     break;
             }

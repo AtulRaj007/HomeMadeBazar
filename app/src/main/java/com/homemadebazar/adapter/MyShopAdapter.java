@@ -85,6 +85,48 @@ public class MyShopAdapter extends RecyclerView.Adapter<MyShopAdapter.MyShopView
         return homeChefOrderModelArrayList.size();
     }
 
+    private String getOrderTypeTiming(int position) {
+        // Lunch, Breakfast, Dinner
+        String orderType = "";
+        String orderTime = "";
+        boolean isBreakfast = false, isLunch = false, isDiner = false;
+        try {
+            ArrayList<FoodDateTimeBookModel> foodDateTimeBookModels = homeChefOrderModelArrayList.get(position).getFoodDateTimeBookModels();
+            for (int i = 0; i < foodDateTimeBookModels.size(); i++) {
+                if (foodDateTimeBookModels.get(i).isBreakFast()) {
+                    isBreakfast = true;
+                }
+
+                if (foodDateTimeBookModels.get(i).isLunch()) {
+                    isLunch = true;
+                }
+
+                if (foodDateTimeBookModels.get(i).isDinner()) {
+                    isDiner = true;
+                }
+            }
+
+            if (isBreakfast) {
+                orderType = orderType + "Breakfast";
+                orderTime = orderTime + homeChefOrderModelArrayList.get(position).getBreakFastTime();
+            }
+
+            if (isLunch) {
+                orderType = orderType + ",Lunch";
+                orderTime = orderTime + "," + homeChefOrderModelArrayList.get(position).getLunchTime();
+            }
+
+            if (isDiner) {
+                orderType = orderType + ",Dinner";
+                orderTime = orderTime + "," + homeChefOrderModelArrayList.get(position).getDinnerTime();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return orderType + "@@" + orderTime;
+    }
+
     class MyShopViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvOrderId, tvName, tvDescription, tvPermoteBusiness;
         private ImageView ivDeleteOrder, ivEditOrder;
@@ -135,7 +177,17 @@ public class MyShopAdapter extends RecyclerView.Adapter<MyShopAdapter.MyShopView
                     Toast.makeText(context, "Under Development", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.tv_promote_business:
-                    applyForHotDeals(homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId());
+                    DialogUtils.showAlert(context, "Your order will be promoted for next 7 days.You will be charged for promotion.", new Runnable() {
+                        @Override
+                        public void run() {
+                            applyForHotDeals(homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId());
+                        }
+                    }, new Runnable() {
+                        @Override
+                        public void run() {
+
+                        }
+                    });
                     break;
             }
         }
@@ -213,47 +265,5 @@ public class MyShopAdapter extends RecyclerView.Adapter<MyShopAdapter.MyShopView
                 Utils.handleError(e.getMessage(), context, null);
             }
         }
-    }
-
-    private String getOrderTypeTiming(int position) {
-        // Lunch, Breakfast, Dinner
-        String orderType = "";
-        String orderTime = "";
-        boolean isBreakfast = false, isLunch = false, isDiner = false;
-        try {
-            ArrayList<FoodDateTimeBookModel> foodDateTimeBookModels = homeChefOrderModelArrayList.get(position).getFoodDateTimeBookModels();
-            for (int i = 0; i < foodDateTimeBookModels.size(); i++) {
-                if (foodDateTimeBookModels.get(i).isBreakFast()) {
-                    isBreakfast = true;
-                }
-
-                if (foodDateTimeBookModels.get(i).isLunch()) {
-                    isLunch = true;
-                }
-
-                if (foodDateTimeBookModels.get(i).isDinner()) {
-                    isDiner = true;
-                }
-            }
-
-            if (isBreakfast) {
-                orderType = orderType + "Breakfast";
-                orderTime = orderTime + homeChefOrderModelArrayList.get(position).getBreakFastTime();
-            }
-
-            if (isLunch) {
-                orderType = orderType + ",Lunch";
-                orderTime = orderTime + "," + homeChefOrderModelArrayList.get(position).getLunchTime();
-            }
-
-            if (isDiner) {
-                orderType = orderType + ",Dinner";
-                orderTime = orderTime + "," + homeChefOrderModelArrayList.get(position).getDinnerTime();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return orderType + "@@" + orderTime;
     }
 }

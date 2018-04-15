@@ -2,8 +2,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_screen">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -49,7 +48,6 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background_screen"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
@@ -67,15 +65,22 @@
                     android:id="@+id/tv_common_interests"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_5"
                     android:layout_marginLeft="@dimen/margin_10"
                     android:layout_marginRight="@dimen/margin_10"
-                    android:text=""
-                    android:textColor="@color/colorPrimary" />
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:text="" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/grey" />
 
 
                 <LinearLayout
@@ -91,6 +96,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_5"
                         android:text="@string/str_name"
+                        android:textColor="@color/title_profile_color"
                         android:textSize="@dimen/text_16" />
 
                     <TextView
@@ -111,6 +117,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_5"
                         android:text="@string/str_email_id"
+                        android:textColor="@color/title_profile_color"
                         android:textSize="@dimen/text_16" />
 
                     <TextView
@@ -137,6 +144,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/margin_5"
                             android:text="@string/str_mobile_number"
+                            android:textColor="@color/title_profile_color"
                             android:textSize="@dimen/text_16" />
 
                         <TextView
@@ -159,6 +167,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_5"
                         android:text="@string/str_country"
+                        android:textColor="@color/title_profile_color"
                         android:textSize="@dimen/text_16" />
 
                     <TextView
@@ -179,6 +188,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_5"
                         android:text="@string/str_profession_type"
+                        android:textColor="@color/title_profile_color"
                         android:textSize="@dimen/text_16" />
 
                     <TextView
@@ -199,6 +209,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_5"
                         android:text="@string/str_profession_name"
+                        android:textColor="@color/title_profile_color"
                         android:textSize="@dimen/text_16" />
 
                     <TextView
@@ -219,6 +230,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/margin_5"
                         android:text="@string/str_about"
+                        android:textColor="@color/title_profile_color"
                         android:textSize="@dimen/text_16" />
 
                     <TextView
