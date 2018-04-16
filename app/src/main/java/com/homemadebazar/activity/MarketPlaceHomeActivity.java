@@ -1,5 +1,7 @@
 package com.homemadebazar.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -38,6 +40,8 @@ public class MarketPlaceHomeActivity extends BaseActivity {
     private UserModel userModel;
     private Toolbar mToolbar;
     private String[] titles = {"Orders", "My Shop", "My Products"};
+    private NotificationReceiver notificationReceiver;
+    private TextView tvNotificationCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,9 @@ public class MarketPlaceHomeActivity extends BaseActivity {
         ServiceUtils.deviceLoginLogoutApiCall(MarketPlaceHomeActivity.this, userModel.getUserId(), deviceToken, Constants.LoginHistory.LOGIN);
         Utils.runAppWalkthrough(this, getFragmentManager(), userModel.getAccountType());
         Utils.setupUserToCrashAnalytics(userModel);
+
+        notificationReceiver = new NotificationReceiver();
+        Utils.registerNotificationReceiver(this, notificationReceiver);
     }
 
     @Override
@@ -57,6 +64,7 @@ public class MarketPlaceHomeActivity extends BaseActivity {
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tab_layout);
+        tvNotificationCount=findViewById(R.id.tv_notification_count);
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
 
@@ -84,7 +92,12 @@ public class MarketPlaceHomeActivity extends BaseActivity {
 
     @Override
     protected void initialiseListener() {
-
+        findViewById(R.id.rl_notification).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MarketPlaceHomeActivity.this, NotificationActivity.class));
+            }
+        });
     }
 
     @Override
@@ -193,5 +206,21 @@ public class MarketPlaceHomeActivity extends BaseActivity {
         Log.e(TAG, "Click:-" + v.getId());
         mDrawerLayout.closeDrawer(Gravity.LEFT);
         Utils.onNavItemClick(MarketPlaceHomeActivity.this, v, userModel.getUserId());
+    }
+
+    public class NotificationReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            System.out.println("Notification Receiver");
+            int count = SharedPreference.getIntegerPreference(MarketPlaceHomeActivity.this, SharedPreference.NOTIFICATION_COUNT);
+            tvNotificationCount.setText(count + "");
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (isFinishing())
+            Utils.unregisterNotificationReceiver(MarketPlaceHomeActivity.this, notificationReceiver);
     }
 }

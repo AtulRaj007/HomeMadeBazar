@@ -1,5 +1,7 @@
 package com.homemadebazar.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -9,8 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -37,9 +37,11 @@ public class FoodieHomeActivity extends BaseActivity {
     private Toolbar mToolbar;
     private UserModel userModel;
     private ViewPagerAdapter viewPagerAdapter;
+    private NotificationReceiver notificationReceiver;
     private String titles[] = {"Home", "Discover", "Flash", "Messenger"};
     private int tabIcons[] = {R.drawable.ic_foodie_home_inactive, R.drawable.ic_discover_inactive, R.drawable.ic_discover_flash_inactive, R.drawable.ic_messenger_inactive};
     private int tabIconsSelected[] = {R.drawable.ic_foodie_home_active, R.drawable.ic_discover_active, R.drawable.ic_discover_flash_active, R.drawable.ic_messenger_active};
+    private TextView tvNotificationCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +52,10 @@ public class FoodieHomeActivity extends BaseActivity {
         ServiceUtils.deviceLoginLogoutApiCall(FoodieHomeActivity.this, userModel.getUserId(), deviceToken, Constants.LoginHistory.LOGIN);
         Utils.runAppWalkthrough(this, getFragmentManager(), userModel.getAccountType());
         Utils.setupUserToCrashAnalytics(userModel);
-//        UserModel userModel = SharedPreference.getUserModel(this);
-//        if (userModel != null)
-//            Log.d("Foodie user id", userModel.getUserId());
+
+        notificationReceiver = new NotificationReceiver();
+        Utils.registerNotificationReceiver(this, notificationReceiver);
+
     }
 
 
@@ -63,6 +66,7 @@ public class FoodieHomeActivity extends BaseActivity {
         toolbar = findViewById(R.id.toolbar);
         viewPager = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tab_layout);
+        tvNotificationCount = findViewById(R.id.tv_notification_count);
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
@@ -127,7 +131,7 @@ public class FoodieHomeActivity extends BaseActivity {
         viewPagerAdapter.addFragment(new FoodieFlashFragment(), "Flash");
         viewPagerAdapter.addFragment(new FoodieMessengerFragment(), "Messenger");
         viewPager.setAdapter(viewPagerAdapter);
-        viewPager.setOffscreenPageLimit(4);
+//        viewPager.setOffscreenPageLimit(4);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -148,7 +152,12 @@ public class FoodieHomeActivity extends BaseActivity {
 
     @Override
     protected void initialiseListener() {
-
+        findViewById(R.id.rl_notification).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(FoodieHomeActivity.this, NotificationActivity.class));
+            }
+        });
     }
 
 
@@ -159,46 +168,25 @@ public class FoodieHomeActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Log.e(TAG, "Id:-" + item.getItemId());
-        switch (item.getItemId()) {
-            case R.id.menu_notification:
-                startActivity(new Intent(FoodieHomeActivity.this, NotificationActivity.class));
-                return true;
-            case R.id.menu_second:
-//                ((MarketPlaceFragment)viewPagerAdapter.getItem(2)).setGridLayout();
-                return false;
-            default:
-                super.onOptionsItemSelected(item);
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        Log.e(TAG, "====== onCreateOptionsMenu ======");
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.inflateMenu(R.menu.menu_home);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return onOptionsItemSelected(item);
-            }
-        });
-        final MenuItem notificationMenuItem = menu.findItem(R.id.menu_notification);
-        notificationMenuItem.getActionView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onOptionsItemSelected(notificationMenuItem);
-            }
-        });
-        return true;
-    }
-
-    @Override
     protected void setData() {
         setUpViewPager();
         setUpTabLayout();
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (isFinishing())
+            Utils.unregisterNotificationReceiver(FoodieHomeActivity.this, notificationReceiver);
+    }
+
+    public class NotificationReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            System.out.println("Notification Receiver");
+            int count = SharedPreference.getIntegerPreference(FoodieHomeActivity.this, SharedPreference.NOTIFICATION_COUNT);
+            tvNotificationCount.setText(count + "");
+        }
     }
 }

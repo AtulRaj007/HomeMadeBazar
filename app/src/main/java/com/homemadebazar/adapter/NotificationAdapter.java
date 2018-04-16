@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.homemadebazar.R;
 import com.homemadebazar.model.NotificationModel;
+import com.homemadebazar.util.Utils;
 
 import java.util.ArrayList;
 
@@ -38,7 +39,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.tvTitle.setText(notificationModel.getTitle());
         holder.tvMessage.setText(notificationModel.getMessage());
         holder.tvNotificationId.setText(Html.fromHtml("<font color='#000000'>Id#</font>" + "<font color='#D3D3D3'>" + notificationModel.getNotificationId() + "</font>"));
-        holder.tvTime.setText(notificationModel.getNotificationTime());
+        holder.tvTime.setText(Utils.formatDateTwoLines(notificationModel.getNotificationTime()));
     }
 
     @Override

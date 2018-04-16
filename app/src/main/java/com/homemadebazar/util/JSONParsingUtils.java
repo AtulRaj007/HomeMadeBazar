@@ -649,7 +649,7 @@ public class JSONParsingUtils {
             chatMessageModel.setReceiverId(object.optString("ReceiverId"));
             chatMessageModel.setFileType(object.optString("FileType"));
             chatMessageModel.setMessageType(object.optString("MessageType"));
-            chatMessageModel.setChatMessage(object.optString("ChatText"));
+            chatMessageModel.setChatMessage(Utils.decodeFromNonLossyAscii(object.optString("ChatText")));
             chatMessageModel.setLatitude(object.optString("Latitude"));
             chatMessageModel.setLongitude(object.optString("Longtitude"));
             chatMessageModel.setReadStatus(object.optString("ReadStatus"));

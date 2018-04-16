@@ -110,9 +110,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/margin_5"
                     android:layout_marginTop="@dimen/margin_5"
+                    android:gravity="center_horizontal"
                     android:text=""
                     android:textColor="@color/grey"
-                    android:textSize="@dimen/text_8" />
+                    android:textSize="@dimen/text_14" />
 
 
             </LinearLayout>

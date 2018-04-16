@@ -265,6 +265,8 @@
     <string name="str_product_id">Product Id</string>
     <string name="str_dispatch">Dispatch</string>
     <string name="str_marketplace_orders">MarketPlace Orders</string>
+    <string name="alert_no_network">Network not available.</string>
+    <string name="something_went_wrong">Something went wrong</string>
 
 
     <string-array name="price">

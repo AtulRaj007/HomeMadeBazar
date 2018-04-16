@@ -58,7 +58,7 @@ public class FoodieMessengerFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
-
+                viewPagerAdapter.getItem(position).onResume();
             }
 
             @Override

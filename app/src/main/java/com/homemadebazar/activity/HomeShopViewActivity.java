@@ -194,7 +194,7 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
                         Utils.handleError(e.getMessage(), HomeShopViewActivity.this, null);
                     }
                 }
-            });
+            }, false);
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), HomeShopViewActivity.this, null);
         }

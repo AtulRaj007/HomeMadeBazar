@@ -360,7 +360,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
                         Utils.handleError(e.getMessage(), SignUpActivity.this, null);
                     }
                 }
-            });
+            }, false);
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), SignUpActivity.this, null);
         }

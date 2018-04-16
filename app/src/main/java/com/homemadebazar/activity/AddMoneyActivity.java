@@ -120,9 +120,7 @@ public class AddMoneyActivity extends BaseActivity implements View.OnClickListen
                 .amount(amount)
                 .requestThreeDSecureVerification(true)
                 .collectDeviceData(true)
-                .disablePayPal()
-                .androidPayPhoneNumberRequired(true)
-                .androidPayShippingAddressRequired(true);
+                .disablePayPal();
 
         startActivityForResult(dropInRequest.getIntent(AddMoneyActivity.this), Constants.Keys.REQUEST_ADD_MONEY);
     }
@@ -145,7 +143,6 @@ public class AddMoneyActivity extends BaseActivity implements View.OnClickListen
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    //    http://localhost:14013/api/Checkouts/CreatePayment?AMOUNT=5&PAYMENT_METHOD_NONCE=ba5effa2-9240-0af1-2157-7b9bf85b7576&ACCOUNT_ID=HMBWA00000008&TXN_NO=Trans00000020
     private String getServiceUrl(String accountId, String paymentMethodNonce, String amount, String transactionId) {
         String url = Constants.ServerURL.CREATE_PAYMENT + "ACCOUNT_ID=" + accountId + "&PAYMENT_METHOD_NONCE=" + paymentMethodNonce + "&AMOUNT=" + amount + "&TXN_NO=" + transactionId;
         System.out.println("Service Url:-" + url);

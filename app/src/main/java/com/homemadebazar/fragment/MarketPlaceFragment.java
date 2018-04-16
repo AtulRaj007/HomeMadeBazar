@@ -148,7 +148,7 @@ public class MarketPlaceFragment extends BaseFragment implements View.OnClickLis
                         Utils.handleError(e.getMessage(), getActivity(), null);
                     }
                 }
-            });
+            }, false);
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), getActivity(), null);
         }

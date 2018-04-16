@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.AddMoneyActivity;
-import com.homemadebazar.activity.HomeShopViewActivity;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.FoodDateTimeBookModel;
 import com.homemadebazar.model.HomeChefOrderModel;
@@ -184,7 +183,7 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
                         Utils.handleError(e.getMessage(), context, null);
                     }
                 }
-            });
+            }, false);
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), context, null);
         }

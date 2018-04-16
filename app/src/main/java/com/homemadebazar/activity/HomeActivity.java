@@ -1,5 +1,7 @@
 package com.homemadebazar.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -46,6 +47,8 @@ public class HomeActivity extends BaseActivity {
     private NavigationDrawerFragment navigationDrawerFragment;
     private Handler handler = new Handler();
     private String titles[] = {"Order", "My Shop", "Market Place", "Skill Hub"};
+    private NotificationReceiver notificationReceiver;
+    private TextView tvNotificationCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,9 @@ public class HomeActivity extends BaseActivity {
         ServiceUtils.deviceLoginLogoutApiCall(HomeActivity.this, userModel.getUserId(), deviceToken, Constants.LoginHistory.LOGIN);
         Utils.runAppWalkthrough(this, getFragmentManager(), userModel.getAccountType());
         Utils.setupUserToCrashAnalytics(userModel);
+
+        notificationReceiver = new NotificationReceiver();
+        Utils.registerNotificationReceiver(this, notificationReceiver);
     }
 
     @Override
@@ -64,6 +70,7 @@ public class HomeActivity extends BaseActivity {
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
+        tvNotificationCount = findViewById(R.id.tv_notification_count);
 
 
         mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
@@ -107,7 +114,12 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initialiseListener() {
-
+        findViewById(R.id.rl_notification).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, NotificationActivity.class));
+            }
+        });
     }
 
     @Override
@@ -117,13 +129,13 @@ public class HomeActivity extends BaseActivity {
         setUpTabLayout();
         userModel = SharedPreference.getUserModel(HomeActivity.this);
         Log.e("UserModel:-", userModel.toString());
-
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 updateNavigationProfile();
             }
         }, 1000);
+
     }
 
     private void updateNavigationProfile() {
@@ -162,7 +174,7 @@ public class HomeActivity extends BaseActivity {
         viewPagerAdapter.addFragment(new MarketPlaceFragment(), "Market Place");
         viewPagerAdapter.addFragment(new SkillHubFragment(), "Skill Hub");
         viewPager.setAdapter(viewPagerAdapter);
-        viewPager.setOffscreenPageLimit(4);
+//        viewPager.setOffscreenPageLimit(4);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -210,44 +222,29 @@ public class HomeActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Log.e(TAG, "Id:-" + item.getItemId());
-        switch (item.getItemId()) {
-            case R.id.menu_notification:
-                startActivity(new Intent(HomeActivity.this, NotificationActivity.class));
-                return true;
-            case R.id.menu_second:
-//                ((MarketPlaceFragment)viewPagerAdapter.getItem(2)).setGridLayout();
-                return false;
-            default:
-                super.onOptionsItemSelected(item);
-        }
-        return false;
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        System.out.println("===== onPrepareOptionsMenu ======");
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        Log.e(TAG, "====== onCreateOptionsMenu ======");
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.inflateMenu(R.menu.menu_home);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return onOptionsItemSelected(item);
-            }
-        });
-        final MenuItem notificationMenuItem = menu.findItem(R.id.menu_notification);
-        notificationMenuItem.getActionView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onOptionsItemSelected(notificationMenuItem);
-            }
-        });
-        return true;
+    protected void onStop() {
+        super.onStop();
+        if (isFinishing()) {
+            Utils.unregisterNotificationReceiver(HomeActivity.this, notificationReceiver);
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public class NotificationReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int count = SharedPreference.getIntegerPreference(HomeActivity.this, SharedPreference.NOTIFICATION_COUNT);
+            tvNotificationCount.setText(count + "");
+        }
     }
 }

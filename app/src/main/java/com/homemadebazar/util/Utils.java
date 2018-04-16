@@ -4,9 +4,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -14,6 +16,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -21,6 +25,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -53,10 +58,13 @@ import com.homemadebazar.model.UserLocation;
 import com.homemadebazar.model.UserModel;
 
 import java.io.File;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -73,6 +81,8 @@ public class Utils {
     static Pattern digit = Pattern.compile("[0-9]");
     static Pattern special = Pattern.compile("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
     static Pattern eight = Pattern.compile(".{8}");
+    private static final Pattern UNICODE_HEX_PATTERN = Pattern.compile("\\\\u([0-9A-Fa-f]{4})");
+    private static final Pattern UNICODE_OCT_PATTERN = Pattern.compile("\\\\([0-7]{3})");
 
     public static void generateKeyHash(Context mContext) {
         try {
@@ -90,7 +100,16 @@ public class Utils {
     }
 
     public static void handleError(String message, final Context context, Runnable runnable) {
-//        DialogUtils.showAlert(context, message);
+        try {
+            if (Utils.isNetworkAvailable(context)) {
+                DialogUtils.showAlert(context, context.getString(R.string.something_went_wrong), null);
+            } else {
+                DialogUtils.showAlert(context, context.getString(R.string.alert_no_network), null);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static boolean isValid(String input, String type) {
@@ -315,6 +334,18 @@ public class Utils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean isNetworkAvailable(final Context context) {
+        boolean status = false;
+        if (context != null) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            if (activeNetworkInfo != null)
+                status = activeNetworkInfo.isAvailable();
+        }
+        return status;
+
     }
 
     public static String getAppStoreUrl(Context context) {
@@ -587,14 +618,6 @@ public class Utils {
         return strRules;
     }
 
-    public static String getDateTime(String dateTime) {
-        try {
-            return dateTime;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
 
     private static double roundToTwoDigits(double distance) {
         try {
@@ -604,5 +627,102 @@ public class Utils {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public static String encodeToNonLossyAscii(String original) {
+        Charset asciiCharset = Charset.forName("US-ASCII");
+        if (asciiCharset.newEncoder().canEncode(original)) {
+            return original;
+        }
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i = 0; i < original.length(); i++) {
+            char c = original.charAt(i);
+            if (c < 128) {
+                stringBuffer.append(c);
+            } else if (c < 256) {
+                String octal = Integer.toOctalString(c);
+                stringBuffer.append("\\");
+                stringBuffer.append(octal);
+            } else {
+                String hex = Integer.toHexString(c);
+                stringBuffer.append("\\u");
+                stringBuffer.append(hex);
+            }
+        }
+        return stringBuffer.toString();
+    }
+
+
+    public static String decodeFromNonLossyAscii(String original) {
+        Matcher matcher = UNICODE_HEX_PATTERN.matcher(original);
+        StringBuffer charBuffer = new StringBuffer(original.length());
+        while (matcher.find()) {
+            String match = matcher.group(1);
+            char unicodeChar = (char) Integer.parseInt(match, 16);
+            matcher.appendReplacement(charBuffer, Character.toString(unicodeChar));
+        }
+        matcher.appendTail(charBuffer);
+        String parsedUnicode = charBuffer.toString();
+
+        matcher = UNICODE_OCT_PATTERN.matcher(parsedUnicode);
+        charBuffer = new StringBuffer(parsedUnicode.length());
+        while (matcher.find()) {
+            String match = matcher.group(1);
+            char unicodeChar = (char) Integer.parseInt(match, 8);
+            matcher.appendReplacement(charBuffer, Character.toString(unicodeChar));
+        }
+        matcher.appendTail(charBuffer);
+        return charBuffer.toString();
+    }
+
+    public static void registerNotificationReceiver(Context context, BroadcastReceiver receiver) {
+        try {
+            LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(context);
+            IntentFilter filter = new IntentFilter("NOTIFICATION_COUNT");
+            localBroadcastManager.registerReceiver(receiver, filter);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void unregisterNotificationReceiver(Context context, BroadcastReceiver receiver) {
+        try {
+            LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(context);
+            localBroadcastManager.unregisterReceiver(receiver);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendLocalNotificationCount(Context context) {
+        try {
+            LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(context);
+            Intent intent = new Intent("NOTIFICATION_COUNT");
+            localBroadcastManager.sendBroadcast(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String formatDateTwoLines(String dateTime) {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM d yyyy h:mm");
+            Date dateTimeObject = simpleDateFormat.parse(dateTime);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d yyyy");
+            String date = dateFormat.format(dateTimeObject);
+
+            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm");
+            String time = timeFormat.format(dateTimeObject);
+
+            return date + "\n" + time;
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "";
+
     }
 }

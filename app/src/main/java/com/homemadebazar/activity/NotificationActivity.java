@@ -34,6 +34,8 @@ public class NotificationActivity extends BaseActivity implements SwipeRefreshLa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
         setupToolbar();
+        SharedPreference.setIntegerPreference(this, SharedPreference.NOTIFICATION_COUNT, 0);
+        Utils.sendLocalNotificationCount(NotificationActivity.this);
     }
 
     @Override
