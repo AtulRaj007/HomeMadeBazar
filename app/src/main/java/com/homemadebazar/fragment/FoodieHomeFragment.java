@@ -51,7 +51,7 @@ public class FoodieHomeFragment extends BaseFragment {
 
     private void setUpViewPager() {
         viewPagerAdapter.addFragment(new FoodieHomeChefSearchFragment(), "Near Me");
-        viewPagerAdapter.addFragment(new FoodieHomeListFragment(), "List");
+        viewPagerAdapter.addFragment(new FoodieHomeListFragment(), "My City");
         viewPagerAdapter.addFragment(new FoodieHomeChefBookmarkFragment(), "Favourites");
 
         viewPager.setAdapter(viewPagerAdapter);

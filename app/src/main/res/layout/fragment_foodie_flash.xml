@@ -23,9 +23,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/margin_10"
-            android:textColor="@color/white"
             android:text="@string/sync_contact"
-            android:textSize="@dimen/text_16" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14" />
 
         <Switch
             android:id="@+id/switch_sync_contact"
@@ -34,9 +34,9 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:thumbTint="@color/white"
             android:layout_marginRight="@dimen/margin_10"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:thumbTint="@color/white" />
     </LinearLayout>
 
     <Button
@@ -51,7 +51,8 @@
         android:paddingLeft="@dimen/padding_20"
         android:paddingRight="@dimen/padding_20"
         android:text="@string/str_invite_friends"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_14" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"

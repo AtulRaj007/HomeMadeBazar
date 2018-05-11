@@ -51,7 +51,7 @@ public class HomeChefFoodTimingAdapter extends RecyclerView.Adapter<HomeChefFood
         holder.tvFoodType.setText(homeChefOrderModel.getOrderType());
         holder.tvNoOfPeople.setText(homeChefOrderModel.getMinGuest() + " to " + homeChefOrderModel.getMaxGuest() + " People ");
         holder.tvPrice.setText(homeChefOrderModel.getPrice());
-        holder.tvDiscount.setText(homeChefOrderModel.getDiscount() + " (%) ");
+        holder.tvDiscount.setText(homeChefOrderModel.getDiscount() + " % ");
         holder.tvOrderTiming.setText(homeChefOrderModel.getOrderTime());
         holder.tvDescription.setText(homeChefOrderModel.getDescription());
         holder.tvRules.setText(Utils.getRulesText(homeChefOrderModel.getRules()));

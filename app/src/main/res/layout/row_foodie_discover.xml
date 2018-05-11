@@ -35,7 +35,7 @@
             android:layout_marginLeft="@dimen/margin_10"
             android:layout_marginTop="@dimen/margin_10"
             android:layout_toRightOf="@id/iv_profile_pic"
-            android:text="Vivek Gupta"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="@dimen/text_18" />
 

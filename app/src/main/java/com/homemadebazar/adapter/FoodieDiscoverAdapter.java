@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.AddMoneyActivity;
-import com.homemadebazar.activity.HomeShopViewActivity;
 import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.FoodDateTimeBookModel;
 import com.homemadebazar.model.HomeChefOrderModel;
@@ -64,7 +63,7 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
             holder.tvFoodName.setText(homeChefOrderModel.getDishName());
             holder.tvNoOfPeople.setText(homeChefOrderModel.getMinGuest() + " to " + homeChefOrderModel.getMaxGuest() + " People");
             holder.tvPrice.setText(homeChefOrderModel.getPrice());
-            holder.tvDiscount.setText(homeChefOrderModel.getDiscount() + " (%) ");
+            holder.tvDiscount.setText(homeChefOrderModel.getDiscount() + " % ");
             holder.tvRules.setText(Utils.getRulesText(homeChefOrderModel.getRules()));
             holder.tvDescription.setText(homeChefOrderModel.getDescription());
 
