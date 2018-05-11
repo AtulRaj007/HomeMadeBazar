@@ -2,9 +2,13 @@ package com.homemadebazar.network;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.util.Log;
 
+import com.homemadebazar.R;
 import com.homemadebazar.util.Constants;
+import com.homemadebazar.util.DialogUtils;
+import com.homemadebazar.util.Utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,6 +27,7 @@ public class GetRequest extends AsyncTask<String, Void, String> {
     private String server_response;
     private Context context;
     private ApiCompleteListener apiCompleteListener;
+    private Handler handler = new Handler();
 
     public GetRequest(Context context, ApiCompleteListener apiCompleteListener) {
         this.context = context;
@@ -39,6 +44,7 @@ public class GetRequest extends AsyncTask<String, Void, String> {
             System.out.println(Constants.ServiceTAG.URL + strings[0]);
             url = new URL(strings[0]);
             urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setUseCaches(true);
 
             int responseCode = urlConnection.getResponseCode();
 
@@ -49,8 +55,24 @@ public class GetRequest extends AsyncTask<String, Void, String> {
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
+
+            if (!Utils.isNetworkAvailable(context)) {
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        DialogUtils.showAlert(context, context.getResources().getString(R.string.alert_no_network));
+                    }
+                }, 100);
+            } else {
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        DialogUtils.showAlert(context, e.getMessage());
+                    }
+                }, 100);
+            }
         }
 
         return server_response;

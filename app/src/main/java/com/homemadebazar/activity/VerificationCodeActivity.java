@@ -55,14 +55,6 @@ public class VerificationCodeActivity extends BaseActivity implements View.OnCli
         return intent;
     }
 
-//    public static Intent getIntent(Context context, UserModel userModel, boolean isSocialLogin)
-//    {
-//        Intent intent=new Intent(context,VerificationCodeActivity.class);
-//        intent.putExtra(KEY_USER_MODEL,userModel);
-//        intent.putExtra(KEY_IS_SOCIAL_LOGIN,isSocialLogin);
-//        return intent;
-//    }
-
     public void getDataFromBundle() {
         userId = getIntent().getStringExtra(KEY_USER_ID);
         isSocialLogin = getIntent().getBooleanExtra(KEY_IS_SOCIAL_LOGIN, false);
@@ -281,7 +273,7 @@ public class VerificationCodeActivity extends BaseActivity implements View.OnCli
                         Utils.handleError(e.getMessage(), VerificationCodeActivity.this, null);
                     }
                 }
-            });
+            }, false);
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), VerificationCodeActivity.this, null);
         }

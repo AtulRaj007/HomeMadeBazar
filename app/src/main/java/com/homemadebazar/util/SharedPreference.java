@@ -23,9 +23,36 @@ public class SharedPreference {
     public static SharedPreferences sSharedPreference;
     public static String USER_MODEL = "USER_MODEL";
     public static String PROFILE_MODEL = "PROFILE_MODEL";
+    public static String NOTIFICATION_COUNT = "NOTIFICATION_COUNT";
+    public static String IS_LOGGED_IN = "IS_LOGGED_IN";
     private static String PRODUCT_MODEL = "PRODUCT_MODEL";
     private static String USER_LOCATION = "USER_LOCATION";
     private static String WALKTHROUGH_MODEL = "WALKTHROUGH_MODEL";
+
+
+    public static void setIntegerPreference(Context context, String key, int value) {
+        sSharedPreference = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sSharedPreference.edit();
+        editor.putInt(key, value);
+        editor.commit();
+    }
+
+    public static int getIntegerPreference(Context context, String key) {
+        sSharedPreference = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return sSharedPreference.getInt(key, 0);
+    }
+
+    public static void setBooleanPreference(Context context, String key, boolean value) {
+        sSharedPreference = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sSharedPreference.edit();
+        editor.putBoolean(key, value);
+        editor.commit();
+    }
+
+    public static boolean getBooleanPreference(Context context, String key) {
+        sSharedPreference = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return sSharedPreference.getBoolean(key, true);
+    }
 
     public static void setStringPreference(Context context, String key, String value) {
         sSharedPreference = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);

@@ -191,41 +191,43 @@ public class DialogUtils {
 
     public static void showAlert(Context context, String message,
                                  final Runnable handler) {
-        if (context != null && dialog == null) {
-            dialog = new AlertDialog.Builder(context);
-            dialog.setTitle(context.getString(R.string.app_name));
-            dialog.setMessage(message);
-            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        try {
+            if (context != null && dialog == null) {
+                dialog = new AlertDialog.Builder(context);
+                dialog.setTitle(context.getString(R.string.app_name));
+                dialog.setMessage(message);
+                dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 
-                @Override
-                public void onClick(DialogInterface dialog1, int which) {
+                    @Override
+                    public void onClick(DialogInterface dialog1, int which) {
 
-                    if (handler != null) {
-                        handler.run();
+                        if (handler != null) {
+                            handler.run();
+                        }
+                        if (dialog != null) {
+                            dialog = null;
+                        }
                     }
-                    if (dialog != null) {
-                        dialog = null;
+                });
+
+                dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+
+                    @Override
+                    public void onCancel(DialogInterface arg0) {
+                        if (handler != null) {
+                            handler.run();
+                        }
+                        if (dialog != null) {
+                            dialog = null;
+                        }
                     }
-                }
-            });
-
-            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-
-                @Override
-                public void onCancel(DialogInterface arg0) {
-                    if (handler != null) {
-                        handler.run();
-                    }
-                    if (dialog != null) {
-                        dialog = null;
-                    }
-                }
-            });
+                });
 
 
-            dialog.show();
-
-
+                dialog.show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

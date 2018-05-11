@@ -62,10 +62,16 @@ public class FoodieMessengerNetworkFragment extends BaseFragment implements Swip
         adapter = new MessengerInviteParticipatesRecyclerAdapter(getActivity(), dataList, userModel.getUserId());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
+//        getInviteParticipateListApiCall();
+//        swipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         getInviteParticipateListApiCall();
         swipeRefreshLayout.setRefreshing(true);
     }
-
 
     private void getInviteParticipateListApiCall() {
         try {

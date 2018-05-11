@@ -183,7 +183,7 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
                         Utils.handleError(e.getMessage(), context, null);
                     }
                 }
-            });
+            }, false);
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), context, null);
         }

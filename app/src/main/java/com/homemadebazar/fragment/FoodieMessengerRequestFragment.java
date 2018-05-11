@@ -66,6 +66,13 @@ public class FoodieMessengerRequestFragment extends BaseFragment implements Swip
         swipeRefreshLayout.setRefreshing(true);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getFriendRequestListApiCall(userModel.getUserId());
+        swipeRefreshLayout.setRefreshing(true);
+    }
+
     private void getFriendRequestListApiCall(String userId) {
         try {
             final MessengerRequestTabApiCall apiCall = new MessengerRequestTabApiCall(userId);

@@ -43,7 +43,7 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
 
         holder.tvTransactionMode.setText(transactionModel.getTransactionMode());
 
-        holder.tvTime.setText(Utils.getDateTime(transactionModel.getDateTime()));
+        holder.tvTime.setText(Utils.formatDateTwoLines(transactionModel.getDateTime()));
         holder.tvTransactionAmount.setText("Transaction Amount :-" + " Rs" + transactionModel.getTransactionAmount());
         holder.tvDescription.setText(transactionModel.getDescription());
     }

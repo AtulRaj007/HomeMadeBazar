@@ -60,6 +60,13 @@ public class FoodieMessengerFriendsFragment extends BaseFragment implements Swip
         foodieMessengerFriendsAdapter = new FoodieMessengerFriendsAdapter(getActivity(), friendList);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(foodieMessengerFriendsAdapter);
+//        getMessengerFriendListApiCall();
+//        swipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         getMessengerFriendListApiCall();
         swipeRefreshLayout.setRefreshing(true);
     }

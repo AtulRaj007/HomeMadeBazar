@@ -156,7 +156,6 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
                 if (isValid()) {
                     sendChatMessage(userModel.getUserId(), targetUserModel.getUserId(), etChatMessage.getText().toString().trim(), "", Constants.FileType.NONE,
                             Constants.MessageType.TEXT, "", "");
-                    etChatMessage.setText("");
                     llAttachmentLayout.setVisibility(View.GONE);
                 }
                 break;
@@ -198,7 +197,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
 
     private String getChatSendUrl(String userId, String receiverId, String text, String fileType, String msgType, String latitude, String longitude) {
-        String url = Constants.ServerURL.SEND_MESSAGE + "SndrId=" + userId + "&RcrId=" + receiverId + "&text=" + text + "&FileType=" + fileType + "&MsgType=" + msgType
+        String url = Constants.ServerURL.SEND_MESSAGE + "SndrId=" + userId + "&RcrId=" + receiverId + "&text=" + Utils.encodeToNonLossyAscii(text) + "&FileType=" + fileType + "&MsgType=" + msgType
                 + "&Lati=" + latitude + "&Longi=" + longitude;
         url = Utils.parseUrl(url);
         System.out.println(Constants.ServiceTAG.URL + url);
@@ -209,6 +208,12 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
     public void sendChatMessage(final String userId, final String receiverId, String text, String imagePath, String fileType, String msgType, String latitude, String longitude) {
         String url = getChatSendUrl(userId, receiverId, text, fileType, msgType, latitude, longitude);
         try {
+            if (!Utils.isNetworkAvailable(ChatActivity.this)) {
+                DialogUtils.showAlert(ChatActivity.this, getResources().getString(R.string.alert_no_network));
+                return;
+            }
+            etChatMessage.setText("");
+
             File compressImageFile = null;
             if (!TextUtils.isEmpty(imagePath))
                 compressImageFile = new Compressor(this).compressToFile(new File(imagePath));
@@ -380,7 +385,7 @@ public class ChatActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         Utils.hideSoftKeyboard(ChatActivity.this);
+        super.onBackPressed();
     }
 }

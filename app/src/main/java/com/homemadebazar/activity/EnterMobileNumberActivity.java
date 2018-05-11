@@ -71,18 +71,9 @@ public class EnterMobileNumberActivity extends BaseActivity implements View.OnCl
         return intent;
     }
 
-//    public static Intent getIntent(Context context,UserModel userModel,boolean isSocialLogin)
-//    {
-//        Intent intent=new Intent(context,EnterMobileNumberActivity.class);
-//        intent.putExtra(KEY_USER_MODEL,userModel);
-//        intent.putExtra(KEY_IS_SOCIAL_LOGIN,isSocialLogin);
-//        return intent;
-//    }
-
     private void getBundleData() {
         try {
             userId = getIntent().getStringExtra(KEY_USER_ID);
-//            userModel=(UserModel) getIntent().getSerializableExtra(KEY_USER_MODEL);
             isSocialLogin = getIntent().getBooleanExtra(KEY_IS_SOCIAL_LOGIN, false);
         } catch (Exception e) {
             e.printStackTrace();
@@ -113,12 +104,7 @@ public class EnterMobileNumberActivity extends BaseActivity implements View.OnCl
                     checkEmailExists();
                 break;
             case R.id.tv_skip:
-//                if(isSocialLogin)
-//                {
-//                    startActivity(SignUpActivity.getIntent(EnterMobileNumberActivity.this,userModel,true));
-//                }else {
                 startActivity(SignUpActivity.getIntent(EnterMobileNumberActivity.this, userId, true));
-//                }
                 break;
         }
     }
@@ -140,8 +126,6 @@ public class EnterMobileNumberActivity extends BaseActivity implements View.OnCl
             final ProgressDialog progressDialog = DialogUtils.getProgressDialog(this, null);
             progressDialog.show();
 
-//            if(isSocialLogin && userModel!=null)
-//                userId=userModel.getUserId();
 
             final IsAccountExistApiCall apiCall = new IsAccountExistApiCall(countryCode, countryName, etMobileNumber.getText().toString(), userId);
             HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
@@ -169,7 +153,7 @@ public class EnterMobileNumberActivity extends BaseActivity implements View.OnCl
                         Utils.handleError(e.getMessage(), EnterMobileNumberActivity.this, null);
                     }
                 }
-            });
+            }, false);
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), EnterMobileNumberActivity.this, null);
         }

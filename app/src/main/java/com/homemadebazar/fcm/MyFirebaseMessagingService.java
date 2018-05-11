@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -18,6 +19,8 @@ import com.homemadebazar.activity.ChatActivity;
 import com.homemadebazar.activity.LoginActivity;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.util.Constants;
+import com.homemadebazar.util.SharedPreference;
+import com.homemadebazar.util.Utils;
 
 /**
  * Created by atulraj on 24/12/17.
@@ -31,10 +34,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.e(">>>>>FCM", remoteMessage.getData().toString());
         System.out.println(Constants.ServiceTAG.NOTIFICATION + remoteMessage.getData().toString());
+
+        /* Checking Device Login*/
+        boolean isLoggedIn = SharedPreference.getBooleanPreference(this, SharedPreference.IS_LOGGED_IN);
+        if (!isLoggedIn)
+            return;
+
         try {
             int notificationType = Integer.parseInt(remoteMessage.getData().get("NotificationType"));
             if (notificationType != Constants.NotificationType.INCOMING_MESSAGE) {
                 playNotificationSound();
+                int count = SharedPreference.getIntegerPreference(this, SharedPreference.NOTIFICATION_COUNT);
+                count++;
+                SharedPreference.setIntegerPreference(this, SharedPreference.NOTIFICATION_COUNT, count);
+                Utils.sendLocalNotificationCount(this);
             } else {
                 String senderId = remoteMessage.getData().get("SenderId");
                 if (!senderId.equals(Constants.activeChatUserId)) {
@@ -104,8 +117,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 String title = remoteMessage.getData().get("Title");
                 showNotification(intent, title, message, notificationType);
             }
-//            {ReceiverId=efWeOCoRuHw:APA91bGY38I2wcZmLoaBy8ivTsW9--FmQ1DlSHezmExwbdGz5AKyYhNBOv-fF2QXEPLcp261g_3W6TUo-7BgUWvwhcQ3K9hi7UWHJFj6g0GI8aqU0qs03J4VfXQ9AS49YH8LR_PJRXGo,
-// Message=Your product has been book with ref.Id #MktPlcOrd00000014., Title=Buy Product, NotificationType=6}
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -113,16 +124,22 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private void showNotification(Intent intent, String title, String messageBody, int id) {
 
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_NO_CREATE);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
+//                .setSmallIcon(R.mipmap.ic_launcher)
                 .setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary))
                 .setContentTitle(title)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(messageBody))
                 .setContentText(messageBody)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent);
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
+        } else {
+            notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
+        }
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify((int) System.currentTimeMillis()/* ID of row_notification*/, notificationBuilder.build());
@@ -155,8 +172,3 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     }
 }
-
-//{ReceiverId=1801060, Message=Atul Jio has send you a message., Title=New Message, NotificationType=2, SenderId=1801062}
-//{ReceiverId=1801062, Message=ABC Shah has send you a message., Title=New Message, NotificationType=2, SenderId=1801060}
-//{ReceiverId=1801060, Message=Atul Jio has send you a message., DP=http://103.54.24.25:200/api/CreateOrder/GetImage, Name=Atul Jio, Title=New Message, NotificationType=2, SenderId=1801062}
-//{ReceiverId=efWeOCoRuHw:APA91bGY38I2wcZmLoaBy8ivTsW9--FmQ1DlSHezmExwbdGz5AKyYhNBOv-fF2QXEPLcp261g_3W6TUo-7BgUWvwhcQ3K9hi7UWHJFj6g0GI8aqU0qs03J4VfXQ9AS49YH8LR_PJRXGo, Message=Your product has been book with ref.Id #MktPlcOrd00000019., Title=Buy Product, NotificationType=6}

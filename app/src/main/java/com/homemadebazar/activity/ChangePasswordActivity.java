@@ -84,8 +84,8 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
 
                 @Override
                 public void onComplete(Exception e) {
+                    DialogUtils.hideProgressDialog(progressDialog);
                     if (e == null) { // Success
-                        DialogUtils.hideProgressDialog(progressDialog);
                         try {
                             BaseModel baseModel = apiCall.getBaseModel();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
@@ -106,7 +106,7 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                         Utils.handleError(e.getMessage(), ChangePasswordActivity.this, null);
                     }
                 }
-            });
+            }, false);
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), ChangePasswordActivity.this, null);
         }

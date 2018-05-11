@@ -135,7 +135,7 @@ public class EnterPasswordActivity extends BaseActivity implements View.OnClickL
                         Utils.handleError(e.getMessage(), EnterPasswordActivity.this, null);
                     }
                 }
-            });
+            }, false);
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), EnterPasswordActivity.this, null);
         }

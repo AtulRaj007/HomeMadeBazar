@@ -36,8 +36,12 @@ public class ServiceUtils {
                         try {
                             BaseModel baseModel = apiCall.getResult();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                if (loginHistory == Constants.LoginHistory.LOGOUT)
+                                if (loginHistory == Constants.LoginHistory.LOGOUT) {
                                     Toast.makeText(context, baseModel.getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                    SharedPreference.setBooleanPreference(context, SharedPreference.IS_LOGGED_IN, false);
+                                } else {
+                                    SharedPreference.setBooleanPreference(context, SharedPreference.IS_LOGGED_IN, true);
+                                }
                             } else {
                                 Toast.makeText(context, baseModel.getStatusMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -49,7 +53,7 @@ public class ServiceUtils {
                         Utils.handleError(e.getMessage(), context, null);
                     }
                 }
-            });
+            }, false);
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), context, null);
         }
@@ -77,7 +81,7 @@ public class ServiceUtils {
                         Utils.handleError(e.getMessage(), context, null);
                     }
                 }
-            });
+            }, false);
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), context, null);
         }
@@ -109,7 +113,7 @@ public class ServiceUtils {
                         Utils.handleError(e.getMessage(), context, null);
                     }
                 }
-            });
+            }, false);
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), context, null);
         }
@@ -137,7 +141,7 @@ public class ServiceUtils {
                         Utils.handleError(e.getMessage(), context, null);
                     }
                 }
-            });
+            }, false);
         } catch (Exception e) {
             Utils.handleError(e.getMessage(), context, null);
         }
