@@ -174,7 +174,7 @@ public class MyShopFragment extends BaseFragment implements View.OnClickListener
                     try {
 
                         JSONObject object = new JSONObject(response);
-                        if (object.optString("StatusCode").equals(Constants.ServerResponseCode.SUCCESS)) {
+                        if ((object.optInt("StatusCode") == Constants.ServerResponseCode.SUCCESS)) {
                             DialogUtils.showAlert(getActivity(), "Profile Image Updated Successfully");
                         } else {
                             DialogUtils.showAlert(getActivity(), object.optString("StatusMessage"));
@@ -293,6 +293,8 @@ public class MyShopFragment extends BaseFragment implements View.OnClickListener
                                 } catch (Exception e1) {
                                     e1.printStackTrace();
                                 }
+                            } else if (homeChefProfileModel.getStatusCode() == Constants.ServerResponseCode.NO_INFORMATION_USER) {
+                                System.out.println("No Information Of Corresponding User Found");
                             } else {
                                 DialogUtils.showAlert(getActivity(), homeChefProfileModel.getStatusMessage());
                             }

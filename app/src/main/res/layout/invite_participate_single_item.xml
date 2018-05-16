@@ -35,7 +35,7 @@
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sonu Kumar"
+                android:text=""
                 android:textSize="@dimen/text_14"
                 android:textStyle="bold" />
 
@@ -43,14 +43,14 @@
                 android:id="@+id/tv_email_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="B-41,Gurgaon 122001"
+                android:text=""
                 android:textSize="@dimen/text_14" />
 
             <TextView
                 android:id="@+id/tv_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="B-41,Gurgaon 122001"
+                android:text=""
                 android:textSize="@dimen/text_14" />
         </LinearLayout>
 

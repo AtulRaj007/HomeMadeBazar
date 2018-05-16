@@ -3,6 +3,7 @@ package com.homemadebazar.adapter;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,9 @@ public class HomeChefFoodTimingAdapter extends RecyclerView.Adapter<HomeChefFood
     public void onBindViewHolder(LunchViewHolder holder, int position) {
 
         HomeChefOrderModel homeChefOrderModel = homeChefOrderModelArrayList.get(position);
-        holder.tvOrderId.setText("Order Id:- " + homeChefOrderModel.getOrderId());
+        String orderIdStyledText = "<font color='#000000'>Order Id:-</font>" + "<font color='#A9A9A9'>" + homeChefOrderModel.getOrderId() + "</font>";
+        holder.tvOrderId.setText(Html.fromHtml(orderIdStyledText));
+//        holder.tvOrderId.setText(Html.fromHtml(<font color="">"Order Id:- " + homeChefOrderModel.getOrderId()));
         holder.tvFoodName.setText(homeChefOrderModel.getDishName());
         holder.tvFoodType.setText(homeChefOrderModel.getOrderType());
         holder.tvNoOfPeople.setText(homeChefOrderModel.getMinGuest() + " to " + homeChefOrderModel.getMaxGuest() + " People ");

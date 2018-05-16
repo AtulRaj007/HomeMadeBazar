@@ -165,42 +165,42 @@ public class MarketPlaceHomeActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Log.e(TAG, "Id:-" + item.getItemId());
-        switch (item.getItemId()) {
-            case R.id.menu_notification:
-                startActivity(new Intent(MarketPlaceHomeActivity.this, NotificationActivity.class));
-                return true;
-            case R.id.menu_second:
-//                ((MarketPlaceFragment)viewPagerAdapter.getItem(2)).setGridLayout();
-                return false;
-            default:
-                super.onOptionsItemSelected(item);
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        Log.e(TAG, "====== onCreateOptionsMenu ======");
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.inflateMenu(R.menu.menu_home);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return onOptionsItemSelected(item);
-            }
-        });
-        final MenuItem notificationMenuItem = menu.findItem(R.id.menu_notification);
-        notificationMenuItem.getActionView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onOptionsItemSelected(notificationMenuItem);
-            }
-        });
-        return true;
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        Log.e(TAG, "Id:-" + item.getItemId());
+//        switch (item.getItemId()) {
+//            case R.id.menu_notification:
+//                startActivity(new Intent(MarketPlaceHomeActivity.this, NotificationActivity.class));
+//                return true;
+//            case R.id.menu_second:
+////                ((MarketPlaceFragment)viewPagerAdapter.getItem(2)).setGridLayout();
+//                return false;
+//            default:
+//                super.onOptionsItemSelected(item);
+//        }
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        Log.e(TAG, "====== onCreateOptionsMenu ======");
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        toolbar.inflateMenu(R.menu.menu_home);
+//        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                return onOptionsItemSelected(item);
+//            }
+//        });
+//        final MenuItem notificationMenuItem = menu.findItem(R.id.menu_notification);
+//        notificationMenuItem.getActionView().setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                onOptionsItemSelected(notificationMenuItem);
+//            }
+//        });
+//        return true;
+//    }
 
     public void onNavItemClick(View v) {
         Log.e(TAG, "Click:-" + v.getId());

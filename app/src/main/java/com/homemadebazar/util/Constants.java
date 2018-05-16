@@ -188,6 +188,7 @@ public class Constants {
         int SUCCESS = 100;
         int NO_RECORD_FOUND = 151;
         int INSUFFICIENT_MONEY = 123;
+        int NO_INFORMATION_USER = 120;
     }
 
     public interface SignInType {

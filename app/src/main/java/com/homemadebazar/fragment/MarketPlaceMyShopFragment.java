@@ -127,6 +127,8 @@ public class MarketPlaceMyShopFragment extends BaseFragment implements View.OnCl
                                 } catch (Exception e1) {
                                     e1.printStackTrace();
                                 }
+                            } else if (homeChefProfileModel.getStatusCode() == Constants.ServerResponseCode.NO_INFORMATION_USER) {
+                                System.out.println("No Information Of Corresponding User Found");
                             } else {
                                 DialogUtils.showAlert(getActivity(), homeChefProfileModel.getStatusMessage());
                             }

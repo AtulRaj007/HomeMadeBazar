@@ -52,7 +52,11 @@ public class MessengerInviteParticipatesRecyclerAdapter extends RecyclerView.Ada
         MessegeInviteParticipateModel messegeInviteParticipateModel = dataList.get(position);
         holder.name.setText(messegeInviteParticipateModel.getfName() + " " + messegeInviteParticipateModel.getlName());
         holder.tvEmailId.setText(messegeInviteParticipateModel.getEmailId());
-        holder.address.setText(CustomAddress.getCompleteAddress(messegeInviteParticipateModel.getAddress()));
+        CustomAddress customAddress = new CustomAddress(messegeInviteParticipateModel.getAddress());
+        if (!TextUtils.isEmpty(customAddress.getCity()) && !TextUtils.isEmpty(customAddress.getState()))
+            holder.address.setText(customAddress.getCity() + ", " + customAddress.getState());
+        else
+            holder.address.setText(customAddress.getCity() + customAddress.getState());
 
         if (!TextUtils.isEmpty(messegeInviteParticipateModel.getProfileImage())) {
             Glide.with(context).load(messegeInviteParticipateModel.getProfileImage())

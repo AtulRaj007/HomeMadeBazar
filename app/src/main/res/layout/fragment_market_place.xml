@@ -9,15 +9,15 @@
         android:id="@+id/ll_search"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:paddingLeft="@dimen/padding_10"
-        android:paddingRight="@dimen/padding_10"
         android:background="@color/black_heading_color"
-        android:gravity="center">
+        android:gravity="center"
+        android:paddingLeft="@dimen/padding_10"
+        android:paddingRight="@dimen/padding_10">
 
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@drawable/ic_search" />
 
         <EditText
@@ -30,7 +30,7 @@
             android:singleLine="true"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="@dimen/text_12" />
+            android:textSize="@dimen/text_14" />
 
     </LinearLayout>
 

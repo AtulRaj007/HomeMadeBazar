@@ -38,7 +38,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         NotificationModel notificationModel = notificationModelArrayList.get(position);
         holder.tvTitle.setText(notificationModel.getTitle());
         holder.tvMessage.setText(notificationModel.getMessage());
-        holder.tvNotificationId.setText(Html.fromHtml("<font color='#000000'>Id#</font>" + "<font color='#D3D3D3'>" + notificationModel.getNotificationId() + "</font>"));
+        holder.tvNotificationId.setText(Html.fromHtml("<font color='#000000'>Id#</font>" + "<font color='#A3A3A3'>" + notificationModel.getNotificationId() + "</font>"));
         holder.tvTime.setText(Utils.formatDateTwoLines(notificationModel.getNotificationTime()));
     }
 
