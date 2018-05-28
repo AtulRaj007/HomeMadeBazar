@@ -21,6 +21,7 @@ import com.homemadebazar.R;
 import com.homemadebazar.activity.MarketPlaceManageActivity;
 import com.homemadebazar.activity.UpdateShopDetailsActivity;
 import com.homemadebazar.adapter.ImagePagerAdapter;
+import com.homemadebazar.model.BaseModel;
 import com.homemadebazar.model.CustomAddress;
 import com.homemadebazar.model.HomeChefProfileModel;
 import com.homemadebazar.model.UserModel;
@@ -28,6 +29,7 @@ import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.MultiPartRequest;
 import com.homemadebazar.network.UploadFileTask;
 import com.homemadebazar.network.api.ApiCall;
+import com.homemadebazar.network.apicall.GetTotalSalesOfTheDayApiCall;
 import com.homemadebazar.network.apicall.ShowHomeChefProfileApiCall;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.DialogUtils;
@@ -98,6 +100,7 @@ public class MarketPlaceMyShopFragment extends BaseFragment implements View.OnCl
     @Override
     protected void setData() {
         getHomeChefProfileDetails();
+        getTotalSaleOfTheDay();
 
     }
 
@@ -131,6 +134,42 @@ public class MarketPlaceMyShopFragment extends BaseFragment implements View.OnCl
                                 System.out.println("No Information Of Corresponding User Found");
                             } else {
                                 DialogUtils.showAlert(getActivity(), homeChefProfileModel.getStatusMessage());
+                            }
+
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    } else { // Failure
+                        Utils.handleError(e.getMessage(), getActivity(), null);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            Utils.handleError(e.getMessage(), getActivity(), null);
+        }
+    }
+
+    private void getTotalSaleOfTheDay() {
+        try {
+            final GetTotalSalesOfTheDayApiCall apiCall = new GetTotalSalesOfTheDayApiCall(getActivity(), userModel.getUserId());
+            HttpRequestHandler.getInstance(getActivity()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
+
+                @Override
+                public void onComplete(Exception e) {
+                    if (e == null) { // Success
+                        try {
+                            BaseModel baseModel = apiCall.getBaseModel();
+                            if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
+                                try {
+
+                                    ((TextView) getView().findViewById(R.id.tv_total_sales)).setText(apiCall.getTotalSale() + "");
+                                    ((TextView) getView().findViewById(R.id.tv_total_product_price)).setText("Total Product Price:-" + apiCall.getProductPrice() + "");
+
+                                } catch (Exception e1) {
+                                    e1.printStackTrace();
+                                }
+                            } else {
+                                DialogUtils.showAlert(getActivity(), baseModel.getStatusMessage());
                             }
 
                         } catch (Exception ex) {

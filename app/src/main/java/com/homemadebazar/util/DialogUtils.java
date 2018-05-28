@@ -223,6 +223,15 @@ public class DialogUtils {
                     }
                 });
 
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if (dialog != null) {
+                            dialog = null;
+                        }
+                    }
+                });
+
 
                 dialog.show();
             }
@@ -262,6 +271,15 @@ public class DialogUtils {
                     }
                 }
             });
+
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    if (dialog != null) {
+                        dialog = null;
+                    }
+                }
+            });
             dialog.show();
 
 
@@ -271,7 +289,7 @@ public class DialogUtils {
     public static void showAlert(Context context, String message, String title,
                                  final Runnable handler) {
         if (context != null) {
-            android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(context);
+            AlertDialog.Builder dialog = new AlertDialog.Builder(context);
             dialog.setTitle(title);
             dialog.setMessage(message);
             dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -292,6 +310,15 @@ public class DialogUtils {
                         handler.run();
                     }
 
+                }
+            });
+
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    if (dialog != null) {
+                        dialog = null;
+                    }
                 }
             });
             dialog.show();

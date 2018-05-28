@@ -16,7 +16,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.homemadebazar.R;
 import com.homemadebazar.activity.ChatActivity;
-import com.homemadebazar.activity.LoginActivity;
+import com.homemadebazar.activity.NotificationActivity;
 import com.homemadebazar.model.UserModel;
 import com.homemadebazar.util.Constants;
 import com.homemadebazar.util.SharedPreference;
@@ -79,40 +79,40 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     showNotification(intent, remoteMessage.getData().get("Title"), remoteMessage.getData().get("Message"), id);
                 }
             } else if (notificationType == Constants.NotificationType.FOODIE_ORDER_BOOKED) {
-                Intent intent = new Intent(MyFirebaseMessagingService.this, LoginActivity.class);
+                Intent intent = new Intent(MyFirebaseMessagingService.this, NotificationActivity.class);
                 String message = remoteMessage.getData().get("Message");
                 String title = remoteMessage.getData().get("Title");
                 String bookingId = remoteMessage.getData().get("Bookingid");
                 showNotification(intent, title, message, notificationType);
 
             } else if (notificationType == Constants.NotificationType.FOODIE_ORDER_ACCEPT_REJECT) {
-                Intent intent = new Intent(MyFirebaseMessagingService.this, LoginActivity.class);
+                Intent intent = new Intent(MyFirebaseMessagingService.this, NotificationActivity.class);
                 String message = remoteMessage.getData().get("Message");
                 String title = remoteMessage.getData().get("Title");
                 showNotification(intent, title, message, notificationType);
 
             } else if (notificationType == Constants.NotificationType.FRIEND_REQUEST_RECEIVED) {
-                Intent intent = new Intent(MyFirebaseMessagingService.this, LoginActivity.class);
+                Intent intent = new Intent(MyFirebaseMessagingService.this, NotificationActivity.class);
                 String message = remoteMessage.getData().get("Message");
                 String title = remoteMessage.getData().get("Title");
                 showNotification(intent, title, message, notificationType);
             } else if (notificationType == Constants.NotificationType.FRIEND_ACCEPTED) {
-                Intent intent = new Intent(MyFirebaseMessagingService.this, LoginActivity.class);
+                Intent intent = new Intent(MyFirebaseMessagingService.this, NotificationActivity.class);
                 String message = remoteMessage.getData().get("Message");
                 String title = remoteMessage.getData().get("Title");
                 showNotification(intent, title, message, notificationType);
             } else if (notificationType == Constants.NotificationType.MARKETPLACE_INCOMING_ORDER) {
-                Intent intent = new Intent(MyFirebaseMessagingService.this, LoginActivity.class);
+                Intent intent = new Intent(MyFirebaseMessagingService.this, NotificationActivity.class);
                 String message = remoteMessage.getData().get("Message");
                 String title = remoteMessage.getData().get("Title");
                 showNotification(intent, title, message, notificationType);
             } else if (notificationType == Constants.NotificationType.MARKETPLACE_ACCEPT_REJECT_DISPATCH_ORDER) {
-                Intent intent = new Intent(MyFirebaseMessagingService.this, LoginActivity.class);
+                Intent intent = new Intent(MyFirebaseMessagingService.this, NotificationActivity.class);
                 String message = remoteMessage.getData().get("Message");
                 String title = remoteMessage.getData().get("Title");
                 showNotification(intent, title, message, notificationType);
             } else if (notificationType == Constants.NotificationType.RECEIVE_MONEY) {
-                Intent intent = new Intent(MyFirebaseMessagingService.this, LoginActivity.class);
+                Intent intent = new Intent(MyFirebaseMessagingService.this, NotificationActivity.class);
                 String message = remoteMessage.getData().get("Message");
                 String title = remoteMessage.getData().get("Title");
                 showNotification(intent, title, message, notificationType);

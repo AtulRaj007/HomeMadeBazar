@@ -1,5 +1,6 @@
 package com.homemadebazar.util;
 
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ public class ServiceUtils {
                             BaseModel baseModel = apiCall.getResult();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
                                 if (loginHistory == Constants.LoginHistory.LOGOUT) {
+                                    NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                                    notificationManager.cancelAll();
                                     Toast.makeText(context, baseModel.getStatusMessage(), Toast.LENGTH_SHORT).show();
                                     SharedPreference.setBooleanPreference(context, SharedPreference.IS_LOGGED_IN, false);
                                 } else {

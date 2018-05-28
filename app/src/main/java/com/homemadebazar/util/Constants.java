@@ -170,6 +170,7 @@ public class Constants {
         String MARKETPLACE_INCOMING_OUTGOING_ORDERS = BASE_URL + "MarketPlace/ShowIncomingOrders";
         String ACTION_BY_MARKET_PLACE_USERS = BASE_URL + "MarketPlace/ActionByMarketPlaceUsers";
         String MARKETPLACE_ORDERS = BASE_URL + "marketplace/MyOrders";
+        String MARKETPLACE_GET_TOTAL_SALE_OF_DAY = BASE_URL + "MarketPlace/GetTotalSaleOftheDay";
 
     }
 
