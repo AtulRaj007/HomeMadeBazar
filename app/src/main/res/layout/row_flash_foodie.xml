@@ -100,7 +100,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_14" />
 
-            <com.homemadebazar.util.AdjustableImageView
+            <com.munchmash.util.AdjustableImageView
                 android:id="@+id/iv_post_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -21,7 +21,7 @@
                 app:layout_collapseMode="parallax">
 
 
-                <com.homemadebazar.util.AdjustableImageView
+                <com.munchmash.util.AdjustableImageView
                     android:id="@+id/iv_profile_pic"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/profile_photo_height"

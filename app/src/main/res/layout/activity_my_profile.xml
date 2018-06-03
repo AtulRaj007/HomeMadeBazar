@@ -17,7 +17,7 @@
             android:layout_marginRight="@dimen/margin_20"
             android:orientation="vertical">
 
-            <com.homemadebazar.util.CircleImageView
+            <com.munchmash.util.CircleImageView
                 android:id="@+id/iv_profile_pic"
                 android:layout_width="100dp"
                 android:layout_height="100dp"

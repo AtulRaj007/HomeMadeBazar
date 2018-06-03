@@ -20,7 +20,7 @@
         android:background="@color/colorPrimary"
         android:visibility="gone">
 
-        <com.homemadebazar.util.CircleImageView
+        <com.munchmash.util.CircleImageView
             android:id="@+id/iv_profile_pic"
             android:layout_width="80dp"
             android:layout_height="80dp"

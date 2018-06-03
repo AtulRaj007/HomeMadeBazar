@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_screen"
-    tools:context="com.homemadebazar.fragment.MyOrdersFragment">
+    tools:context="com.munchmash.fragment.MyOrdersFragment">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
