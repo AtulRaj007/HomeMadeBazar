@@ -190,12 +190,16 @@ public class DialogUtils {
     }
 
     public static void showAlert(Context context, String message,
-                                 final Runnable handler) {
+                                 final Runnable handler, String title) {
         try {
             System.out.println(">>>>> Show Alert Context:-" + context);
             if (context != null && dialog == null) {
                 dialog = new AlertDialog.Builder(context);
-                dialog.setTitle(context.getString(R.string.app_name));
+                if (TextUtils.isEmpty(title))
+                    dialog.setTitle(context.getString(R.string.app_name));
+                else
+                    dialog.setTitle(title);
+
                 dialog.setMessage(message);
                 dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 
@@ -240,6 +244,12 @@ public class DialogUtils {
             e.printStackTrace();
         }
     }
+
+    public static void showAlert(Context context, String message,
+                                 final Runnable handler) {
+        showAlert(context, message, handler);
+    }
+
 
     public static void showAlert(Context context, String message,
                                  final Runnable ok, final Runnable cancel) {

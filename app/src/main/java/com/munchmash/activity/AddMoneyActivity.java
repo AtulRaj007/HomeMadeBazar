@@ -184,7 +184,7 @@ public class AddMoneyActivity extends BaseActivity implements View.OnClickListen
                             public void run() {
                                 finish();
                             }
-                        });
+                        }, "Payment Failed");
                     }
 
                 } catch (Exception e) {
