@@ -95,7 +95,7 @@ public class Constants {
     }
 
     public interface AppDebug {
-        boolean isPaymentDebug = false; // Should be false in production
+        boolean isPaymentDebug = true; // Should be false in production
     }
 
     public interface FoodTiming {

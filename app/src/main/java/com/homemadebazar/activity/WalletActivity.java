@@ -60,7 +60,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         super.onResume();
         userModel = SharedPreference.getUserModel(WalletActivity.this);
         try {
-            tvWalletMoney.setText(userModel.getWalletBalance() + "");
+            tvWalletMoney.setText(userModel.getWalletBalance() + Utils.getCurrencySymbol(this, Utils.Currency.SIGN));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -76,7 +76,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void setData() {
-        tvWalletMoney.setText(userModel.getWalletBalance() + "");
+        tvWalletMoney.setText(userModel.getWalletBalance() + Utils.getCurrencySymbol(this, Utils.Currency.SIGN));
         swipeRefreshLayout.setRefreshing(true);
         getWalletBalance();
     }
@@ -116,7 +116,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                                 String accountId = apiCall.getAccountId();
                                 userModel.setAccountId(accountId);
                                 userModel.setWalletBalance(walletBalance);
-                                tvWalletMoney.setText(walletBalance + "");
+                                tvWalletMoney.setText(walletBalance + Utils.getCurrencySymbol(WalletActivity.this, Utils.Currency.SIGN));
                                 SharedPreference.saveUserModel(WalletActivity.this, userModel);
                                 updateWalletUI();
 

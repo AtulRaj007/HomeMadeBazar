@@ -69,8 +69,12 @@ public class FoodieMessengerRequestFragment extends BaseFragment implements Swip
     @Override
     public void onResume() {
         super.onResume();
-        getFriendRequestListApiCall(userModel.getUserId());
-        swipeRefreshLayout.setRefreshing(true);
+        try {
+            getFriendRequestListApiCall(userModel.getUserId());
+            swipeRefreshLayout.setRefreshing(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void getFriendRequestListApiCall(String userId) {

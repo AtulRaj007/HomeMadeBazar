@@ -328,6 +328,8 @@ public class MyShopFragment extends BaseFragment implements View.OnClickListener
                                 homeChefOrderModelArrayList.addAll(tempHomeChefOrderModelArrayList);
                                 Collections.reverse(homeChefOrderModelArrayList);
                                 myShopAdapter.notifyDataSetChanged();
+                            } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.NO_RECORD_FOUND) {
+                                System.out.println("No Record Found");
                             } else {
                                 DialogUtils.showAlert(getActivity(), userModel.getStatusMessage());
                             }

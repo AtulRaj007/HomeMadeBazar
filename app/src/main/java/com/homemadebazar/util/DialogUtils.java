@@ -192,6 +192,7 @@ public class DialogUtils {
     public static void showAlert(Context context, String message,
                                  final Runnable handler) {
         try {
+            System.out.println(">>>>> Show Alert Context:-" + context);
             if (context != null && dialog == null) {
                 dialog = new AlertDialog.Builder(context);
                 dialog.setTitle(context.getString(R.string.app_name));

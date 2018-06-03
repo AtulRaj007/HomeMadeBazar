@@ -74,7 +74,7 @@ public class MarketPlaceFragment extends BaseFragment implements View.OnClickLis
 
     public void initUI() {
         marketPlaceShoppingCart = MarketPlaceShoppingCart.getInstance(getActivity());
-        recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
+        recyclerView = getView().findViewById(R.id.recycler_view);
         etSearch = getView().findViewById(R.id.et_search);
         btnCheckout = getView().findViewById(R.id.btn_checkout);
         tvNoRecordFound = getView().findViewById(R.id.tv_no_record_found);

@@ -22,6 +22,7 @@ import com.homemadebazar.network.HttpRequestHandler;
 import com.homemadebazar.network.api.ApiCall;
 import com.homemadebazar.network.apicall.HomeChefSkillVideoApiCall;
 import com.homemadebazar.util.Constants;
+import com.homemadebazar.util.DialogUtils;
 import com.homemadebazar.util.SharedPreference;
 import com.homemadebazar.util.Utils;
 
@@ -103,7 +104,9 @@ public class SkillHubFragment extends BaseFragment implements SwipeRefreshLayout
                                 videoModelsArrayList.addAll(tempHomeChefSkillHubVideoArrayList);
                                 skillHubAdapter.notifyDataSetChanged();
                             } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.NO_RECORD_FOUND) {
-
+                                System.out.println("No Videos Found");
+                            } else {
+                                DialogUtils.showAlert(getActivity(), baseModel.getStatusMessage());
                             }
 
                         } catch (Exception ex) {

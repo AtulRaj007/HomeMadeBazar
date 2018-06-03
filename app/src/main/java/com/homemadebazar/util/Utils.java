@@ -76,13 +76,13 @@ public class Utils {
 
     public static final String TYPE_PHONE_NUMBER = "phone_number";
     public static final String TYPE_EMAIL = "email";
+    private static final Pattern UNICODE_HEX_PATTERN = Pattern.compile("\\\\u([0-9A-Fa-f]{4})");
+    private static final Pattern UNICODE_OCT_PATTERN = Pattern.compile("\\\\([0-7]{3})");
     public static Uri cameraUri;
     static Pattern letter = Pattern.compile("[a-zA-z]");
     static Pattern digit = Pattern.compile("[0-9]");
     static Pattern special = Pattern.compile("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
     static Pattern eight = Pattern.compile(".{8}");
-    private static final Pattern UNICODE_HEX_PATTERN = Pattern.compile("\\\\u([0-9A-Fa-f]{4})");
-    private static final Pattern UNICODE_OCT_PATTERN = Pattern.compile("\\\\([0-7]{3})");
 
     public static void generateKeyHash(Context mContext) {
         try {
@@ -724,5 +724,46 @@ public class Utils {
 
         return "";
 
+    }
+
+    public static String getCurrencySymbol(Context context, int type) {
+
+        try {
+            UserModel userModel = SharedPreference.getUserModel(context);
+            int countryCode = Integer.parseInt(userModel.getCountryCode());
+            if (countryCode == 91) {
+                if (type == Currency.SIGN)
+                    return " ( ₹ )";
+                else
+                    return "Rupees";
+            } else if (countryCode == 1) {
+                if (type == Currency.SIGN)
+                    return " ( $ )";
+                else
+                    return "Dollar";
+            } else if (countryCode == 44) {
+                if (type == Currency.SIGN)
+                    return " ( € )";
+                else
+                    return "Euro";
+            } else {
+                if (type == Currency.SIGN)
+                    return " ( $ )";
+                else
+                    return "Dollar";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (type == Currency.SIGN)
+                return "$";
+            else
+                return "Dollar";
+        }
+
+    }
+
+    public interface Currency {
+        int SIGN = 0;
+        int NAME = 1;
     }
 }

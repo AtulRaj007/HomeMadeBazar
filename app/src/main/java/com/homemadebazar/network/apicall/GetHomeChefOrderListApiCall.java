@@ -43,7 +43,8 @@ public class GetHomeChefOrderListApiCall extends BaseApiCall {
             try {
                 JSONObject object = new JSONObject(response);
                 baseModel = JSONParsingUtils.parseBaseModel(object);
-                homeChefOrderModelArrayList = JSONParsingUtils.parseHomeChefOrderList1(object);
+                if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS)
+                    homeChefOrderModelArrayList = JSONParsingUtils.parseHomeChefOrderList1(object);
             } catch (Exception e) {
                 e.printStackTrace();
             }

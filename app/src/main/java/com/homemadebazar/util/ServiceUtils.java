@@ -40,7 +40,7 @@ public class ServiceUtils {
                                 if (loginHistory == Constants.LoginHistory.LOGOUT) {
                                     NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                                     notificationManager.cancelAll();
-                                    Toast.makeText(context, baseModel.getStatusMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, "Logout Successful", Toast.LENGTH_SHORT).show();
                                     SharedPreference.setBooleanPreference(context, SharedPreference.IS_LOGGED_IN, false);
                                 } else {
                                     SharedPreference.setBooleanPreference(context, SharedPreference.IS_LOGGED_IN, true);

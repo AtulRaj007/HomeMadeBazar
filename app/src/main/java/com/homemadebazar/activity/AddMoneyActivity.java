@@ -43,7 +43,8 @@ public class AddMoneyActivity extends BaseActivity implements View.OnClickListen
                 finish();
             }
         });
-        ((TextView) findViewById(R.id.tv_title)).setText("Add Money");
+        ((TextView) findViewById(R.id.tv_title)).setText(getResources().getString(R.string.add_money));
+        ((TextView) findViewById(R.id.et_amount)).setHint("Enter Amount " + Utils.getCurrencySymbol(this, Utils.Currency.SIGN));
     }
 
     @Override
@@ -60,7 +61,7 @@ public class AddMoneyActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void setData() {
-        tvWalletBalance.setText(userModel.getWalletBalance() + "");
+        tvWalletBalance.setText(userModel.getWalletBalance() + Utils.getCurrencySymbol(this, Utils.Currency.SIGN));
     }
 
     @Override
