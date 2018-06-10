@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.munchmash.R;
-import com.munchmash.activity.HomeShopViewActivity;
+import com.munchmash.activity.ShopDetailsActivity;
 import com.munchmash.model.HomeChefOrderModel;
 import com.munchmash.util.DialogUtils;
 import com.munchmash.util.Utils;
@@ -47,7 +47,7 @@ public class HomeChefFoodTimingAdapter extends RecyclerView.Adapter<HomeChefFood
     public void onBindViewHolder(LunchViewHolder holder, int position) {
 
         HomeChefOrderModel homeChefOrderModel = homeChefOrderModelArrayList.get(position);
-        String orderIdStyledText = "<font color='#000000'>Order Id:-</font>" + "<font color='#A9A9A9'>" + homeChefOrderModel.getOrderId() + "</font>";
+        String orderIdStyledText = "<font color='#A9A9A9'>Order Id:-</font>" + "<font color='#D3D3D3'>" + homeChefOrderModel.getOrderId() + "</font>";
         holder.tvOrderId.setText(Html.fromHtml(orderIdStyledText));
 //        holder.tvOrderId.setText(Html.fromHtml(<font color="">"Order Id:- " + homeChefOrderModel.getOrderId()));
         holder.tvFoodName.setText(homeChefOrderModel.getDishName());
@@ -117,7 +117,7 @@ public class HomeChefFoodTimingAdapter extends RecyclerView.Adapter<HomeChefFood
                             System.out.println(">>>>> onOrderSelected" + foodDate);
                             System.out.println(">>>>> onOrderSelected" + foodTime);
                             System.out.println(">>>>> onOrderSelected" + noOfPerson);
-                            ((HomeShopViewActivity) context).bookOrder(homeChefUserId, homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId(), foodDate, String.valueOf(foodTime), noOfPerson);
+                            ((ShopDetailsActivity) context).bookOrder(homeChefUserId, homeChefOrderModelArrayList.get(getAdapterPosition()).getOrderId(), foodDate, String.valueOf(foodTime), noOfPerson);
 
                         }
                     }, foodTimeType);

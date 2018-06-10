@@ -117,17 +117,17 @@ public class FoodieDiscoverAdapter extends RecyclerView.Adapter<FoodieDiscoverAd
 
             if (isBreakfast) {
                 orderType = orderType + "Breakfast";
-                orderTime = orderTime + homeChefOrderModelArrayList.get(position).getBreakFastTime();
+                orderTime = orderTime + "Breakfast(" + homeChefOrderModelArrayList.get(position).getBreakFastTime() + ")";
             }
 
             if (isLunch) {
                 orderType = orderType + ",Lunch";
-                orderTime = orderTime + "," + homeChefOrderModelArrayList.get(position).getLunchTime();
+                orderTime = orderTime + ", " + "Lunch(" + homeChefOrderModelArrayList.get(position).getLunchTime() + ")";
             }
 
             if (isDiner) {
                 orderType = orderType + ",Dinner";
-                orderTime = orderTime + "," + homeChefOrderModelArrayList.get(position).getDinnerTime();
+                orderTime = orderTime + ", " + "Dinner(" + homeChefOrderModelArrayList.get(position).getDinnerTime() + ")";
             }
 
         } catch (Exception e) {

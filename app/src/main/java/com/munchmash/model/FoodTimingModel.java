@@ -12,8 +12,8 @@ public class FoodTimingModel implements Serializable {
     private String breakFastEndTime = "11:00 AM";
     private String lunchStartTime = "1:00 PM";
     private String lunchEndTime = "3:00 PM";
-    private String dinnerStartTime = "7:30 AM";
-    private String dinnerEndTime = "11:30 AM";
+    private String dinnerStartTime = "7:30 PM";
+    private String dinnerEndTime = "11:30 PM";
 
     public String getBreakFastStartTime() {
         return breakFastStartTime;

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.munchmash.R;
-import com.munchmash.activity.HomeShopViewActivity;
+import com.munchmash.activity.ShopDetailsActivity;
 import com.munchmash.model.BaseModel;
 import com.munchmash.model.CustomAddress;
 import com.munchmash.model.HomeChiefNearByModel;
@@ -75,8 +75,12 @@ public class FoodieHomeListAdapter extends RecyclerView.Adapter<FoodieHomeListAd
             holder.profilePic.setImageResource(R.drawable.profile);
         }
         /*Added*/
-        if (!isFavourite)
-            holder.tvDistance.setText(Utils.getDistance(homeChiefNearByModelArrayList.get(position).getDistance()) + " Km Away");
+        if (!isFavourite) {
+            if (userModel.getCountryCode().equals("91"))
+                holder.tvDistance.setText(Utils.getDistance(homeChiefNearByModelArrayList.get(position).getDistance(), 0) + " Km Away");
+            else
+                holder.tvDistance.setText(Utils.getDistance(homeChiefNearByModelArrayList.get(position).getDistance(), 1) + " Miles Away");
+        }
     }
 
     @Override
@@ -154,7 +158,7 @@ public class FoodieHomeListAdapter extends RecyclerView.Adapter<FoodieHomeListAd
                     deleteFavourite(getAdapterPosition());
                     break;
                 default:
-                    context.startActivity(HomeShopViewActivity.getIntent(context, homeChiefNearByModelArrayList.get(getAdapterPosition())));
+                    context.startActivity(ShopDetailsActivity.getIntent(context, homeChiefNearByModelArrayList.get(getAdapterPosition())));
             }
         }
     }

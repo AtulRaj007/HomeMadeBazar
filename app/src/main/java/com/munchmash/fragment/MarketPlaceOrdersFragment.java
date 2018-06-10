@@ -50,7 +50,7 @@ public class MarketPlaceOrdersFragment extends BaseFragment {
     }
 
     private void setUpViewPager() {
-        viewPagerAdapter.addFragment(new MarketPlaceIncomingOrdersFragment(), "Incoming Ordres");
+        viewPagerAdapter.addFragment(new MarketPlaceIncomingOrdersFragment(), "Incoming Orders");
         viewPagerAdapter.addFragment(new MarketPlaceOutgoingOrdersFragment(), "Outgoing Orders");
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

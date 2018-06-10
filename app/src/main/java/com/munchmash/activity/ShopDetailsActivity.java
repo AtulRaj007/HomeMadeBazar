@@ -39,7 +39,7 @@ import com.munchmash.util.Utils;
 
 import me.relex.circleindicator.CircleIndicator;
 
-public class HomeShopViewActivity extends BaseActivity implements View.OnClickListener {
+public class ShopDetailsActivity extends BaseActivity implements View.OnClickListener {
     public static final String KEY_HOME_CHEF_NEARBY_MODEL = "KEY_HOME_CHEF_NEARBY_MODEL";
     public static String KEY_USER_ID = "KEY_USER_ID";
     private TabLayout tabLayout;
@@ -54,7 +54,7 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
     private CircleIndicator circleIndicator;
 
     public static Intent getIntent(Context context, HomeChiefNearByModel homeChiefNearByModel) {
-        Intent intent = new Intent(context, HomeShopViewActivity.class);
+        Intent intent = new Intent(context, ShopDetailsActivity.class);
         intent.putExtra(KEY_HOME_CHEF_NEARBY_MODEL, homeChiefNearByModel);
         return intent;
     }
@@ -85,7 +85,7 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void initUI() {
         getDataFromBundle();
-        userModel = SharedPreference.getUserModel(HomeShopViewActivity.this);
+        userModel = SharedPreference.getUserModel(ShopDetailsActivity.this);
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
         viewPagerCoverImages = findViewById(R.id.view_pager_cover);
@@ -112,15 +112,15 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
     protected void setData() {
         try {
             if (!TextUtils.isEmpty(homeChefNearByModel.getProfileImage())) {
-                Glide.with(HomeShopViewActivity.this).load(homeChefNearByModel.getProfileImage()).into(ivProfileImage);
+                Glide.with(ShopDetailsActivity.this).load(homeChefNearByModel.getProfileImage()).into(ivProfileImage);
             }
-            tvShopName.setText(homeChefNearByModel.getFirstName() + " " + homeChefNearByModel.getLastName());
+            tvShopName.setText(homeChefNearByModel.getFirstName() + " " + homeChefNearByModel.getLastName() + "\n" + homeChefNearByModel.getShopName());
             tvPriceRange.setText(homeChefNearByModel.getPriceRange());
             tvAddress.setText(CustomAddress.getCompleteAddress(homeChefNearByModel.getAddress()));
             tvSpeciality.setText(homeChefNearByModel.getSpeciality());
 
             if (homeChefNearByModel.getCoverPhotoArrayList() != null && homeChefNearByModel.getCoverPhotoArrayList().size() > 0) {
-                ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(HomeShopViewActivity.this, homeChefNearByModel.getCoverPhotoArrayList());
+                ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(ShopDetailsActivity.this, homeChefNearByModel.getCoverPhotoArrayList());
                 viewPagerCoverImages.setAdapter(imagePagerAdapter);
                 circleIndicator.setViewPager(viewPagerCoverImages);
             }
@@ -155,7 +155,7 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
 
     public void bookOrder(String homeChefUserId, String orderId, String bookedDate, String orderBookedFor, int noOfPerson) {
         try {
-            final Dialog progressDialog = DialogUtils.getProgressDialog(HomeShopViewActivity.this, null);
+            final Dialog progressDialog = DialogUtils.getProgressDialog(ShopDetailsActivity.this, null);
             progressDialog.show();
 
             final FoodieBookOrderApiCall apiCall = new FoodieBookOrderApiCall(userModel.getUserId(), homeChefUserId, orderId, bookedDate, orderBookedFor, noOfPerson);
@@ -168,13 +168,13 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
                         try {
                             BaseModel baseModel = apiCall.getResult();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                DialogUtils.showAlert(HomeShopViewActivity.this, "Order sent for HomeChef Review\nPlease wait for the order to get accepted." + "\nYour Booking Id is - " + apiCall.getBookingId());
+                                DialogUtils.showAlert(ShopDetailsActivity.this, "Order sent for HomeChef Review\nPlease wait for the order to get accepted." + "\nYour Booking Id is - " + apiCall.getBookingId());
                             } else if (baseModel.getStatusCode() == Constants.ServerResponseCode.INSUFFICIENT_MONEY) {
-                                DialogUtils.showAlert(HomeShopViewActivity.this, "You have insufficient money. Do you wish to Add Money", new Runnable() {
+                                DialogUtils.showAlert(ShopDetailsActivity.this, "You have insufficient money. Do you wish to Add Money", new Runnable() {
                                     @Override
                                     public void run() {
                                         //OK
-                                        startActivity(new Intent(HomeShopViewActivity.this, AddMoneyActivity.class));
+                                        startActivity(new Intent(ShopDetailsActivity.this, AddMoneyActivity.class));
                                     }
                                 }, new Runnable() {
                                     @Override
@@ -184,19 +184,19 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
                                     }
                                 });
                             } else {
-                                DialogUtils.showAlert(HomeShopViewActivity.this, baseModel.getStatusMessage());
+                                DialogUtils.showAlert(ShopDetailsActivity.this, baseModel.getStatusMessage());
                             }
 
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
                     } else { // Failure
-                        Utils.handleError(e.getMessage(), HomeShopViewActivity.this, null);
+                        Utils.handleError(e.getMessage(), ShopDetailsActivity.this, null);
                     }
                 }
             }, false);
         } catch (Exception e) {
-            Utils.handleError(e.getMessage(), HomeShopViewActivity.this, null);
+            Utils.handleError(e.getMessage(), ShopDetailsActivity.this, null);
         }
     }
 
@@ -204,15 +204,15 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_call:
-                if (ContextCompat.checkSelfPermission(HomeShopViewActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(HomeShopViewActivity.this, new String[]{Manifest.permission.CALL_PHONE}, Constants.Keys.REQUEST_CALL_PHONE);
+                if (ContextCompat.checkSelfPermission(ShopDetailsActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(ShopDetailsActivity.this, new String[]{Manifest.permission.CALL_PHONE}, Constants.Keys.REQUEST_CALL_PHONE);
                 } else {
-                    Utils.startCall(HomeShopViewActivity.this, homeChefNearByModel.getMobile());
+                    Utils.startCall(ShopDetailsActivity.this, homeChefNearByModel.getMobile());
                 }
                 break;
             case R.id.ll_message:
 
-                Utils.message(HomeShopViewActivity.this, homeChefNearByModel.getMobile());
+                Utils.message(ShopDetailsActivity.this, homeChefNearByModel.getMobile());
 
                 break;
             case R.id.ll_save:
@@ -228,7 +228,7 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == Constants.Keys.REQUEST_CALL_PHONE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Utils.startCall(HomeShopViewActivity.this, homeChefNearByModel.getMobile());
+                Utils.startCall(ShopDetailsActivity.this, homeChefNearByModel.getMobile());
             }
         }
 
@@ -237,7 +237,7 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
 
     private void saveHomeChef() {
         try {
-            final Dialog progressDialog = DialogUtils.getProgressDialog(HomeShopViewActivity.this, null);
+            final Dialog progressDialog = DialogUtils.getProgressDialog(ShopDetailsActivity.this, null);
             progressDialog.show();
 
             final SaveFavouriteApiCall apiCall = new SaveFavouriteApiCall(userModel.getUserId(), homeChefNearByModel.getUserId());
@@ -250,23 +250,23 @@ public class HomeShopViewActivity extends BaseActivity implements View.OnClickLi
                         try {
                             BaseModel baseModel = apiCall.getResult();
                             if (baseModel.getStatusCode() == Constants.ServerResponseCode.SUCCESS) {
-                                DialogUtils.showAlert(HomeShopViewActivity.this, "HomeChef is saved to Favourites.");
+                                DialogUtils.showAlert(ShopDetailsActivity.this, "HomeChef is saved to Favourites.");
                                 Constants.isFavouritesChange = true;
                                 homeChefNearByModel.setFavourite(true);
                             } else {
-                                DialogUtils.showAlert(HomeShopViewActivity.this, baseModel.getStatusMessage());
+                                DialogUtils.showAlert(ShopDetailsActivity.this, baseModel.getStatusMessage());
                             }
 
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
                     } else { // Failure
-                        Utils.handleError(e.getMessage(), HomeShopViewActivity.this, null);
+                        Utils.handleError(e.getMessage(), ShopDetailsActivity.this, null);
                     }
                 }
             });
         } catch (Exception e) {
-            Utils.handleError(e.getMessage(), HomeShopViewActivity.this, null);
+            Utils.handleError(e.getMessage(), ShopDetailsActivity.this, null);
         }
     }
 }

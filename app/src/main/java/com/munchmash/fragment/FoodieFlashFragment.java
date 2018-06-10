@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 
 import com.munchmash.R;
@@ -57,7 +58,7 @@ public class FoodieFlashFragment extends BaseFragment implements SwipeRefreshLay
     private Cursor cursor;
     private Switch switchSyncContact;
     private boolean isApiRunning = false;
-    private Button btnInviteFriends;
+    private ImageView btnInviteFriends;
 
     @Nullable
     @Override

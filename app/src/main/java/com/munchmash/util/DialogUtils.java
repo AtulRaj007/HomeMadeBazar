@@ -118,19 +118,19 @@ public class DialogUtils {
                         break;
                     case R.id.tv_lunch_start_time:
                         timeSelectedTextView = tvLunchStartTime;
-                        new TimePickerDialog(context, onTimeSetListener, 1, 00, false).show();
+                        new TimePickerDialog(context, onTimeSetListener, 13, 00, false).show();
                         break;
                     case R.id.tv_lunch_end_time:
                         timeSelectedTextView = tvLunchEndTime;
-                        new TimePickerDialog(context, onTimeSetListener, 2, 30, false).show();
+                        new TimePickerDialog(context, onTimeSetListener, 15, 00, false).show();
                         break;
                     case R.id.tv_dinner_start_time:
                         timeSelectedTextView = tvDinnerStartTime;
-                        new TimePickerDialog(context, onTimeSetListener, 7, 00, false).show();
+                        new TimePickerDialog(context, onTimeSetListener, 19, 30, false).show();
                         break;
                     case R.id.tv_dinner_end_time:
                         timeSelectedTextView = tvDinnerEndTime;
-                        new TimePickerDialog(context, onTimeSetListener, 9, 00, false).show();
+                        new TimePickerDialog(context, onTimeSetListener, 21, 30, false).show();
                         break;
                 }
             }
@@ -239,6 +239,8 @@ public class DialogUtils {
 
 
                 dialog.show();
+            } else {
+                dialog = null;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -247,7 +249,7 @@ public class DialogUtils {
 
     public static void showAlert(Context context, String message,
                                  final Runnable handler) {
-        showAlert(context, message, handler);
+        showAlert(context, message, handler, "");
     }
 
 

@@ -140,7 +140,7 @@
     <string name="str_pets_allowed">Pets Allowed</string>
     <string name="hint_drinks">Drinks</string>
     <string name="str_add_dish_photo">ADD PHOTOS</string>
-    <string name="sync_contact">Sync phone contact into app</string>
+    <string name="sync_contact">Sync Contacts</string>
     <string name="str_edit_timings">Edit Timings</string>
     <string name="hint_enter_price_range">Enter Price Range</string>
     <string name="uploading_photo">Uploading photo ... please Wait</string>

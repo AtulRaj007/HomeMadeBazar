@@ -203,7 +203,6 @@ public class HomeActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("HomeMadeBazar");
         alertDialogBuilder.setMessage("Are you sure you want to exit...");
         alertDialogBuilder.setPositiveButton("Ok",
                 new DialogInterface.OnClickListener() {

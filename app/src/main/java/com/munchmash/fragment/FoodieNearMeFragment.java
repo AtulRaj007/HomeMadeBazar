@@ -24,7 +24,7 @@ import com.munchmash.util.JSONParsingUtils;
 import java.util.ArrayList;
 
 
-public class FoodieHomeChefSearchFragment extends BaseFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class FoodieNearMeFragment extends BaseFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView rvCategories, rvHomeChef;
     private LinearLayoutManager linearLayoutManager;
     private GridLayoutManager gridLayoutManager;

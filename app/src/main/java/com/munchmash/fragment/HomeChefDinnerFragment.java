@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.munchmash.R;
-import com.munchmash.activity.HomeShopViewActivity;
+import com.munchmash.activity.ShopDetailsActivity;
 import com.munchmash.adapter.HomeChefFoodTimingAdapter;
 import com.munchmash.model.BaseModel;
 import com.munchmash.model.HomeChefOrderModel;
@@ -37,7 +37,7 @@ public class HomeChefDinnerFragment extends BaseFragment {
 
     @Override
     protected void initUI() {
-        userId = getArguments().getString(HomeShopViewActivity.KEY_USER_ID);
+        userId = getArguments().getString(ShopDetailsActivity.KEY_USER_ID);
         recyclerView = getView().findViewById(R.id.recycler_view);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);

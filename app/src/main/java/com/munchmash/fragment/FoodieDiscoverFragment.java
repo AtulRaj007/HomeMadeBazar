@@ -33,7 +33,6 @@ public class FoodieDiscoverFragment extends BaseFragment {
     private ViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
     private TabLayout tabLayout;
-//    private HomeChefFoodTimingAdapter homeChefLunchAdapter;
 
     @Nullable
     @Override
@@ -62,8 +61,17 @@ public class FoodieDiscoverFragment extends BaseFragment {
     }
 
     private void setUpViewPager() {
+        String strMealsUnder = "Meals Under" + "\n";
+        if (userModel.getCountryCode().equals("91")) {
+            strMealsUnder += "100 " + Utils.getRupeesSymbol();
+        } else if (userModel.getCountryCode().equals("44")) {
+            strMealsUnder += "5 " + Utils.getPoundSymbol();
+        } else {
+            strMealsUnder += "5 " + Utils.getDollarSymbol();
+        }
+
         viewPagerAdapter.addFragment(new FoodieTopDealsFragment(), "Top Deals");
-        viewPagerAdapter.addFragment(new FoodieMealsUnderPriceFragment(), "Meals Under 100");
+        viewPagerAdapter.addFragment(new FoodieMealsUnderPriceFragment(), strMealsUnder);
         viewPagerAdapter.addFragment(new FoodieTopChefFragment(), "Top Chefs");
 
         viewPager.setAdapter(viewPagerAdapter);

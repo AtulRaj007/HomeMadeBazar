@@ -98,15 +98,11 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
 
     private void getWalletBalance() {
         try {
-//            final ProgressDialog progressDialog = DialogUtils.getProgressDialog(this, null);
-//            progressDialog.show();
-
             final GetWalletBalanceApiCall apiCall = new GetWalletBalanceApiCall(userModel.getUserId());
             HttpRequestHandler.getInstance(this.getApplicationContext()).executeRequest(apiCall, new ApiCall.OnApiCallCompleteListener() {
 
                 @Override
                 public void onComplete(Exception e) {
-//                    DialogUtils.hideProgressDialog(progressDialog);
                     swipeRefreshLayout.setRefreshing(false);
                     if (e == null) { // Success
                         try {
@@ -150,7 +146,10 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 startActivity(new Intent(WalletActivity.this, AcceptMoneyActivity.class));
                 break;
             case R.id.tv_sent_to_bank:
-                startActivity(new Intent(WalletActivity.this, SendMoneyToBankActivity.class));
+                if (userModel.getWalletBalance() > 0)
+                    startActivity(new Intent(WalletActivity.this, SendMoneyToBankActivity.class));
+                else
+                    DialogUtils.showAlert(WalletActivity.this, "Add money to wallet");
                 break;
         }
     }

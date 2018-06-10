@@ -113,7 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_post_image"
-            android:background="@color/grey"
+            android:background="@color/white"
             android:paddingBottom="@dimen/padding_5"
             android:paddingTop="@dimen/padding_5">
 
@@ -133,7 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_5"
-                    android:text="Like"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_16" />
 
@@ -162,7 +162,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_5"
-                    android:text="Comment"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_16" />
 
@@ -190,7 +190,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_5"
-                    android:text="Share"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_16" />
             </LinearLayout>

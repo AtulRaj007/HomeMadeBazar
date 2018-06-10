@@ -164,14 +164,18 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
 
     }
 
-    @Override
-    protected void setData() {
-
+    private void updateFoodTiming() {
         if (foodTimingModel != null) {
             tvBreakfastDuration.setText(foodTimingModel.getBreakFastStartTime() + " - " + foodTimingModel.getBreakFastEndTime());
             tvLunchDuration.setText(foodTimingModel.getLunchStartTime() + " - " + foodTimingModel.getLunchEndTime());
             tvDinnerDuration.setText(foodTimingModel.getDinnerStartTime() + " - " + foodTimingModel.getDinnerEndTime());
         }
+    }
+
+    @Override
+    protected void setData() {
+
+        updateFoodTiming();
 
         DialogUtils.showFoodDialog(CreateOrderActivity.this);
         getFoodCategories();
@@ -308,6 +312,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     public void onFoodTimingSelected(FoodTimingModel foodTimingModel) {
                         CreateOrderActivity.foodTimingModel = foodTimingModel;
+                        updateFoodTiming();
                     }
                 });
                 break;
@@ -398,8 +403,8 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 });
                 break;
             default:
+                etDescription.clearFocus();
                 if ((int) view.getTag() == Constants.FoodTiming.Unselected) {
-//                    etGuestRules.getText().toString().trim()
                     ((ImageView) view).setBackgroundColor(getResources().getColor(R.color.white));
                     ((ImageView) view).setImageResource(R.drawable.ic_date_selected);
                     view.setTag(Constants.FoodTiming.Selected);

@@ -108,9 +108,9 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            ((MyOrdersViewHolder) holder).tvPrice.setText((price * noOfGuest) + "");
+            ((MyOrdersViewHolder) holder).tvPrice.setText(price + "*" + noOfGuest + "=" + (price * noOfGuest));
             ((MyOrdersViewHolder) holder).tvOrderTiming.setText(homeChefIncomingOrderModel.getEatingTime());
-            ((MyOrdersViewHolder) holder).tvDiscount.setText(homeChefIncomingOrderModel.getDiscAmount() + "(%)");
+            ((MyOrdersViewHolder) holder).tvDiscount.setText(homeChefIncomingOrderModel.getDiscAmount() + "%");
             ((MyOrdersViewHolder) holder).tvOrderId.setText(homeChefIncomingOrderModel.getOrderId());
             ((MyOrdersViewHolder) holder).tvRequestId.setText(homeChefIncomingOrderModel.getOrderRequestId());
             ((MyOrdersViewHolder) holder).tvBookingDate.setText(homeChefIncomingOrderModel.getOrderRequestDate());

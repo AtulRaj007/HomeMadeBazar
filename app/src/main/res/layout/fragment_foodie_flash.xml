@@ -31,34 +31,29 @@
             android:id="@+id/switch_sync_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_marginRight="@dimen/margin_10"
-            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/margin_30"
+            android:layout_marginRight="@dimen/margin_30"
             android:thumbTint="@color/white" />
+
+        <ImageView
+            android:id="@+id/btn_invite_friends"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height"
+            android:layout_margin="@dimen/margin_5"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_myshop_invite_friends" />
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_invite_friends"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/button_height"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/sync_layout"
-        android:layout_margin="@dimen/margin_5"
-        android:layout_marginTop="@dimen/margin_5"
-        android:background="@drawable/button_round_primary"
-        android:paddingLeft="@dimen/padding_20"
-        android:paddingRight="@dimen/padding_20"
-        android:text="@string/str_invite_friends"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_14" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/btn_invite_friends">
+        android:layout_below="@id/sync_layout">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -76,7 +71,7 @@
         android:layout_marginBottom="@dimen/margin_60"
         android:layout_marginRight="@dimen/margin_10"
         android:src="@drawable/add"
-        app:backgroundTint="@color/green" />
+        app:backgroundTint="@color/colorPrimary" />
 
     <include layout="@layout/layout_no_record" />
 

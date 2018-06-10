@@ -459,8 +459,16 @@ public class Utils {
                 break;
             case R.id.tv_logout:
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                alertDialogBuilder.setTitle("HomeMadeBazar");
-                alertDialogBuilder.setMessage("Are you sure you want to exit...");
+                UserModel userModel = SharedPreference.getUserModel(context);
+                String message = "Are you sure you want to exit..";
+                if (userModel.getAccountType().equals(Constants.AccountType.FOODIE)) {
+                    message = "Dear Foodie, " + message;
+                } else if (userModel.getAccountType().equals(Constants.AccountType.HOME_CHEF)) {
+                    message = "Dear HomeChef, " + message;
+                } else {
+                    message = "Dear MarketPlace, " + message;
+                }
+                alertDialogBuilder.setMessage(message);
                 alertDialogBuilder.setPositiveButton("Ok",
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -563,14 +571,29 @@ public class Utils {
         return false;
     }
 
-    public static double getDistance(String miles) {
+    public static double getDistance(String miles, int type) {
         double distance = 0;
         try {
-            return Utils.roundToTwoDigits(Double.parseDouble(miles) * 1.60934);
+            if (type == 0)
+                return Utils.roundToTwoDigits(Double.parseDouble(miles) * 1.60934);
+            else
+                return Utils.roundToTwoDigits(Double.parseDouble(miles));
         } catch (Exception e) {
             e.printStackTrace();
         }
         return distance;
+    }
+
+    public static String getRupeesSymbol() {
+        return "₹";
+    }
+
+    public static String getPoundSymbol() {
+        return "£";
+    }
+
+    public static String getDollarSymbol() {
+        return "$";
     }
 
     public static void startCall(Context context, String mobileNumber) {
@@ -619,7 +642,7 @@ public class Utils {
     }
 
 
-    private static double roundToTwoDigits(double distance) {
+    public static double roundToTwoDigits(double distance) {
         try {
             DecimalFormat twoDForm = new DecimalFormat("#.##");
             return Double.valueOf(twoDForm.format(distance));
